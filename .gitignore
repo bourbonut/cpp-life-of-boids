@@ -364,7 +364,7 @@ FodyWeavers.xsd
 
 # Conan
 conan_config/
-conanfile.txt
+conan-config/
 
 # Miscellaneous
 CMakeSettings.json
