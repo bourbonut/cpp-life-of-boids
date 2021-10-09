@@ -46,10 +46,35 @@ void Bird::updatePosition() {
 	position += velocity;
 };
 
+
 class Flock {
+
 public:
-	int popsize;
+	void create_population();
+	void calculate_positions();
+	void add_agent();
+	void destroy_agent();
+	void move_agents();
+	void random(float min, float max);
+
+public:
+	Flock(); // Constructeur avec argument par défaut
+	Flock(int popsize);
+	~Flock(); // Destructeur
+};
+
+Flock::Flock(int popsize) {
 	std::array<float, popsize> birds_vec;
 	std::array<float, popsize> next_pos;
+	create_population();
+};
 
+Flock::create_population() {
+	for (int i = 0; i < popsize; ++i)
+	{
+		vec2 position = random(0, 100);
+		vec2 velocity = random(0, 5);
+		Bird bird = Bird(position, velocity);
+		birds_vec.push_back(bird);
+	}
 };
