@@ -30,8 +30,13 @@ public:
 	vec2 getVelocity();
 
 	void computeNeighbors();
-	void cohesion(std::vector<Bird> neighbors);
-	void alignment(std::vector<Bird> neighbors);
-	void separation(std::vector<Bird> neighbors);
-	void updateVelocity();
+	vec2 vec_cohesion = cohesion(std::vector<Bird> neighbors);
+	vec2 vec_alignment = alignment(std::vector<Bird> neighbors);
+	vec2 vec_separation = separation(std::vector<Bird> neighbors);
+	void updateVelocity(vec2 vec_cohesion, vec2 vec_alignment, vec2 vec_separation);
+};
+
+void Bird::updateVelocity(vec2 vec_cohesion, vec2 vec_alignment, vec2 vec_separation) {
+	vec2 vec_displacement = vec_cohesion + vec_alignment + vec_separation;
+	velocity += vec_displacement
 };
