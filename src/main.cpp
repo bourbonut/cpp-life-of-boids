@@ -14,6 +14,7 @@ using mat3x3 = std::array<vec3, 3>;
 using mat4x4 = std::array<vec4, 4>;
 
 #include "glx.hpp"
+#include "Bird.hpp"
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
@@ -55,22 +56,27 @@ int main() {
   if (!glfwInit())
     exit(EXIT_FAILURE);
 
-  // Specifying some OpenGL variables
+  // Tell GLFW what version of OpenGL we are using
+  // Here, it is 3.3
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  // Tell GLFW we are using the core profile
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   // Creates the window object
   GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Triangle", nullptr, nullptr);
+  // Error check if the window fails to create
   if (!window) {
     glfwTerminate();
     exit(EXIT_FAILURE);
   }
 
   glfwSetKeyCallback(window, key_callback);
-
+  
+  // Introduce the window into the current context
   glfwMakeContextCurrent(window);
+  // Load GLAD so it configures OpenGL
   gladLoadGL();
   glfwSwapInterval(1);
 
@@ -92,10 +98,8 @@ int main() {
   const GLint vpos_location = ShaderProgram_getAttribLocation(triangle_shaderProgram, "vPos");
   const GLint vcol_location = ShaderProgram_getAttribLocation(triangle_shaderProgram, "vCol");
 
-  glVertexAttribPointer(
-      vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, pos));
-  glVertexAttribPointer(
-      vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, col));
+  glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, pos));
+  glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, col));
   glEnableVertexAttribArray(vpos_location);
   glEnableVertexAttribArray(vcol_location);
 
@@ -157,6 +161,7 @@ int main() {
     return vec2{(float)(width * (0.5 + 0.4 * cos(t))), (float)(height * (0.5 + 0.4 * sin(t)))};
   };
 
+
   float v = 0;
   for (auto& p : points) {
     v += 1.0;
@@ -172,6 +177,7 @@ int main() {
     glfwGetFramebufferSize(window, &width, &height);
     const float ratio = (float)width / (float)height;
 
+    // Specify the viewport of OpenGL in the window
     glViewport(0, 0, width, height);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -190,59 +196,60 @@ int main() {
       glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 
-    {  // points
-      mat3x3 transform = points::vertex_transform_2d(width, height);
-      float pointSize = 3.0;
-      float max_speed = 10.0;
+    //{  // points
+    //  mat3x3 transform = points::vertex_transform_2d(width, height);
+    //  float pointSize = 3.0;
+    //  float max_speed = 10.0;
 
-      float v = 0;
-      for (auto& p : points) {
-        v += 1.0;
-        p.velocity = vec2{20*cos(t/10) * (cos(v)-cos(v+1)), 20*cos(t/10) * (sin(v)-sin(v+1))};
-        p.position[0] += p.velocity[0];
-        p.position[1] += p.velocity[1];
-      }
+    //  float v = 0;
+    //  for (auto& p : points) {
+    //    v += 1.0;
+    //    p.velocity = vec2{20*cos(t/10) * (cos(v)-cos(v+1)), 20*cos(t/10) * (sin(v)-sin(v+1))};
+    //    p.position[0] += p.velocity[0];
+    //    p.position[1] += p.velocity[1];
+    //  }
 
-      VertexArray_bind(points_vertexArray);
-      Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
-      ShaderProgram_activate(points_shaderProgram);
+    //  VertexArray_bind(points_vertexArray);
+    //  Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
+    //  ShaderProgram_activate(points_shaderProgram);
 
-      glUniformMatrix3fv(transform_location, 1, GL_FALSE, (const GLfloat*)&transform);
-      glUniform1f(pointSize_location, pointSize);
-      glUniform1f(maxSpeedSquared_location, max_speed);
-      glBindVertexArray(points_vertexArray.vertex_array);
+    //  glUniformMatrix3fv(transform_location, 1, GL_FALSE, (const GLfloat*)&transform);
+    //  glUniform1f(pointSize_location, pointSize);
+    //  glUniform1f(maxSpeedSquared_location, max_speed);
+    //  glBindVertexArray(points_vertexArray.vertex_array);
 
-      glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STREAM_DRAW);
-      glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(points::Point), points.data(), GL_STREAM_DRAW);
-      glDrawArrays(GL_POINTS, 0, points.size());
-    }
+    //  glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STREAM_DRAW);
+    //  glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(points::Point), points.data(), GL_STREAM_DRAW);
+    //  glDrawArrays(GL_POINTS, 0, points.size());
+    //}
 
-    {  // lines
-      mat3x3 transform = points::vertex_transform_2d(width, height);
+    //{  // lines
+    //  mat3x3 transform = points::vertex_transform_2d(width, height);
 
-      VertexArray_bind(lines_vertexArray);
-      Buffer_bind(lines_buffer, GL_ARRAY_BUFFER);
-      ShaderProgram_activate(lines_shaderProgram);
+    //  VertexArray_bind(lines_vertexArray);
+    //  Buffer_bind(lines_buffer, GL_ARRAY_BUFFER);
+    //  ShaderProgram_activate(lines_shaderProgram);
 
-      glUniformMatrix3fv(transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
-      glBindVertexArray(lines_vertexArray.vertex_array);
+    //  glUniformMatrix3fv(transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
+    //  glBindVertexArray(lines_vertexArray.vertex_array);
 
-      std::vector<triangle::Vertex> vertex_data;
-      vertex_data.push_back(triangle::Vertex{{0, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
-      vertex_data.push_back(
-          triangle::Vertex{{static_cast<float>(width), static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
-      vertex_data.push_back(triangle::Vertex{{static_cast<float>(width) / 2, 0}, {1.0, 1.0, 1.0}});
-      vertex_data.push_back(
-          triangle::Vertex{{static_cast<float>(width) / 2, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
+    //  std::vector<triangle::Vertex> vertex_data;
+    //  vertex_data.push_back(triangle::Vertex{{0, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
+    //  vertex_data.push_back(
+    //      triangle::Vertex{{static_cast<float>(width), static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
+    //  vertex_data.push_back(triangle::Vertex{{static_cast<float>(width) / 2, 0}, {1.0, 1.0, 1.0}});
+    //  vertex_data.push_back(
+    //      triangle::Vertex{{static_cast<float>(width) / 2, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
 
-      glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
-      glDrawArrays(GL_LINES, 0, vertex_data.size());
-    }
+    //  glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
+    //  glDrawArrays(GL_LINES, 0, vertex_data.size());
+    //}
 
-    // Measure FPS
+    // Shows the title
     glfwSetWindowTitle(window, "FPS: to be defined");
 
     glfwSwapBuffers(window);
+    // Takes care of all the events
     glfwPollEvents();
   }
 
