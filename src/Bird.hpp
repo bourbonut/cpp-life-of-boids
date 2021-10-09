@@ -34,9 +34,22 @@ public:
 	vec2 vec_alignment = alignment(std::vector<Bird> neighbors);
 	vec2 vec_separation = separation(std::vector<Bird> neighbors);
 	void updateVelocity(vec2 vec_cohesion, vec2 vec_alignment, vec2 vec_separation);
+	void updatePosition()
 };
 
 void Bird::updateVelocity(vec2 vec_cohesion, vec2 vec_alignment, vec2 vec_separation) {
 	vec2 vec_displacement = vec_cohesion + vec_alignment + vec_separation;
-	velocity += vec_displacement
+	velocity += vec_displacement;
+};
+
+void Bird::updatePosition() {
+	position += velocity;
+};
+
+class Flock {
+public:
+	int popsize;
+	std::array<float, popsize> birds_vec;
+	std::array<float, popsize> next_pos;
+
 };
