@@ -33,8 +33,8 @@ static void error_callback(int error, const char* description) {
   *
   * @param window our window
   * @param key which key
-  * @param scancode 
-  * @param action action taken (press, unpress, repeat...) 
+  * @param scancode
+  * @param action action taken (press, unpress, repeat...)
   */
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
   // If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
@@ -164,10 +164,10 @@ int main() {
   }
 
   // global loop
-  float t = 0;
+  float t = 0; // variable pour faire une rotation du triangles
   while (!glfwWindowShouldClose(window)) {
     t += 1.;
-    
+
     int width{}, height{};
     glfwGetFramebufferSize(window, &width, &height);
     const float ratio = (float)width / (float)height;
@@ -229,11 +229,9 @@ int main() {
 
       std::vector<triangle::Vertex> vertex_data;
       vertex_data.push_back(triangle::Vertex{{0, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
-      vertex_data.push_back(
-          triangle::Vertex{{static_cast<float>(width), static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
+      vertex_data.push_back(triangle::Vertex{{static_cast<float>(width), static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
       vertex_data.push_back(triangle::Vertex{{static_cast<float>(width) / 2, 0}, {1.0, 1.0, 1.0}});
-      vertex_data.push_back(
-          triangle::Vertex{{static_cast<float>(width) / 2, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
+      vertex_data.push_back(triangle::Vertex{{static_cast<float>(width) / 2, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
 
       glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
       glDrawArrays(GL_LINES, 0, vertex_data.size());
