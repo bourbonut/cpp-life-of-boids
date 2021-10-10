@@ -5,6 +5,10 @@ FIND_PACKAGE(OpenCV REQUIRED)
 add_library(libGLX glx.cpp glx.hpp "Bird.cpp" "Bird.hpp")
 target_link_libraries(libGLX PUBLIC glfw::glfw glad::glad opencv::opencv)
 
+add_subdirectory(myMath)
+add_executable(MathPart math_main.cpp)
+target_link_libraries(MathPart mymath)
+
 add_executable(life-of-boids main.cpp "Bird.cpp" "Bird.hpp")
 target_link_libraries(life-of-boids libGLX)
 
