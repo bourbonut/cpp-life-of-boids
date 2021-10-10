@@ -29,7 +29,7 @@ public:
 	vec2 getPosition();
 	vec2 getVelocity();
 
-	void computeNeighbors();
+	std::vector<Bird> computeNeighbors();
 	vec2 m_vec_cohesion = cohesion(neighbors);
 	vec2 m_vec_alignment = alignment(neighbors);
 	vec2 m_vec_separation = separation(neighbors);
@@ -37,7 +37,7 @@ public:
 	void updatePosition()
 };
 
-void Bird::updateVelocity(vec2 m_vec_cohesion, vec2 m_vec_alignment, vec2 m_vec_separation) {
+void Bird::updateVelocity(vec2 m_vec_cohesion, vec2 m_vec_alignment, vec2 m_vec_separation) { // Pq?
 	vec2 vec_displacement = m_vec_cohesion + m_vec_alignment + m_vec_separation;
 	m_velocity += vec_displacement;
 };
@@ -51,10 +51,12 @@ class Flock {
 
 public:
 	int m_popsize;
+	std::vector<Bird> m_birds_vec;
+	std::vector<vec2> m_next_pos;
 	void create_population();
 	void calculate_positions();
 	void add_agent();
-	void destroy_agent();
+	void destroy_agent();  // Any ideas??
 	void move_agents();
 	void random(float min, float max);
 
@@ -66,17 +68,25 @@ public:
 
 Flock::Flock(int m_popsize) {
 	std::vector<Bird> m_birds_vec (m_popsize);
-	std::vector<float> m_next_pos (m_popsize);
+	std::vector<vec2> m_next_pos (m_popsize);
 	
 	create_population();
 };
 
-Flock::create_population() {
+void Flock::create_population() {
 	for (int i = 0; i < m_popsize; ++i)
 	{
-		vec2 position = random(0, 100);
-		vec2 velocity = random(0, 5);
+		vec2 position = vec2(5, 10);  //random(0, 100);
+		vec2 velocity = vec2(-2, 1);  //random(0, 5);
 		Bird bird = Bird(position, velocity);
 		m_birds_vec[i] = bird;  // Does it modify the class attribute?
+								// We should be able to add elements to m_birds_vec. Does a "vector" allows that?
 	}
+};
+
+void Flock::add_agent() {
+	vec2 position = vec2(5, 10);  //random(0, 100);
+	vec2 velocity = vec2(-2, 1);  //random(0, 5);
+	Bird bird = Bird(position, velocity);
+	m_birds_vec.push_back(bird);
 };
