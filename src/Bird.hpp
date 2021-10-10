@@ -51,7 +51,6 @@ class Flock {
 
 public:
 	int m_popsize;
-	const int m_init_pop_size;
 	void create_population();
 	void calculate_positions();
 	void add_agent();
@@ -66,9 +65,8 @@ public:
 };
 
 Flock::Flock(int m_popsize) {
-	const int m_init_popsize = m_popsize; 
-	std::array<Bird, m_init_popsize> m_birds_vec; // Why error if ini_popsize is a const
-	std::array<float, m_init_popsize> m_next_pos;
+	std::vector<Bird> m_birds_vec (m_popsize);
+	std::vector<float> m_next_pos (m_popsize);
 	
 	create_population();
 };
