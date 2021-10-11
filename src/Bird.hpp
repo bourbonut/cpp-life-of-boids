@@ -25,10 +25,7 @@ public:
 	vec2 getVelocity();
 
 	std::vector<Bird> computeNeighbors();
-	vec2 m_vec_cohesion = cohesion(neighbors);
-	vec2 m_vec_alignment = alignment(neighbors);
-	vec2 m_vec_separation = separation(neighbors);
-	void updateVelocity(m_vec_cohesion, m_vec_alignment, m_vec_separation);
+	void updateVelocity();
 	void updatePosition()
 };
 

@@ -6,11 +6,11 @@ public:
 	int m_popSize;
 	std::vector<Bird> m_birdsVec;
 	std::vector<vec2> m_nextPos;
-	void create_population();
-	void calculate_positions();
-	void add_agent();
-	void destroy_agent();  // Any ideas?? Destroy by position or index?
-	void move_agents();
+	void createPopulation();
+	void calculatePositions();
+	void addAgent();
+	void destroyAgent();  // Any ideas?? Destroy by position or index?
+	void moveAgents();
 	vec2 random(float min, float max);
 
 public:

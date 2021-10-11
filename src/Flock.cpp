@@ -10,10 +10,10 @@ Flock::Flock(int m_popSize) {
 	std::vector<Bird> m_birdsVec(m_popSize);
 	std::vector<vec2> m_nextPos(m_popSize);
 
-	create_population();
+	createPopulation();
 };
 
-void Flock::create_population() {
+void Flock::createPopulation() {
 	for (int i = 0; i < m_popSize; ++i)
 	{
 		vec2 position = vec2(5, 10);  //random(0, 100);
@@ -24,7 +24,7 @@ void Flock::create_population() {
 	}
 };
 
-void Flock::add_agent() {
+void Flock::addAgent() {
 	vec2 position = vec2(5, 10);  //random(0, 100);
 	vec2 velocity = vec2(-2, 1);  //random(0, 5);
 	Bird bird = Bird(position, velocity);
