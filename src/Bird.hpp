@@ -12,17 +12,17 @@ private:
 	vec2 nextVelocity; // A copier dans velocity
 	double bodySize = 1;
 	double viewAngle;
-	double COHESION_RANGE;
-	double NEIGHBOR_RANGE;
-	double SEPARATION_RANGE;
-	double ALIGNMENT_RELAXATION;
-	double COHESION_RELAXATION;
+	//double COHESION_RANGE;
+	//double NEIGHBOR_RANGE;
+	//double SEPARATION_RANGE;
+	//double ALIGNMENT_RELAXATION;
+	//double COHESION_RELAXATION;
 
-	std::vector<Bird> neighbors;
+	std::vector<Bird> m_neighbors;
 
 public:
 	Bird(); // Constructeur avec argument par défaut
-	Bird(vec2 position, vec2 velocity);
+	Bird(const vec2& position, const vec2& velocity);
 	~Bird(); // Destructeur
 
 public:
@@ -30,8 +30,15 @@ public:
 	vec2 getVelocity();
 
 	void computeNeighbors();
-	void cohesion(std::vector<Bird> neighbors);
-	void alignment(std::vector<Bird> neighbors);
-	void separation(std::vector<Bird> neighbors);
+	vec2 cohesion(const std::vector<Bird>& neighbors);
+	vec2 alignment(std::vector<Bird> neighbors);
+	vec2 separation(std::vector<Bird> neighbors);
 	void updateVelocity();
+
+	vec2 calculateDistance();
+
+	vec2 computeAgentsBarycenter(const std::vector<Bird> &neighbors);
+	vec2 computeBarycenter(const std::vector<vec2> &points);
+
+	vec2 getCoordinatesArray(const std::vector<Bird>& neighbors);
 };
