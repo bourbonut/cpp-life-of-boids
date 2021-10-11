@@ -7,6 +7,9 @@
 #include <iostream>
 #include <vector>
 #include "myMath/Vec2.hpp"
+#include <chrono>
+#include <string>
+using namespace std::chrono;
 
 //using Vec2 = std::array<float, 2>;
 using vec3 = std::array<float, 3>;
@@ -168,11 +171,11 @@ int main() {
         p = points::Point{ get_pos(v), Vec2{} };
     }
 
-
-    // global loop
-    float t = 0; // variable pour faire une rotation du triangles
-    while (!glfwWindowShouldClose(window)) {
-        t += 1.;
+  // global loop
+  float t = 0; // variable pour faire une rotation du triangles
+  while (!glfwWindowShouldClose(window)) {
+    t += 1.;
+    auto start = high_resolution_clock::now(); // stat le choron
 
         int width{}, height{};
         glfwGetFramebufferSize(window, &width, &height);
@@ -254,8 +257,11 @@ int main() {
 
         }
 
-        // Measure FPS
-        glfwSetWindowTitle(window, "FPS: to be defined");
+    // Measure FPS
+    glfwSetWindowTitle(window, "FPS: to be defined");
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    std::cout << "FPS is : " << 1/(duration.count() * 10e-6) << " seconds. " << std::endl;
 
         glfwSwapBuffers(window);
         glfwPollEvents();
