@@ -1,10 +1,13 @@
 #pragma once
 
+#include "myMath/Vec2.hpp"
+#include <vector>
+
 class Bird {
 private:
-	vec2 m_position;
-	vec2 m_velocity;
-	vec2 m_nextVelocity; // A copier dans velocity
+	Vec2 m_position;
+	Vec2 m_velocity;
+	Vec2 m_nextVelocity; // A copier dans velocity
 	double m_bodySize = 1;
 	double m_viewAngle;
 	double m_COHESION_RANGE;
@@ -16,17 +19,26 @@ private:
 	std::vector<Bird> m_neighbors;
 
 public:
-	Bird(); // Constructeur avec argument par défaut
-	Bird(vec2 m_position, vec2 m_velocity);
-	~Bird(); // Destructeur
+	Bird() {} // Constructeur avec argument par défaut
+	Bird(Vec2 m_position, Vec2 m_velocity) {}
+	~Bird() {} // Destructeur
 
 public:
-	vec2 getPosition();
-	vec2 getVelocity();
+	Vec2 getPosition();
+	Vec2 getVelocity();
 
 	std::vector<Bird> computeNeighbors();
-	void updateVelocity();
-	void updatePosition()
+	void updateVelocity(const std::vector<Bird>& neighbors);
+	void updatePosition();
+	Vec2 cohesion(const std::vector<Bird>& neighbors) {
+		return {};
+	}
+	Vec2 alignment(const std::vector<Bird>& neighbors) {
+		return {};
+	}
+	Vec2 separation(const std::vector<Bird>& neighbors) {
+		return {};
+	}
 };
 
 

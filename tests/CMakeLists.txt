@@ -17,7 +17,7 @@ gtest_discover_tests(first_gtest) # helps to split one ctest executable into mul
 
 
 add_executable(test_math test_math.cpp)
-target_link_libraries(test_math mymath GTest::GTest)
+target_link_libraries(test_math myMath GTest::GTest)
 target_include_directories(test_math PUBLIC ${CMAKE_SOURCE_DIR}/src)
 # add_test(NAME AllMysqrtTests COMMAND mysqrt_tests)
 gtest_discover_tests(test_math) # helps to split one ctest executable into multiple google tests
