@@ -91,3 +91,5 @@ Vec2 Bird::getVelocity() const {
 	return vel;
 }
 
+	return result;
+}
