@@ -17,6 +17,7 @@ public:
     Vec2 operator-(const Vec2 &other) const; // substract vectors
     Vec2 operator*(const Vec2 &other); // multiply vectors term by term
     Vec2 operator*(const float &other); // scale the vector
+    Vec2 operator/(const float &other); // scale the vector
     Vec2& operator=(const Vec2 &other); // assign vector
     float dot(Vec2 other); // return the scalar product
     float norm() const; // return the norm of the vector

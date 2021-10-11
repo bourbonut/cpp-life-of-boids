@@ -1,19 +1,20 @@
+#include "myMath/Vec2.hpp"
 
 namespace points {
-struct Point {
-  Vec2 position;
-  Vec2 velocity;
-};
+    struct Point {
+        Vec2 position;
+        Vec2 velocity;
+    };
 
-mat3x3 vertex_transform_2d(float width, float height) {
-  return mat3x3{{{{2.f / width, 0.f, 0.f}}, {{0.f, -2.f / height, 0.f}}, {{-1.f, 1.f, 1.f}}}};
-}
+    mat3x3 vertex_transform_2d(float width, float height) {
+        return mat3x3{ {{{2.f / width, 0.f, 0.f}}, {{0.f, -2.f / height, 0.f}}, {{-1.f, 1.f, 1.f}}} };
+    }
 
-// Shader sources
-static const char* const vertex_shader_text = R"#(
+    // Shader sources
+    static const char* const vertex_shader_text = R"#(
     #version 330 core
-    layout (location = 0) in Vec2 position;
-    layout (location = 1) in Vec2 velocity;
+    layout (location = 0) in vec2 position;
+    layout (location = 1) in vec2 velocity;
 
     uniform mat3 transform;
     uniform float pointSize;
@@ -41,7 +42,7 @@ static const char* const vertex_shader_text = R"#(
         gl_Position = vec4(transform * vec3(position, 1.0), 1.0);
     })#";
 
-static const char* const fragment_shader_text = R"#(
+    static const char* const fragment_shader_text = R"#(
     #version 330 core
     out vec4 frag_colour;
 
