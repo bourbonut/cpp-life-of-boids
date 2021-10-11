@@ -14,10 +14,10 @@ namespace {
 	}*/
 
 	TEST(Vec2, Methods) {
-		vec2 a = vec2(4., 3.);
-		vec2 b = vec2(0., 1.);
+		Vec2 a = Vec2(4., 3.);
+		Vec2 b = Vec2(0., 1.);
 		ASSERT_NEAR(a.norm(), 5., 1e-3) << "Norm";
-		// ASSERT_EQ(a.normalize(), vec2(0.8, 0.6)) << "Normalized vector";
+		// ASSERT_EQ(a.normalize(), Vec2(0.8, 0.6)) << "Normalized vector";
 		ASSERT_NEAR(a.angle(), 0.644, 1e-3) << "angle";
 		ASSERT_NEAR(a.anglebt(b), 0.927, 1e-3) << "anglebt";
 		ASSERT_NEAR(a.dot(b), 3., 1e-3) << "dot";
@@ -26,12 +26,12 @@ namespace {
 	}
 
 	TEST(Functions, All) {
-		vec2 a = vec2(4., 3.);
-		vec2 b = vec2(0., 1.);
+		Vec2 a = Vec2(4., 3.);
+		Vec2 b = Vec2(0., 1.);
 		ASSERT_NEAR(distance(a, b), 4.472, 1e-3) << "Distance";
-		/*std::vector<vec2> vecs;
+		/*std::vector<Vec2> vecs;
 		vecs.push_back(a);
 		vecs.push_back(b);
-		ASSERT_EQ(barycenter(vecs), vec2(2., 2.)) << "Barycenter";*/
+		ASSERT_EQ(barycenter(vecs), Vec2(2., 2.)) << "Barycenter";*/
 	}
 }

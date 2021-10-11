@@ -1,26 +1,26 @@
 #pragma once
 
-class vec2 {
+class Vec2 {
 private:
-    double _x;
-    double _y;
+    double m_x;
+    double m_y;
 
 public:
-    vec2();
-    vec2(double, double);
+    Vec2();
+    Vec2(float, float);
 
 public:
-    double x(); // return the x value
-    double y(); // return the y value
-    vec2 operator+(vec2 other); // add vectors
-    vec2 operator-(vec2 other); // substract vectors
-    vec2 operator*(vec2 other); // multiply vectors term by term
-    vec2 operator*(double other); // scale the vector
-    vec2& operator=(vec2& other); // assign vector
-    double dot(vec2 other); // return the scalar product
-    double norm(); // return the norm of the vector
-    vec2 normalize(); // return the current vector normalized
-    double angle(); // return the angle between the current vector and `vec2(1, 0)`
-    double anglebt(vec2 other); // return the angle between the current vector and an other vector
+    float x(); // return the x value
+    float y(); // return the y value
+    Vec2 operator+(Vec2 other); // add vectors
+    Vec2 operator-(Vec2 other); // substract vectors
+    Vec2 operator*(Vec2 other); // multiply vectors term by term
+    Vec2 operator*(float other); // scale the vector
+    Vec2& operator=(Vec2& other); // assign vector
+    float dot(Vec2 other); // return the scalar product
+    float norm(); // return the norm of the vector
+    Vec2 normalize(); // return the current vector normalized
+    float angle(); // return the angle between the current vector and `Vec2(1, 0)`
+    float anglebt(Vec2 other); // return the angle between the current vector and an other vector
     void print(); // display the vector in shell
 };

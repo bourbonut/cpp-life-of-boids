@@ -2,72 +2,72 @@
 #include <iostream>
 #include "vec2.hpp"
 
-vec2::vec2(){
-  _x = 0.;
-  _y = 0.;
+Vec2::Vec2(){
+  m_x = 0.;
+  m_y = 0.;
 }
 
-vec2::vec2(double x, double y){
-  _x = x;
-  _y = y;
+Vec2::Vec2(float x, float y){
+  m_x = x;
+  m_y = y;
 }
 
-vec2& vec2::operator=(vec2& other)
+Vec2& Vec2::operator=(Vec2& other)
 {
-    _x = other.x();
-    _y = other.y();
+    m_x = other.x();
+    m_y = other.y();
     return *this;
 }
 
-vec2 vec2::operator+(vec2 other)
+Vec2 Vec2::operator+(Vec2 other)
 {
-    return vec2(_x + other.x(), _y + other.y());
+    return Vec2(m_x + other.x(), m_y + other.y());
 }
 
-vec2 vec2::operator-(vec2 other)
+Vec2 Vec2::operator-(Vec2 other)
 {
-    return vec2(_x - other.x(), _y - other.y());
+    return Vec2(m_x - other.x(), m_y - other.y());
 }
 
-vec2 vec2::operator*(vec2 other)
+Vec2 Vec2::operator*(Vec2 other)
 {
-   return vec2(_x * other.x(), _y * other.y());
+   return Vec2(m_x * other.x(), m_y * other.y());
 }
 
-vec2 vec2::operator*(double other)
+Vec2 Vec2::operator*(float other)
 {
-    return vec2(_x * other, _y * other);
+    return Vec2(m_x * other, m_y * other);
 }
 
-double vec2::x() {
-    return _x;
+float Vec2::x() {
+    return m_x;
 }
 
-double vec2::y() {
-    return _y;
+float Vec2::y() {
+    return m_y;
 }
 
-double vec2::dot(vec2 other){
-  return _x * other.x() + _y * other.y();
+float Vec2::dot(Vec2 other){
+  return m_x * other.x() + m_y * other.y();
 }
 
-double vec2::norm(){
-  return std::sqrt(_x*_x + _y*_y);
+float Vec2::norm(){
+  return std::sqrt(m_x*m_x + m_y*m_y);
 }
 
-vec2 vec2::normalize(){
-  double norm = this->norm();
-  return vec2(_x / norm, _y / norm);
+Vec2 Vec2::normalize(){
+  float norm = this->norm();
+  return Vec2(m_x / norm, m_y / norm);
 }
 
-double vec2::angle(){
-  return std::acos(_x/this->norm());
+float Vec2::angle(){
+  return std::acos(m_x/this->norm());
 }
 
-double vec2::anglebt(vec2 other){
+float Vec2::anglebt(Vec2 other){
   return acos(this->dot(other) / (this->norm() * other.norm()));
 }
 
-void vec2::print(){
-  std::cout << "vec2(" << _x << ", " << _y << ")" << std::endl;
+void Vec2::print(){
+  std::cout << "Vec2(" << m_x << ", " << m_y << ")" << std::endl;
 }

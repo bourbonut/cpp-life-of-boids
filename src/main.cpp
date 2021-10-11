@@ -135,9 +135,9 @@ int main() {
   Buffer_bind(lines_buffer, GL_ARRAY_BUFFER);
   ShaderProgram_activate(lines_shaderProgram);
 
-  const GLint transform_location2 = ShaderProgram_getUniformLocation(points_shaderProgram, "transform");
-  const GLint vpos_location2 = ShaderProgram_getAttribLocation(triangle_shaderProgram, "vPos");
-  const GLint vcol_location2 = ShaderProgram_getAttribLocation(triangle_shaderProgram, "vCol");
+  const GLint transform_location2 = ShaderProgram_getUniformLocation(lines_shaderProgram, "transform");
+  const GLint vpos_location2 = ShaderProgram_getAttribLocation(lines_shaderProgram, "vPos");
+  const GLint vcol_location2 = ShaderProgram_getAttribLocation(lines_shaderProgram, "vCol");
 
   glVertexAttribPointer(
       vpos_location2, 2, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, pos));
@@ -227,14 +227,30 @@ int main() {
       glUniformMatrix3fv(transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
       glBindVertexArray(lines_vertexArray.vertex_array);
 
-      std::vector<triangle::Vertex> vertex_data;
+      /*std::vector<triangle::Vertex> vertex_data;
       vertex_data.push_back(triangle::Vertex{{0, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
       vertex_data.push_back(triangle::Vertex{{static_cast<float>(width), static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
       vertex_data.push_back(triangle::Vertex{{static_cast<float>(width) / 2, 0}, {1.0, 1.0, 1.0}});
-      vertex_data.push_back(triangle::Vertex{{static_cast<float>(width) / 2, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});
+      vertex_data.push_back(triangle::Vertex{{static_cast<float>(width) / 2, static_cast<float>(height) / 2}, {1.0, 1.0, 1.0}});*/
 
+      std::vector<triangle::Vertex> vertex_data;
+
+      auto h = static_cast<float>(height);
+      auto w = static_cast<float>(width);
+
+
+      vertex_data.push_back(triangle::Vertex{ {w, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex A |
+      vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B | Triangle ABC
+      vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C | 
+      vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B   |
+      vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C   | Triangle BCD
+      vertex_data.push_back(triangle::Vertex{ {0, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex D   |
       glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
-      glDrawArrays(GL_LINES, 0, vertex_data.size());
+      glDrawArrays(GL_TRIANGLES, 0, vertex_data.size());
+
+
+      /*glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
+      glDrawArrays(GL_LINES, 0, vertex_data.size());*/
     }
 
     // Measure FPS
