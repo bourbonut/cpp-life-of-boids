@@ -9,8 +9,13 @@ add_subdirectory(myMath)
 #add_executable(MathPart math_main.cpp)
 #target_link_libraries(MathPart PUBLIC myMath)
 
+<<<<<<< HEAD
 add_executable(life-of-boids main.cpp "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp")
 target_link_libraries(life-of-boids PUBLIC libGLX myMath)
 
 add_executable(main_opencv main_opencv.cpp)
 target_link_libraries(main_opencv PRIVATE opencv::opencv)
+=======
+add_executable(main_opencv main_opencv.cpp Bird.cpp Bird.hpp)
+target_link_libraries(main_opencv PUBLIC opencv::opencv)
+>>>>>>> dev-issue5-cohesionLaw
