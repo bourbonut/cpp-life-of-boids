@@ -39,7 +39,7 @@ vec2 Bird::computeAgentsBarycenter(const std::vector<Bird>& neighbors) {
 	return computeBarycenter(points);
 }
 
-vec2 Bird::getCoordinatesArray(const std::vector<Bird>& neighbors) {
+std::vector<vec2> Bird::getCoordinatesArray(const std::vector<Bird>& neighbors) {
 	//We create a new array with a size of the number of neighbors
 	std::vector<vec2> points(neighbors.size());
 
