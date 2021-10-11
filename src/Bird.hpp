@@ -19,26 +19,21 @@ private:
 	std::vector<Bird> m_neighbors;
 
 public:
-	Bird() {} // Constructeur avec argument par défaut
-	Bird(Vec2 m_position, Vec2 m_velocity) {}
-	~Bird() {} // Destructeur
+	Bird(); // Constructeur avec argument par dï¿½faut
+	Bird(Vec2 &position, Vec2 &velocity);
+	~Bird(); // Destructeur
 
 public:
-	Vec2 getPosition();
-	Vec2 getVelocity();
+	Vec2 getPosition() const;
+	Vec2 getVelocity() const;
 
-	std::vector<Bird> computeNeighbors();
+	//std::vector<Bird> computeNeighbors();
 	void updateVelocity(const std::vector<Bird>& neighbors);
 	void updatePosition();
-	Vec2 cohesion(const std::vector<Bird>& neighbors) {
-		return {};
-	}
-	Vec2 alignment(const std::vector<Bird>& neighbors) {
-		return {};
-	}
-	Vec2 separation(const std::vector<Bird>& neighbors) {
-		return {};
-	}
+	Vec2 cohesion(const std::vector<Bird>& neighbors);
+	Vec2 alignment(const std::vector<Bird>& neighbors) { return {}; };
+	Vec2 separation(const std::vector<Bird>& neighbors) { return {}; };
+	std::vector<Vec2> getCoordinatesArray(const std::vector<Bird>& neighbors);
+	//Vec2 computeBarycenter(const std::vector<Vec2> &points);
+	Vec2 computeAgentsBarycenter(const std::vector<Bird> &neighbors);
 };
-
-
