@@ -39,3 +39,6 @@ public:
 };
 
 
+
+	std::vector<Vec2> getCoordinatesArray(const std::vector<Bird>& neighbors);
+};
