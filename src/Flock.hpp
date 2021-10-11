@@ -16,7 +16,6 @@ public:
 	void addAgent();
 	void destroyAgent();  // Any ideas?? Destroy by position or index?
 	void moveAgents();
-	Vec2 random(float min, float max);
 
 public:
 	Flock(); // Constructeur avec argument par défaut

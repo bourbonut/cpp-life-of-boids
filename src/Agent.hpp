@@ -1,9 +1,11 @@
 #pragma once
 
 #include "myMath/Vec2.hpp"
-#include <vector>
+#include "vector"
+// #include "Bird.hpp"
+// #include "myMath/utils.hpp"
 
-class Bird {
+Bird{
 private:
 	Vec2 m_position;
 	Vec2 m_velocity;
@@ -40,5 +42,3 @@ public:
 		return {};
 	}
 };
-
-
