@@ -43,25 +43,38 @@ static void error_callback(int error, const char* description) {
   * @param action action taken (press, unpress, repeat...)
   */
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
-  // If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
-  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-    // Sets the window into "closing mode"
-    glfwSetWindowShouldClose(window, GLFW_TRUE);
-  }
-  if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-    std::puts("Export current display");
-    char export_filename[] = "export.png";
-    saveImage(export_filename, window);
-  }
-  if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-      std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-      Flock population = Flock(2);
-       //population.add_agent();
-  }
+    // If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        // Sets the window into "closing mode"
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
+    if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+        std::puts("Export current display");
+        char export_filename[] = "export.png";
+        saveImage(export_filename, window);
+    }
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+        std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
+        Flock population = Flock(2);
+        population.addAgent();
+    }
+}
+
+static void cursor_position_callback(GLFWwindow * window, double xpos, double ypos) {
+
+    glfwSetCursorPosCallback(GLFWwindow * window, cursor_position_callback);
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        // Sets the window into "closing mode"
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
+
 
 
 
 }
+
+glfwSetCursorPosCallback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
+
 
 int main() {
     glfwSetErrorCallback(error_callback);
@@ -184,11 +197,11 @@ int main() {
   float t = 0; // variable pour faire une rotation du triangles
   while (!glfwWindowShouldClose(window)) {
     t += 1.;
-    auto start = high_resolution_clock::now(); // stat le choron
+    auto start = high_resolution_clock::now(); // start le chrono
 
-        int width{}, height{};
-        glfwGetFramebufferSize(window, &width, &height);
-        const float ratio = (float)width / (float)height;
+    int width{}, height{};
+    glfwGetFramebufferSize(window, &width, &height);
+    const float ratio = (float)width / (float)height;
 
       float v = 0;
       for (auto& p : points) {
