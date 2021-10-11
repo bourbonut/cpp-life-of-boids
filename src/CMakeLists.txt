@@ -9,6 +9,9 @@ add_subdirectory(myMath)
 #add_executable(MathPart math_main.cpp)
 #target_link_libraries(MathPart PUBLIC myMath)
 
+add_executable(GraphicsTest graphics_main.cpp "graphics.hpp" "graphics.cpp")
+target_link_libraries(GraphicsTest PUBLIC libGLX myMath)
+
 add_executable(life-of-boids main.cpp "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp")
 target_link_libraries(life-of-boids PUBLIC libGLX myMath)
 

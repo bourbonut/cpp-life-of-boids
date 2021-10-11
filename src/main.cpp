@@ -18,6 +18,10 @@ using mat4x4 = std::array<vec4, 4>;
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
 #include "myMath/Vec2.hpp"
+#include "graphics.hpp"
+
+using mat2x3 = std::array<Vec2, 3>;
+
 
 /**
   * Prints the error number and description
@@ -101,7 +105,7 @@ int main() {
     glEnableVertexAttribArray(vpos_location);
     glEnableVertexAttribArray(vcol_location);
 
-
+    
     // point part
     // new
     ShaderProgram points_shaderProgram = ShaderProgram_new(points::vertex_shader_text, points::fragment_shader_text);
@@ -127,7 +131,7 @@ int main() {
     glEnableVertexAttribArray(velocity_location);
 
     glEnable(GL_PROGRAM_POINT_SIZE);
-
+    
     // lines
 
     // new
@@ -155,7 +159,7 @@ int main() {
 
     int width{}, height{};
     glfwGetFramebufferSize(window, &width, &height);
-
+    
     std::vector<points::Point> points(100);
     auto get_pos = [=](float t) {
         return Vec2{ (float)(width * (0.5 + 0.4 * cos(t))), (float)(height * (0.5 + 0.4 * sin(t))) };
@@ -167,7 +171,7 @@ int main() {
         p = points::Point{ get_pos(v), Vec2{} };
     }
 
-
+    
     // global loop
     float t = 0; // variable pour faire une rotation du triangles
     while (!glfwWindowShouldClose(window)) {
@@ -194,7 +198,7 @@ int main() {
             glBindVertexArray(triangle_vertexArray.vertex_array);
             glDrawArrays(GL_TRIANGLES, 0, 3);
         }
-
+        
         {  // points
             mat3x3 transform = points::vertex_transform_2d(width, height);
             float pointSize = 3.0;
@@ -204,9 +208,9 @@ int main() {
             for (auto& p : points) {
                 v += 1.0;
                 p.velocity = Vec2{ 20 * cos(t / 10) * (cos(v) - cos(v + 1)), 20 * cos(t / 10) * (sin(v) - sin(v + 1)) };
-                p.position = p.position + p.velocity;
-            }
-
+                p.position = (p.position + p.velocity);
+            } 
+            // Les positions sont OK
             VertexArray_bind(points_vertexArray);
             Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
             ShaderProgram_activate(points_shaderProgram);
@@ -219,8 +223,9 @@ int main() {
             glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STREAM_DRAW);
             glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(points::Point), points.data(), GL_STREAM_DRAW);
             glDrawArrays(GL_POINTS, 0, points.size());
+            // Le rendu n'est pas OK
         }
-
+        
         {  // lines
             mat3x3 transform = points::vertex_transform_2d(width, height);
 
@@ -236,17 +241,31 @@ int main() {
             auto h = static_cast<float>(height);
             auto w = static_cast<float>(width);
 
-            vertex_data.push_back(triangle::Vertex{ {w, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex A |
-            vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B | Triangle ABC
-            vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C | 
-            vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B   |
-            vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C   | Triangle BCD
-            vertex_data.push_back(triangle::Vertex{ {0, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex D   |
+
+            float v = 0;
+            for (auto& p : points) {
+                v += 1.0;
+                p.velocity = Vec2{ 20 * cos(t / 10) * (cos(v) - cos(v + 1)), 20 * cos(t / 10) * (sin(v) - sin(v + 1)) };
+                p.position = (p.position + p.velocity);
+                
+                mat2x3 result = drawAgent(p.position, p.velocity, h, w);
+
+                for (int i = 0; i < result.size(); ++i) {
+                    vertex_data.push_back(triangle::Vertex{ {result[i].x(), result[i].y()}, {0.0, 1.0, 1.0} }); // Vertex A |
+                }
+            }
+
+            vertex_data.push_back(triangle::Vertex{ {480, h / 2 - 20}, {0.0, 1.0, 1.0} }); // Vertex A |
+            vertex_data.push_back(triangle::Vertex{ {500, h / 2 + 20}, {0.0, 1.0, 1.0} }); // Vertex B | Triangle ABC
+            vertex_data.push_back(triangle::Vertex{ {520, h / 2 - 20}, {0.0, 1.0, 1.0} }); // Vertex C | 
+            //vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B   |
+            //vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C   | Triangle BCD
+            //vertex_data.push_back(triangle::Vertex{ {0, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex D   |
             glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
             glDrawArrays(GL_TRIANGLES, 0, vertex_data.size());
 
         }
-
+        
         // Measure FPS
         glfwSetWindowTitle(window, "FPS: to be defined");
 
