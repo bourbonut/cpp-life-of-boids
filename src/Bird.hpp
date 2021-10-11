@@ -32,7 +32,7 @@ public:
 	void updatePosition();
 	Vec2 cohesion(const std::vector<Bird>& neighbors);
 	Vec2 alignment(const std::vector<Bird>& neighbors) { return {}; };
-	Vec2 separation(const std::vector<Bird>& neighbors) { return {}; };
+	Vec2 separation(const std::vector<Bird>& neighbors);
 	std::vector<Vec2> getCoordinatesArray(const std::vector<Bird>& neighbors);
 	//Vec2 computeBarycenter(const std::vector<Vec2> &points);
 	Vec2 computeAgentsBarycenter(const std::vector<Bird> &neighbors);

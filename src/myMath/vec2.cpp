@@ -44,6 +44,11 @@ Vec2 Vec2::operator*(const float &other)
     return Vec2(m_x * other, m_y * other);
 }
 
+Vec2 Vec2::operator/(const float& other)
+{
+    return Vec2(m_x / other, m_y / other);
+}
+
 float Vec2::x() const{
     return m_x;
 }
