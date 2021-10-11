@@ -8,7 +8,7 @@
 pip3 install conan
 ```
 
-### Configure conan
+### Configure conan//
 * For GCC
   ```
   conan profile new default --detect
