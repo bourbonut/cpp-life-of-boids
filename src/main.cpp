@@ -9,6 +9,7 @@
 #include "myMath/Vec2.hpp"
 #include <chrono>
 #include <string>
+#include "Flock.hpp"
 using namespace std::chrono;
 
 //using Vec2 = std::array<float, 2>;
@@ -54,9 +55,12 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
   }
   if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
       std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-      // Flock population = Flock(2);
+      Flock population = Flock(2);
        //population.add_agent();
   }
+
+
+
 }
 
 int main() {
