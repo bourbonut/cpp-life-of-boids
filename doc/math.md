@@ -5,8 +5,8 @@
 ### Attributes
 ```cpp
 private:
-    double _x; // x coordinate
-    double _y; // y coordinate
+    float m_x; // x coordinate
+    float m_y; // y coordinate
 ```
 
 ### Initialization
@@ -20,19 +20,35 @@ public:
 
 ```cpp
 public:
-    double x(); // return the x value
-    double y(); // return the y value
-    vec2 operator+(vec2 other); // add vectors
-    vec2 operator-(vec2 other); // substract vectors
-    vec2 operator*(vec2 other); // multiply vectors term by term
-    vec2 operator*(double other); // scale the vector
-    vec2& operator=(vec2& other); // assign vector
-    double dot(vec2 other); // return the scalar product
-    double norm(); // return the norm of the vector
-    vec2 normalize(); // return the current vector normalized
-    double angle(); // return the angle between the current vector and `vec2(1, 0)`
-    double anglebt(vec2 other); // return the angle between the current vector and an other vector
-    void print(); // display the vector in shell
+    float x(); // return the x value
+    float y(); // return the y value
+    Vec2 operator+(const Vec2& other); // add vectors
+    Vec2& operator+=(const Vec2& other); // add vectors
+
+    Vec2 operator-(const Vec2& other); // substract vectors
+    Vec2& operator-=(const Vec2& other); // substract vectors
+
+    Vec2 operator*(const Vec2& other); // multiply vectors term by term
+    Vec2 operator*(float other); // scale the vector
+
+    Vec2 operator/(const Vec2& other); // divide vectors term by term
+    Vec2 operator/(float other); // scale the vector
+
+    Vec2& operator*=(const Vec2& other); // multiply vectors term by term
+    Vec2& operator*=(float other); // scale the vector
+
+    Vec2& operator/=(const Vec2& other); // divide vectors term by term
+    Vec2& operator/=(float other); // scale the vector
+
+    Vec2& operator=(Vec2& other); // assign vector
+    bool operator==(const Vec2& other); // compare current vector with vector
+    float dot(const Vec2& other); // return the scalar product
+    float norm(); // return the norm of the vector
+    Vec2 normalize(); // return the current vector normalized
+    float angle(); // return the angle between the current vector and `Vec2(1, 0)`
+    float angle(Vec2& other); // return the angle between the current vector and an other vector
+    Vec2 rotate(float angle); // rotate the vector anti-clockwise
+    std::string string(); // return a string useful when you need to display the vector
 ```
 
 ## Functions
@@ -45,4 +61,10 @@ double distance(vec2 a, vec2 b) // return the distance between `a` and `b`
 ### barycenter
 ```cpp
 vec2 barycenter(std::vector<vec2> vecs) // return a `vec2` which has the coordinates of the barycenter of all `vec2`
+```
+
+### radians and degrees
+```cpp
+float radians(float angle); // convert the degree angle to radian angle
+float degrees(float angle); // convert the radian angle to degree angle
 ```
