@@ -45,7 +45,7 @@ inline mat4x4 mat4x4_ortho(float l, float r, float b, float t, float n, float f)
 }
 
 struct Vertex {
-  vec2 pos;
+  Vec2 pos;
   vec3 col;
 };
 
@@ -60,7 +60,7 @@ static const char* const vertex_shader_text
     = "#version 330\n"
       "uniform mat4 MVP;\n"
       "in vec3 vCol;\n"
-      "in vec2 vPos;\n"
+      "in Vec2 vPos;\n"
       "out vec3 color;\n"
       "void main()\n"
       "{\n"

@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 
-using vec2 = std::array<float, 2>;
+using Vec2 = std::array<float, 2>;
 using vec3 = std::array<float, 3>;
 using vec4 = std::array<float, 4>;
 using mat3x3 = std::array<vec3, 3>;
@@ -154,13 +154,13 @@ int main() {
 
   std::vector<points::Point> points(1'000);
   auto get_pos = [=](float t) {
-    return vec2{(float)(width * (0.5 + 0.4 * cos(t))), (float)(height * (0.5 + 0.4 * sin(t)))};
+    return Vec2{(float)(width * (0.5 + 0.4 * cos(t))), (float)(height * (0.5 + 0.4 * sin(t)))};
   };
 
   float v = 0;
   for (auto& p : points) {
     v += 1.0;
-    p = points::Point{get_pos(v), vec2{}};
+    p = points::Point{get_pos(v), Vec2{}};
   }
 
   // global loop
@@ -198,7 +198,7 @@ int main() {
       float v = 0;
       for (auto& p : points) {
         v += 1.0;
-        p.velocity = vec2{20*cos(t/10) * (cos(v)-cos(v+1)), 20*cos(t/10) * (sin(v)-sin(v+1))};
+        p.velocity = Vec2{20*cos(t/10) * (cos(v)-cos(v+1)), 20*cos(t/10) * (sin(v)-sin(v+1))};
         p.position[0] += p.velocity[0];
         p.position[1] += p.velocity[1];
       }

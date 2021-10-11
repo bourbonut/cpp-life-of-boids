@@ -1,4 +1,4 @@
-#include "vec2.hpp"
+#include "Vec2.hpp"
 #include <vector>
 
 float distance(Vec2 a, Vec2 b) {

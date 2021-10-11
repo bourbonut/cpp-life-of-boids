@@ -1,6 +1,6 @@
 #include <cmath>
 #include <iostream>
-#include "vec2.hpp"
+#include "Vec2.hpp"
 
 Vec2::Vec2(){
   m_x = 0.;
