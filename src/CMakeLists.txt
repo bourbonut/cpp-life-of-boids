@@ -6,8 +6,8 @@ add_library(libGLX glx.cpp glx.hpp "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp"
 target_link_libraries(libGLX PUBLIC glfw::glfw glad::glad opencv::opencv)
 
 add_subdirectory(myMath)
-add_executable(MathPart math_main.cpp)
-target_link_libraries(MathPart PUBLIC myMath)
+#add_executable(MathPart math_main.cpp)
+#target_link_libraries(MathPart PUBLIC myMath)
 
 add_executable(life-of-boids main.cpp "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp")
 target_link_libraries(life-of-boids PUBLIC libGLX myMath)

@@ -12,38 +12,43 @@ Vec2::Vec2(float x, float y){
   m_y = y;
 }
 
-Vec2& Vec2::operator=(Vec2& other)
+Vec2::Vec2(const Vec2& other) {
+    m_x = other.x();
+    m_y = other.y();
+}
+
+Vec2& Vec2::operator=(const Vec2& other)
 {
     m_x = other.x();
     m_y = other.y();
     return *this;
 }
 
-Vec2 Vec2::operator+(Vec2 other)
+Vec2 Vec2::operator+(const Vec2 &other)
 {
     return Vec2(m_x + other.x(), m_y + other.y());
 }
 
-Vec2 Vec2::operator-(Vec2 other)
+Vec2 Vec2::operator-(const Vec2 &other) const
 {
     return Vec2(m_x - other.x(), m_y - other.y());
 }
 
-Vec2 Vec2::operator*(Vec2 other)
+Vec2 Vec2::operator*(const Vec2 &other)
 {
    return Vec2(m_x * other.x(), m_y * other.y());
 }
 
-Vec2 Vec2::operator*(float other)
+Vec2 Vec2::operator*(const float &other)
 {
     return Vec2(m_x * other, m_y * other);
 }
 
-float Vec2::x() {
+float Vec2::x() const{
     return m_x;
 }
 
-float Vec2::y() {
+float Vec2::y() const{
     return m_y;
 }
 
@@ -51,7 +56,7 @@ float Vec2::dot(Vec2 other){
   return m_x * other.x() + m_y * other.y();
 }
 
-float Vec2::norm(){
+float Vec2::norm() const{
   return std::sqrt(m_x*m_x + m_y*m_y);
 }
 
