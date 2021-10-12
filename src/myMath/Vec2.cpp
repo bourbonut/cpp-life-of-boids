@@ -31,7 +31,7 @@ Vec2 Vec2::operator+(const Vec2& other)
     return Vec2(this->x + other.x, this->y + other.y);
 }
 
-Vec2 Vec2::operator-(const Vec2& other)
+Vec2 Vec2::operator-(const Vec2& other) const
 {
     return Vec2(this->x - other.x, this->y - other.y);
 }

@@ -54,7 +54,7 @@ Vec2 Bird::cohesion(const std::vector<Bird> &neighbors) {
 
 	//We calculate the coordinates of the velocity vector
 	//We want to use barycenter.x, or even barycenter - this.position 
-	Vec2 newVelocity = { barycenter.x() - m_position.x(), barycenter.y() - m_position.y() };
+	Vec2 newVelocity = { barycenter.x - m_position.x, barycenter.y - m_position.y };
 
 	return newVelocity;
 }
@@ -95,8 +95,8 @@ std::vector<Vec2> Bird::getCoordinatesArray(const std::vector<Bird> &neighbors) 
 	
 	for (int i = 0; i < neighbors.size(); ++i) {
 		//filling the array with the coordinates of the position of each agent of the neighborhood
-		float x = (neighbors[i]).getPosition().x();
-		float y = (neighbors[i]).getPosition().y();
+		float x = (neighbors[i]).getPosition().x;
+		float y = (neighbors[i]).getPosition().y;
 		points[i] = Vec2(x, y);		
 		//points[i] = { (((Bird)neighbors[i]).getPosition())[0], (((Bird)neighbors[i]).getPosition())[1] };
 	}

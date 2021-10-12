@@ -15,7 +15,7 @@ public:
     Vec2 operator+(const Vec2& other); // add vectors
     Vec2& operator+=(const Vec2& other); // add vectors
 
-    Vec2 operator-(const Vec2& other); // substract vectors
+    Vec2 operator-(const Vec2& other) const; // substract vectors
     Vec2& operator-=(const Vec2& other); // substract vectors
 
     Vec2 operator*(const Vec2& other); // multiply vectors term by term
