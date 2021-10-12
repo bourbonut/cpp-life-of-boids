@@ -21,6 +21,7 @@ void Flock::createPopulation() {
 		Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 		Bird bird = Bird(position, velocity);
 		m_birdsVec[i] = bird;
+		m_nextPos[i] = position;
 	}
 };
 
@@ -40,4 +41,5 @@ void Flock::addAgent() {
 	Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 	Bird bird = Bird(position, velocity);
 	m_birdsVec.push_back(bird);
+	m_popSize += 1;
 };

@@ -7,7 +7,7 @@ class Bird {
 private:
 	Vec2 m_position;
 	Vec2 m_velocity;
-	Vec2 m_nextVelocity; // A copier dans velocity
+	Vec2 m_nextPosition; // A copier dans velocity
 	double m_bodySize = 1;
 	double m_viewAngle;
 	double m_COHESION_RANGE;
@@ -29,7 +29,8 @@ public:
 
 	const std::vector<Bird> computeNeighbors();
 	void updateVelocity(const std::vector<Bird>& neighbors);
-	void updatePosition();
+	Vec2 computePosition();
+	Vec2 updatePosition();
 	Vec2 cohesion(const std::vector<Bird>& neighbors) {
 		return {};
 	}
