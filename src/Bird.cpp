@@ -5,7 +5,7 @@
 #include "myMath/Vec2.hpp"
 #include "myMath/utils.hpp"
 
-Bird::Bird() {}
+Bird::Bird() = default;
 Bird::Bird(Vec2 &position, Vec2 &velocity){
 	m_position = Vec2(position);
 	m_velocity = Vec2(velocity);
@@ -42,7 +42,7 @@ Vec2 Bird::separation(const std::vector<Bird>& neighbors)
 	float distBetwA = 0, weight = 0;
 
 	//for each neighbor bird, add to a final vector the weigthed input of the neighbor bird
-	for (Bird b : neighbors)
+	for(Bird b : neighbors)
 	{
 		distBetwA = distance(b.getPosition(), m_position);
 		//Get the weight from the inverse of the square, depending on the distance between the two agents
@@ -78,7 +78,7 @@ Vec2 Bird::computeAgentsBarycenter(const std::vector<Bird> &neighbors) {
 std::vector<Vec2> Bird::getCoordinatesArray(const std::vector<Bird> &neighbors) {
 	//We create a new array with a size of the number of neighbors
 	std::vector<Vec2> points(neighbors.size());
-
+	
 	for (int i = 0; i < neighbors.size(); ++i) {
 		//filling the array with the coordinates of the position of each agent of the neighborhood
 		float x = (neighbors[i]).getPosition().x();

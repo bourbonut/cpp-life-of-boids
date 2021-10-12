@@ -19,7 +19,7 @@ private:
 	std::vector<Bird> m_neighbors;
 
 public:
-	Bird(); // Constructeur avec argument par d�faut
+	Bird(); // Constructeur sans arguments
 	Bird(Vec2 &position, Vec2 &velocity);
 	~Bird(); // Destructeur
 

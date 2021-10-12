@@ -23,6 +23,7 @@ void Flock::createPopulation() {
 		m_birdsVec[i] = bird;  // Does it modify the class attribute?
 								// We should be able to add elements to m_birds_vec. Does a "vector" allows that?
 	}
+
 };
 
 void Flock::addAgent() {
