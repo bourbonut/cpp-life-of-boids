@@ -7,7 +7,7 @@
 #include <vector>
 
 
-Flock::Flock(int popSize) : m_popSize{popSize} {
+Flock::Flock(int popSize) : m_popSize{ popSize } {
 	std::vector<Bird> m_birdsVec(m_popSize);
 	std::vector<Vec2> m_nextPos(m_popSize);
 	this->createPopulation();
@@ -43,7 +43,7 @@ void Flock::calculatePositions() {
 	}
 };
 
-void Flock::updatePositions(){
+void Flock::updatePositions() {
 	for (Bird bird : m_birdsVec)
 	{
 		bird.updatePosition();
@@ -52,8 +52,8 @@ void Flock::updatePositions(){
 };
 
 void Flock::addAgent() {
-	Vec2 &&position = Vec2(5, 10);  //random(0, 100);
-	Vec2 &&velocity = Vec2(-2, 1);  //random(0, 5);
+	Vec2&& position = Vec2(5, 10);  //random(0, 100);
+	Vec2&& velocity = Vec2(-2, 1);  //random(0, 5);
 	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
 	// m_nextPos.push_back(position);
 	m_popSize += 1;
@@ -61,8 +61,34 @@ void Flock::addAgent() {
 
 void Flock::destroyAgent(Vec2 position) {
 	auto garbageBirdsVec = std::remove_if(m_birdsVec.begin(), m_birdsVec.end(),
-										  [pos = position](Bird bird) { 
-											// If distance < 1, destroy bird 
-										   return (bird.getPosition() - pos).norm() < 1; });
+		[pos = position](Bird bird) {
+			// If distance < 1, destroy bird 
+			return (bird.getPosition() - pos).norm() < 1; });
 	m_birdsVec.erase(garbageBirdsVec);
+};
+
+std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, const float &angle) {
+	std::vector<Bird> neighbors;
+	neighbors.reserve(100000); //CHANGE THIS TO SMTHING LIKE NUMBER_AGENT*2 OR SMTHNG
+
+	//float angle = myBird.getViewAngle();
+	//float Neighbor.radius = myBird.getRadius();
+
+	//for (int i = 0; i < popsize; ++i)){
+
+	//	if distance(Vec2 Birds, Vec2 Bird[i]) <= Neighbor.radius && degrees(mybird.getVelocity().angle(neighbor)) <= angle{
+	//		{
+
+	//		birds.push_back(Bird{j});
+
+
+
+	//	}
+
+	//	}
+	return neighbors;
+};
+
+void Flock::moveAgents() {
+	//TODO :
 };

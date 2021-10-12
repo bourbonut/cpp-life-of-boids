@@ -6,15 +6,16 @@
 // #include "myMath/utils.hpp"
 
 class Flock {
-
-public:
+private :
 	int m_popSize;
 	std::vector<Bird> m_birdsVec;
 	// std::vector<Vec2> m_nextPos;
+
+public:
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
-	std::vector<Bird> computeNeighbors(Bird bird) { return std::vector<Bird>{}; };
+	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
 	void addAgent();
 	void destroyAgent(Vec2 position);
 	void moveAgents();

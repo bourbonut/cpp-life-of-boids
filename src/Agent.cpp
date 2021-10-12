@@ -23,9 +23,6 @@ void Agent::computePosition() {
 	m_nextPosition = m_position + m_velocity;
 };
 
-void Agent::updatePosition() {
-	m_position = m_nextPosition;
-};
 
 void Agent::updatePosition() {
 	m_position = m_position + m_velocity;

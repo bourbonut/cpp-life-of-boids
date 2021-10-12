@@ -22,7 +22,7 @@ private:
 
 public:
 	Bird(); // Constructeur sans arguments
-	Bird(Vec2 &position, Vec2 &velocity);
+	Bird(const Vec2 &position, const Vec2 &velocity);
 	~Bird(); // Destructeur
 
 public:
