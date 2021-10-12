@@ -5,12 +5,26 @@
 #include "myMath/Vec2.hpp"
 // #include "myMath/utils.hpp"
 
-void Agent::updateVelocity(const std::vector<Bird>& neighbors) {
-	Vec2 vecCohesion = cohesion(neighbors);
-	Vec2 vecAlignment = alignment(neighbors);
-	Vec2 vecSeparation = separation(neighbors);
-	Vec2 vec_displacement = vecCohesion + vecAlignment + vecSeparation;
-	m_velocity = m_velocity + vec_displacement;
+Agent::Agent(Vec2 position, Vec2 velocity) {
+	m_position = position;
+	m_velocity = velocity;
+	m_nextPosition = position;
+};
+
+Vec2 Agent::getPosition() {
+	return m_position; // Do we need it ?
+};
+
+Vec2 Agent::getVelocity() {
+	return m_velocity; // Do we need it?
+};
+
+void Agent::computePosition() {
+	m_nextPosition = m_position + m_velocity;
+};
+
+void Agent::updatePosition() {
+	m_position = m_nextPosition;
 };
 
 void Agent::updatePosition() {

@@ -31,7 +31,7 @@ void Flock::calculatePositions() {
 		// position and use a function similar to updateVelocity. Or, we can add the user 
 		// interaction (like a new bird) directly to computeNeighbors function.
 		const std::vector<Bird> neighbors = bird.computeNeighbors();
-		bird.updateVelocity(neighbors); // Why const problem?
+		bird.updateVelocity(neighbors);
 		bird.computePosition();
 	}
 };
