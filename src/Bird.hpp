@@ -9,12 +9,12 @@ private:
 	Vec2 m_velocity;
 	Vec2 m_nextVelocity; // A copier dans velocity
 	double m_bodySize = 1;
-	double m_viewAngle;
-	double m_COHESION_RANGE;
-	double m_NEIGHBOR_RANGE;
-	double m_SEPARATION_RANGE;
-	double m_ALIGNMENT_RELAXATION;
-	double m_COHESION_RELAXATION;
+	double m_viewAngle = 1;
+	double m_COHESION_RANGE = 1;
+	double m_NEIGHBOR_RANGE = 1;
+	double m_SEPARATION_RANGE = 1;
+	double m_ALIGNMENT_RELAXATION = 1;
+	double m_COHESION_RELAXATION = 1;
 
 	std::vector<Bird> m_neighbors;
 
