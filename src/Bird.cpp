@@ -5,14 +5,14 @@
 #include "myMath/Vec2.hpp"
 #include "myMath/utils.hpp"
 
-Bird::Bird() = default;
-Bird::Bird(Vec2 &position, Vec2 &velocity){
-	m_position = Vec2(position);
-	m_velocity = Vec2(velocity);
-}
+//Bird::Bird() = default;
+//Bird::Bird(Vec2 &position, Vec2 &velocity){
+//	m_position = Vec2(position);
+//	m_velocity = Vec2(velocity);
+//}
 Bird::~Bird(){}
 
-Bird::Bird(Vec2 position, Vec2 velocity) : m_position{ position }, m_velocity{ velocity }, 
+Bird::Bird(const Vec2 &position, const Vec2 &velocity) : m_position{ position }, m_velocity{ velocity }, 
 										   m_nextPosition{ position }, m_nextVelocity{velocity} {};
 
 Bird::Bird() {
@@ -22,11 +22,11 @@ Bird::Bird() {
 	m_nextVelocity = Vec2(1, 1);
 };
 
-Vec2 Bird::getPosition() {
+Vec2 Bird::getPosition() const {
 	return m_position;
 };
 
-Vec2 Bird::getVelocity() {
+Vec2 Bird::getVelocity() const {
 	return m_velocity;
 };
 
@@ -74,15 +74,6 @@ Vec2 Bird::separation(const std::vector<Bird>& neighbors)
 		result = result + (b.getPosition() - m_position) * weight;
 	}
 
-	/*for each (Bird b in neighbors)
-	{
-		distBetwA = distance(b.getPosition(), m_position);
-		//Get the weight from the inverse of the square, depending on the distance between the two agents
-		weight = 1 / ((distBetwA / m_SEPARATION_RANGE) * (distBetwA / m_SEPARATION_RANGE));
-		//Calculates a vector between agent b and this, and mutiplies it by the current weight of agent b
-		result = result + (b.getPosition() - m_position) * weight;
-	}*/
-
 	//divide the actual final vector by the number of neighbor birds to get a final vector pointing to the barycenter needed
 	result = result / neighbors.size();
 
@@ -113,16 +104,3 @@ std::vector<Vec2> Bird::getCoordinatesArray(const std::vector<Bird> &neighbors) 
 	return points;
 }
 
-
-
-Vec2 Bird::getPosition() const { 
-	Vec2 pos = Vec2();
-	pos = m_position;
-	return pos; 
-}
-
-Vec2 Bird::getVelocity() const { 
-	Vec2 vel = Vec2();
-	vel = m_velocity;
-	return vel;
-}
