@@ -5,10 +5,12 @@
 
 class Bird {
 private:
+	// Use an ID attribute?
 	Vec2 m_position;
 	Vec2 m_velocity;
+	Vec2 m_nextVelocity;
 	Vec2 m_nextPosition; // A copier dans velocity
-	double m_bodySize = 1;
+	double m_bodySize { 1 };
 	double m_viewAngle;
 	double m_COHESION_RANGE;
 	double m_NEIGHBOR_RANGE;

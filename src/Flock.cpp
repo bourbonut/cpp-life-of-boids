@@ -11,7 +11,7 @@ Flock::Flock(int m_popSize) {
 	std::vector<Bird> m_birdsVec(m_popSize);
 	std::vector<Vec2> m_nextPos(m_popSize);
 
-	createPopulation();
+	this->createPopulation();
 };
 
 void Flock::createPopulation() {

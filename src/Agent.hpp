@@ -11,6 +11,7 @@ private:
 	Vec2 m_velocity;
 	Vec2 m_nextVelocity; // A copier dans velocity
 	double m_bodySize;
+	double m_viewAngle;
 
 public:
 	Agent() {} // Constructeur avec argument par défaut
