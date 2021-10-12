@@ -2,6 +2,7 @@
 #include "Vec2.hpp"
 #include <vector>
 #include <cmath>
+#include <random>
 
 float distance(const Vec2 &a,const Vec2 &b) {
     return (a - b).norm();
@@ -28,4 +29,12 @@ float degrees(float angle) {
 
 bool isAntiClockwise(Vec2 a, Vec2 b){
   return (a.x * b.y - a.y * b.x >=0);
+}
+
+Vec2 randomVec2Generation(int infBoundary, int supBoundary)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(infBoundary, supBoundary);
+    return Vec2(dis(gen), dis(gen));
 }

@@ -23,8 +23,7 @@ public:
 	void moveAgents();
 
 public:
-	Flock(); // Constructeur avec argument par défaut
+	Flock(); // Constructeur avec argument par dï¿½faut
 	Flock(int popsize);
 	~Flock() {}; // Destructeur
-
 };

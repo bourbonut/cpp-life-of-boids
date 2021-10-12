@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Agent.hpp"
-#include "myMath/Vec2.hpp"
+#include "../lib/myMath/Vec2.hpp"
 #include <vector>
 
 class Bird {

@@ -1,8 +1,8 @@
 #include "Flock.hpp"
 #include "Bird.hpp"
-#include "myMath/Vec2.hpp"
-#include "myMath/utils.hpp"
-// #include "myMath/utils.hpp"
+#include "../lib/myMath/Vec2.hpp"
+#include "../lib/myMath/utils.hpp"
+#include "../lib/myLaws/Law.hpp"
 
 #include <array>
 #include <vector>
@@ -28,10 +28,6 @@ void Flock::createPopulation() {
 	m_birdsVec.reserve(this->getPopSize() + 100); // Should we do that?
 	for (int i = 0; i < this->getPopSize(); ++i)
 	{
-		std::random_device dev;  // After we have to replace this lines for a vec2.random
-		std::mt19937 rng(dev());
-		std::uniform_int_distribution<std::mt19937::result_type> rand100(0, 100);
-		std::uniform_int_distribution<std::mt19937::result_type> rand2(0, 2);
 		//Vec2 position = Vec2(5, 10);  //random(0, 100);
 		Vec2 position = Vec2(rand100(rng), rand100(rng));  //random(0, 100);
 		Vec2 velocity = Vec2(rand2(rng), rand2(rng));  //random(0, 5);
@@ -42,7 +38,7 @@ void Flock::createPopulation() {
 
 void Flock::calculatePositions() {
 	for (Bird bird : m_birdsVec)
-	{ 
+	{
 		const std::vector<Bird> neighbors = this->computeNeighbors(bird, 0,0); //TODO : CHANGE THIS CALL
 		bird.updateVelocity(neighbors);
 		bird.computePosition();
@@ -72,7 +68,7 @@ void Flock::addAgent(Bird b) {
 void Flock::destroyAgent(Vec2 position) {
 	auto garbageBirdsVec = std::remove_if(m_birdsVec.begin(), m_birdsVec.end(),
 		[pos = position](Bird bird) {
-			// If distance < 1, destroy bird 
+			// If distance < 1, destroy bird
 			return (bird.getPosition() - pos).norm() < 1; });
 	m_birdsVec.erase(garbageBirdsVec);
 };
