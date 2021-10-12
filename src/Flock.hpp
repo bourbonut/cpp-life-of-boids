@@ -15,7 +15,7 @@ public:
 	void calculatePositions();
 	void updatePositions();
 	void addAgent();
-	void destroyAgent();  // Any ideas?? Destroy by position or index?
+	void destroyAgent(Vec2 position);  // Any ideas?? Destroy by position or index?
 	void moveAgents();
 
 public:

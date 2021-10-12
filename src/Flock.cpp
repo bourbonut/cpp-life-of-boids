@@ -19,8 +19,8 @@ void Flock::createPopulation() {
 	{
 		Vec2 position = Vec2(5, 10);  //random(0, 100);
 		Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
-		Bird bird = Bird(position, velocity);
-		m_birdsVec[i] = bird;
+		m_birdsVec[i] = Bird(position, velocity);
+		m_birdsVec.reserve(m_popSize + 100); // Should we do that?
 		// m_nextPos[i] = position;
 	}
 };
@@ -44,10 +44,13 @@ void Flock::updatePositions(){
 };
 
 void Flock::addAgent() {
-	Vec2 position = Vec2(5, 10);  //random(0, 100);
-	Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
-	Bird &bird = Bird(position, velocity);
-	m_birdsVec.push_back(bird);
+	Vec2 &&position = Vec2(5, 10);  //random(0, 100);
+	Vec2 &&velocity = Vec2(-2, 1);  //random(0, 5);
+	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
 	// m_nextPos.push_back(position);
 	m_popSize += 1;
 };
+
+//void Flock::destroyAgent(Vec2 position) {
+//	garbageBirdsVec = std::
+//};

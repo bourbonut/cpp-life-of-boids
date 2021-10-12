@@ -23,6 +23,7 @@ private:
 public:
 	Bird() {} // Constructeur avec argument par défaut
 	Bird(Vec2 m_position, Vec2 m_velocity);
+	// void operator=(const Bird& other) {};
 	~Bird() {} // Destructeur
 
 public:
