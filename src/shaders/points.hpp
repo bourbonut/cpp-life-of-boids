@@ -1,3 +1,4 @@
+//#include "../myMath/vec2.hpp"
 
 namespace points {
 struct Point {
@@ -12,8 +13,8 @@ mat3x3 vertex_transform_2d(float width, float height) {
 // Shader sources
 static const char* const vertex_shader_text = R"#(
     #version 330 core
-    layout (location = 0) in Vec2 position;
-    layout (location = 1) in Vec2 velocity;
+    layout (location = 0) in vec2 position;
+    layout (location = 1) in vec2 velocity;
 
     uniform mat3 transform;
     uniform float pointSize;

@@ -2,7 +2,7 @@ namespace lines {
 static const char* const vertex_shader_text = R"#(
 #version 330 core
 uniform mat3 transform;
-in Vec2 vPos;
+in vec2 vPos;
 in vec3 vCol; // Specify a vertex attribute for color
 out vec3 color;
 void main()

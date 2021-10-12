@@ -34,6 +34,7 @@ public:
 
     Vec2& operator=(Vec2& other); // assign vector
     bool operator==(const Vec2& other); // compare current vector with vector
+
     float dot(const Vec2& other); // return the scalar product
     float norm(); // return the norm of the vector
     Vec2 normalize(); // return the current vector normalized
@@ -42,3 +43,5 @@ public:
     Vec2 rotate(float angle); // rotate the vector anti-clockwise
     std::string string(); // return a string useful when you need to display the vector
 };
+
+std::ostream& operator<<(std::ostream& os, Vec2& obj);

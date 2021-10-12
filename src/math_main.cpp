@@ -1,5 +1,5 @@
 #define _USE_MATH_DEFINES
-#include "myMath/Vec2.hpp"
+#include "myMath/vec2.hpp"
 #include "myMath/utils.hpp"
 #include <iostream>
 #include <vector>
@@ -47,7 +47,7 @@ int main() {
     std::cout << e.rotate(M_PI/2).string() << std::endl;
     std::cout << e.rotate(-M_PI/2).string() << std::endl;
     std::cout << e.rotate(M_PI).string() << std::endl;
-    std::cout << Vec2(1., 0.).rotate(M_PI / 3).string() << std::endl;
+    std::cout << "Rotation: " << Vec2(1., 0.).rotate(M_PI / 3) << std::endl;
 
     return 0;
 }

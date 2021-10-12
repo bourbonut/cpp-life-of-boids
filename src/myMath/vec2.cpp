@@ -107,6 +107,11 @@ bool Vec2::operator==(const Vec2& other)
   }
 }
 
+std::ostream& operator<<(std::ostream& os, Vec2& obj)
+{
+    return os << obj.string();
+}
+
 float Vec2::x() {
     return m_x;
 }

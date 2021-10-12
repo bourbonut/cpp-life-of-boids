@@ -60,7 +60,7 @@ static const char* const vertex_shader_text
     = "#version 330\n"
       "uniform mat4 MVP;\n"
       "in vec3 vCol;\n"
-      "in Vec2 vPos;\n"
+      "in vec2 vPos;\n"
       "out vec3 color;\n"
       "void main()\n"
       "{\n"

@@ -6,8 +6,9 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include "myMath/vec2.hpp"
 
-using Vec2 = std::array<float, 2>;
+//using Vec2 = std::array<float, 2>;
 using vec3 = std::array<float, 3>;
 using vec4 = std::array<float, 4>;
 using mat3x3 = std::array<vec3, 3>;
@@ -199,8 +200,9 @@ int main() {
       for (auto& p : points) {
         v += 1.0;
         p.velocity = Vec2{20*cos(t/10) * (cos(v)-cos(v+1)), 20*cos(t/10) * (sin(v)-sin(v+1))};
-        p.position[0] += p.velocity[0];
-        p.position[1] += p.velocity[1];
+       /* p.position[0] += p.velocity[0];
+        p.position[1] += p.velocity[1];*/
+        p.position += p.velocity;
       }
 
       VertexArray_bind(points_vertexArray);
