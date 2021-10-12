@@ -14,6 +14,7 @@ public:
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
+	const std::vector<Bird> computeNeighbors(Bird bird) {};
 	void addAgent();
 	void destroyAgent(Vec2 position);  // Any ideas?? Destroy by position or index?
 	void moveAgents();
@@ -21,5 +22,5 @@ public:
 public:
 	Flock(); // Constructeur avec argument par défaut
 	Flock(int popsize);
-	~Flock(); // Destructeur
+	~Flock() {}; // Destructeur
 };

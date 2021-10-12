@@ -5,7 +5,7 @@
 // #include "Bird.hpp"
 // #include "myMath/utils.hpp"
 
-Agent{
+class Agent{
 private:
 	Vec2 m_position;
 	Vec2 m_velocity;

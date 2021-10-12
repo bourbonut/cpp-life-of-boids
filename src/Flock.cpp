@@ -7,9 +7,17 @@
 #include <vector>
 
 
-Flock::Flock(int m_popSize) {
+Flock::Flock(int popSize) {
 	std::vector<Bird> m_birdsVec(m_popSize);
 	std::vector<Vec2> m_nextPos(m_popSize);
+	m_popSize = m_popSize;
+	this->createPopulation();
+};
+
+Flock::Flock() {
+	//m_popSize
+	std::vector<Bird> m_birdsVec(0);
+	std::vector<Vec2> m_nextPos(0);
 
 	this->createPopulation();
 };
@@ -30,7 +38,8 @@ void Flock::calculatePositions() {
 	{   // To add user interaction, we can include here an if statement according to the bird 
 		// position and use a function similar to updateVelocity. Or, we can add the user 
 		// interaction (like a new bird) directly to computeNeighbors function.
-		const std::vector<Bird> neighbors = bird.computeNeighbors();
+		const std::vector<Bird> neighbors = this->computeNeighbors(bird);
+		const std::vector<Bird> neighbors{};
 		bird.updateVelocity(neighbors);
 		bird.computePosition();
 	}

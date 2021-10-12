@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Agent.hpp"
 #include "myMath/Vec2.hpp"
 #include <vector>
 
@@ -18,10 +19,9 @@ private:
 	double m_ALIGNMENT_RELAXATION;
 	double m_COHESION_RELAXATION;
 
-	std::vector<Bird> m_neighbors;
 
 public:
-	Bird() {} // Constructeur avec argument par défaut
+	Bird(); // Constructeur avec argument par défaut
 	Bird(Vec2 m_position, Vec2 m_velocity);
 	// void operator=(const Bird& other) {};
 	~Bird() {} // Destructeur
@@ -30,7 +30,6 @@ public:
 	Vec2 getPosition(); // Do we need it?
 	Vec2 getVelocity();
 
-	const std::vector<Bird> computeNeighbors();
 	void updateVelocity(const std::vector<Bird>& neighbors);
 	void computePosition();
 	void updatePosition();
