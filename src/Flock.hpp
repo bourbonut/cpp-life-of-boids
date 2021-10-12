@@ -12,6 +12,7 @@ private :
 	// std::vector<Vec2> m_nextPos;
 
 public:
+	void print();
 	int getPopSize() const;
 	void createPopulation();
 	void calculatePositions();

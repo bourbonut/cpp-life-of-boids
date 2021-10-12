@@ -31,6 +31,8 @@ namespace {
 		}
 		ASSERT_EQ(flock.getPopSize(), 1301) << "Added 100 agents, now popSize should be 1301";
 
+
+		flock.print();
 	}
 	/*TEST(Functions, All) {
 
