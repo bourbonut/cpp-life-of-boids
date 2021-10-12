@@ -39,7 +39,6 @@ void Flock::calculatePositions() {
 		// position and use a function similar to updateVelocity. Or, we can add the user 
 		// interaction (like a new bird) directly to computeNeighbors function.
 		const std::vector<Bird> neighbors = this->computeNeighbors(bird);
-		const std::vector<Bird> neighbors{};
 		bird.updateVelocity(neighbors);
 		bird.computePosition();
 	}
@@ -60,6 +59,10 @@ void Flock::addAgent() {
 	m_popSize += 1;
 };
 
-//void Flock::destroyAgent(Vec2 position) {
-//	garbageBirdsVec = std::
-//};
+void Flock::destroyAgent(Vec2 position) {
+	auto garbageBirdsVec = std::remove_if(m_birdsVec.begin(), m_birdsVec.end(),
+										  [pos = position](Bird bird) { 
+											// If distance < 1, destroy bird 
+										   return (bird.getPosition() - pos).norm() < 1; });
+	m_birdsVec.erase(garbageBirdsVec);
+};

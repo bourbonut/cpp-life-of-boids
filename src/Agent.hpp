@@ -9,7 +9,6 @@ class Agent{
 private:
 	Vec2 m_position;
 	Vec2 m_velocity;
-	Vec2 m_nextVelocity; // A copier dans velocity
 	double m_bodySize;
 	double m_viewAngle;
 
