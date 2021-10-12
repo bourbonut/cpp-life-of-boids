@@ -5,102 +5,102 @@
 #include <algorithm>
 
 Vec2::Vec2(){
-  m_x = 0.;
-  m_y = 0.;
+  this->x = 0.;
+  this->y = 0.;
 }
 
 Vec2::Vec2(float x, float y){
-  m_x = x;
-  m_y = y;
+  this->x = x;
+  this->y = y;
 }
 
 Vec2::Vec2(float a){
-  m_x = a;
-  m_y = a;
+  this->x = a;
+  this->y = a;
 }
 
 Vec2& Vec2::operator=(const Vec2& other)
 {
-    m_x = other.m_x;
-    m_y = other.m_y;
+    this->x = other.x;
+    this->y = other.y;
     return *this;
 }
 
 Vec2 Vec2::operator+(const Vec2& other)
 {
-    return Vec2(m_x + other.m_x, m_y + other.m_y);
+    return Vec2(this->x + other.x, this->y + other.y);
 }
 
 Vec2 Vec2::operator-(const Vec2& other)
 {
-    return Vec2(m_x - other.m_x, m_y - other.m_y);
+    return Vec2(this->x - other.x, this->y - other.y);
 }
 
 Vec2 Vec2::operator*(const Vec2& other)
 {
-   return Vec2(m_x * other.m_x, m_y * other.m_y);
+   return Vec2(this->x * other.x, this->y * other.y);
 }
 
 Vec2 Vec2::operator*(float other)
 {
-    return Vec2(m_x * other, m_y * other);
+    return Vec2(this->x * other, this->y * other);
 }
 
 Vec2& Vec2::operator+=(const Vec2& other)
 {
-  m_x += other.m_x;
-  m_y += other.m_y;
+  this->x += other.x;
+  this->y += other.y;
   return *this;
 }
 
 Vec2& Vec2::operator-=(const Vec2& other)
 {
-  m_x -= other.m_x;
-  m_y -= other.m_y;
+  this->x -= other.x;
+  this->y -= other.y;
   return *this;
 }
 
 Vec2& Vec2::operator*=(const Vec2& other)
 {
-  m_x *= other.m_x;
-  m_y *= other.m_y;
+  this->x *= other.x;
+  this->y *= other.y;
   return *this;
 }
 
 Vec2& Vec2::operator*=(float other)
 {
-  m_x *= other;
-  m_y *= other;
+  this->x *= other;
+  this->y *= other;
   return *this;
 }
 
 Vec2 Vec2::operator/(const Vec2& other)
 {
-   return Vec2(m_x / other.m_x, m_y / other.m_y);
+   return Vec2(this->x / other.x, this->y / other.y);
 }
 
 Vec2 Vec2::operator/(float other)
 {
-    return Vec2(m_x / other, m_y / other);
+    return Vec2(this->x / other, this->y / other);
 }
 
 Vec2& Vec2::operator/=(const Vec2& other)
 {
-  m_x /= other.m_x;
-  m_y /= other.m_y;
+  this->x /= other.x;
+  this->y /= other.y;
   return *this;
 }
 
 Vec2& Vec2::operator/=(float other)
 {
-  m_x /= other;
-  m_y /= other;
+  this->x /= other;
+  this->y /= other;
   return *this;
 }
 
 bool Vec2::operator==(const Vec2& other)
 {
-  if(m_x == other.m_x && m_y == other.m_y){
+  if(this->x == other.x && this->y == other.y){
     return true;
   }
   else{
@@ -113,37 +113,22 @@ std::ostream& operator<<(std::ostream& os, Vec2& obj)
     return os << obj.string();
 }
 
-float Vec2::x() {
-    return m_x;
-}
-
-float Vec2::y() {
-    return m_y;
-}
-
-void Vec2::setx(float x) {
-    m_x = x;
-}
-
-void Vec2::sety(float y) {
-    m_y = y;
-}
-
 float Vec2::dot(const Vec2& other){
-  return m_x * other.m_x + m_y * other.m_y;
+  return this->x * other.x + this->y * other.y;
 }
 
 float Vec2::norm(){
-  return std::sqrt(m_x*m_x + m_y*m_y);
+  return std::sqrt(this->x*this->x + this->y*this->y);
 }
 
 Vec2 Vec2::normalize(){
   float norm = this->norm();
-  return Vec2(m_x / norm, m_y / norm);
+  return Vec2(this->x / norm, this->y / norm);
 }
 
 float Vec2::angle(){
-  return std::acos(std::min(1., std::max(-1., (double) m_x/this->norm())));
+  float angle = std::acos(std::min(1., std::max(-1., (double) this->x/this->norm())));
+  return (this->y > 0) ? angle : -angle;
 }
 
 float Vec2::angle(Vec2& other){
@@ -157,9 +142,9 @@ float Vec2::angle(Vec2& other){
 }
 
 Vec2 Vec2::rotate(float angle){
-  return Vec2(std::cos(angle) * m_x - std::sin(angle) * m_y, std::sin(angle) * m_x + std::cos(angle) * m_y);
+  return Vec2(std::cos(angle) * this->x - std::sin(angle) * this->y, std::sin(angle) * this->x + std::cos(angle) * this->y);
 }
 
 std::string Vec2::string(){
-  return "Vec2(" + std::to_string(m_x) + ", " + std::to_string(m_y) + ")";
+  return "Vec2(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ")";
 }

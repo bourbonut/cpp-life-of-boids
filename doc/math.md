@@ -4,28 +4,23 @@
 
 ### Attributes
 ```cpp
-private:
-    float m_x; // x coordinate
-    float m_y; // y coordinate
+float x;
+float y;
 ```
 
 ### Initialization
 ```cpp
 public:
-    vec2(); // return vec2(0, 0)
-    vec2(double, double);
+    Vec2(); // return vec2(0, 0)
+    Vec2(float, float);
+    Vec2(float);
+    ~Vec2() {};
 ```
 
 ### Methods
 
 ```cpp
 public:
-  float x(); // return the x value
-  float y(); // return the y value
-
-  void setx(float x); // set x
-  void sety(float y); // set y
-
   Vec2 operator+(const Vec2& other); // add vectors
   Vec2& operator+=(const Vec2& other); // add vectors
 
@@ -54,6 +49,8 @@ public:
   float angle(Vec2& other); // return the angle between the current vector and an other vector
   Vec2 rotate(float angle); // rotate the vector anti-clockwise
   std::string string(); // return a string useful when you need to display the vector
+
+std::ostream& operator<<(std::ostream& os, Vec2& obj);
 ```
 
 ## Functions
@@ -72,4 +69,9 @@ vec2 barycenter(std::vector<vec2> vecs) // return a `vec2` which has the coordin
 ```cpp
 float radians(float angle); // convert the degree angle to radian angle
 float degrees(float angle); // convert the radian angle to degree angle
+```
+
+### isAntiClockwise
+```cpp
+bool isAntiClockwise(Vec2 a, Vec2 b); // return `true` if `a` and `b` are anti clockwise else `false`
 ```

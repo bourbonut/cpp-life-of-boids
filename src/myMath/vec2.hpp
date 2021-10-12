@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 
-struct Vec2 {
-    float m_x;
-    float m_y;
+typedef struct Vec2 {
+    float x;
+    float y;
 
 public:
     Vec2();
@@ -12,12 +12,6 @@ public:
     ~Vec2() {};
 
 public:
-    float x(); // return the x value
-    float y(); // return the y value
-
-    void setx(float x); // set x
-    void sety(float y); // set y
-
     Vec2 operator+(const Vec2& other); // add vectors
     Vec2& operator+=(const Vec2& other); // add vectors
 
