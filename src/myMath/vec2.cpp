@@ -143,7 +143,7 @@ Vec2 Vec2::normalize(){
 }
 
 float Vec2::angle(){
-  return std::acos(m_x/this->norm());
+  return std::acos(std::min(1., std::max(-1., (double) m_x/this->norm())));
 }
 
 float Vec2::angle(Vec2& other){
