@@ -87,7 +87,7 @@ int main() {
     // init
     VertexArray_bind(triangle_vertexArray);
     Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
-    ShaderProgram_activate(triangle_shaderProgram); // Première apparition de l'erreur
+    ShaderProgram_activate(triangle_shaderProgram); // Premiï¿½re apparition de l'erreur
     glBufferData(GL_ARRAY_BUFFER, sizeof(triangle::vertices), triangle::vertices.data(), GL_STATIC_DRAW);
 
     const GLint mvp_location = ShaderProgram_getUniformLocation(triangle_shaderProgram, "MVP");
@@ -156,7 +156,7 @@ int main() {
     int width{}, height{};
     glfwGetFramebufferSize(window, &width, &height);
 
-    std::vector<points::Point> points(100);
+    std::vector<points::Point> points(1000);
     auto get_pos = [=](float t) {
         return Vec2{ (float)(width * (0.5 + 0.4 * cos(t))), (float)(height * (0.5 + 0.4 * sin(t))) };
     };
@@ -238,7 +238,7 @@ int main() {
 
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex A |
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B | Triangle ABC
-            vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C | 
+            vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C |
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B   |
             vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C   | Triangle BCD
             vertex_data.push_back(triangle::Vertex{ {0, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex D   |

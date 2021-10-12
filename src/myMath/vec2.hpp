@@ -2,8 +2,8 @@
 
 class Vec2 {
 private:
-    double m_x;
-    double m_y;
+    float m_x;
+    float m_y;
 
 public:
     Vec2();
