@@ -14,7 +14,7 @@ public:
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
-	const std::vector<Bird> computeNeighbors(Bird bird) {};
+	std::vector<Bird> computeNeighbors(Bird bird) { return std::vector<Bird>{}; };
 	void addAgent();
 	void destroyAgent(Vec2 position);
 	void moveAgents();
@@ -23,4 +23,5 @@ public:
 	Flock(); // Constructeur avec argument par défaut
 	Flock(int popsize);
 	~Flock() {}; // Destructeur
+
 };
