@@ -26,8 +26,15 @@ public:
 	~Bird(); // Destructeur
 
 public:
+<<<<<<< HEAD
 	Vec2 getPosition() const;
 	Vec2 getVelocity() const;
+=======
+	Vec2 getPosition();
+	Vec2 getVelocity();
+	Vec2 getNextPosition();
+	Vec2 getNextVelocity();
+>>>>>>> Enriches the tests
 
 	void updateVelocity(const std::vector<Bird>& neighbors);
 	void computePosition();
