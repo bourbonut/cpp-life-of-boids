@@ -16,7 +16,7 @@ public:
 	void updatePositions();
 	const std::vector<Bird> computeNeighbors(Bird bird) {};
 	void addAgent();
-	void destroyAgent(Vec2 position);  // Any ideas?? Destroy by position or index?
+	void destroyAgent(Vec2 position);
 	void moveAgents();
 
 public:

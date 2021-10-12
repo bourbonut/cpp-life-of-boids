@@ -7,10 +7,9 @@
 #include <vector>
 
 
-Flock::Flock(int popSize) {
+Flock::Flock(int popSize) : m_popSize{popSize} {
 	std::vector<Bird> m_birdsVec(m_popSize);
 	std::vector<Vec2> m_nextPos(m_popSize);
-	m_popSize = m_popSize;
 	this->createPopulation();
 };
 

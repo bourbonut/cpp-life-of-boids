@@ -6,12 +6,8 @@
 #include "myMath/Vec2.hpp"
 // #include "myMath/utils.hpp"
 
-Bird::Bird(Vec2 position, Vec2 velocity) {
-	m_position = position;
-	m_velocity = velocity;
-	m_nextPosition = position;
-	m_nextVelocity = velocity;
-};
+Bird::Bird(Vec2 position, Vec2 velocity) : m_position{ position }, m_velocity{ velocity }, 
+										   m_nextPosition{ position }, m_nextVelocity{velocity} {};
 
 Bird::Bird() {
 	m_position = Vec2(0, 0);
