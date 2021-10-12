@@ -6,20 +6,23 @@
 // #include "myMath/utils.hpp"
 
 class Flock {
-
-public:
+private :
 	int m_popSize;
 	std::vector<Bird> m_birdsVec;
-	std::vector<Vec2> m_nextPos;
+	// std::vector<Vec2> m_nextPos;
+
+public:
 	void createPopulation();
 	void calculatePositions();
+	void updatePositions();
+	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
 	void addAgent();
-	void destroyAgent();  // Any ideas?? Destroy by position or index?
+	void destroyAgent(Vec2 position);
 	void moveAgents();
-	Vec2 random(float min, float max);
 
 public:
 	Flock(); // Constructeur avec argument par défaut
 	Flock(int popsize);
-	~Flock(); // Destructeur
+	~Flock() {}; // Destructeur
+
 };

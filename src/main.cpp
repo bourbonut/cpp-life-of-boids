@@ -6,8 +6,9 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include "myMath/vec2.hpp"
 
-//using vec2 = std::array<float, 2>;
+//using Vec2 = std::array<float, 2>;
 using vec3 = std::array<float, 3>;
 using vec4 = std::array<float, 4>;
 using mat3x3 = std::array<vec3, 3>;
@@ -177,8 +178,14 @@ int main() {
         glfwGetFramebufferSize(window, &width, &height);
         const float ratio = (float)width / (float)height;
 
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT);
+      float v = 0;
+      for (auto& p : points) {
+        v += 1.0;
+        p.velocity = Vec2{20*cos(t/10) * (cos(v)-cos(v+1)), 20*cos(t/10) * (sin(v)-sin(v+1))};
+       /* p.position[0] += p.velocity[0];
+        p.position[1] += p.velocity[1];*/
+        p.position += p.velocity;
+      }
 
         {  // triangle
             mat4x4 m = triangle::mat4x4_identity();
