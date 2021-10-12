@@ -14,23 +14,39 @@ Flock::Flock(int popSize) : m_popSize{ popSize } {
 };
 
 Flock::Flock() {
-	//m_popSize
+	//m_popSize = RANDOM SINON createPopulation va pas marcher
 	std::vector<Bird> m_birdsVec(0);
 	std::vector<Vec2> m_nextPos(0);
 
 	this->createPopulation();
 };
 
+int Flock::getPopSize() const {
+	return m_birdsVec.size();
+}
+
+
 void Flock::createPopulation() {
+	//m_birdsVec.reserve(m_popSize + 100); // Should we do that?
 	for (int i = 0; i < m_popSize; ++i)
 	{
 		Vec2 position = Vec2(5, 10);  //random(0, 100);
 		Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
-		m_birdsVec[i] = Bird(position, velocity);
-		m_birdsVec.reserve(m_popSize + 100); // Should we do that?
+		m_birdsVec.emplace_back(Bird(position, velocity));
 		// m_nextPos[i] = position;
 	}
 };
+//here when this will be called by line 21, m_popsize will be 0 so it won't iterate, and reserve here is in the iteration !
+//void Flock::createPopulation() {
+//	for (int i = 0; i < m_popSize; ++i)
+//	{
+//		Vec2 position = Vec2(5, 10);  //random(0, 100);
+//		Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
+//		m_birdsVec[i] = Bird(position, velocity);
+//		m_birdsVec.reserve(m_popSize + 100); // Should we do that?
+//		// m_nextPos[i] = position;
+//	}
+//};
 
 void Flock::calculatePositions() {
 	for (Bird bird : m_birdsVec)
@@ -51,6 +67,7 @@ void Flock::updatePositions() {
 
 };
 
+//why double && ? and m_popSize is juste m_birdsVec.size(), so no need ?
 void Flock::addAgent() {
 	Vec2&& position = Vec2(5, 10);  //random(0, 100);
 	Vec2&& velocity = Vec2(-2, 1);  //random(0, 5);
