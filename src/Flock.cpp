@@ -67,9 +67,9 @@ void Flock::destroyAgent(Vec2 position) {
 	m_birdsVec.erase(garbageBirdsVec);
 };
 
-std::vector<Bird> Flock::computeNeighbors(const Bird& bird) {
+std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, const float &angle) {
 	std::vector<Bird> neighbors;
-	neighbors.reserve(100000);
+	neighbors.reserve(100000); //CHANGE THIS TO SMTHING LIKE NUMBER_AGENT*2 OR SMTHNG
 
 	//float angle = myBird.getViewAngle();
 	//float Neighbor.radius = myBird.getRadius();
@@ -90,5 +90,5 @@ std::vector<Bird> Flock::computeNeighbors(const Bird& bird) {
 };
 
 void Flock::moveAgents() {
-
+	//TODO :
 };

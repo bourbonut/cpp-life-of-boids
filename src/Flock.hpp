@@ -15,7 +15,7 @@ public:
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
-	std::vector<Bird> computeNeighbors(const Bird& bird);
+	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
 	void addAgent();
 	void destroyAgent(Vec2 position);
 	void moveAgents();
