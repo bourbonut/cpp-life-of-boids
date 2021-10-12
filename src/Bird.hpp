@@ -1,22 +1,24 @@
 #pragma once
 
+#include "Agent.hpp"
 #include "myMath/Vec2.hpp"
 #include <vector>
 
 class Bird {
 private:
+	// Use an ID attribute?
 	Vec2 m_position;
 	Vec2 m_velocity;
-	Vec2 m_nextVelocity; // A copier dans velocity
-	double m_bodySize = 1;
-	double m_viewAngle = 1;
-	double m_COHESION_RANGE = 1;
-	double m_NEIGHBOR_RANGE = 1;
-	double m_SEPARATION_RANGE = 1;
-	double m_ALIGNMENT_RELAXATION = 1;
-	double m_COHESION_RELAXATION = 1;
+	Vec2 m_nextVelocity;
+	Vec2 m_nextPosition; // A copier dans velocity
+	double m_bodySize { 1 };
+	double m_viewAngle;
+	double m_COHESION_RANGE;
+	double m_NEIGHBOR_RANGE;
+	double m_SEPARATION_RANGE;
+	double m_ALIGNMENT_RELAXATION;
+	double m_COHESION_RELAXATION;
 
-	std::vector<Bird> m_neighbors;
 
 public:
 	Bird(); // Constructeur sans arguments
@@ -27,8 +29,8 @@ public:
 	Vec2 getPosition() const;
 	Vec2 getVelocity() const;
 
-	//std::vector<Bird> computeNeighbors();
 	void updateVelocity(const std::vector<Bird>& neighbors);
+	void computePosition();
 	void updatePosition();
 	Vec2 cohesion(const std::vector<Bird>& neighbors);
 	Vec2 alignment(const std::vector<Bird>& neighbors) { return {}; };

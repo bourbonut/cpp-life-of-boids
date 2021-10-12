@@ -16,7 +16,7 @@ target_include_directories(first_gtest PRIVATE ${GTest_INCLUDE_DIRS})
 gtest_discover_tests(first_gtest) # helps to split one ctest executable into multiple google tests
 
 
-add_executable(test_math test_math.cpp)
+add_executable(test_math test_math.cpp "test_bird.cpp")
 target_link_libraries(test_math myMath GTest::GTest)
 target_include_directories(test_math PUBLIC ${CMAKE_SOURCE_DIR}/src)
 add_test(NAME test_math COMMAND test_math)
