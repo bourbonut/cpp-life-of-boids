@@ -104,6 +104,7 @@ std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, 
 	//float angle = myBird.getViewAngle();
 	//float Neighbor.radius = myBird.getRadius();
 
+	//Like this one bird is going to be its own potential neighbor
 	for (Bird potentialNeighbor : m_birdsVec){
 		if (distance(bird.getPosition(), potentialNeighbor.getPosition()) <= range) { //only range because was scared of angle
 			neighbors.emplace_back(potentialNeighbor);

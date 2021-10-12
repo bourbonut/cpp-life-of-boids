@@ -45,7 +45,18 @@ namespace {
 		EXPECT_EQ(flock.getAgent(testSize + loopSize + 1).getPosition(), b.getPosition()) << "Last agent's position should be 0,0";
 		EXPECT_EQ(flock.getAgent(testSize + loopSize + 1).getVelocity(), b.getVelocity()) << "Last agent's velocity should be 0,0";
 
+		flock.addAgent(b);
+		flock.addAgent(b);
+		flock.addAgent(b);
+		flock.addAgent(b);
+		flock.addAgent(b);
 
+		std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(flock.getPopSize() - 1), 1, 1);
+		EXPECT_GE(neighbors.size(), 5) << "Expected at least 5 neighbors to the bird we added";
+
+		for (Bird b : neighbors) {
+			std::cout << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
+		}
 		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(1000)
 	}
 	/*TEST(Functions, All) {
