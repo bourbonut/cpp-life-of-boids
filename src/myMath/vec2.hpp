@@ -1,8 +1,7 @@
 #pragma once
 #include <iostream>
 
-class Vec2 {
-private:
+struct Vec2 {
     float m_x;
     float m_y;
 
@@ -10,10 +9,15 @@ public:
     Vec2();
     Vec2(float, float);
     Vec2(float);
+    ~Vec2() {};
 
 public:
     float x(); // return the x value
     float y(); // return the y value
+
+    void setx(float x); // set x
+    void sety(float y); // set y
+
     Vec2 operator+(const Vec2& other); // add vectors
     Vec2& operator+=(const Vec2& other); // add vectors
 
@@ -32,7 +36,7 @@ public:
     Vec2& operator/=(const Vec2& other); // divide vectors term by term
     Vec2& operator/=(float other); // scale the vector
 
-    Vec2& operator=(Vec2& other); // assign vector
+    Vec2& operator=(const Vec2& other); // assign vector
     bool operator==(const Vec2& other); // compare current vector with vector
 
     float dot(const Vec2& other); // return the scalar product

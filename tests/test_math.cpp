@@ -26,8 +26,11 @@ namespace {
 		ASSERT_NEAR(a.x(), 4., 1e-3) << "get x";
 		ASSERT_NEAR(a.y(), 3., 1e-3) << "get y";
 		Vec2 c = Vec2(1., 0.).rotate(M_PI / 3);
-		ASSERT_NEAR(c.x(), 0.500000, 1e-3);
-		ASSERT_NEAR(c.y(), 0.866025, 1e-3);
+		ASSERT_NEAR(c.x(), 0.500000, 1e-3) << "Rotation X";
+		ASSERT_NEAR(c.y(), 0.866025, 1e-3) << "Rotation Y";
+		c.setx(4.);
+		c.sety(5.);
+		ASSERT_TRUE(c == Vec2(4., 5.)) << "Set";
 	}
 
 	TEST(Functions, All) {

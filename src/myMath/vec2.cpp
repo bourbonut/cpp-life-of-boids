@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Vec2.hpp"
+#include <algorithm>
 
 Vec2::Vec2(){
   m_x = 0.;
@@ -18,7 +19,7 @@ Vec2::Vec2(float a){
   m_y = a;
 }
 
-Vec2& Vec2::operator=(Vec2& other)
+Vec2& Vec2::operator=(const Vec2& other)
 {
     m_x = other.m_x;
     m_y = other.m_y;
@@ -120,6 +121,14 @@ float Vec2::y() {
     return m_y;
 }
 
+void Vec2::setx(float x) {
+    m_x = x;
+}
+
+void Vec2::sety(float y) {
+    m_y = y;
+}
+
 float Vec2::dot(const Vec2& other){
   return m_x * other.m_x + m_y * other.m_y;
 }
@@ -138,7 +147,13 @@ float Vec2::angle(){
 }
 
 float Vec2::angle(Vec2& other){
-  return acos(this->dot(other) / (this->norm() * other.norm()));
+  float norm = this->norm() * other.norm();
+  if(norm == 0.){
+    return 0.;
+  }
+  else{
+    return std::acos(std::min(1., std::max(-1., (double) this->dot(other) / norm)));
+  }
 }
 
 Vec2 Vec2::rotate(float angle){
