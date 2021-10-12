@@ -368,3 +368,5 @@ conan-config/
 
 # Miscellaneous
 CMakeSettings.json
+
+Testing/

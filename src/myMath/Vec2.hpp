@@ -31,7 +31,7 @@ public:
     Vec2& operator/=(float other); // scale the vector
 
     Vec2& operator=(const Vec2& other); // assign vector
-    bool operator==(const Vec2& other); // compare current vector with vector
+    bool operator==(const Vec2& other) const; // compare current vector with vector
 
     float dot(const Vec2& other); // return the scalar product
     float norm(); // return the norm of the vector

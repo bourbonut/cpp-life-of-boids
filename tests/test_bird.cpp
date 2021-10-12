@@ -17,22 +17,36 @@ namespace {
 
 
 	TEST(TestFlock, InstanciationAndAddingAgents) {
-		Flock flock(300);
+		int testSize = 300;
+		int loopSize = 1000;
+
+		Flock flock(testSize);
 		//Initializing a flock with pop size 300 and checking size of vector population
-		ASSERT_EQ(flock.getPopSize(), 300) << "Population size should be 300";
+		ASSERT_EQ(flock.getPopSize(), testSize) << "Population size should be " << testSize;
 
 		//Adding one agent and checking size
 		flock.addAgent();
-		ASSERT_EQ(flock.getPopSize(), 301) << "Added an agent with addAgent(), now popSize should be 301";
+		ASSERT_EQ(flock.getPopSize(), testSize + 1) << "Added an agent with addAgent(), now popSize should be " << testSize << " +1";
 	
 		//Adding 1000 agents
-		for (int i = 0; i < 1000; ++i) {
+		for (int i = 0; i < loopSize; ++i) {
 			flock.addAgent();
 		}
-		ASSERT_EQ(flock.getPopSize(), 1301) << "Added 100 agents, now popSize should be 1301";
+		ASSERT_EQ(flock.getPopSize(), testSize + 1001) << "Added " << loopSize << " agents, now popSize should be " << testSize << " + " << loopSize << "+ 1";
 
 
+		//Adding a specific agent with specific values
+		Bird b = Bird(Vec2(0, 0), Vec2(0, 0));
+		flock.addAgent(b);
+
+		ASSERT_EQ(flock.getPopSize(), testSize + loopSize + 2) << "Added one more agents, should be " << testSize << " + " << loopSize << "+ 2";
 		flock.print();
+
+		EXPECT_EQ(flock.getAgent(testSize + loopSize + 1).getPosition(), b.getPosition()) << "Last agent's position should be 0,0";
+		EXPECT_EQ(flock.getAgent(testSize + loopSize + 1).getVelocity(), b.getVelocity()) << "Last agent's velocity should be 0,0";
+
+
+		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(1000)
 	}
 	/*TEST(Functions, All) {
 

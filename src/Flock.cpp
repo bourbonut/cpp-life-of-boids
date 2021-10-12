@@ -84,6 +84,11 @@ void Flock::addAgent() {
 	m_popSize += 1;
 };
 
+//see if we need a const &b or not ?
+void Flock::addAgent(Bird b) {
+	m_birdsVec.emplace_back(b);
+}
+
 void Flock::destroyAgent(Vec2 position) {
 	auto garbageBirdsVec = std::remove_if(m_birdsVec.begin(), m_birdsVec.end(),
 		[pos = position](Bird bird) {
@@ -126,4 +131,8 @@ void Flock::print() {
 	for (Bird b : m_birdsVec) {
 		std::cout << ++i << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
 	}
+}
+
+Bird Flock::getAgent(int index) const {
+	return this->m_birdsVec.at(index);
 }

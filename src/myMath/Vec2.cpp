@@ -98,7 +98,7 @@ Vec2& Vec2::operator/=(float other)
     return *this;
 }
 
-bool Vec2::operator==(const Vec2& other)
+bool Vec2::operator==(const Vec2& other) const
 {
     if (this->x == other.x && this->y == other.y) {
         return true;
