@@ -1,3 +1,5 @@
+#pragma once
+
 #include "myMath/Vec2.hpp"
 
 namespace points {

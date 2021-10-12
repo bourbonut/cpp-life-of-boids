@@ -1,3 +1,5 @@
+#pragma once
+
 using vec2 = std::array<float, 2>;
 
 namespace triangle {

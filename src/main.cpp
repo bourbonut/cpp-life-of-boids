@@ -19,6 +19,7 @@ using mat4x4 = std::array<vec4, 4>;
 #include "shaders/triangle.hpp"
 #include "myMath/Vec2.hpp"
 #include "graphics.hpp"
+#include "GraphicalManager.hpp"
 
 using mat2x3 = std::array<Vec2, 3>;
 using mat2x6 = std::array<Vec2, 6>;
@@ -56,6 +57,10 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 }
 
 int main() {
+
+    GraphicalManager GM;
+
+    /*
     glfwSetErrorCallback(error_callback);
 
     if (!glfwInit())
@@ -273,4 +278,5 @@ int main() {
 
     glfwTerminate();
     exit(EXIT_SUCCESS);
+    */
 }
