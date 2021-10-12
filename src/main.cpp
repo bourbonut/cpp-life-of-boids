@@ -59,16 +59,13 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
         Flock population = Flock(2);
         population.addAgent();
     }
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+        std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
+        Flock population = Flock(2);
+        population.addAgent();
+    }
 }
 
-/*
-static void cursor_position_callback(GLFWwindow* window, double x, double y)
-{
-    // (x, y) are relative!
-
-    glfwSetCursorPos(window, 0, 0);
-}
-*/
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
