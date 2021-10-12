@@ -18,7 +18,11 @@ public:
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
+<<<<<<< HEAD
 	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
+=======
+	const std::vector<Bird> computeNeighbors(Bird bird) { return std::vector<Bird> {bird}; };
+>>>>>>> Enriches the tests
 	void addAgent();
 	void addAgent(Bird b);
 	void destroyAgent(Vec2 position);
