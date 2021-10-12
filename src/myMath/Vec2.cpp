@@ -1,83 +1,150 @@
 #include <cmath>
 #include <iostream>
+#include <string>
 #include "Vec2.hpp"
+#include <algorithm>
 
-Vec2::Vec2(){
-  m_x = 0.;
-  m_y = 0.;
+Vec2::Vec2() {
+    this->x = 0.;
+    this->y = 0.;
 }
 
-Vec2::Vec2(float x, float y){
-  m_x = x;
-  m_y = y;
+Vec2::Vec2(float x, float y) {
+    this->x = x;
+    this->y = y;
 }
 
-Vec2::Vec2(const Vec2& other) {
-    m_x = other.x();
-    m_y = other.y();
+Vec2::Vec2(float a) {
+    this->x = a;
+    this->y = a;
 }
 
 Vec2& Vec2::operator=(const Vec2& other)
 {
-    m_x = other.x();
-    m_y = other.y();
+    this->x = other.x;
+    this->y = other.y;
     return *this;
 }
 
-Vec2 Vec2::operator+(const Vec2 &other)
+Vec2 Vec2::operator+(const Vec2& other)
 {
-    return Vec2(m_x + other.x(), m_y + other.y());
+    return Vec2(this->x + other.x, this->y + other.y);
 }
 
-Vec2 Vec2::operator-(const Vec2 &other) const
+Vec2 Vec2::operator-(const Vec2& other)
 {
-    return Vec2(m_x - other.x(), m_y - other.y());
+    return Vec2(this->x - other.x, this->y - other.y);
 }
 
-Vec2 Vec2::operator*(const Vec2 &other)
+Vec2 Vec2::operator*(const Vec2& other)
 {
-   return Vec2(m_x * other.x(), m_y * other.y());
+    return Vec2(this->x * other.x, this->y * other.y);
 }
 
-Vec2 Vec2::operator*(const float &other)
+Vec2 Vec2::operator*(float other)
 {
-    return Vec2(m_x * other, m_y * other);
+    return Vec2(this->x * other, this->y * other);
 }
 
-Vec2 Vec2::operator/(const float& other)
+Vec2& Vec2::operator+=(const Vec2& other)
 {
-    return Vec2(m_x / other, m_y / other);
+    this->x += other.x;
+    this->y += other.y;
+    return *this;
 }
 
-float Vec2::x() const{
-    return m_x;
+Vec2& Vec2::operator-=(const Vec2& other)
+{
+    this->x -= other.x;
+    this->y -= other.y;
+    return *this;
 }
 
-float Vec2::y() const{
-    return m_y;
+Vec2& Vec2::operator*=(const Vec2& other)
+{
+    this->x *= other.x;
+    this->y *= other.y;
+    return *this;
 }
 
-float Vec2::dot(Vec2 other){
-  return m_x * other.x() + m_y * other.y();
+Vec2& Vec2::operator*=(float other)
+{
+    this->x *= other;
+    this->y *= other;
+    return *this;
 }
 
-float Vec2::norm() const{
-  return std::sqrt(m_x*m_x + m_y*m_y);
+Vec2 Vec2::operator/(const Vec2& other)
+{
+    return Vec2(this->x / other.x, this->y / other.y);
 }
 
-Vec2 Vec2::normalize(){
-  float norm = this->norm();
-  return Vec2(m_x / norm, m_y / norm);
+Vec2 Vec2::operator/(float other)
+{
+    return Vec2(this->x / other, this->y / other);
 }
 
-float Vec2::angle(){
-  return std::acos(m_x/this->norm());
+Vec2& Vec2::operator/=(const Vec2& other)
+{
+    this->x /= other.x;
+    this->y /= other.y;
+    return *this;
 }
 
-float Vec2::anglebt(Vec2 other){
-  return acos(this->dot(other) / (this->norm() * other.norm()));
+Vec2& Vec2::operator/=(float other)
+{
+    this->x /= other;
+    this->y /= other;
+    return *this;
 }
 
-void Vec2::print(){
-  std::cout << "Vec2(" << m_x << ", " << m_y << ")" << std::endl;
+bool Vec2::operator==(const Vec2& other)
+{
+    if (this->x == other.x && this->y == other.y) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+std::ostream& operator<<(std::ostream& os, Vec2& obj)
+{
+    return os << obj.string();
+}
+
+float Vec2::dot(const Vec2& other) {
+    return this->x * other.x + this->y * other.y;
+}
+
+float Vec2::norm() {
+    return std::sqrt(this->x * this->x + this->y * this->y);
+}
+
+Vec2 Vec2::normalize() {
+    float norm = this->norm();
+    return Vec2(this->x / norm, this->y / norm);
+}
+
+float Vec2::angle() {
+    float angle = std::acos(std::min(1., std::max(-1., (double)this->x / this->norm())));
+    return (this->y > 0) ? angle : -angle;
+}
+
+float Vec2::angle(Vec2& other) {
+    float norm = this->norm() * other.norm();
+    if (norm == 0.) {
+        return 0.;
+    }
+    else {
+        return std::acos(std::min(1., std::max(-1., (double)this->dot(other) / norm)));
+    }
+}
+
+Vec2 Vec2::rotate(float angle) {
+    return Vec2(std::cos(angle) * this->x - std::sin(angle) * this->y, std::sin(angle) * this->x + std::cos(angle) * this->y);
+}
+
+std::string Vec2::string() {
+    return "Vec2(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ")";
 }
