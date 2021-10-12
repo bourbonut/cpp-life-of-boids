@@ -59,7 +59,9 @@ namespace {
 		}
 		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(1000)
 	}
-	/*TEST(Functions, All) {
 
-	}*/
+
+	TEST(TestFlock, NeighborhoodComputing) {
+
+	}
 }
