@@ -20,17 +20,17 @@ private:
 
 public:
 	Bird() {} // Constructeur avec argument par défaut
-	Bird(Vec2 m_position, Vec2 m_velocity) {}
+	Bird(Vec2 m_position, Vec2 m_velocity);
 	~Bird() {} // Destructeur
 
 public:
-	Vec2 getPosition();
+	Vec2 getPosition(); // Do we need it?
 	Vec2 getVelocity();
 
 	const std::vector<Bird> computeNeighbors();
 	void updateVelocity(const std::vector<Bird>& neighbors);
-	Vec2 computePosition();
-	Vec2 updatePosition();
+	void computePosition();
+	void updatePosition();
 	Vec2 cohesion(const std::vector<Bird>& neighbors) {
 		return {};
 	}

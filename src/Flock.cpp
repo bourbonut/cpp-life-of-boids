@@ -21,7 +21,7 @@ void Flock::createPopulation() {
 		Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 		Bird bird = Bird(position, velocity);
 		m_birdsVec[i] = bird;
-		m_nextPos[i] = position;
+		// m_nextPos[i] = position;
 	}
 };
 
@@ -32,6 +32,13 @@ void Flock::calculatePositions() {
 		// interaction (like a new bird) directly to computeNeighbors function.
 		const std::vector<Bird> neighbors = bird.computeNeighbors();
 		bird.updateVelocity(neighbors); // Why const problem?
+		bird.computePosition();
+	}
+};
+
+void Flock::updatePositions(){
+	for (Bird bird : m_birdsVec)
+	{
 		bird.updatePosition();
 	}
 };
@@ -41,5 +48,6 @@ void Flock::addAgent() {
 	Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 	Bird bird = Bird(position, velocity);
 	m_birdsVec.push_back(bird);
+	// m_nextPos.push_back(position);
 	m_popSize += 1;
 };

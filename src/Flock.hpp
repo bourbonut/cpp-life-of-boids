@@ -10,9 +10,10 @@ class Flock {
 public:
 	int m_popSize;
 	std::vector<Bird> m_birdsVec;
-	std::vector<Vec2> m_nextPos;
+	// std::vector<Vec2> m_nextPos;
 	void createPopulation();
 	void calculatePositions();
+	void updatePositions();
 	void addAgent();
 	void destroyAgent();  // Any ideas?? Destroy by position or index?
 	void moveAgents();
