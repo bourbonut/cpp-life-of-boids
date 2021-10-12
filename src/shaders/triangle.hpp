@@ -56,17 +56,17 @@ namespace triangle {
             {{1, 0}, {0., 0., 1.}}   //
         } };
 
-    static const char* const vertex_shader_text
-        = "#version 330\n"
-        "uniform mat4 MVP;\n"
-        "in vec3 vCol;\n"
-        "in vec2 vPos;\n"
-        "out vec3 color;\n"
-        "void main()\n"
-        "{\n"
-        "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
-        "    color = vCol; // pass the color along to the fragment shader\n"
-        "}\n";
+static const char* const vertex_shader_text
+    = "#version 330\n"
+      "uniform mat4 MVP;\n"
+      "in vec3 vCol;\n"
+      "in vec2 vPos;\n"
+      "out vec3 color;\n"
+      "void main()\n"
+      "{\n"
+      "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
+      "    color = vCol; // pass the color along to the fragment shader\n"
+      "}\n";
 
     static const char* const fragment_shader_text
         = "#version 330\n"

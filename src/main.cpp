@@ -6,8 +6,9 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include "myMath/vec2.hpp"
 
-//using vec2 = std::array<float, 2>;
+//using Vec2 = std::array<float, 2>;
 using vec3 = std::array<float, 3>;
 using vec4 = std::array<float, 4>;
 using mat3x3 = std::array<vec3, 3>;
@@ -87,7 +88,7 @@ int main() {
     // init
     VertexArray_bind(triangle_vertexArray);
     Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
-    ShaderProgram_activate(triangle_shaderProgram); // Première apparition de l'erreur
+    ShaderProgram_activate(triangle_shaderProgram); // Premiï¿½re apparition de l'erreur
     glBufferData(GL_ARRAY_BUFFER, sizeof(triangle::vertices), triangle::vertices.data(), GL_STATIC_DRAW);
 
     const GLint mvp_location = ShaderProgram_getUniformLocation(triangle_shaderProgram, "MVP");
@@ -177,8 +178,14 @@ int main() {
         glfwGetFramebufferSize(window, &width, &height);
         const float ratio = (float)width / (float)height;
 
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT);
+      float v = 0;
+      for (auto& p : points) {
+        v += 1.0;
+        p.velocity = Vec2{20*cos(t/10) * (cos(v)-cos(v+1)), 20*cos(t/10) * (sin(v)-sin(v+1))};
+       /* p.position[0] += p.velocity[0];
+        p.position[1] += p.velocity[1];*/
+        p.position += p.velocity;
+      }
 
         {  // triangle
             mat4x4 m = triangle::mat4x4_identity();

@@ -1,4 +1,4 @@
-#include "myMath/Vec2.hpp"
+//#include "../myMath/vec2.hpp"
 
 namespace points {
     struct Point {
