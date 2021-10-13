@@ -202,9 +202,9 @@ int main() {
     t += 1.;
     auto start = high_resolution_clock::now(); // start le chrono
 
-    //int width{}, height{};
-    //glfwGetFramebufferSize(window, &width, &height);
-    //const float ratio = (float)width / (float)height;
+    int width{}, height{};
+    glfwGetFramebufferSize(window, &width, &height);
+    const float ratio = (float)width / (float)height;
 
       float v = 0;
       for (auto& p : points) {
