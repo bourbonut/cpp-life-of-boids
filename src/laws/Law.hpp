@@ -1,5 +1,6 @@
 #pragma once
 #include "../myMath/Vec2.hpp"
+#include "../Bird.hpp"
 //need to add file in CMake.txt
 
 interface Law {
@@ -22,5 +23,13 @@ class CohesionLaw : public Law {
 class SeparationLaw : public Law {
 	Vec2 compute(Bird currentBird, std::vector<Bird> neighbors) {
 		
+	}
+};
+
+class AlignmentLaw : public Law {
+	Vec2 compute(Bird currentBird, std::vector<Bird> neighbors) {
+		
+
+		return Vec2{};
 	}
 };
