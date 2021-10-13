@@ -2,6 +2,7 @@
 #include "Bird.hpp"
 #include "myMath/Vec2.hpp"
 #include "myMath/utils.hpp"
+//#include "laws/Law.hpp"
 // #include "myMath/utils.hpp"
 
 #include <array>

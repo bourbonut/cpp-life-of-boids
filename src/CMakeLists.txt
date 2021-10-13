@@ -9,7 +9,7 @@ add_subdirectory(myMath)
 add_executable(MathPart math_main.cpp)
 target_link_libraries(MathPart PUBLIC myMath)
 
-add_executable(life-of-boids "main.cpp" "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp" "Agent.cpp" "Agent.hpp")
+add_executable(life-of-boids "main.cpp" "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp" "Agent.cpp" "Agent.hpp" "./laws/Law.hpp")
 target_link_libraries(life-of-boids PUBLIC libGLX myMath)
 
 add_executable(main_opencv main_opencv.cpp)
