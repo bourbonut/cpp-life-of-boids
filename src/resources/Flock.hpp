@@ -1,6 +1,6 @@
 #pragma once
 
-#include "myMath/Vec2.hpp"
+#include "../lib/myMath/Vec2.hpp"
 #include "vector"
 #include "Bird.hpp"
 // #include "myMath/utils.hpp"

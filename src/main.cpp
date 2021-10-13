@@ -7,10 +7,10 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "myMath/Vec2.hpp"
+#include "lib/myMath/Vec2.hpp"
 #include <chrono>
 #include <string>
-#include "Flock.hpp"
+#include "resources/Flock.hpp"
 
 //using Vec2 = std::array<float, 2>;
 using vec3 = std::array<float, 3>;
@@ -23,7 +23,7 @@ using namespace std::chrono;
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
-#include "myMath/Vec2.hpp"
+#include "lib/myMath/Vec2.hpp"
 
 /**
   * Prints the error number and description
