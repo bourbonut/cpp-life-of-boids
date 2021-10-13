@@ -1,7 +1,7 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "../src/Bird.hpp"
-#include "../src/Flock.hpp"
+#include "../src/resources/Bird.hpp"
+#include "../src/resources/Flock.hpp"
 #include <vector>
 
 namespace {

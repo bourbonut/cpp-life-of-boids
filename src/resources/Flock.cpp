@@ -1,7 +1,8 @@
 #include "Flock.hpp"
 #include "Bird.hpp"
-#include "myMath/Vec2.hpp"
-#include "myMath/utils.hpp"
+#include "../lib/myMath/Vec2.hpp"
+#include "../lib/myMath/utils.hpp"
+#include "../lib/myLaws/Law.hpp"
 // #include "myMath/utils.hpp"
 
 #include <array>
