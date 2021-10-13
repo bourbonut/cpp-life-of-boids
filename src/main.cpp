@@ -13,10 +13,10 @@
 #include "resources/Flock.hpp"
 
 
-#include "glx.hpp"
-#include "graphics.hpp"
-#include "GraphicalManager.hpp"
-#include "oglTypes.hpp"
+#include "resources/graphics/glx.hpp"
+#include "resources/graphics/graphics.hpp"
+#include "resources/graphics/GraphicalManager.hpp"
+#include "resources/graphics/oglTypes.hpp"
 
 
 int main() {

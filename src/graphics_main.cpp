@@ -5,9 +5,9 @@
 #define _USE_MATH_DEFINES 
 #include <math.h>
 #include "lib/myMath/Vec2.hpp"
-#include "GraphicalManager.hpp"
-#include "graphics.hpp"
-#include "oglTypes.hpp"
+#include "resources/graphics/GraphicalManager.hpp"
+#include "resources/graphics/graphics.hpp"
+#include "resources/graphics/oglTypes.hpp"
 
 int main() {
 	std::cout << "Hello, world !" << std::endl;
