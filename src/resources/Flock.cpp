@@ -8,15 +8,14 @@
 #include <vector>
 
 
-Flock::Flock(int popSize) {
+Flock::Flock(int popSize) : m_birdsVec{popSize}{ // need to instanciate the vector like this otherwise it won't work ???
 
-	std::vector<Bird> m_birdsVec(popSize);
+	//std::vector<Bird> m_birdsVec(popSize);
 	for (int i = 0; i < popSize; ++i)
 	{
 		m_birdsVec[i] = Bird{};
-
 	}
-	std::cout << "popSize : " << m_birdsVec.size() << "\n";
+	//std::cout << "popSize : " << m_birdsVec.size() << "\n";
 };
 
 Flock::Flock() {
@@ -113,6 +112,7 @@ void Flock::moveAgents() {
 };
 
 void Flock::print() {
+	std::cout << "Printing Flock :\n";
 	int i = 0;
 	for (Bird b : m_birdsVec) {
 		std::cout << ++i << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;

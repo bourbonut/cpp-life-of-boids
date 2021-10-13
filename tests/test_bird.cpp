@@ -30,10 +30,11 @@ namespace {
 
 
 	TEST(TestFlock, InstanciationAndAddingAgents) {
-		int testSize = 10;
+		int testSize = 300;
 		int loopSize = 1000;
 
 		Flock flock(testSize);
+		//flock.print();
 		//Initializing a flock with pop size 300 and checking size of vector population
 		ASSERT_EQ(flock.getPopSize(), testSize) << "Population size should be " << testSize;
 
@@ -69,9 +70,10 @@ namespace {
 		std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(flock.getPopSize() - 1), 1, 1);
 		EXPECT_GE(neighbors.size(), 5) << "Expected at least 5 neighbors to the bird we added";
 
-		for (Bird b : neighbors) {
-			std::cout << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
-		}
+		//Printing neighbors
+		//for (Bird b : neighbors) {
+		//	std::cout << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
+		//}
 		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(1000)
 	}
 
