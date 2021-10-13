@@ -30,11 +30,11 @@ Vec2 Bird::getVelocity() const {
 	return m_velocity;
 };
 
-Vec2 Bird::getNextPosition() {
+Vec2 Bird::getNextPosition() const {
 	return m_nextPosition;
 };
 
-Vec2 Bird::getNextVelocity() {
+Vec2 Bird::getNextVelocity() const {
 	return m_nextVelocity;
 };
 
