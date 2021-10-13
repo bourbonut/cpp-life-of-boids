@@ -38,4 +38,5 @@ public:
 	std::vector<Vec2> getCoordinatesArray(const std::vector<Bird>& neighbors);
 	//Vec2 computeBarycenter(const std::vector<Vec2> &points);
 	Vec2 computeAgentsBarycenter(const std::vector<Bird> &neighbors);
+	void print() const;
 };

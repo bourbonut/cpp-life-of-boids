@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include "oglTypes.hpp"
+#include "../oglTypes.hpp"
 
 namespace triangle {
 

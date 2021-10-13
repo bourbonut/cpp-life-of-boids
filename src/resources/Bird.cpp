@@ -111,3 +111,9 @@ std::vector<Vec2> Bird::getCoordinatesArray(const std::vector<Bird> &neighbors) 
 
 	return points;
 }
+
+
+void Bird::print() const {
+	std::cout << ">>>Printing bird : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";
+	std::cout << "\n>>>           N_P( " << m_nextPosition.x << ", " << m_nextPosition.y << " ) / N_V(" << m_nextVelocity.x << ", " << m_nextVelocity.y << " )\n";
+}

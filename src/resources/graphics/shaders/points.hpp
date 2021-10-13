@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include "../lib/myMath/Vec2.hpp"
+#include "../../../lib/myMath/Vec2.hpp"
 #include "../oglTypes.hpp"
 
 namespace points {
