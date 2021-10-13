@@ -31,7 +31,7 @@ public:
     Vec2& operator/=(float other); // scale the vector
 
     Vec2& operator=(const Vec2& other); // assign vector
-    bool operator==(const Vec2& other); // compare current vector with vector
+    bool operator==(const Vec2& other) const; // compare current vector with vector
 
     float dot(const Vec2& other); // return the scalar product
     float norm(); // return the norm of the vector
@@ -39,7 +39,7 @@ public:
     float angle(); // return the angle between the current vector and `Vec2(1, 0)`
     float angle(Vec2& other); // return the angle between the current vector and an other vector
     Vec2 rotate(float angle); // rotate the vector anti-clockwise
-    std::string string(); // return a string useful when you need to display the vector
+    std::string string() const; // return a string useful when you need to display the vector
 };
 
-std::ostream& operator<<(std::ostream& os, Vec2& obj);
+std::ostream& operator<<(std::ostream& os, const Vec2& obj);
