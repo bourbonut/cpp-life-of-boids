@@ -76,8 +76,22 @@ TEST(Bird, Methods) {
 	std::cout << "Position X: " << bird.getPosition().x() << std::endl;
 	ASSERT_NEAR(bird.getPosition().x(), 1, 1e-6);
 	ASSERT_NEAR(bird.getPosition().y(), 1, 1e-6);
+	ASSERT_NEAR(bird.getNextPosition().x(), 1, 1e-6);
+	ASSERT_NEAR(bird.getNextPosition().y(), 1, 1e-6);
 	ASSERT_NEAR(bird.getVelocity().x(), 0, 1e-6);
-	ASSERT_NEAR(bird.getVelocity().y(), 0, 1e-6);
+	ASSERT_NEAR(bird.getVelocity().y(), 1, 1e-6);
+	ASSERT_NEAR(bird.getNextVelocity().x(), 0, 1e-6);
+	ASSERT_NEAR(bird.getNextVelocity().y(), 1, 1e-6);
+
+	bird.computePosition();
+	ASSERT_NEAR(bird.getNextPosition().x(), 1, 1e-6);
+	ASSERT_NEAR(bird.getNextPosition().y(), 2, 1e-6);
+
+	bird.updatePosition();
+	ASSERT_NEAR(bird.getPosition().x(), 1, 1e-6);
+	ASSERT_NEAR(bird.getPosition().y(), 2, 1e-6);
+	ASSERT_NEAR(bird.getVelocity().x(), 0, 1e-6);
+	ASSERT_NEAR(bird.getVelocity().y(), 1, 1e-6);
 	//ASSERT_NEAR(a.norm(), 5., 1e-3) << "Norm";
 >>>>>>> Enriches the tests
 >>>>>>> Enriches the tests
