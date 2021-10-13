@@ -5,19 +5,15 @@ FIND_PACKAGE(OpenCV REQUIRED)
 add_library(libGLX glx.cpp glx.hpp)
 target_link_libraries(libGLX PUBLIC glfw::glfw glad::glad opencv::opencv)
 
-add_library(Grafix "GraphicalManager.hpp" "GraphicalManager.hpp" "graphics.hpp" "graphics.cpp") 
-target_link_libraries(Grafix PUBLIC libGLX)
-
 add_subdirectory(myMath)
 #add_executable(MathPart math_main.cpp)
 #target_link_libraries(MathPart PUBLIC myMath)
 
-#add_subdirectory(graphics)
-add_executable(GraphicsTest graphics_main.cpp)
-target_link_libraries(GraphicsTest PUBLIC libGLX myMath Grafix)
+add_executable(GraphicsTest graphics_main.cpp "graphics.hpp" "graphics.cpp" "GraphicalManager.hpp" "GraphicalManager.cpp")
+target_link_libraries(GraphicsTest PUBLIC libGLX myMath)
 
-add_executable(life-of-boids main.cpp "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp")
-target_link_libraries(life-of-boids PUBLIC libGLX myMath Grafix)
+add_executable(life-of-boids main.cpp "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp" "GraphicalManager.hpp" "GraphicalManager.cpp" "graphics.hpp" "graphics.cpp")
+target_link_libraries(life-of-boids PUBLIC libGLX myMath)
 
 add_executable(main_opencv main_opencv.cpp)
 target_link_libraries(main_opencv PRIVATE opencv::opencv)

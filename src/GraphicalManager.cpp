@@ -1,10 +1,12 @@
 #include <iostream>
+#include <vector>
 #include "glx.hpp"
+#include "GraphicalManager.hpp"
+#include "graphics.hpp"
+
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
-#include "GraphicalManager.hpp"
-#include "graphics.hpp"
 
 
 GraphicalManager::GraphicalManager() {
@@ -20,70 +22,177 @@ GraphicalManager::GraphicalManager() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Triangle", nullptr, nullptr);
+    m_window = glfwCreateWindow(800, 600, "OpenGL Triangle", nullptr, nullptr);
 
-    if (!window) {
+    if (!m_window) {
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
 
-    glfwSetKeyCallback(window, key_callback);
+    glfwSetKeyCallback(m_window, key_callback);
 
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(m_window);
     gladLoadGL();
     glfwSwapInterval(1);
 
     glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+
+    glfwGetFramebufferSize(m_window, &m_width, &m_height);
 }
 
-
-GraphicalManager::GraphicalManager(float width, float height) {
-    std::cout << "Constructing GraphicalManager object" << std::endl;
-    glfwSetErrorCallback(error_callback);
-
-    if (!glfwInit())
-        exit(EXIT_FAILURE);
-
-    // Specifying some OpenGL variables
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(width, height, "OpenGL Triangle", nullptr, nullptr);
-
-    if (!window) {
-        glfwTerminate();
-        exit(EXIT_FAILURE);
-    }
-
-    glfwSetKeyCallback(window, key_callback);
-
-    glfwMakeContextCurrent(window);
-    gladLoadGL();
-    glfwSwapInterval(1);
-
-    glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-}
 
 GraphicalManager::~GraphicalManager() {
-    glfwDestroyWindow(window);
+    glfwDestroyWindow(m_window);
 
     glfwTerminate();
     exit(EXIT_SUCCESS);
 }
 
+void GraphicalManager::defineShaders() {
+    // Triangle part
+    triangle_shaderProgram = ShaderProgram_new(triangle::vertex_shader_text, triangle::fragment_shader_text);
+    triangle_vertexArray = VertexArray_new();
+    triangle_buffer = Buffer_new();
+
+    VertexArray_bind(triangle_vertexArray);
+    Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
+    ShaderProgram_activate(triangle_shaderProgram);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle::vertices), triangle::vertices.data(), GL_STATIC_DRAW);
+
+    m_mvp_location = ShaderProgram_getUniformLocation(triangle_shaderProgram, "MVP");
+    m_vpos_location = ShaderProgram_getAttribLocation(triangle_shaderProgram, "vPos");
+    m_vcol_location = ShaderProgram_getAttribLocation(triangle_shaderProgram, "vCol");
+
+    glVertexAttribPointer(
+        m_vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, pos));
+    glVertexAttribPointer(
+        m_vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, col));
+    glEnableVertexAttribArray(m_vpos_location);
+    glEnableVertexAttribArray(m_vcol_location);
+
+
+
+    // Points part 
+    points_shaderProgram = ShaderProgram_new(points::vertex_shader_text, points::fragment_shader_text);
+    points_vertexArray = VertexArray_new();
+    points_buffer = Buffer_new();
+
+    VertexArray_bind(points_vertexArray);
+    Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
+    ShaderProgram_activate(points_shaderProgram);
+
+    m_transform_location = ShaderProgram_getUniformLocation(points_shaderProgram, "transform");
+    m_pointSize_location = ShaderProgram_getUniformLocation(points_shaderProgram, "pointSize");
+    m_maxSpeedSquared_location = ShaderProgram_getUniformLocation(points_shaderProgram, "maxSpeedSquared");
+    m_position_location = ShaderProgram_getAttribLocation(points_shaderProgram, "position");
+    m_velocity_location = ShaderProgram_getAttribLocation(points_shaderProgram, "velocity");
+
+    glVertexAttribPointer(
+        m_position_location, 2, GL_FLOAT, GL_FALSE, sizeof(points::Point), (void*)offsetof(points::Point, position));
+    glVertexAttribPointer(
+        m_velocity_location, 2, GL_FLOAT, GL_FALSE, sizeof(points::Point), (void*)offsetof(points::Point, velocity));
+
+    glEnableVertexAttribArray(m_position_location);
+    glEnableVertexAttribArray(m_velocity_location);
+
+    glEnable(GL_PROGRAM_POINT_SIZE);
+
+    // Lines part
+
+    // new
+    lines_shaderProgram = ShaderProgram_new(lines::vertex_shader_text, lines::fragment_shader_text);
+    lines_vertexArray = VertexArray_new();
+    lines_buffer = Buffer_new();
+    // init
+    VertexArray_bind(lines_vertexArray);
+    Buffer_bind(lines_buffer, GL_ARRAY_BUFFER);
+    ShaderProgram_activate(lines_shaderProgram);
+
+    m_transform_location2 = ShaderProgram_getUniformLocation(lines_shaderProgram, "transform");
+    m_vpos_location2 = ShaderProgram_getAttribLocation(lines_shaderProgram, "vPos");
+    m_vcol_location2 = ShaderProgram_getAttribLocation(lines_shaderProgram, "vCol");
+
+    glVertexAttribPointer(
+        m_vpos_location2, 2, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, pos));
+    glVertexAttribPointer(
+        m_vcol_location2, 3, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, col));
+
+    glEnableVertexAttribArray(m_vpos_location2);
+    glEnableVertexAttribArray(m_vcol_location2);
+}
+
+//std::vector<points::Point> GraphicalManager::pointsPreprocessing(int number) {
+//    std::vector<points::Point> points(number);
+//    auto get_pos = [=](float t) {
+//        return Vec2{ (float)(m_width * (0.5 + 0.4 * cos(t))), (float)(m_height * (0.5 + 0.4 * sin(t))) };
+//    };
+//
+//    float v = 0;
+//    for (auto& p : points) {
+//        v += 1.0;
+//        p = points::Point{ get_pos(v), Vec2{} };
+//    }
+//
+//    return points;
+//}
+
 int GraphicalManager::mainLoop() {
 
-    while (!glfwWindowShouldClose(window)) {
-        // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
+    defineShaders();
+    // std::vector<points::Point> points = pointsPreprocessing(100);
+
+    float t = 0;
+    while (!glfwWindowShouldClose(m_window)) {
+        glfwGetFramebufferSize(m_window, &m_width, &m_height);
+        const float ratio = (float)m_width / (float)m_height;
+
+        glViewport(0, 0, m_width, m_height);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Draw nothing, see you in tutorial 2 !
+        {  // triangle
+            mat4x4 m = triangle::mat4x4_identity();
+            m = triangle::mat4x4_rotate_Z(m, (float)glfwGetTime());
+            mat4x4 p = triangle::mat4x4_ortho(-ratio, ratio, -1., 1., 1., -1.);
+            mat4x4 mvp = triangle::mat4x4_mul(p, m);
 
+            VertexArray_bind(triangle_vertexArray);
+            Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
+            ShaderProgram_activate(triangle_shaderProgram);
+
+            glUniformMatrix4fv(m_mvp_location, 1, GL_FALSE, (const GLfloat*)&mvp);
+            glBindVertexArray(triangle_vertexArray.vertex_array);
+            glDrawArrays(GL_TRIANGLES, 0, 3);
+        }
+
+        //{  // points
+        //    mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
+        //    float pointSize = 3.0;
+        //    float max_speed = 10.0;
+
+        //    float v = 0;
+        //    for (auto& p : points) {
+        //        v += 1.0;
+        //        p.velocity = Vec2{ 20 * cos(t / 10) * (cos(v) - cos(v + 1)), 20 * cos(t / 10) * (sin(v) - sin(v + 1)) };
+        //        p.position = (p.position + p.velocity);
+        //    } 
+        //    // Les positions sont OK
+        //    VertexArray_bind(points_vertexArray);
+        //    Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
+        //    ShaderProgram_activate(points_shaderProgram);
+
+        //    glUniformMatrix3fv(m_transform_location, 1, GL_FALSE, (const GLfloat*)&transform);
+        //    glUniform1f(m_pointSize_location, pointSize);
+        //    glUniform1f(m_maxSpeedSquared_location, max_speed);
+        //    glBindVertexArray(points_vertexArray.vertex_array);
+
+        //    glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STREAM_DRAW);
+        //    glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(points::Point), points.data(), GL_STREAM_DRAW);
+        //    glDrawArrays(GL_POINTS, 0, points.size());
+        //    // Le rendu n'est pas OK
+        //}
 
         // Swap buffers
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
 

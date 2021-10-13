@@ -1,6 +1,8 @@
 #pragma once
 
 #include "myMath/Vec2.hpp"
+using vec3 = std::array<float, 3>;
+using mat3x3 = std::array<vec3, 3>;
 
 namespace points {
     struct Point {
