@@ -8,8 +8,12 @@
 #include <vector>
 #include <random>
 
+<<<<<<< HEAD
 
 Flock::Flock(int popSize) : m_popSize{ popSize } {
+=======
+Flock::Flock(int popSize) : m_popSize{popSize} {
+>>>>>>> Changes to integrate to the next commit
 	std::vector<Bird> m_birdsVec(m_popSize);
 	std::vector<Vec2> m_nextPos(m_popSize);
 	this->createPopulation();
@@ -66,6 +70,10 @@ void Flock::createPopulation() {
 //		// m_nextPos[i] = position;
 //	}
 //};
+
+std::vector<Bird> getBirdsVec() {
+	return m_birdsVec;
+};
 
 void Flock::calculatePositions() {
 	for (Bird bird : m_birdsVec)
