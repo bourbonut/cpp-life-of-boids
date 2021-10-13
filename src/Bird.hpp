@@ -24,10 +24,10 @@ public:
 	Bird(); // Constructeur sans arguments
 	Bird(const Vec2 &position, const Vec2 &velocity);
 	~Bird(); // Destructeur
-
-public:
 	Vec2 getPosition() const;
 	Vec2 getVelocity() const;
+	Vec2 getNextPosition() const;
+	Vec2 getNextVelocity() const;
 
 	void updateVelocity(const std::vector<Bird>& neighbors);
 	void computePosition();

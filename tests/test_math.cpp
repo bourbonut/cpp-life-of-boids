@@ -1,8 +1,8 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include "gtest/gtest.h"
-#include "../src/myMath/vec2.hpp"
-#include "../src/myMath/utils.hpp"
+#include "../src/lib/myMath/vec2.hpp"
+#include "../src/lib/myMath/utils.hpp"
 #include <vector>
 #include <cmath>
 

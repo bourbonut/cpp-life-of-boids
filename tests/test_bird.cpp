@@ -1,18 +1,31 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "../src/Bird.hpp"
-#include "../src/Flock.hpp"
+#include "../src/resources/Bird.hpp"
+#include "../src/resources/Flock.hpp"
 #include <vector>
 
 namespace {
-
-
 	TEST(TestBird, Instanciation) {
-		Vec2 v = Vec2(3.0f, 3.0f);
-		Bird b = Bird(v, v);
+		Vec2 pos = Vec2(1, 1);
+		Vec2 vel = Vec2(0, 1);
+		Bird b = Bird(pos, vel);
 
-		ASSERT_EQ(b.getPosition().x, b.getVelocity().x) << "Basic instanciation with one vector and test equality of x";
-		ASSERT_EQ(b.getPosition().y, b.getVelocity().y) << "Basic instanciation with one vector and test equality of y";
+		ASSERT_EQ(b.getPosition().x, 1);
+		ASSERT_EQ(b.getPosition().y, 1);
+		//ASSERT_EQ(b.getNextPosition().x, 1);
+		//ASSERT_EQ(b.getNextPosition().y, 1);
+		ASSERT_EQ(b.getVelocity().x, 0);
+		ASSERT_EQ(b.getVelocity().y, 1);
+		//ASSERT_EQ(b.getNextVelocity().x, 0);
+		//ASSERT_EQ(b.getNextVelocity().y, 1);
+
+		b.computePosition();
+		//ASSERT_EQ(b.getNextPosition().x, 1);
+		//ASSERT_EQ(b.getNextPosition().y, 2);
+
+		b.updatePosition();
+		ASSERT_EQ(b.getPosition().x, 1);
+		ASSERT_EQ(b.getPosition().y, 2);
 	}
 
 
@@ -41,6 +54,8 @@ namespace {
 
 		ASSERT_EQ(flock.getPopSize(), testSize + loopSize + 2) << "Added one more agents, should be " << testSize << " + " << loopSize << "+ 2";
 		flock.print();
+
+		//flock[testSize + loopSize + 1].getPosition()
 
 		EXPECT_EQ(flock.getAgent(testSize + loopSize + 1).getPosition(), b.getPosition()) << "Last agent's position should be 0,0";
 		EXPECT_EQ(flock.getAgent(testSize + loopSize + 1).getVelocity(), b.getVelocity()) << "Last agent's velocity should be 0,0";

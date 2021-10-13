@@ -5,20 +5,25 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <vector>
-#include "myMath/Vec2.hpp"
+#include "lib/myMath/Vec2.hpp"
+#include <chrono>
+#include <string>
+#include "resources/Flock.hpp"
 
 //using Vec2 = std::array<float, 2>;
 using vec3 = std::array<float, 3>;
 using vec4 = std::array<float, 4>;
 using mat3x3 = std::array<vec3, 3>;
 using mat4x4 = std::array<vec4, 4>;
+using namespace std::chrono;
 
 #include "glx.hpp"
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
-#include "myMath/Vec2.hpp"
+#include "lib/myMath/Vec2.hpp"
 
 /**
   * Prints the error number and description
@@ -49,7 +54,29 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
         char export_filename[] = "export.png";
         saveImage(export_filename, window);
     }
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+        std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
+        Flock population = Flock(2);
+        population.addAgent();
+    }
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+        std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
+        Flock population = Flock(2);
+        population.addAgent();
+    }
 }
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        double xpos, ypos;
+        //getting cursor position
+        glfwGetCursorPos(window, &xpos, &ypos);
+       std::cout << "Cursor Position at ( " << xpos << " : " << ypos << " ) " << std::endl;
+    }
+}
+
 
 int main() {
     glfwSetErrorCallback(error_callback);
@@ -70,7 +97,8 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    glfwSetKeyCallback(window, key_callback);
+  glfwSetKeyCallback(window, key_callback);
+  glfwSetMouseButtonCallback(window, mouse_button_callback);
 
     glfwMakeContextCurrent(window);
     gladLoadGL();
@@ -157,7 +185,7 @@ int main() {
     int width{}, height{};
     glfwGetFramebufferSize(window, &width, &height);
 
-    std::vector<points::Point> points(100);
+    std::vector<points::Point> points(1000);
     auto get_pos = [=](float t) {
         return Vec2{ (float)(width * (0.5 + 0.4 * cos(t))), (float)(height * (0.5 + 0.4 * sin(t))) };
     };
@@ -168,15 +196,15 @@ int main() {
         p = points::Point{ get_pos(v), Vec2{} };
     }
 
+  // global loop
+  float t = 0; // variable pour faire une rotation du triangles
+  while (!glfwWindowShouldClose(window)) {
+    t += 1.;
+    auto start = high_resolution_clock::now(); // start le chrono
 
-    // global loop
-    float t = 0; // variable pour faire une rotation du triangles
-    while (!glfwWindowShouldClose(window)) {
-        t += 1.;
-
-        int width{}, height{};
-        glfwGetFramebufferSize(window, &width, &height);
-        const float ratio = (float)width / (float)height;
+    int width{}, height{};
+    glfwGetFramebufferSize(window, &width, &height);
+    const float ratio = (float)width / (float)height;
 
       float v = 0;
       for (auto& p : points) {
@@ -245,7 +273,7 @@ int main() {
 
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex A |
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B | Triangle ABC
-            vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C | 
+            vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C |
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B   |
             vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C   | Triangle BCD
             vertex_data.push_back(triangle::Vertex{ {0, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex D   |
@@ -254,8 +282,13 @@ int main() {
 
         }
 
-        // Measure FPS
-        glfwSetWindowTitle(window, "FPS: to be defined");
+    // Measure FPS
+    
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    std::ostringstream oss;
+    oss << "FPS is : " << 1/(duration.count() * 10e-6) << " seconds. " << std::endl;
+    glfwSetWindowTitle(window, oss.str().c_str());
 
         glfwSwapBuffers(window);
         glfwPollEvents();

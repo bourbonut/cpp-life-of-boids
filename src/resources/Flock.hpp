@@ -1,15 +1,13 @@
 #pragma once
 
-#include "myMath/Vec2.hpp"
+#include "../lib/myMath/Vec2.hpp"
 #include "vector"
 #include "Bird.hpp"
 // #include "myMath/utils.hpp"
 
 class Flock {
 private :
-	int m_popSize;
 	std::vector<Bird> m_birdsVec;
-	// std::vector<Vec2> m_nextPos;
 
 public:
 	void print();
