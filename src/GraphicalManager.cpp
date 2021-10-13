@@ -1,12 +1,12 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
+#include <array>
 #include "glx.hpp"
 #include "GraphicalManager.hpp"
 #include "graphics.hpp"
 
-#include "shaders/lines.hpp"
-#include "shaders/points.hpp"
-#include "shaders/triangle.hpp"
 
 
 GraphicalManager::GraphicalManager() {
@@ -121,25 +121,25 @@ void GraphicalManager::defineShaders() {
     glEnableVertexAttribArray(m_vcol_location2);
 }
 
-//std::vector<points::Point> GraphicalManager::pointsPreprocessing(int number) {
-//    std::vector<points::Point> points(number);
-//    auto get_pos = [=](float t) {
-//        return Vec2{ (float)(m_width * (0.5 + 0.4 * cos(t))), (float)(m_height * (0.5 + 0.4 * sin(t))) };
-//    };
-//
-//    float v = 0;
-//    for (auto& p : points) {
-//        v += 1.0;
-//        p = points::Point{ get_pos(v), Vec2{} };
-//    }
-//
-//    return points;
-//}
+std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
+    std::vector<points::Point> points(number);
+    auto get_pos = [=](float t) {
+        return Vec2{ (float)(m_width * (0.5 + 0.4 * cos(t))), (float)(m_height * (0.5 + 0.4 * sin(t))) };
+    };
+
+    float v = 0;
+    for (auto& p : points) {
+        v += 1.0;
+        p = points::Point{ get_pos(v), Vec2{} };
+    }
+
+    return points;
+}
 
 int GraphicalManager::mainLoop() {
 
     defineShaders();
-    // std::vector<points::Point> points = pointsPreprocessing(100);
+    // std::vector<points::Point> points = createPoints(100);
 
     float t = 0;
     while (!glfwWindowShouldClose(m_window)) {
@@ -226,4 +226,5 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
         char export_filename[] = "export.png";
         saveImage(export_filename, window);
     }
+
 }

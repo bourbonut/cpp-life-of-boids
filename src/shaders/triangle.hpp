@@ -1,11 +1,7 @@
 #pragma once
 
 #include <array>
-
-using vec2 = std::array<float, 2>;
-using vec3 = std::array<float, 3>;
-using vec4 = std::array<float, 4>;
-using mat4x4 = std::array<vec4, 4>;
+#include "oglTypes.hpp"
 
 namespace triangle {
 

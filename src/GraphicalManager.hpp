@@ -1,9 +1,12 @@
 #pragma once
 
 #include <vector>
+#include <array>
 
 #include "glx.hpp"
-
+#include "shaders/lines.hpp"
+#include "shaders/points.hpp"
+#include "shaders/triangle.hpp"
 
 class GraphicalManager {
 private:
@@ -44,7 +47,7 @@ public:
 	
 
 	void defineShaders();
-	// std::vector<points::Point> pointsPreprocessing(int number);
+	std::vector<points::Point> createPoints(unsigned int number);
 	int mainLoop();
 };
 

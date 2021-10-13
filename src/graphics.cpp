@@ -1,10 +1,8 @@
-#define _USE_MATH_DEFINES 
-#include <math.h>
+#pragma once
+
 #include "graphics.hpp"
 #include "myMath/vec2.hpp"
-
-using mat2x3 = std::array<Vec2, 3>;
-using mat2x6 = std::array<Vec2, 6>;
+#include "oglTypes.hpp"
 
 mat2x6 drawAgent(Vec2 position, Vec2 velocity, float h, float w) {
 

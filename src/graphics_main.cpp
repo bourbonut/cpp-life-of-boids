@@ -1,13 +1,13 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
 #define _USE_MATH_DEFINES 
 #include <math.h>
 #include "myMath/Vec2.hpp"
+#include "GraphicalManager.hpp"
 #include "graphics.hpp"
-
-
-using mat2x3 = std::array<Vec2, 3>;
-using mat2x6 = std::array<Vec2, 6>;
+#include "oglTypes.hpp"
 
 int main() {
 	std::cout << "Hello, world !" << std::endl;
