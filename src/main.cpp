@@ -185,7 +185,7 @@ int main() {
     int width{}, height{};
     glfwGetFramebufferSize(window, &width, &height);
 
-    std::vector<points::Point> points(100);
+    std::vector<points::Point> points(1000);
     auto get_pos = [=](float t) {
         return Vec2{ (float)(width * (0.5 + 0.4 * cos(t))), (float)(height * (0.5 + 0.4 * sin(t))) };
     };
@@ -273,7 +273,7 @@ int main() {
 
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex A |
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B | Triangle ABC
-            vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C | 
+            vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C |
             vertex_data.push_back(triangle::Vertex{ {w, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex B   |
             vertex_data.push_back(triangle::Vertex{ {0, h / 2 + h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex C   | Triangle BCD
             vertex_data.push_back(triangle::Vertex{ {0, h / 2 - h * 0.002f}, {0.0, 1.0, 1.0} }); // Vertex D   |
