@@ -1,3 +1,5 @@
+#pragma once
+
 namespace lines {
     static const char* const vertex_shader_text = R"#(
 #version 330 core

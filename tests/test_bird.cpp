@@ -45,7 +45,7 @@ namespace {
 		for (int i = 0; i < loopSize; ++i) {
 			flock.addAgent();
 		}
-		ASSERT_EQ(flock.getPopSize(), testSize + 1001) << "Added " << loopSize << " agents, now popSize should be " << testSize << " + " << loopSize << "+ 1";
+		ASSERT_EQ(flock.getPopSize(), testSize + loopSize+1) << "Added " << loopSize << " agents, now popSize should be " << testSize << " + " << loopSize << "+ 1";
 
 
 		//Adding a specific agent with specific values
