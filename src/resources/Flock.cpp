@@ -19,7 +19,6 @@ Flock::Flock() {
 	//m_popSize = RANDOM SINON createPopulation va pas marcher
 	std::vector<Bird> m_birdsVec(0);
 	std::vector<Vec2> m_nextPos(0);
-
 };
 
 int Flock::getPopSize() const {

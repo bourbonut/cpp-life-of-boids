@@ -37,5 +37,4 @@ TEST(Bird, Methods) {
 	Bird bird2 = Bird(position, velocity);
 	std::vector<Bird> birdsVec{ bird1, bird2 };
 
-	//ASSERT_NEAR(a.norm(), 5., 1e-3) << "Norm";
 }
