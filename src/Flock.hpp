@@ -11,8 +11,8 @@ private :
 	std::vector<Bird> m_birdsVec;
 	// std::vector<Vec2> m_nextPos;
 
-<<<<<<< HEAD
 public:
+<<<<<<< HEAD
 <<<<<<< HEAD
 	void print();
 	int getPopSize() const;
@@ -22,14 +22,12 @@ public:
 	std::vector<Bird> getBirdsVec();
 >>>>>>> Changes to integrate to the next commit
 >>>>>>> Changes to integrate to the next commit
+=======
+>>>>>>> Rebase conflicts
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
-<<<<<<< HEAD
 	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
-=======
-	const std::vector<Bird> computeNeighbors(Bird bird) { return std::vector<Bird> {bird}; };
->>>>>>> Enriches the tests
 	void addAgent();
 	void addAgent(Bird b);
 	void destroyAgent(Vec2 position);
