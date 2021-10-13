@@ -4,7 +4,7 @@
 #include <vector>
 class Bird;
 
-class SeparationLaw : public ILaw {
+class SeparationLaw : public Law {
 public:
 	Vec2 compute(Bird& currentBird, const std::vector<Bird>& neighbors) const override;
 };

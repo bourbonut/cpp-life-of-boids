@@ -4,7 +4,7 @@
 #include <vector>
 class Bird;
 
-class CohesionLaw : public ILaw {
+class CohesionLaw : public Law {
 public:
 	Vec2 compute(Bird& currentBird, const std::vector<Bird>& neighbors) const override;
 };
