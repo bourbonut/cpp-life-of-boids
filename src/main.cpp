@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
-#include "myMath/vec2.hpp"
+#include "myMath/Vec2.hpp"
 
 //using Vec2 = std::array<float, 2>;
 using vec3 = std::array<float, 3>;
