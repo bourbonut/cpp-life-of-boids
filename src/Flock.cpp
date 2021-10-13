@@ -85,6 +85,15 @@ void Flock::addAgent() {
 	std::cout << "taille population : " << m_popSize << "\n";
 };
 
+void Flock::addAgent(float xpos, float ypos) {
+	Vec2&& position = Vec2(xpos, ypos);  //random(0, 100);
+	Vec2&& velocity = Vec2(-2, 1);  //random(0, 5);
+	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
+	// m_nextPos.push_back(position);
+	m_popSize += 1;
+	std::cout << "taille population : " << m_popSize << "\n";
+};
+
 //see if we need a const &b or not ?
 void Flock::addAgent(Bird b) {
 	m_birdsVec.emplace_back(b);

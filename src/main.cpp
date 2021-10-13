@@ -75,8 +75,9 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
         //getting cursor position
         glfwGetCursorPos(window, &xpos, &ypos);
        std::cout << "Cursor Position at ( " << xpos << " : " << ypos << " ) " << std::endl;
-       //population.createPopulation();
+       population.addAgent(xpos, ypos);
 
+       Vec2 getPosition(); // chercher le dernier oiseau, puis chercher ses coordonnées et comparer avec les coordonnées affichées sur la console
     }
 }
 
