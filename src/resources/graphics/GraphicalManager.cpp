@@ -11,6 +11,7 @@
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
 
+#include "../Flock.hpp"
 
 GraphicalManager::GraphicalManager() {
     std::cout << "Constructing GraphicalManager object" << std::endl;
@@ -141,12 +142,9 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
     return points;
 }
 
-int GraphicalManager::mainLoop() {
-    std::vector<points::Point> points = createPoints(10);
+bool GraphicalManager::mainLoop(float t, Flock & flock) {
 
-    float t = 0;
-    while (!glfwWindowShouldClose(m_window)) {
-        ++t;
+    if (!glfwWindowShouldClose(m_window)) {
 
         int width{};
         int height{};
@@ -188,16 +186,16 @@ int GraphicalManager::mainLoop() {
             auto h = static_cast<float>(m_height);
             auto w = static_cast<float>(m_width);
 
-            float v = 0;
-            for (auto& p : points) {
-                v += 1.0;
-                p.velocity = Vec2{ 5 * cos(t / 10) * (cos(v) - cos(v + 1)), 5 * cos(t / 10) * (sin(v) - sin(v + 1)) };
-                p.position = (p.position + p.velocity);
 
-                mat2x6 result = drawAgent(p.position, p.velocity, h, w);
+            for (int i = 0; i < flock.getPopSize(); ++i) {
+                Bird b = flock.getAgent(i);
+                b.computePosition();
+                b.updatePosition();
 
-                for (int i = 0; i < result.size(); ++i) {
-                    vertex_data.push_back(triangle::Vertex{ {result[i].x, result[i].y}, {0.0, 1.0, 1.0} });
+                mat2x6 result = drawAgent(b.getPosition(), b.getVelocity(), h, w);
+
+                for (int j = 0; j < result.size(); ++j) {
+                    vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {0.0, 1.0, 1.0} });
                 }
             }
 
@@ -211,7 +209,7 @@ int GraphicalManager::mainLoop() {
         glfwPollEvents();
     }
 
-    return 0;
+    return glfwWindowShouldClose(m_window);
 }
 
 /** Prints the error number and description

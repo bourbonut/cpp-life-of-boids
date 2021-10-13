@@ -12,7 +12,7 @@ private :
 public:
 	void print();
 	int getPopSize() const;
-	Bird getAgent(int index) const;
+	Bird getAgent(int index);
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();

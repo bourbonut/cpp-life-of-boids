@@ -22,6 +22,21 @@
 int main() {
 
     GraphicalManager GM{};
-    GM.mainLoop();
+
+
+    Flock flock{};
+    Bird titi(Vec2(400, 400), Vec2(4, 4));
+    flock.addAgent(titi);
+    Bird toto(Vec2(200, 400), Vec2(-4, 4));
+    flock.addAgent(toto);
+
+
+    float t = 0;
+    bool shouldClose = false;
+    while (!shouldClose) {
+        shouldClose = GM.mainLoop(t, flock);
+        ++t;
+    }
+
 
 }
