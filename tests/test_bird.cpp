@@ -12,16 +12,16 @@ namespace {
 
 		ASSERT_EQ(b.getPosition().x, 1);
 		ASSERT_EQ(b.getPosition().y, 1);
-		//ASSERT_EQ(b.getNextPosition().x, 1);
-		//ASSERT_EQ(b.getNextPosition().y, 1);
+		ASSERT_EQ(b.getNextPosition().x, 1);
+		ASSERT_EQ(b.getNextPosition().y, 1);
 		ASSERT_EQ(b.getVelocity().x, 0);
 		ASSERT_EQ(b.getVelocity().y, 1);
-		//ASSERT_EQ(b.getNextVelocity().x, 0);
-		//ASSERT_EQ(b.getNextVelocity().y, 1);
+		ASSERT_EQ(b.getNextVelocity().x, 0);
+		ASSERT_EQ(b.getNextVelocity().y, 1);
 
 		b.computePosition();
-		//ASSERT_EQ(b.getNextPosition().x, 1);
-		//ASSERT_EQ(b.getNextPosition().y, 2);
+		ASSERT_EQ(b.getNextPosition().x, 1);
+		ASSERT_EQ(b.getNextPosition().y, 2);
 
 		b.updatePosition();
 		ASSERT_EQ(b.getPosition().x, 1);
@@ -40,7 +40,7 @@ namespace {
 		//Adding one agent and checking size
 		flock.addAgent();
 		ASSERT_EQ(flock.getPopSize(), testSize + 1) << "Added an agent with addAgent(), now popSize should be " << testSize << " +1";
-	
+
 		//Adding 1000 agents
 		for (int i = 0; i < loopSize; ++i) {
 			flock.addAgent();
