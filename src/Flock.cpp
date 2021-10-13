@@ -16,15 +16,10 @@ Flock::Flock(int popSize) : m_popSize{ popSize } {
 };
 
 Flock::Flock() {
-<<<<<<< HEAD
 	//m_popSize = RANDOM SINON createPopulation va pas marcher
-=======
-	int m_popSize = 0;
->>>>>>> Enriches the tests
 	std::vector<Bird> m_birdsVec(0);
 	std::vector<Vec2> m_nextPos(0);
 
-	this->createPopulation();
 };
 
 int Flock::getPopSize() const {
@@ -36,7 +31,6 @@ void Flock::createPopulation() {
 	//m_birdsVec.reserve(m_popSize + 100); // Should we do that?
 	for (int i = 0; i < m_popSize; ++i)
 	{
-<<<<<<< HEAD
 		std::random_device dev;
 		std::mt19937 rng(dev());
 		std::uniform_int_distribution<std::mt19937::result_type> rand100(0, 100);
@@ -47,12 +41,6 @@ void Flock::createPopulation() {
 		//Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 		m_birdsVec.emplace_back(Bird(position, velocity));
 		// m_nextPos[i] = position;
-=======
-		Vec2 position = Vec2(5, 10);  //random(0, 100);
-		Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
-		m_birdsVec[i] = Bird(position, velocity);
-		m_birdsVec.reserve(m_popSize + 100); // Should we do that?
->>>>>>> Enriches the tests
 	}
 };
 //here when this will be called by line 21, m_popsize will be 0 so it won't iterate, and reserve here is in the iteration !
@@ -66,10 +54,6 @@ void Flock::createPopulation() {
 //		// m_nextPos[i] = position;
 //	}
 //};
-
-std::vector<Bird> getBirdsVec() {
-	return m_birdsVec;
-};
 
 void Flock::calculatePositions() {
 	for (Bird bird : m_birdsVec)
