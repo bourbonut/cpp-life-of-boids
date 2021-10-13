@@ -11,10 +11,17 @@ private :
 	std::vector<Bird> m_birdsVec;
 	// std::vector<Vec2> m_nextPos;
 
+<<<<<<< HEAD
 public:
+<<<<<<< HEAD
 	void print();
 	int getPopSize() const;
 	Bird getAgent(int index) const;
+=======
+=======
+	std::vector<Bird> getBirdsVec();
+>>>>>>> Changes to integrate to the next commit
+>>>>>>> Changes to integrate to the next commit
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
