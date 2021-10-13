@@ -79,7 +79,7 @@ Vec2 Bird::separation(const std::vector<Bird>& neighbors)
 		//Get the weight from the inverse of the square, depending on the distance between the two agents
 		weight = 1 / ((distBetwA / m_SEPARATION_RANGE) * (distBetwA / m_SEPARATION_RANGE));
 		//Calculates a vector between agent b and this, and mutiplies it by the current weight of agent b
-		result = result + (b.getPosition() - m_position) * weight;
+		result = result + (m_position - b.getPosition()) * weight;
 	}
 
 	//divide the actual final vector by the number of neighbor birds to get a final vector pointing to the barycenter needed
