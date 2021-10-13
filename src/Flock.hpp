@@ -12,11 +12,15 @@ private :
 	// std::vector<Vec2> m_nextPos;
 
 public:
+	void print();
+	int getPopSize() const;
+	Bird getAgent(int index) const;
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
 	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
 	void addAgent();
+	void addAgent(Bird b);
 	void destroyAgent(Vec2 position);
 	void moveAgents();
 

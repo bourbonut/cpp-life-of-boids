@@ -98,7 +98,7 @@ Vec2& Vec2::operator/=(float other)
     return *this;
 }
 
-bool Vec2::operator==(const Vec2& other)
+bool Vec2::operator==(const Vec2& other) const
 {
     if (this->x == other.x && this->y == other.y) {
         return true;
@@ -108,7 +108,7 @@ bool Vec2::operator==(const Vec2& other)
     }
 }
 
-std::ostream& operator<<(std::ostream& os, Vec2& obj)
+std::ostream& operator<<(std::ostream& os, const Vec2& obj)
 {
     return os << obj.string();
 }
@@ -145,6 +145,6 @@ Vec2 Vec2::rotate(float angle) {
     return Vec2(std::cos(angle) * this->x - std::sin(angle) * this->y, std::sin(angle) * this->x + std::cos(angle) * this->y);
 }
 
-std::string Vec2::string() {
+std::string Vec2::string() const {
     return "Vec2(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ")";
 }
