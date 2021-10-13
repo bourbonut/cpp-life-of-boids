@@ -9,16 +9,14 @@
 #include <random>
 
 
-Flock::Flock(int popSize) : m_popSize{ popSize } {
-	std::vector<Bird> m_birdsVec(m_popSize);
-	std::vector<Vec2> m_nextPos(m_popSize);
+Flock::Flock(int popSize) {
+	std::vector<Bird> m_birdsVec(popSize);
 	this->createPopulation();
 };
 
 Flock::Flock() {
 	//m_popSize = RANDOM SINON createPopulation va pas marcher
 	std::vector<Bird> m_birdsVec(0);
-	std::vector<Vec2> m_nextPos(0);
 };
 
 int Flock::getPopSize() const {
@@ -30,7 +28,7 @@ void Flock::createPopulation() {
 	m_birdsVec.reserve(this->getPopSize() + 100); // Should we do that?
 	for (int i = 0; i < this->getPopSize(); ++i)
 	{
-		std::random_device dev;
+		std::random_device dev;  // After we have to replace this lines for a vec2.random
 		std::mt19937 rng(dev());
 		std::uniform_int_distribution<std::mt19937::result_type> rand100(0, 100);
 		std::uniform_int_distribution<std::mt19937::result_type> rand2(0, 2);
