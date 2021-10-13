@@ -1,9 +1,9 @@
 #pragma once
 #include "Agent.hpp"
-#include "myMath/Vec2.hpp"
+#include "../lib/myMath/Vec2.hpp"
 #include <vector>
-#include "laws/SeparationLaw.hpp"
-#include "laws/CohesionLaw.hpp"
+#include "../lib/myLaws/SeparationLaw.hpp"
+#include "../lib/myLaws/CohesionLaw.hpp"
 
 
 class Bird {

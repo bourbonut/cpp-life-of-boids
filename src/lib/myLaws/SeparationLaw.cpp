@@ -2,7 +2,7 @@
 #include "../myMath/utils.hpp"
 #include <vector>
 class Bird;
-#include "../Bird.hpp"
+#include "../../resources/Bird.hpp"
 
 Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
 

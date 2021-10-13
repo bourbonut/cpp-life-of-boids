@@ -1,7 +1,7 @@
 #pragma once
 #include "../myMath/Vec2.hpp"
 class Bird;
-#include "../Bird.hpp"
+#include "../../resources/Bird.hpp"
 #include <vector>
 //need to add file in CMake.txt
 

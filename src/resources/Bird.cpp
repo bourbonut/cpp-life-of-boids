@@ -2,8 +2,8 @@
 
 #include <array>
 #include <vector>
-#include "myMath/Vec2.hpp"
-#include "myMath/utils.hpp"
+#include "../lib/myMath/Vec2.hpp"
+#include "../lib/myMath/utils.hpp"
 
 //Bird::Bird() = default;
 //Bird::Bird(Vec2 &position, Vec2 &velocity){
