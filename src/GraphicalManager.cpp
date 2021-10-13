@@ -45,18 +45,7 @@ GraphicalManager::GraphicalManager() {
     glfwGetFramebufferSize(m_window, &width, &height);
     m_width = (float) width;
     m_height = (float) height;
-}
 
-
-GraphicalManager::~GraphicalManager() {
-    glfwDestroyWindow(m_window);
-
-    glfwTerminate();
-    exit(EXIT_SUCCESS);
-}
-
-void GraphicalManager::defineShaders() {
-    // Triangle part
     triangle_shaderProgram = ShaderProgram_new(triangle::vertex_shader_text, triangle::fragment_shader_text);
     triangle_vertexArray = VertexArray_new();
     triangle_buffer = Buffer_new();
@@ -128,6 +117,15 @@ void GraphicalManager::defineShaders() {
     glEnableVertexAttribArray(m_vcol_location2);
 }
 
+
+GraphicalManager::~GraphicalManager() {
+    glfwDestroyWindow(m_window);
+
+    glfwTerminate();
+    exit(EXIT_SUCCESS);
+}
+
+
 std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
     std::vector<points::Point> points(number);
     auto get_pos = [=](float t) {
@@ -144,12 +142,12 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
 }
 
 int GraphicalManager::mainLoop() {
-
-    defineShaders();
     std::vector<points::Point> points = createPoints(10);
 
     float t = 0;
     while (!glfwWindowShouldClose(m_window)) {
+        ++t;
+
         int width{};
         int height{};
         glfwGetFramebufferSize(m_window, &width, &height);

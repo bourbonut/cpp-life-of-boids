@@ -46,7 +46,6 @@ public:
 	~GraphicalManager();
 	
 
-	void defineShaders();
 	std::vector<points::Point> createPoints(unsigned int number);
 	int mainLoop();
 };
