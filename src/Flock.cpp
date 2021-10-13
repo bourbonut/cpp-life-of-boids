@@ -8,12 +8,8 @@
 #include <vector>
 #include <random>
 
-<<<<<<< HEAD
 
 Flock::Flock(int popSize) : m_popSize{ popSize } {
-=======
-Flock::Flock(int popSize) : m_popSize{popSize} {
->>>>>>> Changes to integrate to the next commit
 	std::vector<Bird> m_birdsVec(m_popSize);
 	std::vector<Vec2> m_nextPos(m_popSize);
 	this->createPopulation();
