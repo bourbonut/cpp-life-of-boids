@@ -3,16 +3,19 @@
 #include "../lib/myMath/Vec2.hpp"
 #include "../lib/myMath/utils.hpp"
 #include "../lib/myLaws/Law.hpp"
-// #include "myMath/utils.hpp"
-
 #include <array>
-#include <vector>
 #include <random>
+#include <vector>
 
 
-Flock::Flock(int popSize) {
-	std::vector<Bird> m_birdsVec(popSize);
-	this->createPopulation();
+Flock::Flock(int popSize) : m_birdsVec{popSize}{ // need to instanciate the vector like this otherwise it won't work ???
+
+	//std::vector<Bird> m_birdsVec(popSize);
+	for (int i = 0; i < popSize; ++i)
+	{
+		m_birdsVec[i] = Bird{};
+	}
+	//std::cout << "popSize : " << m_birdsVec.size() << "\n";
 };
 
 Flock::Flock() {
@@ -26,8 +29,8 @@ int Flock::getPopSize() const {
 
 
 void Flock::createPopulation() {
-	m_birdsVec.reserve(this->getPopSize() + 100); // Should we do that?
-	for (int i = 0; i < this->getPopSize(); ++i)
+	m_birdsVec.reserve(1000000); // Should we do that?
+	for (int i = 0; i < m_birdsVec.size(); ++i)
 	{
 		std::random_device dev;  // After we have to replace this lines for a vec2.random
 		std::mt19937 rng(dev());
@@ -109,6 +112,7 @@ void Flock::moveAgents() {
 };
 
 void Flock::print() {
+	std::cout << "Printing Flock :\n";
 	int i = 0;
 	for (Bird b : m_birdsVec) {
 		std::cout << ++i << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
