@@ -4,7 +4,6 @@
 #include "../src/Flock.hpp"
 #include <vector>
 
-<<<<<<< HEAD
 namespace {
 
 
@@ -68,6 +67,7 @@ namespace {
 	}
 =======
 	}*/
+<<<<<<< HEAD
 =======
 TEST(Bird, Methods) {
 	Vec2 position = Vec2(1., 1.);
@@ -95,4 +95,6 @@ TEST(Bird, Methods) {
 	//ASSERT_NEAR(a.norm(), 5., 1e-3) << "Norm";
 >>>>>>> Enriches the tests
 >>>>>>> Enriches the tests
+=======
+>>>>>>> Rebase with conflicts
 }
