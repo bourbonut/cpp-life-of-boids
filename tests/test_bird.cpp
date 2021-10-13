@@ -40,7 +40,7 @@ namespace {
 		//Adding one agent and checking size
 		flock.addAgent();
 		ASSERT_EQ(flock.getPopSize(), testSize + 1) << "Added an agent with addAgent(), now popSize should be " << testSize << " +1";
-	
+
 		//Adding 1000 agents
 		for (int i = 0; i < loopSize; ++i) {
 			flock.addAgent();
