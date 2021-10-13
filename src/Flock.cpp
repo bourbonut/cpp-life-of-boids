@@ -82,6 +82,7 @@ void Flock::addAgent() {
 	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
 	// m_nextPos.push_back(position);
 	m_popSize += 1;
+	std::cout << "taille population : " << m_popSize << "\n";
 };
 
 //see if we need a const &b or not ?
@@ -95,6 +96,9 @@ void Flock::destroyAgent(Vec2 position) {
 			// If distance < 1, destroy bird 
 			return (bird.getPosition() - pos).norm() < 1; });
 	m_birdsVec.erase(garbageBirdsVec);
+	m_popSize -= 1;
+	std::cout << "Destruction : " << "\n";
+	std::cout << "taille population : " << m_popSize << "\n";
 };
 
 std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, const float &angle) {

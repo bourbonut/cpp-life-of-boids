@@ -43,6 +43,9 @@ static void error_callback(int error, const char* description) {
   * @param scancode
   * @param action action taken (press, unpress, repeat...)
   */
+
+Flock population = Flock(2);
+
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
     // If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -56,13 +59,11 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
     }
     if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
         std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-        Flock population = Flock(2);
         population.addAgent();
     }
     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
         std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
-        Flock population = Flock(2);
-        population.addAgent();
+        population.destroyAgent(Vec2(5, 10));
     }
 }
 
@@ -76,6 +77,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
        std::cout << "Cursor Position at ( " << xpos << " : " << ypos << " ) " << std::endl;
     }
 }
+
 
 
 int main() {
