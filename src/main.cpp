@@ -7,58 +7,18 @@
 #include <iostream>
 #include <vector>
 
-//using vec2 = std::array<float, 2>;
-using vec3 = std::array<float, 3>;
-using vec4 = std::array<float, 4>;
-using mat3x3 = std::array<vec3, 3>;
-using mat4x4 = std::array<vec4, 4>;
 
 #include "glx.hpp"
-#include "shaders/lines.hpp"
-#include "shaders/points.hpp"
-#include "shaders/triangle.hpp"
 #include "myMath/Vec2.hpp"
 #include "graphics.hpp"
 #include "GraphicalManager.hpp"
+#include "oglTypes.hpp"
 
-using mat2x3 = std::array<Vec2, 3>;
-using mat2x6 = std::array<Vec2, 6>;
-
-
-/**
-  * Prints the error number and description
-  *
-  * @param error Error ID.
-  * @param description Error text description.
-  */
-static void error_callback(int error, const char* description) {
-    std::cerr << "Error[" << error << "]: " << description << "\n";
-}
-
-/**
-  * Actions to be taken when specific keys are pressed
-  *
-  * @param window our window
-  * @param key which key
-  * @param scancode
-  * @param action action taken (press, unpress, repeat...)
-  */
-static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
-    // If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        // Sets the window into "closing mode"
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
-    if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-        std::puts("Export current display");
-        char export_filename[] = "export.png";
-        saveImage(export_filename, window);
-    }
-}
 
 int main() {
 
-    GraphicalManager GM;
+    GraphicalManager GM{};
+    GM.mainLoop();
 
     /*
     glfwSetErrorCallback(error_callback);

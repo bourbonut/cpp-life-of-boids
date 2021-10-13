@@ -3,10 +3,13 @@
 #include <iostream>
 #include <vector>
 #include <array>
-#include "glx.hpp"
 #include "GraphicalManager.hpp"
+#include "glx.hpp"
 #include "graphics.hpp"
 
+#include "shaders/lines.hpp"
+#include "shaders/points.hpp"
+#include "shaders/triangle.hpp"
 
 
 GraphicalManager::GraphicalManager() {
@@ -37,7 +40,11 @@ GraphicalManager::GraphicalManager() {
 
     glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 
-    glfwGetFramebufferSize(m_window, &m_width, &m_height);
+    int width{};
+    int height{};
+    glfwGetFramebufferSize(m_window, &width, &height);
+    m_width = (float) width;
+    m_height = (float) height;
 }
 
 
@@ -139,11 +146,15 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
 int GraphicalManager::mainLoop() {
 
     defineShaders();
-    // std::vector<points::Point> points = createPoints(100);
+    std::vector<points::Point> points = createPoints(10);
 
     float t = 0;
     while (!glfwWindowShouldClose(m_window)) {
-        glfwGetFramebufferSize(m_window, &m_width, &m_height);
+        int width{};
+        int height{};
+        glfwGetFramebufferSize(m_window, &width, &height);
+        m_width = (float)width;
+        m_height = (float)height;
         const float ratio = (float)m_width / (float)m_height;
 
         glViewport(0, 0, m_width, m_height);
@@ -164,32 +175,38 @@ int GraphicalManager::mainLoop() {
             glDrawArrays(GL_TRIANGLES, 0, 3);
         }
 
-        //{  // points
-        //    mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
-        //    float pointSize = 3.0;
-        //    float max_speed = 10.0;
+        {  // lines
+            mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
 
-        //    float v = 0;
-        //    for (auto& p : points) {
-        //        v += 1.0;
-        //        p.velocity = Vec2{ 20 * cos(t / 10) * (cos(v) - cos(v + 1)), 20 * cos(t / 10) * (sin(v) - sin(v + 1)) };
-        //        p.position = (p.position + p.velocity);
-        //    } 
-        //    // Les positions sont OK
-        //    VertexArray_bind(points_vertexArray);
-        //    Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
-        //    ShaderProgram_activate(points_shaderProgram);
+            VertexArray_bind(lines_vertexArray);
+            Buffer_bind(lines_buffer, GL_ARRAY_BUFFER);
+            ShaderProgram_activate(lines_shaderProgram);
 
-        //    glUniformMatrix3fv(m_transform_location, 1, GL_FALSE, (const GLfloat*)&transform);
-        //    glUniform1f(m_pointSize_location, pointSize);
-        //    glUniform1f(m_maxSpeedSquared_location, max_speed);
-        //    glBindVertexArray(points_vertexArray.vertex_array);
+            glUniformMatrix3fv(m_transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
+            glBindVertexArray(lines_vertexArray.vertex_array);
 
-        //    glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STREAM_DRAW);
-        //    glBufferData(GL_ARRAY_BUFFER, points.size() * sizeof(points::Point), points.data(), GL_STREAM_DRAW);
-        //    glDrawArrays(GL_POINTS, 0, points.size());
-        //    // Le rendu n'est pas OK
-        //}
+            std::vector<triangle::Vertex> vertex_data;
+
+            auto h = static_cast<float>(m_height);
+            auto w = static_cast<float>(m_width);
+
+            float v = 0;
+            for (auto& p : points) {
+                v += 1.0;
+                p.velocity = Vec2{ 5 * cos(t / 10) * (cos(v) - cos(v + 1)), 5 * cos(t / 10) * (sin(v) - sin(v + 1)) };
+                p.position = (p.position + p.velocity);
+
+                mat2x6 result = drawAgent(p.position, p.velocity, h, w);
+
+                for (int i = 0; i < result.size(); ++i) {
+                    vertex_data.push_back(triangle::Vertex{ {result[i].x(), result[i].y()}, {0.0, 1.0, 1.0} });
+                }
+            }
+
+            glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
+            glDrawArrays(GL_TRIANGLES, 0, vertex_data.size());
+
+        }
 
         // Swap buffers
         glfwSwapBuffers(m_window);

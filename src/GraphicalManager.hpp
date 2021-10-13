@@ -11,8 +11,8 @@
 class GraphicalManager {
 private:
 	GLFWwindow* m_window;
-	int m_height;
-	int m_width;
+	float m_height;
+	float m_width;
 
 	GLint m_mvp_location;
 	GLint m_vpos_location;

@@ -1,3 +1,4 @@
+#include <array>
 #include "points.hpp"
 #include "../oglTypes.hpp"
 

@@ -9,12 +9,14 @@ add_subdirectory(myMath)
 #add_executable(MathPart math_main.cpp)
 #target_link_libraries(MathPart PUBLIC myMath)
 
+add_subdirectory(shaders)
+
 add_executable(GraphicsTest graphics_main.cpp "graphics.hpp" "graphics.cpp" "GraphicalManager.hpp" "GraphicalManager.cpp" "oglTypes.hpp")
-target_link_libraries(GraphicsTest PUBLIC libGLX myMath)
+target_link_libraries(GraphicsTest PUBLIC libGLX myMath shaders)
 
 add_executable(life-of-boids main.cpp "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp" "GraphicalManager.hpp" "GraphicalManager.cpp" "graphics.hpp" "graphics.cpp" "oglTypes.hpp")
-target_link_libraries(life-of-boids PUBLIC libGLX myMath)
+target_link_libraries(life-of-boids PUBLIC libGLX myMath shaders)
 
-add_executable(main_opencv main_opencv.cpp "shaders/points.cpp")
+add_executable(main_opencv main_opencv.cpp)
 target_link_libraries(main_opencv PRIVATE opencv::opencv)
 
