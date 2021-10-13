@@ -15,6 +15,6 @@ target_link_libraries(life-of-boids PUBLIC libGLX myMath)
 add_executable(main_opencv main_opencv.cpp)
 target_link_libraries(main_opencv PRIVATE opencv::opencv)
 
-add_library(birdsLib "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp")
 
+add_library(birdsLib "Bird.cpp" "Bird.hpp" "Flock.cpp" "Flock.hpp")
 
