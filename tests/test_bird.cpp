@@ -30,7 +30,7 @@ namespace {
 
 
 	TEST(TestFlock, InstanciationAndAddingAgents) {
-		int testSize = 300;
+		int testSize = 10;
 		int loopSize = 1000;
 
 		Flock flock(testSize);

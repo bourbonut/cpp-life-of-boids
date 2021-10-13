@@ -3,16 +3,20 @@
 #include "../lib/myMath/Vec2.hpp"
 #include "../lib/myMath/utils.hpp"
 #include "../lib/myLaws/Law.hpp"
-// #include "myMath/utils.hpp"
-
 #include <array>
-#include <vector>
 #include <random>
+#include <vector>
 
 
 Flock::Flock(int popSize) {
+
 	std::vector<Bird> m_birdsVec(popSize);
-	this->createPopulation();
+	for (int i = 0; i < popSize; ++i)
+	{
+		m_birdsVec[i] = Bird{};
+
+	}
+	std::cout << "popSize : " << m_birdsVec.size() << "\n";
 };
 
 Flock::Flock() {
@@ -26,8 +30,8 @@ int Flock::getPopSize() const {
 
 
 void Flock::createPopulation() {
-	m_birdsVec.reserve(this->getPopSize() + 100); // Should we do that?
-	for (int i = 0; i < this->getPopSize(); ++i)
+	m_birdsVec.reserve(1000000); // Should we do that?
+	for (int i = 0; i < m_birdsVec.size(); ++i)
 	{
 		std::random_device dev;  // After we have to replace this lines for a vec2.random
 		std::mt19937 rng(dev());
