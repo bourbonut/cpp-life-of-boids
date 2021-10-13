@@ -15,14 +15,14 @@ private:
 	Vec2 m_nextPosition; // A copier dans velocity
 	double m_bodySize;
 	double m_viewAngle;
-	double m_COHESION_RANGE;
-	double m_NEIGHBOR_RANGE;
-	double m_SEPARATION_RANGE;
-	double m_ALIGNMENT_RELAXATION;
-	double m_COHESION_RELAXATION;	
+	//double m_COHESION_RANGE;
+	//double m_NEIGHBOR_RANGE;
+	//double m_SEPARATION_RANGE;
+	//double m_ALIGNMENT_RELAXATION;
+	//double m_COHESION_RELAXATION;	
 
 	//CohesionLaw m_cohesionLaw{};// = CohesionLaw{};
-	//SeparationLaw m_separationLaw;// = SeparationLaw{};
+	SeparationLaw m_separationLaw;// = SeparationLaw{};
 	//AlignmentLaw m_AlignmentLaw{}
 
 public:

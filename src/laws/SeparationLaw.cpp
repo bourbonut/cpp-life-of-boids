@@ -4,7 +4,7 @@
 class Bird;
 #include "../Bird.hpp"
 
-Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const override  {
+Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
 
 	Vec2 result;
 	float distBetwA = 0, weight = 0;
