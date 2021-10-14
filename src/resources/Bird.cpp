@@ -4,8 +4,8 @@
 #include <vector>
 #include "../lib/myMath/Vec2.hpp"
 #include "../lib/myMath/utils.hpp"
-#include "../lib/myLaws/SeparationLaw.hpp"
-#include "../lib/myLaws/CohesionLaw.hpp"
+//#include "../lib/myLaws/SeparationLaw.hpp"
+//#include "../lib/myLaws/CohesionLaw.hpp"
 
 //Bird::Bird() = default;
 //Bird::Bird(Vec2 &position, Vec2 &velocity){
@@ -31,6 +31,7 @@ Vec2 Bird::getPosition() const {
 Vec2 Bird::getVelocity() const {
 	return m_velocity;
 };
+
 
 void Bird::updateVelocity(const std::vector<Bird>& neighbors) {
 	////Vec2 vecCohesion = this->cohesion(neighbors);
