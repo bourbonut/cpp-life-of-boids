@@ -27,4 +27,7 @@ public:
 	Flock(int popsize);
 	~Flock() {}; // Destructeur
 
+	auto begin() { return m_birdsVec.begin(); }
+	auto end() { return m_birdsVec.end(); }
+
 };

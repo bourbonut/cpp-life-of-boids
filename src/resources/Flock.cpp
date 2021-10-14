@@ -45,7 +45,7 @@ void Flock::createPopulation() {
 };
 
 void Flock::calculatePositions() {
-	for (Bird bird : m_birdsVec)
+	for (auto & bird : m_birdsVec)
 	{ 
 		const std::vector<Bird> neighbors = this->computeNeighbors(bird, 0,0); //TODO : CHANGE THIS CALL
 		bird.updateVelocity(neighbors);
@@ -54,7 +54,7 @@ void Flock::calculatePositions() {
 };
 
 void Flock::updatePositions() {
-	for (Bird bird : m_birdsVec)
+	for (auto & bird : m_birdsVec)
 	{
 		bird.updatePosition();  // replace for a range function
 	}
@@ -122,3 +122,4 @@ void Flock::print() {
 Bird Flock::getAgent(int index) {
 	return this->m_birdsVec.at(index);
 }
+

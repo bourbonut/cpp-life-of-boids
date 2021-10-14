@@ -48,8 +48,6 @@ void Bird::updateVelocity(const std::vector<Bird> &neighbors) {
 
 void Bird::computePosition() {
 	m_nextPosition = m_position + m_nextVelocity;
-
-	std::cout << "Pos : " << m_position << "Next pos : " << m_nextPosition << "\n";
 };
 
 void Bird::updatePosition() {

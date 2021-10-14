@@ -151,7 +151,7 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
         glfwGetFramebufferSize(m_window, &width, &height);
         m_width = (float)width;
         m_height = (float)height;
-        const float ratio = (float)m_width / (float)m_height;
+        const float ratio = m_width / m_height;
 
         glViewport(0, 0, m_width, m_height);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -187,15 +187,14 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
             auto w = static_cast<float>(m_width);
 
 
-            for (int i = 0; i < flock.getPopSize(); ++i) {
-                Bird b = flock.getAgent(i);
-                b.computePosition();
-                b.updatePosition();
+            for (auto & bird : flock) {
+                bird.computePosition();
+                bird.updatePosition();
 
-                mat2x6 result = drawAgent(b.getPosition(), b.getVelocity(), h, w);
+                mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity(), h, w);
 
                 for (int j = 0; j < result.size(); ++j) {
-                    vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {0.0, 1.0, 1.0} });
+                    vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
                 }
             }
 
