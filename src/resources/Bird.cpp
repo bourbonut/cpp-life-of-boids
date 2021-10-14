@@ -10,7 +10,7 @@
 //	m_position = Vec2(position);
 //	m_velocity = Vec2(velocity);
 //}
-Bird::~Bird(){}
+Bird::~Bird() {};
 
 Bird::Bird(const Vec2 &position, const Vec2 &velocity) : m_position{ position }, m_velocity{ velocity },
 										   m_nextPosition{ position }, m_nextVelocity{velocity} {};
@@ -58,4 +58,4 @@ void Bird::updatePosition() {
 void Bird::print() const {
 	std::cout << ">>>Printing bird : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";
 	std::cout << "\n>>>           N_P( " << m_nextPosition.x << ", " << m_nextPosition.y << " ) / N_V(" << m_nextVelocity.x << ", " << m_nextVelocity.y << " )\n";
-}
+};

@@ -25,4 +25,4 @@ Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbor
 
 	return result;
 
-}
+};
