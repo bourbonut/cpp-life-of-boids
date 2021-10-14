@@ -1,0 +1,2 @@
+/usr/bin/ar qc liblibGLX.a CMakeFiles/libGLX.dir/glx.cpp.o CMakeFiles/libGLX.dir/resources/Bird.cpp.o CMakeFiles/libGLX.dir/resources/Flock.cpp.o
+/usr/bin/ranlib liblibGLX.a
