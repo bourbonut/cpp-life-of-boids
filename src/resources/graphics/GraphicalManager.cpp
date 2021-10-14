@@ -156,20 +156,20 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
         glViewport(0, 0, m_width, m_height);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        {  // triangle
-            mat4x4 m = triangle::mat4x4_identity();
-            m = triangle::mat4x4_rotate_Z(m, (float)glfwGetTime());
-            mat4x4 p = triangle::mat4x4_ortho(-ratio, ratio, -1., 1., 1., -1.);
-            mat4x4 mvp = triangle::mat4x4_mul(p, m);
+        //{  // triangle
+        //    mat4x4 m = triangle::mat4x4_identity();
+        //    m = triangle::mat4x4_rotate_Z(m, (float)glfwGetTime());
+        //    mat4x4 p = triangle::mat4x4_ortho(-ratio, ratio, -1., 1., 1., -1.);
+        //    mat4x4 mvp = triangle::mat4x4_mul(p, m);
 
-            VertexArray_bind(triangle_vertexArray);
-            Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
-            ShaderProgram_activate(triangle_shaderProgram);
+        //    VertexArray_bind(triangle_vertexArray);
+        //    Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
+        //    ShaderProgram_activate(triangle_shaderProgram);
 
-            glUniformMatrix4fv(m_mvp_location, 1, GL_FALSE, (const GLfloat*)&mvp);
-            glBindVertexArray(triangle_vertexArray.vertex_array);
-            glDrawArrays(GL_TRIANGLES, 0, 3);
-        }
+        //    glUniformMatrix4fv(m_mvp_location, 1, GL_FALSE, (const GLfloat*)&mvp);
+        //    glBindVertexArray(triangle_vertexArray.vertex_array);
+        //    glDrawArrays(GL_TRIANGLES, 0, 3);
+        //}
 
         {  // lines
             mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
