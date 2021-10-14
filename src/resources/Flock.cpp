@@ -9,13 +9,13 @@
 
 
 Flock::Flock(int popSize) : m_birdsVec{popSize}{ // need to instanciate the vector like this otherwise it won't work ???
-
+	//createPopulation();
 	//std::vector<Bird> m_birdsVec(popSize);
 	for (int i = 0; i < popSize; ++i)
 	{
-		m_birdsVec[i] = Bird{};
+		addAgent(Bird{});
 	}
-	//std::cout << "popSize : " << m_birdsVec.size() << "\n";
+	std::cout << "popSize : " << m_birdsVec.size() << "\n";
 };
 
 Flock::Flock() {
@@ -29,7 +29,7 @@ int Flock::getPopSize() const {
 
 
 void Flock::createPopulation() {
-	m_birdsVec.reserve(1000000); // Should we do that?
+	m_birdsVec.reserve(m_birdsVec.size() * 2); // Should we do that?
 	std::random_device dev;  // After we have to replace this lines for a vec2.random
 	for (int i = 0; i < m_birdsVec.size(); ++i)
 	{

@@ -18,10 +18,12 @@ Bird::Bird(const Vec2& position, const Vec2& velocity) : m_position{ position },
 m_nextPosition{ position }, m_nextVelocity{ velocity } {};
 
 Bird::Bird() {
-	m_position = Vec2(0, 0);
-	m_velocity = Vec2(1, 1);
-	m_nextPosition = Vec2(0, 0);
-	m_nextVelocity = Vec2(1, 1);
+	Vec2 pos = randomVec2Generation(0, 250);
+	Vec2 vel = randomVec2Generation(-1, 1);
+	m_position = pos;
+	m_velocity = vel;
+	m_nextPosition = pos+1;
+	m_nextVelocity = vel+1;
 };
 
 Vec2 Bird::getPosition() const {
