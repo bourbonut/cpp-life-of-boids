@@ -25,9 +25,9 @@ int main() {
 
 
     Flock flock{};
-    Bird titi(Vec2(400, 400), Vec2(1, 1));
+    Bird titi(Vec2(400, 400), Vec2(0.2, 0.2));
     flock.addAgent(titi);
-    Bird toto(Vec2(200, 400), Vec2(-1, 1));
+    Bird toto(Vec2(200, 400), Vec2(-0.2, 0.2));
     flock.addAgent(toto);
 
 

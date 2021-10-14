@@ -16,7 +16,7 @@ int main() {
 	Vec2 velocity(2, 5);
 	Vec2 velocity2(2, -5);
 
-	mat2x6 result = drawAgent(position, velocity, 600.f, 800.f);
+	mat2x6 result = drawAgent(position, velocity);
 
 	for (int i = 0; i < result.size(); ++i) {
 		std::cout << result[i].string() << std::endl;

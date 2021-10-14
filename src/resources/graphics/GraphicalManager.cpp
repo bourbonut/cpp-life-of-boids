@@ -191,7 +191,7 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
                 bird.computePosition();
                 bird.updatePosition();
 
-                mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity(), h, w);
+                mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());
 
                 for (int j = 0; j < result.size(); ++j) {
                     vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
