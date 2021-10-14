@@ -5,7 +5,7 @@ class Bird;
 #include "../../resources/Bird.hpp"
 
 
-Vec2 AlignmentLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
+Vec2 AlignmentLaw::computeposition(Bird& currentBird, const std::vector<Bird>& neighbors) const {
 
 	float ALIGNMENT_RADIUS = 50;
 		Vec2 nextVelocity(0, 0);
