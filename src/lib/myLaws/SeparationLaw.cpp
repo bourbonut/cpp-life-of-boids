@@ -3,7 +3,6 @@
 #include <vector>
 class Bird;
 #include "../../resources/Bird.hpp"
-#include "SeparationLaw.hpp"
 
 Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
 
@@ -25,4 +24,4 @@ Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbor
 
 	return result;
 
-};
+}
