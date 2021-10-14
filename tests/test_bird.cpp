@@ -12,16 +12,16 @@ namespace {
 
 		ASSERT_EQ(b.getPosition().x, 1);
 		ASSERT_EQ(b.getPosition().y, 1);
-		//ASSERT_EQ(b.getNextPosition().x, 1);
-		//ASSERT_EQ(b.getNextPosition().y, 1);
+		ASSERT_EQ(b.getNextPosition().x, 1);
+		ASSERT_EQ(b.getNextPosition().y, 1);
 		ASSERT_EQ(b.getVelocity().x, 0);
 		ASSERT_EQ(b.getVelocity().y, 1);
-		//ASSERT_EQ(b.getNextVelocity().x, 0);
-		//ASSERT_EQ(b.getNextVelocity().y, 1);
+		ASSERT_EQ(b.getNextVelocity().x, 0);
+		ASSERT_EQ(b.getNextVelocity().y, 1);
 
 		b.computePosition();
-		//ASSERT_EQ(b.getNextPosition().x, 1);
-		//ASSERT_EQ(b.getNextPosition().y, 2);
+		ASSERT_EQ(b.getNextPosition().x, 1);
+		ASSERT_EQ(b.getNextPosition().y, 2);
 
 		b.updatePosition();
 		ASSERT_EQ(b.getPosition().x, 1);
@@ -34,18 +34,19 @@ namespace {
 		int loopSize = 1000;
 
 		Flock flock(testSize);
+		//flock.print();
 		//Initializing a flock with pop size 300 and checking size of vector population
 		ASSERT_EQ(flock.getPopSize(), testSize) << "Population size should be " << testSize;
 
 		//Adding one agent and checking size
 		flock.addAgent();
 		ASSERT_EQ(flock.getPopSize(), testSize + 1) << "Added an agent with addAgent(), now popSize should be " << testSize << " +1";
-	
+
 		//Adding 1000 agents
 		for (int i = 0; i < loopSize; ++i) {
 			flock.addAgent();
 		}
-		ASSERT_EQ(flock.getPopSize(), testSize + 1001) << "Added " << loopSize << " agents, now popSize should be " << testSize << " + " << loopSize << "+ 1";
+		ASSERT_EQ(flock.getPopSize(), testSize + loopSize+1) << "Added " << loopSize << " agents, now popSize should be " << testSize << " + " << loopSize << "+ 1";
 
 
 		//Adding a specific agent with specific values
@@ -69,9 +70,10 @@ namespace {
 		std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(flock.getPopSize() - 1), 1, 1);
 		EXPECT_GE(neighbors.size(), 5) << "Expected at least 5 neighbors to the bird we added";
 
-		for (Bird b : neighbors) {
-			std::cout << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
-		}
+		//Printing neighbors
+		//for (Bird b : neighbors) {
+		//	std::cout << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
+		//}
 		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(1000)
 	}
 

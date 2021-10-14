@@ -1,6 +1,6 @@
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
-class Bird;
+#include "Law.hpp"
 #include "../../resources/Bird.hpp"
 #include <vector>
 
@@ -29,5 +29,3 @@ Vec2 Law::computeAgentsBarycenter(const std::vector<Bird>& neighbors) const {
 
 	return barycenter(points);
 };
-
-
