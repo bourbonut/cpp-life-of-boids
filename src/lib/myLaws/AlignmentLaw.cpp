@@ -14,10 +14,8 @@ Vec2 AlignmentLaw::computeposition(Bird& currentBird, const std::vector<Bird>& n
 	for (int i = 0; i < neighbors.size(); ++i) {
 		if ((currentBird.getPosition() - neighbors[i]) < ALIGNMENT_RADIUS) {
 			Vec2 nextVelocity = currentBird.getVelocity() + neighbors[i];
-			
+			Vec2 nextVelocity = nextVelocity / neighbors.size();
 		}
-
-		Vec2 nextVelocity = nextVelocity / neighbors.size();
 	}
 
 	return Vec2{};
