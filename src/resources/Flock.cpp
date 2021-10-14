@@ -30,14 +30,14 @@ int Flock::getPopSize() const {
 
 void Flock::createPopulation() {
 	m_birdsVec.reserve(1000000); // Should we do that?
+	std::random_device dev;  // After we have to replace this lines for a vec2.random
 	for (int i = 0; i < m_birdsVec.size(); ++i)
 	{
-		std::random_device dev;  // After we have to replace this lines for a vec2.random
 		std::mt19937 rng(dev());
-		std::uniform_int_distribution<std::mt19937::result_type> rand100(0, 100);
+		std::uniform_int_distribution<std::mt19937::result_type> rand600(0, 600);
 		std::uniform_int_distribution<std::mt19937::result_type> rand2(0, 2);
 		//Vec2 position = Vec2(5, 10);  //random(0, 100);
-		Vec2 position = Vec2(rand100(rng), rand100(rng));  //random(0, 100);
+		Vec2 position = Vec2(rand600(rng), rand600(rng));  //random(0, 100);
 		Vec2 velocity = Vec2(rand2(rng), rand2(rng));  //random(0, 5);
 		//Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 		m_birdsVec.emplace_back(Bird(position, velocity));
@@ -45,7 +45,7 @@ void Flock::createPopulation() {
 };
 
 void Flock::calculatePositions() {
-	for (Bird bird : m_birdsVec)
+	for (auto & bird : m_birdsVec)
 	{ 
 		const std::vector<Bird> neighbors = this->computeNeighbors(bird, 0,0); //TODO : CHANGE THIS CALL
 		bird.updateVelocity(neighbors);
@@ -54,7 +54,7 @@ void Flock::calculatePositions() {
 };
 
 void Flock::updatePositions() {
-	for (Bird bird : m_birdsVec)
+	for (auto & bird : m_birdsVec)
 	{
 		bird.updatePosition();  // replace for a range function
 	}
@@ -63,7 +63,7 @@ void Flock::updatePositions() {
 
 //why double && ? and m_popSize is juste m_birdsVec.size(), so no need ?
 void Flock::addAgent() {
-	Vec2 position = Vec2(5, 10);  //random(0, 100);
+	Vec2 position = Vec2(500, 500);  //random(0, 100);
 	Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
 };
@@ -119,6 +119,7 @@ void Flock::print() {
 	}
 }
 
-Bird Flock::getAgent(int index) const {
+Bird Flock::getAgent(int index) {
 	return this->m_birdsVec.at(index);
 }
+

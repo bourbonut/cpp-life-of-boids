@@ -8,6 +8,8 @@
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
 
+#include "../Flock.hpp"
+
 class GraphicalManager {
 private:
 	GLFWwindow* m_window;
@@ -47,7 +49,7 @@ public:
 	
 
 	std::vector<points::Point> createPoints(unsigned int number);
-	int mainLoop();
+	bool mainLoop(float t, Flock & flock);
 };
 
 
