@@ -37,6 +37,10 @@ public:
 	void updateVelocity(const std::vector<Bird>& neighbors);
 	void computePosition();
 	void updatePosition();
+	Vec2 getNextPosition() const;
+	Vec2 getNextVelocity() const;
+
+
 	//Vec2 cohesion(const std::vector<Bird>& neighbors);
 	Vec2 alignment(const std::vector<Bird>& neighbors) { return {}; };
 	//Vec2 separation(const std::vector<Bird>& neighbors);

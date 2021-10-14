@@ -32,6 +32,14 @@ Vec2 Bird::getVelocity() const {
 	return m_velocity;
 };
 
+Vec2 Bird::getNextPosition() const {
+	return m_nextPosition;
+};
+
+Vec2 Bird::getNextVelocity() const {
+	return m_nextVelocity;
+};
+
 
 void Bird::updateVelocity(const std::vector<Bird>& neighbors) {
 	////Vec2 vecCohesion = this->cohesion(neighbors);
