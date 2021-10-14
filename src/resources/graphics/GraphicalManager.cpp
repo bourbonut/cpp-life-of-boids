@@ -10,6 +10,7 @@
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
+#include <math.h>
 
 
 GraphicalManager::GraphicalManager() {
