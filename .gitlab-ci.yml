@@ -10,7 +10,7 @@ build-stage:
         - echo "Updating apt ..."
         - sudo apt update && sudo apt upgrade
         - echo "Downloading libgtk2.0-dev libgl1-mesa-dev"
-        - sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+        - Y | sudo DEBIAN_FRONTEND=noninteractive apt install -y libgtk2.0-dev libgl1-mesa-dev
         - echo "Building..."
         - if [ -d "build" ]; then rm -r "build"; fi
         - mkdir build
