@@ -1,6 +1,7 @@
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
+class Bird;
 #include "../../resources/Bird.hpp"
 #include "SeparationLaw.hpp"
 
