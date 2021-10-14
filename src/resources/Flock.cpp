@@ -15,7 +15,6 @@ Flock::Flock(int popSize) : m_birdsVec{popSize}{ // need to instanciate the vect
 	{
 		addAgent(Bird{});
 	}
-	std::cout << "popSize : " << m_birdsVec.size() << "\n";
 };
 
 Flock::Flock() {
@@ -90,20 +89,12 @@ std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, 
 
 	//Like this one bird is going to be its own potential neighbor
 	for (Bird potentialNeighbor : m_birdsVec){
-		if (distance(bird.getPosition(), potentialNeighbor.getPosition()) <= range) { //only range because was scared of angle
+		float d = distance(bird.getPosition(), potentialNeighbor.getPosition());
+		if (d <= range) { //only range because was scared of angle
 			neighbors.emplace_back(potentialNeighbor);
 		}
 	}
 	//	if distance(Vec2 Birds, Vec2 Bird[i]) <= Neighbor.radius && degrees(mybird.getVelocity().angle(neighbor)) <= angle{
-	//		{
-
-	//		birds.push_back(Bird{j});
-
-
-
-	//	}
-
-	//	}
 	return neighbors;
 };
 

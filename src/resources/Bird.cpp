@@ -44,17 +44,18 @@ Vec2 Bird::getNextVelocity() const {
 
 
 void Bird::updateVelocity(const std::vector<Bird>& neighbors) {
-	////Vec2 vecCohesion = this->cohesion(neighbors);
 	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors);
 	//Vec2 vecAlignment = this->alignment(neighbors);
 	Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);
-	////Vec2 vecSeparation = this->separation(neighbors);
-	//Vec2 vec_displacement = vecCohesion + vecAlignment + vecSeparation;
-	//m_nextVelocity = m_velocity + vec_displacement;
+	Vec2 vec_displacement = vecCohesion +10;// + /*vecAlignment + */ vecSeparation;
 };
 
 void Bird::computePosition() {
 	m_nextPosition = m_position + m_nextVelocity;
+
+	//TO CHANGE !!! ONLY TO SHOW SMHT TO CLIENT
+	//m_nextVelocity += randomVec2Generation(-1, 1);//.normalize(); //Test to randomly move birds
+	//m_nextVelocity.normalize();
 };
 
 void Bird::updatePosition() {
