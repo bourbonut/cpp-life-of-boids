@@ -26,12 +26,11 @@ namespace {
 		ASSERT_EQ(b.getPosition().y, 2);
 	}
 
-	
-		//balayage 1000 agents
+		//balayage 100000 agents
 		for (int i = 0; i < neighbors.size(); ++i) {
 		
 		}
-		ASSERT_EQ(neighbors.size(), loopSizee + 1001);
+		ASSERT_EQ(neighbors.size(), loopSizee + 100001);
 
 
 		EXPECT_EQ((currentBird.getPosition() - neighbors[1]).getPosition(), b.getPosition(1));
