@@ -9,8 +9,9 @@
 #include <random>
 
 
-Flock::Flock(int popSize) {
-	std::vector<Bird> m_birdsVec(popSize);
+Flock::Flock(int popSize) : m_popSize{popSize} {
+	std::vector<Bird> m_birdsVec(m_popSize);
+	std::vector<Vec2> m_nextPos(m_popSize);
 	this->createPopulation();
 };
 
@@ -34,6 +35,10 @@ void Flock::createPopulation() {
 		//Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 		m_birdsVec.emplace_back(Bird(position, velocity));
 	}
+};
+
+std::vector<Bird> getBirdsVec() {
+	return m_birdsVec;
 };
 
 void Flock::calculatePositions() {
