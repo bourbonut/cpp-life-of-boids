@@ -9,8 +9,8 @@ class Flock {
 private :
 	std::vector<Bird> m_birdsVec;
 
-<<<<<<< HEAD
 public:
+<<<<<<< HEAD
 <<<<<<< HEAD
 	void print();
 	int getPopSize() const;
@@ -20,6 +20,8 @@ public:
 	std::vector<Bird> getBirdsVec();
 >>>>>>> Changes to integrate to the next commit
 >>>>>>> Changes to integrate to the next commit
+=======
+>>>>>>> Rebase conflicts
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
