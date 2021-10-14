@@ -1,7 +1,7 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "../src/Bird.hpp"
-#include "../src/Flock.hpp"
+#include "../src/resources/Bird.hpp"
+#include "../src/resources/Flock.hpp"
 #include <vector>
 
 namespace {
@@ -34,6 +34,7 @@ namespace {
 		int loopSize = 1000;
 
 		Flock flock(testSize);
+		//flock.print();
 		//Initializing a flock with pop size 300 and checking size of vector population
 		ASSERT_EQ(flock.getPopSize(), testSize) << "Population size should be " << testSize;
 
@@ -45,7 +46,7 @@ namespace {
 		for (int i = 0; i < loopSize; ++i) {
 			flock.addAgent();
 		}
-		ASSERT_EQ(flock.getPopSize(), testSize + 1001) << "Added " << loopSize << " agents, now popSize should be " << testSize << " + " << loopSize << "+ 1";
+		ASSERT_EQ(flock.getPopSize(), testSize + loopSize+1) << "Added " << loopSize << " agents, now popSize should be " << testSize << " + " << loopSize << "+ 1";
 
 
 		//Adding a specific agent with specific values
@@ -69,40 +70,15 @@ namespace {
 		std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(flock.getPopSize() - 1), 1, 1);
 		EXPECT_GE(neighbors.size(), 5) << "Expected at least 5 neighbors to the bird we added";
 
-		for (Bird b : neighbors) {
-			std::cout << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
-		}
+		//Printing neighbors
+		//for (Bird b : neighbors) {
+		//	std::cout << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
+		//}
 		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(1000)
 	}
 
 
 	TEST(TestFlock, NeighborhoodComputing) {
 
-	}
-
-	TEST(Bird, Methods) {
-		Vec2 position = Vec2(1., 1.);
-		Vec2 velocity = Vec2(0., 1.);
-		Bird bird = Bird(position, velocity);
-		std::cout << "Position X: " << bird.getPosition().x() << std::endl;
-		ASSERT_NEAR(bird.getPosition().x(), 1, 1e-6);
-		ASSERT_NEAR(bird.getPosition().y(), 1, 1e-6);
-		ASSERT_NEAR(bird.getNextPosition().x(), 1, 1e-6);
-		ASSERT_NEAR(bird.getNextPosition().y(), 1, 1e-6);
-		ASSERT_NEAR(bird.getVelocity().x(), 0, 1e-6);
-		ASSERT_NEAR(bird.getVelocity().y(), 1, 1e-6);
-		ASSERT_NEAR(bird.getNextVelocity().x(), 0, 1e-6);
-		ASSERT_NEAR(bird.getNextVelocity().y(), 1, 1e-6);
-
-		bird.computePosition();
-		ASSERT_NEAR(bird.getNextPosition().x(), 1, 1e-6);
-		ASSERT_NEAR(bird.getNextPosition().y(), 2, 1e-6);
-
-		bird.updatePosition();
-		ASSERT_NEAR(bird.getPosition().x(), 1, 1e-6);
-		ASSERT_NEAR(bird.getPosition().y(), 2, 1e-6);
-		ASSERT_NEAR(bird.getVelocity().x(), 0, 1e-6);
-		ASSERT_NEAR(bird.getVelocity().y(), 1, 1e-6);
-		//ASSERT_NEAR(a.norm(), 5., 1e-3) << "Norm";
 	}
 }

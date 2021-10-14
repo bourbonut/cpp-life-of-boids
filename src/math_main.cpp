@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
-#include "myMath/Vec2.hpp"
-#include "myMath/utils.hpp"
+#include "lib/myMath/Vec2.hpp"
+#include "lib/myMath/utils.hpp"
 #include <iostream>
 #include <vector>
 #include <cmath>

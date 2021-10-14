@@ -2,7 +2,8 @@
 
 #include <array>
 #include <vector>
-#include "myMath/Vec2.hpp"
+#include "../lib/myMath/Vec2.hpp"
+
 // #include "myMath/utils.hpp"
 
 Agent::Agent(Vec2 position, Vec2 velocity) {

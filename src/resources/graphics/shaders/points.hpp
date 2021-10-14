@@ -1,4 +1,8 @@
-//#include "../myMath/Vec2.hpp"
+#pragma once
+
+#include <array>
+#include "../../../lib/myMath/Vec2.hpp"
+#include "../oglTypes.hpp"
 
 namespace points {
     struct Point {
@@ -6,9 +10,7 @@ namespace points {
         Vec2 velocity;
     };
 
-    mat3x3 vertex_transform_2d(float width, float height) {
-        return mat3x3{ {{{2.f / width, 0.f, 0.f}}, {{0.f, -2.f / height, 0.f}}, {{-1.f, 1.f, 1.f}}} };
-    }
+    mat3x3 vertex_transform_2d(float, float); 
 
     // Shader sources
     static const char* const vertex_shader_text = R"#(
