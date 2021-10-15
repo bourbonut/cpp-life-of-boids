@@ -1,7 +1,7 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include "gtest/gtest.h"
-#include "../src/lib/myMath/vec2.hpp"
+#include "../src/lib/myMath/Vec2.hpp"
 #include "../src/lib/myMath/utils.hpp"
 #include <vector>
 #include <cmath>
