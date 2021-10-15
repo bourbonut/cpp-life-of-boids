@@ -12,8 +12,8 @@ before_script:
 after_script:
     - echo '########################-END-#############################'
 
-build-stage:
-    stage: build
+build-and-test-stage:
+    stage: build-and-test
     script:
         - echo "Building files..."
         - rm -rf buildGCC
@@ -22,12 +22,14 @@ build-stage:
         - conan install ..
         - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake ..
         - cmake --build . --config "Release"
-    artifacts:
-        paths:
-            - buildGCC/
-
-test-stage:
-    stage: test
-    script:
         - echo "Running tests..."
         - ctest
+#    artifacts:
+#        paths:
+#            - buildGCC/
+
+#test-stage:
+#    stage: test
+#    script:
+#        - echo "Running tests..."
+#        - ctest
