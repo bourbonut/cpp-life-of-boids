@@ -135,6 +135,7 @@ GraphicalManager::~GraphicalManager() {
 }
 
 
+
 std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
     std::vector<points::Point> points(number);
     auto get_pos = [=](float t) {
@@ -150,7 +151,7 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
     return points;
 }
 
-bool GraphicalManager::mainLoop(float t, Flock & flock) {
+bool GraphicalManager::mainLoop(float t) {
 
     if (!glfwWindowShouldClose(m_window)) {
         auto start = high_resolution_clock::now();
@@ -196,10 +197,10 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
             auto w = static_cast<float>(m_width);
 
 
-            for (auto & bird : flock) {
+            for (auto & bird : *flockPtr) {
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
                 //bird.updatePosition();
-                bird.updateVelocity(flock.computeNeighbors(bird, 50, 50));
+                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
                 bird.computePosition();
                 bird.updatePosition();
 
@@ -229,6 +230,7 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
     return glfwWindowShouldClose(m_window);
 }
 
+
 /** Prints the error number and description
   *
   * @param error Error ID.
@@ -247,7 +249,6 @@ static void error_callback(int error, const char* description) {
   * @param action action taken (press, unpress, repeat...)
   */
 
-Flock population = Flock(2);
 
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
     // If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
@@ -262,24 +263,25 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
     }
     if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
         std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-        population.addAgent();
+        (*flockPtr).addAgent();
     }
     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
         std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
-        population.destroyAgent(Vec2(5, 10));
+        (*flockPtr).destroyAgent(Vec2(5, 10));
     }
 }
+
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        double xpos, ypos;
-        //getting cursor position
-        glfwGetCursorPos(window, &xpos, &ypos);
-        std::cout << "Cursor Position at ( " << xpos << " : " << ypos << " ) " << std::endl;
-        population.addAgent(xpos, ypos);
-
-        Vec2 getPosition(); // chercher le dernier oiseau, puis chercher ses coordonnées et comparer avec les coordonnées affichées sur la console
+        if (flockPtr != nullptr) {
+            double xpos, ypos;
+            //getting cursor position
+            glfwGetCursorPos(window, &xpos, &ypos);
+            std::cout << "Cursor Position at ( " << xpos << " : " << ypos << " ) " << std::endl;
+            (*flockPtr).addAgent(xpos, ypos);
+        }
     }
 }

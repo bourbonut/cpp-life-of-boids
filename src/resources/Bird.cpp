@@ -8,7 +8,7 @@
 
 //Bird::~Bird() {};
 Bird::Bird() {
-	Vec2 pos = randomVec2Generation(0, 1000);
+	Vec2 pos = randomVec2Generation(0, 600);
 	Vec2 vel = randomVec2Generation(-1, 1);
 	m_position = pos;
 	m_velocity = vel;

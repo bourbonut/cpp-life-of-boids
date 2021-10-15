@@ -10,9 +10,12 @@
 
 #include "../Flock.hpp"
 
+extern Flock* flockPtr;
+
 class GraphicalManager {
 private:
 	GLFWwindow* m_window;
+
 	float m_height;
 	float m_width;
 
@@ -47,14 +50,13 @@ public:
 	GraphicalManager();
 	~GraphicalManager();
 	
-
 	std::vector<points::Point> createPoints(unsigned int number);
-	bool mainLoop(float t, Flock & flock);
+	bool mainLoop(float t);
 };
 
 
 static void error_callback(int error, const char* description);
 
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/);
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
+static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
