@@ -3,6 +3,7 @@
 #include <array>
 #include <math.h>
 #include "../oglTypes.hpp"
+#include <cmath>
 
 namespace triangle {
 

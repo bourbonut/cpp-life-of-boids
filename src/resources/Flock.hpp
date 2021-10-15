@@ -12,7 +12,7 @@ private :
 public:
 	void print();
 	int getPopSize() const;
-	Bird getAgent(int index) const;
+	Bird getAgent(int index);
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
@@ -26,4 +26,8 @@ public:
 	Flock(); // Constructeur avec argument par d�faut
 	Flock(int popsize);
 	~Flock() {}; // Destructeur
+
+	auto begin() { return m_birdsVec.begin(); };
+	auto end() { return m_birdsVec.end(); };
+
 };

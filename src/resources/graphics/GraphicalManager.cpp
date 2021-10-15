@@ -12,6 +12,7 @@
 #include "shaders/triangle.hpp"
 #include <math.h>
 
+#include "../Flock.hpp"
 
 GraphicalManager::GraphicalManager() {
     std::cout << "Constructing GraphicalManager object" << std::endl;
@@ -142,37 +143,34 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
     return points;
 }
 
-int GraphicalManager::mainLoop() {
-    std::vector<points::Point> points = createPoints(10);
+bool GraphicalManager::mainLoop(float t, Flock & flock) {
 
-    float t = 0;
-    while (!glfwWindowShouldClose(m_window)) {
-        ++t;
+    if (!glfwWindowShouldClose(m_window)) {
 
         int width{};
         int height{};
         glfwGetFramebufferSize(m_window, &width, &height);
         m_width = (float)width;
         m_height = (float)height;
-        const float ratio = (float)m_width / (float)m_height;
+        const float ratio = m_width / m_height;
 
         glViewport(0, 0, m_width, m_height);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        {  // triangle
-            mat4x4 m = triangle::mat4x4_identity();
-            m = triangle::mat4x4_rotate_Z(m, (float)glfwGetTime());
-            mat4x4 p = triangle::mat4x4_ortho(-ratio, ratio, -1., 1., 1., -1.);
-            mat4x4 mvp = triangle::mat4x4_mul(p, m);
+        //{  // triangle
+        //    mat4x4 m = triangle::mat4x4_identity();
+        //    m = triangle::mat4x4_rotate_Z(m, (float)glfwGetTime());
+        //    mat4x4 p = triangle::mat4x4_ortho(-ratio, ratio, -1., 1., 1., -1.);
+        //    mat4x4 mvp = triangle::mat4x4_mul(p, m);
 
-            VertexArray_bind(triangle_vertexArray);
-            Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
-            ShaderProgram_activate(triangle_shaderProgram);
+        //    VertexArray_bind(triangle_vertexArray);
+        //    Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
+        //    ShaderProgram_activate(triangle_shaderProgram);
 
-            glUniformMatrix4fv(m_mvp_location, 1, GL_FALSE, (const GLfloat*)&mvp);
-            glBindVertexArray(triangle_vertexArray.vertex_array);
-            glDrawArrays(GL_TRIANGLES, 0, 3);
-        }
+        //    glUniformMatrix4fv(m_mvp_location, 1, GL_FALSE, (const GLfloat*)&mvp);
+        //    glBindVertexArray(triangle_vertexArray.vertex_array);
+        //    glDrawArrays(GL_TRIANGLES, 0, 3);
+        //}
 
         {  // lines
             mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
@@ -189,16 +187,18 @@ int GraphicalManager::mainLoop() {
             auto h = static_cast<float>(m_height);
             auto w = static_cast<float>(m_width);
 
-            float v = 0;
-            for (auto& p : points) {
-                v += 1.0;
-                p.velocity = Vec2{ 5 * cos(t / 10) * (cos(v) - cos(v + 1)), 5 * cos(t / 10) * (sin(v) - sin(v + 1)) };
-                p.position = (p.position + p.velocity);
 
-                mat2x6 result = drawAgent(p.position, p.velocity, h, w);
+            for (auto & bird : flock) {
+                //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
+                //bird.updatePosition();
+                bird.updateVelocity(flock.computeNeighbors(bird, 50, 50));
+                bird.computePosition();
+                bird.updatePosition();
 
-                for (int i = 0; i < result.size(); ++i) {
-                    vertex_data.push_back(triangle::Vertex{ {result[i].x, result[i].y}, {0.0, 1.0, 1.0} });
+                mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());
+
+                for (int j = 0; j < result.size(); ++j) {
+                    vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
                 }
             }
 
@@ -212,7 +212,7 @@ int GraphicalManager::mainLoop() {
         glfwPollEvents();
     }
 
-    return 0;
+    return glfwWindowShouldClose(m_window);
 }
 
 /** Prints the error number and description
