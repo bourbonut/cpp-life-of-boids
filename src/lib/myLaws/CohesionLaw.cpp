@@ -6,12 +6,29 @@ class Bird;
 
 Vec2 CohesionLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
 
-	//We get the barycenter of all the VALID neighbors
-	Vec2 barycenter = computeAgentsBarycenter(neighbors);
+	Vec2 newVelocity{};
+	float distBetwA = 0, weight = 0;
 
-	//We calculate the coordinates of the velocity vector
-	//We want to use barycenter.x, or even barycenter - this.position 
-	Vec2 newVelocity{ barycenter.x - currentBird.getPosition().x, barycenter.y - currentBird.getPosition().y };
+	//std::cout << "current : "; currentBird.print();
+	//std::cout << "0 : "; neighbors[0].print();
 
+	//for each neighbor bird, add to a final vector the weigthed input of the neighbor bird
+	//std::cout << "m_range : " << m_range << std::endl;
+	for (Bird b : neighbors)
+	{
+		if (!(b.getPosition() == currentBird.getPosition())) {
+			distBetwA = distance(b.getPosition(), currentBird.getPosition());
+
+			weight = distBetwA / m_range;
+
+			newVelocity = newVelocity + (b.getPosition() - currentBird.getPosition()) * weight;
+		}
+
+	}
+
+	//divide the actual final vector by the number of neighbor birds to get a final vector pointing to the barycenter needed
+	//result = result / neighbors.size();
+
+	//newVelocity.string();
 	return newVelocity;
 };

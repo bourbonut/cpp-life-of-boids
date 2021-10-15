@@ -45,8 +45,8 @@ void Bird::updateVelocity(const std::vector<Bird>& neighbors) {
 	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors) ;
 	//Vec2 vecAlignment = this->alignment(neighbors);
 	Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);
-	Vec2 vec_displacement = vecCohesion *0.2 + /*vecAlignment + */ vecSeparation;
-	m_nextVelocity = vec_displacement.normalize() * 0.5; // To go real slow to show client
+	Vec2 vec_displacement = vecCohesion * 0.2 +/* vecAlignment + */ vecSeparation;
+	m_nextVelocity = vec_displacement.normalize() * 0.3; // To go real slow to show client, normal : 0.5
 };
 
 void Bird::computePosition() {
