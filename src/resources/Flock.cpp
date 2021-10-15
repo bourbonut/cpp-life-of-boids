@@ -6,6 +6,7 @@
 #include <array>
 #include <random>
 #include <vector>
+#include <algorithm>
 
 
 Flock::Flock(int popSize) : m_birdsVec(popSize){ // need to instanciate the vector like this otherwise it won't work ???
