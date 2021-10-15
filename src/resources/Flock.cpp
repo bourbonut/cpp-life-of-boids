@@ -1,7 +1,7 @@
 #include "Flock.hpp"
 #include "Bird.hpp"
-#include "../lib/myMath/Vec2.hpp"
 #include "../lib/myMath/utils.hpp"
+#include "../lib/myMath/Vec2.hpp"
 #include "../lib/myLaws/Law.hpp"
 #include <array>
 #include <random>
@@ -98,25 +98,12 @@ std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, 
 	std::vector<Bird> neighbors;
 	neighbors.reserve(m_birdsVec.size()); //CHANGE THIS TO SMTHING LIKE popSize*2 OR SMTHNG
 
-	//float angle = myBird.getViewAngle();
-	//float Neighbor.radius = myBird.getRadius();
-
 	//Like this one bird is going to be its own potential neighbor
 	for (Bird potentialNeighbor : m_birdsVec){
 		if (distance(bird.getPosition(), potentialNeighbor.getPosition()) <= range) { //only range because was scared of angle
 			neighbors.emplace_back(potentialNeighbor);
 		}
 	}
-	//	if distance(Vec2 Birds, Vec2 Bird[i]) <= Neighbor.radius && degrees(mybird.getVelocity().angle(neighbor)) <= angle{
-	//		{
-
-	//		birds.push_back(Bird{j});
-
-
-
-	//	}
-
-	//	}
 	return neighbors;
 };
 

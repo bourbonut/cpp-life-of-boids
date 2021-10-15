@@ -1,6 +1,7 @@
 #include "glx.hpp"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <opencv2/opencv.hpp>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <vector>
