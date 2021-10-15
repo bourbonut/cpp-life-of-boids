@@ -2,6 +2,7 @@
 
 #include <array>
 #include "../oglTypes.hpp"
+#include <cmath>
 
 namespace triangle {
 

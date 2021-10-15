@@ -8,7 +8,7 @@
 #include <vector>
 
 
-Flock::Flock(int popSize) : m_birdsVec{popSize}{ // need to instanciate the vector like this otherwise it won't work ???
+Flock::Flock(int popSize) : m_birdsVec(popSize){ // need to instanciate the vector like this otherwise it won't work ???
 
 	//std::vector<Bird> m_birdsVec(popSize);
 	for (int i = 0; i < popSize; ++i)
