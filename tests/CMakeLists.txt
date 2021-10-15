@@ -38,5 +38,5 @@ gtest_discover_tests(test_graphics)
 add_executable(test_law "test_law.cpp")
 target_link_libraries(test_law myBirds myLaws myMath GTest::GTest)
 target_include_directories(test_law PUBLIC ${GTest_INCLUDE_DIRS}/src)
-add_test(NAME test_law COMMAND test_alignmentLaw)
+add_test(NAME test_law COMMAND test_law)
 gtest_discover_tests(test_law) # helps to split one ctest executable into multiple google tests
