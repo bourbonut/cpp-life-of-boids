@@ -32,4 +32,7 @@ build-and-test-stage:
 #    stage: test
 #    script:
 #        - echo "Running tests..."
+#        - ls
+#        - pwd
+#        - cd buildGCC
 #        - ctest
