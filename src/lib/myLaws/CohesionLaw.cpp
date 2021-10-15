@@ -1,7 +1,7 @@
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
-#include "CohesionLaw.hpp"
+class Bird;
 #include "../../resources/Bird.hpp"
 
 Vec2 CohesionLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
@@ -10,8 +10,8 @@ Vec2 CohesionLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors)
 	Vec2 barycenter = computeAgentsBarycenter(neighbors);
 
 	//We calculate the coordinates of the velocity vector
-	//We want to use barycenter.x, or even barycenter - this.position
+	//We want to use barycenter.x, or even barycenter - this.position 
 	Vec2 newVelocity{ barycenter.x - currentBird.getPosition().x, barycenter.y - currentBird.getPosition().y };
 
-	return Vec2{};
+	return newVelocity;
 };

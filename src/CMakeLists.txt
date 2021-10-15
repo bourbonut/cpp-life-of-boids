@@ -20,7 +20,7 @@ add_executable(GraphicsTest graphics_main.cpp)
 target_link_libraries(GraphicsTest PUBLIC libGLX myMath shaders)
 
 add_executable(life-of-boids main.cpp)
-target_link_libraries(life-of-boids PUBLIC libGLX myMath shaders myBirds)
+target_link_libraries(life-of-boids PUBLIC libGLX myMath shaders myBirds myLaws)
 
 add_executable(main_opencv main_opencv.cpp)
 target_link_libraries(main_opencv PRIVATE opencv::opencv)
