@@ -18,12 +18,16 @@
 #include "resources/graphics/oglTypes.hpp"
 
 
+Flock* flockPtr = nullptr;
+
+
 int main() {
 
     GraphicalManager GM{};
 
 
     Flock flock{400};
+    flockPtr = &flock;
     //Bird titi(Vec2(400, 400), Vec2(0.2, 0.2));
     //flock.addAgent(titi);
     //Bird toto(Vec2(200, 400), Vec2(-0.2, 0.2));
@@ -33,10 +37,9 @@ int main() {
     float t = 0;
     bool shouldClose = false;
     while (!shouldClose) {
-        shouldClose = GM.mainLoop(t, flock);
+        shouldClose = GM.mainLoop(t);
         ++t;
 
     }
-
-
 }
+
