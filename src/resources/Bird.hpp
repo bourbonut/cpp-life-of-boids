@@ -4,6 +4,7 @@
 #include <vector>
 #include "../lib/myLaws/SeparationLaw.hpp"
 #include "../lib/myLaws/CohesionLaw.hpp"
+#include "../lib/myLaws/AlignmentLaw.hpp"
 
 
 class Bird {
@@ -17,7 +18,7 @@ private:
 
 	CohesionLaw m_cohesionLaw;// = CohesionLaw{};
 	SeparationLaw m_separationLaw;// = SeparationLaw{};
-	//AlignmentLaw m_AlignmentLaw{}
+	AlignmentLaw m_AlignmentLaw;
 
 public:
 	Bird(); // Constructeur sans arguments
