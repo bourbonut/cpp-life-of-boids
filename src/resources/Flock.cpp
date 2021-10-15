@@ -1,7 +1,7 @@
 #include "Flock.hpp"
 #include "Bird.hpp"
-#include "../lib/myMath/Vec2.hpp"
 #include "../lib/myMath/utils.hpp"
+#include "../lib/myMath/Vec2.hpp"
 #include "../lib/myLaws/Law.hpp"
 #include <vector>
 #include <random>
@@ -66,6 +66,16 @@ void Flock::addAgent() {
 	Vec2 position = Vec2(500, 500);  //random(0, 100);
 	Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
+	// m_nextPos.push_back(position);
+	std::cout << "taille population : " << this->getPopSize() << "\n";
+};
+
+void Flock::addAgent(float xpos, float ypos) {
+	Vec2&& position = Vec2(xpos, ypos);  //random(0, 100);
+	Vec2&& velocity = Vec2(-2, 1);  //random(0, 5);
+	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
+	// m_nextPos.push_back(position);
+	std::cout << "taille population : " << this->getPopSize() << "\n";
 };
 
 //see if we need a const &b or not ?
@@ -79,14 +89,13 @@ void Flock::destroyAgent(Vec2 position) {
 			// If distance < 1, destroy bird 
 			return (bird.getPosition() - pos).norm() < 1; });
 	m_birdsVec.erase(garbageBirdsVec);
+	std::cout << "Destruction : " << "\n";
+	std::cout << "taille population : " << this->getPopSize() << "\n";
 };
 
 std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, const float &angle) {
 	std::vector<Bird> neighbors;
 	neighbors.reserve(m_birdsVec.size()); //CHANGE THIS TO SMTHING LIKE popSize*2 OR SMTHNG
-
-	//float angle = myBird.getViewAngle();
-	//float Neighbor.radius = myBird.getRadius();
 
 	//Like this one bird is going to be its own potential neighbor
 	for (Bird potentialNeighbor : m_birdsVec){
@@ -94,16 +103,6 @@ std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, 
 			neighbors.emplace_back(potentialNeighbor);
 		}
 	}
-	//	if distance(Vec2 Birds, Vec2 Bird[i]) <= Neighbor.radius && degrees(mybird.getVelocity().angle(neighbor)) <= angle{
-	//		{
-
-	//		birds.push_back(Bird{j});
-
-
-
-	//	}
-
-	//	}
 	return neighbors;
 };
 

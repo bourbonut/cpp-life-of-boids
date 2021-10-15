@@ -36,6 +36,7 @@ int main() {
     while (!shouldClose) {
         shouldClose = GM.mainLoop(t, flock);
         ++t;
+
     }
 
 

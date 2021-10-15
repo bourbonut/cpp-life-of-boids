@@ -1,1 +1,1 @@
-add_library(myMath utils.cpp utils.hpp Vec2.cpp Vec2.hpp)
+add_library(myMath "utils.cpp" "utils.hpp" "Vec2.cpp" "Vec2.hpp")

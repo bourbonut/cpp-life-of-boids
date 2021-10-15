@@ -1,3 +1,6 @@
+before_script:
+    - sudo apt-get update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+
 stages:
   - build-and-test
 
