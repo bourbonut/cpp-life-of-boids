@@ -1,2 +1,0 @@
-/usr/bin/ar qc libmyLaws.a CMakeFiles/myLaws.dir/Law.cpp.o CMakeFiles/myLaws.dir/SeparationLaw.cpp.o CMakeFiles/myLaws.dir/CohesionLaw.cpp.o CMakeFiles/myLaws.dir/AlignmentLaw.cpp.o
-/usr/bin/ranlib libmyLaws.a

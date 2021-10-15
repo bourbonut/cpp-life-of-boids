@@ -1,2 +1,0 @@
-/usr/bin/ar qc libmyBirds.a CMakeFiles/myBirds.dir/Bird.cpp.o CMakeFiles/myBirds.dir/Flock.cpp.o CMakeFiles/myBirds.dir/Agent.cpp.o
-/usr/bin/ranlib libmyBirds.a

@@ -1,1 +1,0 @@
-/usr/bin/g++   -Wall -Wextra -g CMakeFiles/MathPart.dir/math_main.cpp.o -o MathPart  lib/myMath/libmyMath.a 

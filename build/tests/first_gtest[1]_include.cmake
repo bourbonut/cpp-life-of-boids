@@ -1,5 +1,0 @@
-if(EXISTS "/data/build/tests/first_gtest[1]_tests.cmake")
-  include("/data/build/tests/first_gtest[1]_tests.cmake")
-else()
-  add_test(first_gtest_NOT_BUILT first_gtest_NOT_BUILT)
-endif()
