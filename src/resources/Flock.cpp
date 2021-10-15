@@ -66,6 +66,16 @@ void Flock::addAgent() {
 	Vec2 position = Vec2(500, 500);  //random(0, 100);
 	Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
+	// m_nextPos.push_back(position);
+	std::cout << "taille population : " << this->getPopSize() << "\n";
+};
+
+void Flock::addAgent(float xpos, float ypos) {
+	Vec2&& position = Vec2(xpos, ypos);  //random(0, 100);
+	Vec2&& velocity = Vec2(-2, 1);  //random(0, 5);
+	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
+	// m_nextPos.push_back(position);
+	std::cout << "taille population : " << this->getPopSize() << "\n";
 };
 
 //see if we need a const &b or not ?
@@ -79,6 +89,8 @@ void Flock::destroyAgent(Vec2 position) {
 			// If distance < 1, destroy bird 
 			return (bird.getPosition() - pos).norm() < 1; });
 	m_birdsVec.erase(garbageBirdsVec);
+	std::cout << "Destruction : " << "\n";
+	std::cout << "taille population : " << this->getPopSize() << "\n";
 };
 
 std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, const float &angle) {

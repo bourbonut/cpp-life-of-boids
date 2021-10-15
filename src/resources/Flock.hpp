@@ -18,6 +18,8 @@ public:
 	void updatePositions();
 	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
 	void addAgent();
+	void addAgent(float xpos, float ypos);
+
 	void addAgent(Bird b);
 	void destroyAgent(Vec2 position);
 	void moveAgents();
