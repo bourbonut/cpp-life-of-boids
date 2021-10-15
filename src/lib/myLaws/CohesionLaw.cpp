@@ -16,7 +16,7 @@ Vec2 CohesionLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors)
 	//std::cout << "m_range : " << m_range << std::endl;
 	for (Bird b : neighbors)
 	{
-		if (!(b.getPosition() == currentBird.getPosition())) {
+		if (abs(distance(b.getPosition(), currentBird.getPosition())) > 30) { //!(b.getPosition() == currentBird.getPosition())
 			distBetwA = distance(b.getPosition(), currentBird.getPosition());
 
 			weight = distBetwA / m_range;
