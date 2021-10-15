@@ -196,13 +196,20 @@ bool GraphicalManager::mainLoop(float t) {
             auto h = static_cast<float>(m_height);
             auto w = static_cast<float>(m_width);
 
-
             for (auto & bird : *flockPtr) {
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
                 //bird.updatePosition();
+                std::cout << "---> Affichage 1" << '\n';
+                (*flockPtr).print();
                 bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
+                std::cout << "---> Affichage 2" << '\n';
+                (*flockPtr).print();
                 bird.computePosition();
+                std::cout << "---> Affichage 3" << '\n';
+                (*flockPtr).print();
                 bird.updatePosition();
+                std::cout << "---> Affichage 4" << '\n';
+                (*flockPtr).print();
 
                 mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());
 

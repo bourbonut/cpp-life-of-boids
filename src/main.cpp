@@ -7,12 +7,13 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "lib/myMath/Vec2.hpp"
 #include <chrono>
 #include <string>
+
+
+#include "lib/myMath/Vec2.hpp"
+#include "lib/myMath/utils.hpp"
 #include "resources/Flock.hpp"
-
-
 #include "resources/graphics/glx.hpp"
 #include "resources/graphics/graphics.hpp"
 #include "resources/graphics/GraphicalManager.hpp"
@@ -26,8 +27,11 @@ int main() {
 
     GraphicalManager GM{};
 
-
-    Flock flock{10};
+    for (int i = 0; i < 10; ++i) {
+        randomVec2Generation(0, 600);
+    }
+        
+    Flock flock{5};
     flockPtr = &flock;
     //Bird titi(Vec2(400, 400), Vec2(0.2, 0.2));
     //flock.addAgent(titi);
@@ -37,10 +41,12 @@ int main() {
 
     float t = 0;
     bool shouldClose = false;
-    while (!shouldClose) {
+    while (t == 0) {
+        (*flockPtr).print();
         shouldClose = GM.mainLoop(t);
         ++t;
-
+        std::cout << "Tour " << (int)t << "-----------------------------" << '\n';
+        (*flockPtr).print();
     }
 }
 
