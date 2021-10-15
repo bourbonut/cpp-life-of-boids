@@ -6,7 +6,7 @@
 #include "../lib/myMath/utils.hpp"
 
 
-Bird::~Bird() {};
+//Bird::~Bird() {};
 Bird::Bird() {
 	Vec2 pos = randomVec2Generation(0, 1000);
 	Vec2 vel = randomVec2Generation(-1, 1);
