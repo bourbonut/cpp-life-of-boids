@@ -3,9 +3,9 @@
 #include "../lib/myMath/Vec2.hpp"
 #include "../lib/myMath/utils.hpp"
 #include "../lib/myLaws/Law.hpp"
-#include <array>
-#include <random>
 #include <vector>
+#include <random>
+#include <algorithm>
 
 
 Flock::Flock(int popSize) : m_birdsVec(popSize){ // need to instanciate the vector like this otherwise it won't work ???

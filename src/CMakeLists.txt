@@ -10,14 +10,14 @@ add_subdirectory("lib/myMath")
 add_subdirectory("resources")
 add_subdirectory("resources/graphics")
 
-add_executable(MathPart math_main.cpp)
-target_link_libraries(MathPart PUBLIC myMath)
+add_executable(mathPart math_main.cpp)
+target_link_libraries(mathPart PUBLIC myMath)
 
 
 add_subdirectory("resources/graphics/shaders")
 
-add_executable(GraphicsTest graphics_main.cpp)
-target_link_libraries(GraphicsTest PUBLIC libGLX myMath shaders)
+add_executable(graphicsTest graphics_main.cpp)
+target_link_libraries(graphicsTest PUBLIC libGLX myMath shaders)
 
 add_executable(life-of-boids main.cpp)
 target_link_libraries(life-of-boids PUBLIC libGLX myMath shaders myBirds myLaws)

@@ -372,3 +372,4 @@ conan-config/
 CMakeSettings.json
 
 Testing/
+buildGCC/
