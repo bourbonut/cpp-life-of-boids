@@ -1,3 +1,6 @@
+before_script:
+    - sudo apt-get update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+
 stages:
   - build
   - test
@@ -6,8 +9,12 @@ build-stage:
     stage: build
     script:
         - echo "Building..."
-        - mkdir build
-        - touch build/proof.txt
+        - cd /data
+        - mkdir -p build && cd build
+        - conan install ..
+        - conan profile update settings.compiler.libcxx=libstdc++11 default
+        - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake _DCMAKE_BUILD_TYPE=Debug ..
+        - cmake --build .
     artifacts:
         paths:
             - build/
