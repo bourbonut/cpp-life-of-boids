@@ -5,6 +5,7 @@
 
 build/
 buildGCC/
+buildClang/
 
 # User-specific files
 *.rsuser
