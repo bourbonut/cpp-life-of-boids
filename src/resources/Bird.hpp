@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Agent.hpp"
-#include "myMath/Vec2.hpp"
+#include "../lib/myMath/Vec2.hpp"
 #include <vector>
 
 class Bird {
@@ -24,10 +24,10 @@ public:
 	Bird(); // Constructeur sans arguments
 	Bird(const Vec2 &position, const Vec2 &velocity);
 	~Bird(); // Destructeur
-
-public:
 	Vec2 getPosition() const;
 	Vec2 getVelocity() const;
+	Vec2 getNextPosition() const;
+	Vec2 getNextVelocity() const;
 
 	void updateVelocity(const std::vector<Bird>& neighbors);
 	void computePosition();
@@ -38,4 +38,5 @@ public:
 	std::vector<Vec2> getCoordinatesArray(const std::vector<Bird>& neighbors);
 	//Vec2 computeBarycenter(const std::vector<Vec2> &points);
 	Vec2 computeAgentsBarycenter(const std::vector<Bird> &neighbors);
+	void print() const;
 };

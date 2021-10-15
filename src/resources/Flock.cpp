@@ -1,26 +1,26 @@
 #include "Flock.hpp"
 #include "Bird.hpp"
-#include "myMath/Vec2.hpp"
-#include "myMath/utils.hpp"
-// #include "myMath/utils.hpp"
-
+#include "../lib/myMath/Vec2.hpp"
+#include "../lib/myMath/utils.hpp"
+#include "../lib/myLaws/Law.hpp"
 #include <array>
-#include <vector>
 #include <random>
+#include <vector>
 
 
-Flock::Flock(int popSize) : m_popSize{ popSize } {
-	std::vector<Bird> m_birdsVec(m_popSize);
-	std::vector<Vec2> m_nextPos(m_popSize);
-	this->createPopulation();
+Flock::Flock(int popSize) : m_birdsVec{popSize}{ // need to instanciate the vector like this otherwise it won't work ???
+
+	//std::vector<Bird> m_birdsVec(popSize);
+	for (int i = 0; i < popSize; ++i)
+	{
+		m_birdsVec[i] = Bird{};
+	}
+	//std::cout << "popSize : " << m_birdsVec.size() << "\n";
 };
 
 Flock::Flock() {
 	//m_popSize = RANDOM SINON createPopulation va pas marcher
 	std::vector<Bird> m_birdsVec(0);
-	std::vector<Vec2> m_nextPos(0);
-
-	this->createPopulation();
 };
 
 int Flock::getPopSize() const {
@@ -29,38 +29,24 @@ int Flock::getPopSize() const {
 
 
 void Flock::createPopulation() {
-	//m_birdsVec.reserve(m_popSize + 100); // Should we do that?
-	for (int i = 0; i < m_popSize; ++i)
+	m_birdsVec.reserve(1000000); // Should we do that?
+	std::random_device dev;  // After we have to replace this lines for a vec2.random
+	for (int i = 0; i < m_birdsVec.size(); ++i)
 	{
-		std::random_device dev;
 		std::mt19937 rng(dev());
-		std::uniform_int_distribution<std::mt19937::result_type> rand100(0, 100);
+		std::uniform_int_distribution<std::mt19937::result_type> rand600(0, 600);
 		std::uniform_int_distribution<std::mt19937::result_type> rand2(0, 2);
 		//Vec2 position = Vec2(5, 10);  //random(0, 100);
-		Vec2 position = Vec2(rand100(rng), rand100(rng));  //random(0, 100);
+		Vec2 position = Vec2(rand600(rng), rand600(rng));  //random(0, 100);
 		Vec2 velocity = Vec2(rand2(rng), rand2(rng));  //random(0, 5);
 		//Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 		m_birdsVec.emplace_back(Bird(position, velocity));
-		// m_nextPos[i] = position;
 	}
 };
-//here when this will be called by line 21, m_popsize will be 0 so it won't iterate, and reserve here is in the iteration !
-//void Flock::createPopulation() {
-//	for (int i = 0; i < m_popSize; ++i)
-//	{
-//		Vec2 position = Vec2(5, 10);  //random(0, 100);
-//		Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
-//		m_birdsVec[i] = Bird(position, velocity);
-//		m_birdsVec.reserve(m_popSize + 100); // Should we do that?
-//		// m_nextPos[i] = position;
-//	}
-//};
 
 void Flock::calculatePositions() {
-	for (Bird bird : m_birdsVec)
-	{   // To add user interaction, we can include here an if statement according to the bird 
-		// position and use a function similar to updateVelocity. Or, we can add the user 
-		// interaction (like a new bird) directly to computeNeighbors function.
+	for (auto & bird : m_birdsVec)
+	{ 
 		const std::vector<Bird> neighbors = this->computeNeighbors(bird, 0,0); //TODO : CHANGE THIS CALL
 		bird.updateVelocity(neighbors);
 		bird.computePosition();
@@ -68,21 +54,20 @@ void Flock::calculatePositions() {
 };
 
 void Flock::updatePositions() {
-	for (Bird bird : m_birdsVec)
+	for (auto & bird : m_birdsVec)
 	{
-		bird.updatePosition();
+		bird.updatePosition();  // replace for a range function
 	}
 
 };
 
 //why double && ? and m_popSize is juste m_birdsVec.size(), so no need ?
 void Flock::addAgent() {
-	Vec2&& position = Vec2(5, 10);  //random(0, 100);
-	Vec2&& velocity = Vec2(-2, 1);  //random(0, 5);
+	Vec2 position = Vec2(500, 500);  //random(0, 100);
+	Vec2 velocity = Vec2(-2, 1);  //random(0, 5);
 	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
 	// m_nextPos.push_back(position);
-	m_popSize += 1;
-	std::cout << "taille population : " << m_popSize << "\n";
+	std::cout << "taille population : " << this->getPopSize() << "\n";
 };
 
 void Flock::addAgent(float xpos, float ypos) {
@@ -90,8 +75,7 @@ void Flock::addAgent(float xpos, float ypos) {
 	Vec2&& velocity = Vec2(-2, 1);  //random(0, 5);
 	m_birdsVec.emplace_back(position, velocity); // emplace_back more efficient than push_back
 	// m_nextPos.push_back(position);
-	m_popSize += 1;
-	std::cout << "taille population : " << m_popSize << "\n";
+	std::cout << "taille population : " << this->getPopSize() << "\n";
 };
 
 //see if we need a const &b or not ?
@@ -105,9 +89,8 @@ void Flock::destroyAgent(Vec2 position) {
 			// If distance < 1, destroy bird 
 			return (bird.getPosition() - pos).norm() < 1; });
 	m_birdsVec.erase(garbageBirdsVec);
-	m_popSize -= 1;
 	std::cout << "Destruction : " << "\n";
-	std::cout << "taille population : " << m_popSize << "\n";
+	std::cout << "taille population : " << this->getPopSize() << "\n";
 };
 
 std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, const float &angle) {
@@ -141,12 +124,14 @@ void Flock::moveAgents() {
 };
 
 void Flock::print() {
+	std::cout << "Printing Flock :\n";
 	int i = 0;
 	for (Bird b : m_birdsVec) {
 		std::cout << ++i << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
 	}
 }
 
-Bird Flock::getAgent(int index) const {
+Bird Flock::getAgent(int index) {
 	return this->m_birdsVec.at(index);
 }
+

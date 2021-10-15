@@ -2,8 +2,8 @@
 
 #include <array>
 #include <vector>
-#include "myMath/Vec2.hpp"
-#include "myMath/utils.hpp"
+#include "../lib/myMath/Vec2.hpp"
+#include "../lib/myMath/utils.hpp"
 
 //Bird::Bird() = default;
 //Bird::Bird(Vec2 &position, Vec2 &velocity){
@@ -12,7 +12,7 @@
 //}
 Bird::~Bird(){}
 
-Bird::Bird(const Vec2 &position, const Vec2 &velocity) : m_position{ position }, m_velocity{ velocity }, 
+Bird::Bird(const Vec2 &position, const Vec2 &velocity) : m_position{ position }, m_velocity{ velocity },
 										   m_nextPosition{ position }, m_nextVelocity{velocity} {};
 
 Bird::Bird() {
@@ -28,6 +28,14 @@ Vec2 Bird::getPosition() const {
 
 Vec2 Bird::getVelocity() const {
 	return m_velocity;
+};
+
+Vec2 Bird::getNextPosition() const {
+	return m_nextPosition;
+};
+
+Vec2 Bird::getNextVelocity() const {
+	return m_nextVelocity;
 };
 
 void Bird::updateVelocity(const std::vector<Bird> &neighbors) {
@@ -53,7 +61,7 @@ Vec2 Bird::cohesion(const std::vector<Bird> &neighbors) {
 	Vec2 barycenter = computeAgentsBarycenter(neighbors);
 
 	//We calculate the coordinates of the velocity vector
-	//We want to use barycenter.x, or even barycenter - this.position 
+	//We want to use barycenter.x, or even barycenter - this.position
 	Vec2 newVelocity = { barycenter.x - m_position.x, barycenter.y - m_position.y };
 
 	return newVelocity;
@@ -71,7 +79,7 @@ Vec2 Bird::separation(const std::vector<Bird>& neighbors)
 		//Get the weight from the inverse of the square, depending on the distance between the two agents
 		weight = 1 / ((distBetwA / m_SEPARATION_RANGE) * (distBetwA / m_SEPARATION_RANGE));
 		//Calculates a vector between agent b and this, and mutiplies it by the current weight of agent b
-		result = result + (b.getPosition() - m_position) * weight;
+		result = result + (m_position - b.getPosition()) * weight;
 	}
 
 	//divide the actual final vector by the number of neighbor birds to get a final vector pointing to the barycenter needed
@@ -81,7 +89,7 @@ Vec2 Bird::separation(const std::vector<Bird>& neighbors)
 }
 
 Vec2 Bird::computeAgentsBarycenter(const std::vector<Bird> &neighbors) {
-	
+
 	//We create a new array with a size of the number of neighbors
 	std::vector<Vec2> points(neighbors.size());
 	points = getCoordinatesArray(neighbors);
@@ -92,15 +100,20 @@ Vec2 Bird::computeAgentsBarycenter(const std::vector<Bird> &neighbors) {
 std::vector<Vec2> Bird::getCoordinatesArray(const std::vector<Bird> &neighbors) {
 	//We create a new array with a size of the number of neighbors
 	std::vector<Vec2> points(neighbors.size());
-	
+
 	for (int i = 0; i < neighbors.size(); ++i) {
 		//filling the array with the coordinates of the position of each agent of the neighborhood
 		float x = (neighbors[i]).getPosition().x;
 		float y = (neighbors[i]).getPosition().y;
-		points[i] = Vec2(x, y);		
+		points[i] = Vec2(x, y);
 		//points[i] = { (((Bird)neighbors[i]).getPosition())[0], (((Bird)neighbors[i]).getPosition())[1] };
 	}
 
 	return points;
 }
 
+
+void Bird::print() const {
+	std::cout << ">>>Printing bird : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";
+	std::cout << "\n>>>           N_P( " << m_nextPosition.x << ", " << m_nextPosition.y << " ) / N_V(" << m_nextVelocity.x << ", " << m_nextVelocity.y << " )\n";
+}

@@ -1,20 +1,18 @@
 #pragma once
 
-#include "myMath/Vec2.hpp"
+#include "../lib/myMath/Vec2.hpp"
 #include "vector"
 #include "Bird.hpp"
 // #include "myMath/utils.hpp"
 
 class Flock {
 private :
-	int m_popSize;
 	std::vector<Bird> m_birdsVec;
-	// std::vector<Vec2> m_nextPos;
 
 public:
 	void print();
 	int getPopSize() const;
-	Bird getAgent(int index) const;
+	Bird getAgent(int index);
 	void createPopulation();
 	void calculatePositions();
 	void updatePositions();
@@ -30,5 +28,8 @@ public:
 	Flock(); // Constructeur avec argument par défaut
 	Flock(int popsize);
 	~Flock() {}; // Destructeur
+
+	auto begin() { return m_birdsVec.begin(); }
+	auto end() { return m_birdsVec.end(); }
 
 };
