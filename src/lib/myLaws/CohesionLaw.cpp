@@ -13,5 +13,5 @@ Vec2 CohesionLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors)
 	//We want to use barycenter.x, or even barycenter - this.position 
 	Vec2 newVelocity{ barycenter.x - currentBird.getPosition().x, barycenter.y - currentBird.getPosition().y };
 
-	return Vec2{};
+	return newVelocity;
 };
