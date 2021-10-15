@@ -279,7 +279,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
         //std::cout << "Cursor Position at ( " << xpos << " : " << ypos << " ) " << std::endl;
         population.addAgent(xpos, ypos);
 
-        Vec2 getPosition(); // chercher le dernier oiseau, puis chercher ses coordonnées et comparer avec les coordonnées affichées sur la console
+        Vec2 getPosition(); // chercher le dernier oiseau, puis chercher ses coordonn�es et comparer avec les coordonn�es affich�es sur la console
         if (flockPtr != nullptr) {
             double xpos, ypos;
             //getting cursor position
