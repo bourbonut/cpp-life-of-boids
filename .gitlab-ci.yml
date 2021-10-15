@@ -8,7 +8,7 @@ build-stage:
     stage: build
     script:
         - echo "Updating apt ..."
-        - sudo apt update && sudo apt upgrade
+        - sudo apt update
         - echo "Downloading libgtk2.0-dev libgl1-mesa-dev"
         - Y | sudo DEBIAN_FRONTEND=noninteractive apt install -y libgtk2.0-dev
         - Y | sudo DEBIAN_FRONTEND=noninteractive apt install -y libgl1-mesa-dev
