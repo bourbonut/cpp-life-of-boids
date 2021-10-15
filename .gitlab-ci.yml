@@ -1,6 +1,5 @@
 stages:
-  - build
-  - test
+  - build-and-test
 
 before_script:
     - echo '#######################-BEGIN-##############################'
