@@ -25,7 +25,7 @@ Vec2 barycenter(std::vector<Vec2> vecs) {
 }
 
 float radians(float angle) {
-    return angle * 3.14 / 180;
+    return angle * 3.14 / 180; //CHANGED M_PI because it causes error with gcc compiler, will try to add it again later
 }
 
 float degrees(float angle) {

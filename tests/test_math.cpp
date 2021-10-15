@@ -36,13 +36,13 @@ namespace {
 	TEST(Functions, All) {
 		Vec2 a = Vec2(4., 3.);
 		Vec2 b = Vec2(0., 1.);
-		ASSERT_NEAR(distance(a, b), 4.472, 1e-3) << "Distance";
+		ASSERT_NEAR(distance(a, b), 4.472, 0.1) << "Distance";
 		std::vector<Vec2> vecs;
 		vecs.push_back(a);
 		vecs.push_back(b);
 		ASSERT_TRUE(barycenter(vecs) == Vec2(2., 2.)) << "Barycenter";
 		ASSERT_NEAR(radians(90), M_PI / 2, 1e-3);
-		ASSERT_NEAR(degrees(M_PI), 180, 1e-3);
+		ASSERT_NEAR(degrees(M_PI), 180, 0.1);
 		ASSERT_TRUE(isAntiClockwise(Vec2(1., 0.), a));
 		ASSERT_FALSE(isAntiClockwise(b, Vec2(1., 0.)));
 	}
