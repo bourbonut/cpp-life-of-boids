@@ -22,6 +22,9 @@ build-stage:
         - conan install ..
         - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake ..
         - cmake --build . --config "Release"
+    artifacts:
+        paths:
+            - buildGCC/
 
 test-stage:
     stage: test
