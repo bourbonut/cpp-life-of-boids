@@ -190,15 +190,10 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
 
             std::vector<triangle::Vertex> vertex_data;
 
-            auto h = static_cast<float>(m_height);
-            auto w = static_cast<float>(m_width);
-
-
             for (auto & bird : flock) {
-                //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
-                //bird.updatePosition();
                 bird.updateVelocity(flock.computeNeighbors(bird, 50, 50));
-                bird.computePosition();
+                bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
+                verifyPosition(bird&, m_width, m_height);
                 bird.updatePosition();
 
                 mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());
