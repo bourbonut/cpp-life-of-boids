@@ -26,5 +26,11 @@ build-stage:
 test-stage:
     stage: test
     script:
+        - ls
         - cd build
+        - ls
+        - cd ../tests
+        - ls
+        - cd tests
+        - ls
         - ctest
