@@ -1,37 +1,41 @@
-stages:
-  - build-and-test
+# stages:
+#   - build-and-test
+#
+# before_script:
+#     - echo '#######################-BEGIN-##############################'
+#     - echo 'Processing update and installs...'
+#     - conan profile new default --detect
+#     - conan profile update settings.compiler.libcxx=libstdc++11 default
+#     - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+#
+# after_script:
+#     - echo '########################-END-#############################'
+#
+# build-and-test-stage:
+#     stage: build-and-test
+#     script:
+#         - echo "Building files..."
+#         - rm -rf buildGCC
+#         - mkdir buildGCC
+#         - cd buildGCC
+#         - conan install ..
+#         - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake ..
+#         - cmake --build . --config "Release"
+#         - echo "Running tests..."
+#         - ctest
 
-before_script:
-    - echo '#######################-BEGIN-##############################'
-    - echo 'Processing update and installs...'
-    - conan profile new default --detect
-    - conan profile update settings.compiler.libcxx=libstdc++11 default
-    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+job:gcc:
+  image: conanio/gcc9
+  script:
+    - echo "Hello gcc"
+    - gcc --help
+  tags:
+    - gcc
 
-after_script:
-    - echo '########################-END-#############################'
-
-build-and-test-stage:
-    stage: build-and-test
-    script:
-        - echo "Building files..."
-        - rm -rf buildGCC
-        - mkdir buildGCC
-        - cd buildGCC
-        - conan install ..
-        - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake ..
-        - cmake --build . --config "Release"
-        - echo "Running tests..."
-        - ctest
-#    artifacts:
-#        paths:
-#            - buildGCC/
-
-#test-stage:
-#    stage: test
-#    script:
-#        - echo "Running tests..."
-#        - ls
-#        - pwd
-#        - cd buildGCC
-#        - ctest
+job:gcc:
+  image: conanio/clang10
+  script:
+    - echo "Hello clang"
+    - clang --help
+  tags:
+    - clang
