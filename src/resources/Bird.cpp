@@ -14,6 +14,13 @@ Bird::Bird() {
 	m_nextPosition = pos + 1;
 	m_nextVelocity = vel + 1;
 };
+Bird::Bird(const Bird& other) {
+	m_position = other.m_position;
+	m_velocity = other.m_velocity;
+	m_nextPosition = other.m_nextPosition;
+	m_nextVelocity = other.m_nextVelocity;
+	m_bodySize = other.m_bodySize;
+};
 //NEED CTOR BY COPY (rule of three) BUT ACCESSING TO OTHER BIRD'S DATA SEEMS WEIRD
 //MAYBE WE NEED A STRUCT ?? OR MAYBE WE NEED TO APPLY THE ZERO LAW AND BIRDS ARE NOT THE ONES WHO RANDOMIZE!!
 //Bird::Bird(const Bird& other) {};
