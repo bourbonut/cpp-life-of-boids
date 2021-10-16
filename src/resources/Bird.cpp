@@ -4,16 +4,8 @@
 #include "../lib/myMath/utils.hpp"
 #include "Bird.hpp"
 
-//Bird::Bird() = default;
-//Bird::Bird(Vec2 &position, Vec2 &velocity){
-//	m_position = Vec2(position);
-//	m_velocity = Vec2(velocity);
-//}
-Bird::~Bird(){}
 
-Bird::Bird(const Vec2 &position, const Vec2 &velocity) : m_position{ position }, m_velocity{ velocity },
-										   m_nextPosition{ position }, m_nextVelocity{velocity} {};
-
+//Bird::~Bird() {};
 Bird::Bird() {
 	Vec2 pos = randomVec2Generation(0, 1000);
 	Vec2 vel = randomVec2Generation(-5, 5);
@@ -35,6 +27,8 @@ Bird::Bird(const Bird& other) {
 
 Bird::Bird(const Vec2& position, const Vec2& velocity) : m_position{ position }, m_velocity{ velocity },
 m_nextPosition{ position }, m_nextVelocity{ velocity }, m_bodySize{ 1 } {};
+
+
 
 Vec2 Bird::getPosition() const {
 	return m_position;
@@ -95,4 +89,4 @@ void Bird::escape() {
 void Bird::print() const {
 	std::cout << ">>>Printing bird : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";
 	std::cout << "\n>>>           N_P( " << m_nextPosition.x << ", " << m_nextPosition.y << " ) / N_V(" << m_nextVelocity.x << ", " << m_nextVelocity.y << " )\n";
-}
+};
