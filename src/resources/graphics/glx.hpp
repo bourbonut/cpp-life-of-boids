@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+
 struct VertexArray {
   GLuint vertex_array;
 };
