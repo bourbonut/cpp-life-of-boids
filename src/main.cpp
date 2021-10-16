@@ -8,6 +8,9 @@
 #include <sstream>
 #include <vector>
 
+#include "lib/myMath/Vec2.hpp"
+#include "lib/myMath/utils.hpp"
+#include "resources/Flock.hpp"
 #include "resources/graphics/glx.hpp"
 #include "resources/graphics/graphics.hpp"
 #include "resources/graphics/GraphicalManager.hpp"
