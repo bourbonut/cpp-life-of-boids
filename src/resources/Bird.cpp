@@ -8,7 +8,7 @@
 //Bird::~Bird() {};
 Bird::Bird() {
 	Vec2 pos = randomVec2Generation(0, 1000);
-	Vec2 vel = randomVec2Generation(-1, 1);
+	Vec2 vel = randomVec2Generation(-5, 5);
 	m_position = pos;
 	m_velocity = vel;
 	m_nextPosition = pos + 1;
@@ -38,6 +38,10 @@ Vec2 Bird::getNextPosition() const {
 Vec2 Bird::getNextVelocity() const {
 	return m_nextVelocity;
 };
+
+void Bird::setNextPosition(Vec2 nextPosition) {
+	m_nextPosition = nextPosition;
+}
 
 
 void Bird::updateVelocity(const std::vector<Bird>& neighbors) {

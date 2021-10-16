@@ -10,6 +10,7 @@
 #include "shaders/triangle.hpp"
 
 #include "../Flock.hpp"
+#include "../Bird.hpp"
 #include <string>
 #include <iomanip>
 #include <chrono>
@@ -193,7 +194,7 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
             for (auto & bird : flock) {
                 bird.updateVelocity(flock.computeNeighbors(bird, 50, 50));
                 bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
-                verifyPosition(bird&, m_width, m_height);
+                keepPositionInScreen(bird, m_width, m_height);
                 bird.updatePosition();
 
                 mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());

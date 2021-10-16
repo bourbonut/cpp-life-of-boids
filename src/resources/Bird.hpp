@@ -36,6 +36,7 @@ public:
 	void updatePosition();
 	Vec2 getNextPosition() const;
 	Vec2 getNextVelocity() const;
+	void setNextPosition(Vec2 nextPosition);
 	void print() const;
 
 
