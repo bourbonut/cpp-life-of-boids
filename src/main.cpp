@@ -7,15 +7,17 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "lib/myMath/Vec2.hpp"
-#include <chrono>
-#include <string>
-#include "resources/Flock.hpp"
 
+#include "lib/myMath/Vec2.hpp"
+#include "lib/myMath/utils.hpp"
+#include "resources/Flock.hpp"
 #include "resources/graphics/glx.hpp"
 #include "resources/graphics/graphics.hpp"
 #include "resources/graphics/GraphicalManager.hpp"
 #include "resources/graphics/oglTypes.hpp"
+
+
+Flock* flockPtr = nullptr;
 
 
 int main() {
@@ -24,6 +26,7 @@ int main() {
 
 
     Flock flock{400};
+    flockPtr = &flock;
     //Bird titi(Vec2(400, 400), Vec2(0.2, 0.2));
     //flock.addAgent(titi);
     //Bird toto(Vec2(200, 400), Vec2(-0.2, 0.2));
@@ -33,10 +36,9 @@ int main() {
     float t = 0;
     bool shouldClose = false;
     while (!shouldClose) {
-        shouldClose = GM.mainLoop(t, flock);
+        shouldClose = GM.mainLoop(t);
         ++t;
 
     }
-
-
 }
+

@@ -4,8 +4,6 @@
 #include "../lib/myMath/utils.hpp"
 #include "Bird.hpp"
 
-
-//Bird::~Bird() {};
 Bird::Bird() {
 	Vec2 pos = randomVec2Generation(0, 1000);
 	Vec2 vel = randomVec2Generation(-5, 5);
@@ -14,6 +12,8 @@ Bird::Bird() {
 	m_nextPosition = pos + 1;
 	m_nextVelocity = vel + 1;
 };
+
+
 Bird::Bird(const Bird& other) {
 	m_position = other.m_position;
 	m_velocity = other.m_velocity;
@@ -90,3 +90,4 @@ void Bird::print() const {
 	std::cout << ">>>Printing bird : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";
 	std::cout << "\n>>>           N_P( " << m_nextPosition.x << ", " << m_nextPosition.y << " ) / N_V(" << m_nextVelocity.x << ", " << m_nextVelocity.y << " )\n";
 };
+
