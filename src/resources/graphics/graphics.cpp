@@ -17,16 +17,21 @@ mat2x6 drawAgent(Vec2 position, Vec2 velocity) {
 	return r;
 }
 
-void verifyPosition(Bird& bird, float width, float height) {
+
+void keepPositionInScreen(Bird& bird, float width, float height) {
 	float x = bird.getNextPosition().x;
 	float y = bird.getNextPosition().y;
 	if (x >= width) {
-		if (y >= height) {
-			bird.setNextPosition(Vec2(x - width, y - height));
-		}
 		bird.setNextPosition(Vec2(x - width, y));
 	}
-	else if (y >= height) {
+	else if (x < 0) {
+		bird.setNextPosition(Vec2(x + width, y));
+	}
+	x = bird.getNextPosition().x;
+	if (y >= height) {
 		bird.setNextPosition(Vec2(x, y - height));
+	}
+	else if (y < 0) {
+		bird.setNextPosition(Vec2(x, y + height));
 	}
 }

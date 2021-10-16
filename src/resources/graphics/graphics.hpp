@@ -8,4 +8,4 @@
 
 mat2x6 drawAgent(Vec2 position, Vec2 velocity);
 
-void verifyPosition(Bird& bird, float width, float height);
+void keepPositionInScreen(Bird& bird, float width, float height);
