@@ -18,6 +18,8 @@
 #include "resources/graphics/GraphicalManager.hpp"
 #include "resources/graphics/oglTypes.hpp"
 
+float EPS_ = 0.00001;
+
 
 int main() {
 

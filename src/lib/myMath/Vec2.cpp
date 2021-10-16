@@ -123,7 +123,11 @@ float Vec2::norm() {
 
 Vec2 Vec2::normalize() {
     float norm = this->norm();
-    return Vec2(this->x / norm, this->y / norm);
+    Vec2 normalized = Vec2(this->x / (norm + EPS_), this->y / (norm + EPS_));
+    if (isnan(normalized.x) | isnan(normalized.y)) {
+        throw std::domain_error("Undefined coordinate");
+    }
+    return normalized;
 }
 
 float Vec2::angle() {
