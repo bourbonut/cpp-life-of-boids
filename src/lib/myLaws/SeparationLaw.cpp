@@ -6,7 +6,7 @@ class Bird;
 
 Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
 
-	Vec2 result;
+	Vec2 result{};
 	float distBetwA = 0, weight = 0;
 
 	//std::cout << "current : "; currentBird.print();
@@ -21,17 +21,19 @@ Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbor
 			//std::cout << "dist : " << distBetwA << std::endl;
 			//Get the weight from the inverse of the square, depending on the distance between the two agents
 			//weight = 1 / ((distBetwA / m_range) * (distBetwA / m_range));
-			weight = 1 / ((distBetwA / 50) * (distBetwA / 50));
+			weight = 1 / ((distBetwA) * (distBetwA));
+			//weight = weight * 1000;
 			//std::cout << "weight : " << weight << std::endl;
 			//Calculates a vector between agent b and this, and mutiplies it by the current weight of agent b
-			result = result + (b.getPosition() - currentBird.getPosition()) * weight;
+			result = result + (currentBird.getPosition() - b.getPosition()) * weight;
 		}
 
 	}
 
 	//divide the actual final vector by the number of neighbor birds to get a final vector pointing to the barycenter needed
 	//result = result / neighbors.size();
-
+	//if (neighbors.size() > 0){ std::cout << "0 : " << neighbors[0].getPosition().string() << '\n'; }
+	
 	return result;
 
 }

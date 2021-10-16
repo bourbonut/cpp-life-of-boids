@@ -4,8 +4,7 @@
 #include "../lib/myMath/Vec2.hpp"
 #include "../lib/myLaws/Law.hpp"
 #include <vector>
-#include <random>
-#include <algorithm>
+#include <cmath>
 
 
 Flock::Flock(int popSize) : m_birdsVec(popSize){ // need to instanciate the vector like this otherwise it won't work ???
@@ -99,8 +98,14 @@ std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, 
 
 	//Like this one bird is going to be its own potential neighbor
 	for (Bird potentialNeighbor : m_birdsVec){
-		if (distance(bird.getPosition(), potentialNeighbor.getPosition()) <= range) { //only range because was scared of angle
-			neighbors.emplace_back(potentialNeighbor);
+		if (!(potentialNeighbor.getPosition() == bird.getPosition()))
+		{
+			double distWithPotNeighb = distance(bird.getPosition(), potentialNeighbor.getPosition());
+			//float min_range = 5.0;
+			double a = abs(distWithPotNeighb);
+			if (abs(distWithPotNeighb) <= abs(range)) { //only range because was scared of angle
+				neighbors.emplace_back(potentialNeighbor);
+			}
 		}
 	}
 	return neighbors;

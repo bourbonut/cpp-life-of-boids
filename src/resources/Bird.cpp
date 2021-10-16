@@ -45,15 +45,24 @@ void Bird::setNextPosition(Vec2 nextPosition) {
 
 
 void Bird::updateVelocity(const std::vector<Bird>& neighbors) {
-	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors) ;
+	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors);
 	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighbors);
 	Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);
-	Vec2 vec_displacement = vecCohesion *0.2 + vecAlignment + vecSeparation;
-	m_nextVelocity = vec_displacement.normalize() * 0.2; // To go real slow to show client
+	Vec2 vec_displacement = vecCohesion / 10 + vecAlignment + vecSeparation * 1000;
+	m_nextVelocity = vec_displacement.normalize() * 0.5; // To go real slow to show client, normal : 0.5 + .normalize()
 };
 
 void Bird::computePosition() {
 	m_nextPosition = m_position + m_nextVelocity;
+
+	if (m_position.x - 0.5 < m_nextPosition.x < m_position.x + 0.5)
+	{
+		m_nextPosition.x = m_nextPosition.x + 0.1;
+	}
+	if (m_position.y - 0.5 < m_nextPosition.y < m_position.y + 0.5)
+	{
+		m_nextPosition.y = m_nextPosition.y + 0.1;
+	}
 
 	//TO CHANGE !!! ONLY TO SHOW SMHT TO CLIENT
 	//m_nextVelocity += randomVec2Generation(-1, 1);//.normalize(); //Test to randomly move birds
@@ -63,6 +72,10 @@ void Bird::computePosition() {
 void Bird::updatePosition() {
 	m_position = m_nextPosition;
 	m_velocity = m_nextVelocity;
+};
+
+void Bird::escape() {
+
 };
 
 
