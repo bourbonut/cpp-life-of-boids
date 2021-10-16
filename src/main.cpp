@@ -12,7 +12,6 @@
 #include <string>
 #include "resources/Flock.hpp"
 
-
 #include "resources/graphics/glx.hpp"
 #include "resources/graphics/graphics.hpp"
 #include "resources/graphics/GraphicalManager.hpp"

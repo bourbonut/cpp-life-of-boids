@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 
+
 typedef struct Vec2 {
     float x;
     float y;

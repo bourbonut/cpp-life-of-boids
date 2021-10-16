@@ -10,6 +10,7 @@
 #include "shaders/triangle.hpp"
 
 #include "../Flock.hpp"
+#include "../Bird.hpp"
 #include <string>
 #include <iomanip>
 #include <chrono>
@@ -190,15 +191,11 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
 
             std::vector<triangle::Vertex> vertex_data;
 
-            auto h = static_cast<float>(m_height);
-            auto w = static_cast<float>(m_width);
-
-
             for (auto & bird : flock) {
-                //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
-                //bird.updatePosition();
                 bird.updateVelocity(flock.computeNeighbors(bird, 50, 50));
-                bird.computePosition();
+                bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
+                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
+                bird.setNextPosition(newPos);
                 bird.updatePosition();
 
                 mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());
@@ -278,6 +275,6 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
         std::cout << "Cursor Position at ( " << xpos << " : " << ypos << " ) " << std::endl;
         population.addAgent(xpos, ypos);
 
-        Vec2 getPosition(); // chercher le dernier oiseau, puis chercher ses coordonnées et comparer avec les coordonnées affichées sur la console
+        Vec2 getPosition(); // chercher le dernier oiseau, puis chercher ses coordonnï¿½es et comparer avec les coordonnï¿½es affichï¿½es sur la console
     }
 }

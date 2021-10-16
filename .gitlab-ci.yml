@@ -1,3 +1,5 @@
+image: conanio/gcc9
+
 stages:
   - build-and-test
 
