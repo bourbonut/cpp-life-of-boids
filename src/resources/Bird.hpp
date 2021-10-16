@@ -34,6 +34,7 @@ public:
 	void updateVelocity(const std::vector<Bird>& neighbors);
 	void computePosition();
 	void updatePosition();
+	void escape();
 	Vec2 getNextPosition() const;
 	Vec2 getNextVelocity() const;
 	void print() const;

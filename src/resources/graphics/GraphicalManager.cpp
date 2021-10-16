@@ -190,7 +190,7 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
             for (auto & bird : flock) {
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
                 //bird.updatePosition();
-                bird.updateVelocity(flock.computeNeighbors(bird, 50, 50));
+                bird.updateVelocity(flock.computeNeighbors(bird, 50, 270));
                 bird.computePosition();
                 bird.updatePosition();
 
