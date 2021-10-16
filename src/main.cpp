@@ -12,13 +12,10 @@
 #include <string>
 #include "resources/Flock.hpp"
 
-
 #include "resources/graphics/glx.hpp"
 #include "resources/graphics/graphics.hpp"
 #include "resources/graphics/GraphicalManager.hpp"
 #include "resources/graphics/oglTypes.hpp"
-
-float EPS_ = 0.00001;
 
 
 int main() {

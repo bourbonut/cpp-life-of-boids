@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 
-extern float EPS_;
 
 typedef struct Vec2 {
     float x;

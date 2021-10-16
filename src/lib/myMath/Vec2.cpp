@@ -4,6 +4,8 @@
 #include "Vec2.hpp"
 #include <algorithm>
 
+float EPS_ = 0.00001;
+
 Vec2::Vec2() {
     this->x = 0.;
     this->y = 0.;
@@ -124,7 +126,7 @@ float Vec2::norm() {
 Vec2 Vec2::normalize() {
     float norm = this->norm();
     Vec2 normalized = Vec2(this->x / (norm + EPS_), this->y / (norm + EPS_));
-    if (isnan(normalized.x) | isnan(normalized.y)) {
+    if (std::isnan(normalized.x) | std::isnan(normalized.y)) {
         throw std::domain_error("Undefined coordinate");
     }
     return normalized;
