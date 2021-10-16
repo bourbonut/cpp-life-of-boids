@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include <math.h>
+#include <cmath>
 #include "../oglTypes.hpp"
 #include <cmath>
 

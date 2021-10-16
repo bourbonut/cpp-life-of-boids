@@ -1,8 +1,13 @@
-#define _USE_MATH_DEFINES
+//#include "utils.hpp"
+////#define _USE_MATH_DEFINES
+////#include <cmath>
+//#include "Vec2.hpp"
+//#include <vector>
+//#include <random>
 #include "Vec2.hpp"
 #include <vector>
-#include <cmath>
 #include <random>
+#include "utils.hpp"
 
 float distance(Vec2 a, Vec2 b) {
     return (a - b).norm();
@@ -20,11 +25,11 @@ Vec2 barycenter(std::vector<Vec2> vecs) {
 }
 
 float radians(float angle) {
-    return angle * M_PI / 180;
+    return angle * 3.14 / 180; //CHANGED M_PI because it causes error with gcc compiler, will try to add it again later
 }
 
 float degrees(float angle) {
-    return angle * 180/ M_PI;
+    return angle * 180/ 3.14;
 }
 
 bool isAntiClockwise(Vec2 a, Vec2 b){

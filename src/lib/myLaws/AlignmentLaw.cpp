@@ -8,7 +8,6 @@ class Bird;
 
 Vec2 AlignmentLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
 
-	float ALIGNMENT_RADIUS = 50;
 		Vec2 nextVelocity(0, 0);
 
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #include <iostream>
 #include <vector>
 #include <array>
@@ -13,6 +11,13 @@
 #include <math.h>
 
 #include "../Flock.hpp"
+#include <string>
+#include <iomanip>
+#include <chrono>
+#include <sstream>
+
+using namespace std::chrono;
+
 
 GraphicalManager::GraphicalManager() {
     std::cout << "Constructing GraphicalManager object" << std::endl;
@@ -35,6 +40,7 @@ GraphicalManager::GraphicalManager() {
     }
 
     glfwSetKeyCallback(m_window, key_callback);
+    glfwSetMouseButtonCallback(m_window, mouse_button_callback);
 
     glfwMakeContextCurrent(m_window);
     gladLoadGL();
@@ -146,6 +152,7 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
 bool GraphicalManager::mainLoop(float t, Flock & flock) {
 
     if (!glfwWindowShouldClose(m_window)) {
+        auto start = high_resolution_clock::now();
 
         int width{};
         int height{};
@@ -207,6 +214,12 @@ bool GraphicalManager::mainLoop(float t, Flock & flock) {
 
         }
 
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        /*std::ostringstream oss;
+        oss << "FPS is : " << 1 / (duration.count() * 10e-6) << " seconds. " << std::endl;
+        glfwSetWindowTitle(m_window, oss.str().c_str());*/
+        glfwSetWindowTitle(m_window, "mon blabla");
         // Swap buffers
         glfwSwapBuffers(m_window);
         glfwPollEvents();
@@ -224,13 +237,17 @@ static void error_callback(int error, const char* description) {
     std::cerr << "Error[" << error << "]: " << description << "\n";
 }
 
-/** Actions to be taken when specific keys are pressed
+/**
+  * Actions to be taken when specific keys are pressed
   *
   * @param window our window
   * @param key which key
   * @param scancode
   * @param action action taken (press, unpress, repeat...)
   */
+
+Flock population = Flock(2);
+
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
     // If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -242,5 +259,26 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
         char export_filename[] = "export.png";
         saveImage(export_filename, window);
     }
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+        std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
+        population.addAgent();
+    }
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+        std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
+        population.destroyAgent(Vec2(5, 10));
+    }
+}
 
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        double xpos, ypos;
+        //getting cursor position
+        glfwGetCursorPos(window, &xpos, &ypos);
+        std::cout << "Cursor Position at ( " << xpos << " : " << ypos << " ) " << std::endl;
+        population.addAgent(xpos, ypos);
+
+        Vec2 getPosition(); // chercher le dernier oiseau, puis chercher ses coordonnées et comparer avec les coordonnées affichées sur la console
+    }
 }
