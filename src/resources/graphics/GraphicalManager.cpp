@@ -8,6 +8,7 @@
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
+#include <math.h>
 
 #include "../Flock.hpp"
 #include "../Bird.hpp"

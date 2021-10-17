@@ -1,39 +1,59 @@
 image: conanio/gcc9
 
 stages:
-  - build-and-test
+  - build
+  - test
 
-before_script:
-    - echo '#######################-BEGIN-##############################'
-    - echo 'Processing update and installs...'
-    - conan profile new default --detect
-    - conan profile update settings.compiler.libcxx=libstdc++11 default
-    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+job:gcc:build:
+  image: arthurviens/hpcai-2021:lob-conan-gcc9
 
-after_script:
-    - echo '########################-END-#############################'
+  stage: build
+  script:
+    - echo 'Building ...'
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install ..
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Release ..
+    - cmake --build . --config "Release"
+  artifacts:
+      paths:
+          - build/
 
-build-and-test-stage:
-    stage: build-and-test
-    script:
-        - echo "Building files..."
-        - rm -rf buildGCC
-        - mkdir buildGCC
-        - cd buildGCC
-        - conan install ..
-        - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake ..
-        - cmake --build . --config "Release"
-        - echo "Running tests..."
-        - ctest
-#    artifacts:
-#        paths:
-#            - buildGCC/
+job:gcc:test:
+  image: arthurviens/hpcai-2021:lob-conan-gcc9
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - ctest
+  dependencies:
+    - job:gcc:build
 
-#test-stage:
-#    stage: test
-#    script:
-#        - echo "Running tests..."
-#        - ls
-#        - pwd
-#        - cd buildGCC
-#        - ctest
+
+job:clang:build:
+  image: arthurviens/hpcai-2021:lob-conan-clang10
+
+  stage: build
+  script:
+    - echo 'Building ...'
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install ..
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Release ..
+    - cmake --build . --config "Release"
+  artifacts:
+      paths:
+          - build/
+
+job:clang:test:
+  image: arthurviens/hpcai-2021:lob-conan-clang10
+
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - ctest
+  dependencies:
+    - job:clang:build
