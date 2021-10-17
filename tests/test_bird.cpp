@@ -1,6 +1,7 @@
 #include <iostream>
 #include "gtest/gtest.h"
 #include "../src/resources/Bird.hpp"
+#include "../src/resources/Agent.hpp"
 #include "../src/resources/Flock.hpp"
 #include <vector>
 
@@ -39,27 +40,27 @@ namespace {
 		ASSERT_EQ(flock.getPopSize(), testSize) << "Population size should be " << testSize;
 
 		//Adding one agent and checking size
-		flock.addAgent();
+		Bird b1 = Bird{};
+		flock.addAgent(&b1);
 		ASSERT_EQ(flock.getPopSize(), testSize + 1) << "Added an agent with addAgent(), now popSize should be " << testSize << " +1";
 
 		//Adding 1000 agents
 		for (int i = 0; i < loopSize; ++i) {
-			flock.addAgent();
+			Bird bx = Bird{};
+			flock.addAgent(&bx);
 		}
 		ASSERT_EQ(flock.getPopSize(), testSize + loopSize+1) << "Added " << loopSize << " agents, now popSize should be " << testSize << " + " << loopSize << "+ 1";
 
 
 		//Adding a specific agent with specific values
 		Bird b = Bird(Vec2(0, 0), Vec2(0, 0));
-		flock.addAgent(b);
+		flock.addAgent(&b);
 
 		ASSERT_EQ(flock.getPopSize(), testSize + loopSize + 2) << "Added one more agents, should be " << testSize << " + " << loopSize << "+ 2";
-		flock.print();
-
+		//flock.print();
 		//flock[testSize + loopSize + 1].getPosition()
-
-		EXPECT_EQ(flock.getAgent(testSize + loopSize + 1).getPosition(), b.getPosition()) << "Last agent's position should be 0,0";
-		EXPECT_EQ(flock.getAgent(testSize + loopSize + 1).getVelocity(), b.getVelocity()) << "Last agent's velocity should be 0,0";
+		EXPECT_EQ((flock.getAgentPtr(testSize + loopSize + 1))->getPosition(), b.getPosition()) << "Last agent's position should be 0,0";
+		EXPECT_EQ((flock.getAgentPtr(testSize + loopSize + 1))->getVelocity(), b.getVelocity()) << "Last agent's velocity should be 0,0";
 
 		//flock.addAgent(b);
 		//flock.addAgent(b);

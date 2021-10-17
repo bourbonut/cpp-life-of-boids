@@ -3,6 +3,7 @@
 #include "../src/resources/graphics/graphics.hpp"
 #include "../src/resources/graphics/oglTypes.hpp"
 #include "../src/resources/Bird.hpp"
+#include "../src/resources/Agent.hpp"
 #include "../src/lib/myMath/Vec2.hpp"
 #include <vector>
 

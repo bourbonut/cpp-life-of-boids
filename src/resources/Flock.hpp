@@ -7,27 +7,30 @@
 
 class Flock {
 private :
-	std::vector<Bird> m_birdsVec;
+	//std::vector<Bird> m_birdsVec;
+	std::vector<Agent*> m_agents;
 
 public:
 	void print();
 	int getPopSize() const;
-	Bird getAgent(int index);
-	void createPopulation();
-	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
-	void addAgent();
-	void addAgent(float xpos, float ypos);
+	Agent* getAgentPtr(int index);
+	//void createPopulation();
+	std::vector<Agent*> computeNeighbors(const Agent& agent);//, const float& range, const float& angle);
+	//void addAgent();
+	//void addAgent(float xpos, float ypos);
 
-	void addAgent(Bird b);
-	void destroyAgent(Vec2 position);
-	void moveAgents();
+	void addAgent(Agent *a);
+	//void destroyAgent(Vec2 position);
+	//void moveAgents();
 
 public:
 	Flock(); // Constructeur avec argument par défaut
 	Flock(int popsize);
 	~Flock() {}; // Destructeur
 
-	auto begin() { return m_birdsVec.begin(); };
-	auto end() { return m_birdsVec.end(); };
+	//auto begin() { return m_birdsVec.begin(); };
+	auto begin() { return m_agents.begin(); };
+	//auto end() { return m_birdsVec.end(); };
+	auto end() { return m_agents.end(); };
 
 };
