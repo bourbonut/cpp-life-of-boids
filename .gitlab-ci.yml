@@ -2,11 +2,13 @@ stages:
   - build
   - test
 
-job:gcc:build:
+job:gcc:debug:build:
   image: arthurviens/hpcai-2021:lob-conan-gcc9
 
   stage: build
   script:
+    - echo 'Update settings to Debug mode ...'
+    - conan profile update settings.build_type=Debug default
     - echo 'Building ...'
     - if [ -d build ]; then rm build -r; fi
     - mkdir build
@@ -18,7 +20,7 @@ job:gcc:build:
       paths:
           - build/
 
-job:gcc:test:
+job:gcc:debug:test:
   image: arthurviens/hpcai-2021:lob-conan-gcc9
   stage: test
   script:
@@ -26,15 +28,16 @@ job:gcc:test:
     - cd build
     - ctest
   dependencies:
-    - job:gcc:build
+    - job:gcc:debug:build
 
 
-job:clang:build:
+job:clang:debug:build:
   image: arthurviens/hpcai-2021:lob-conan-clang10
 
   stage: build
   script:
-    - echo 'Processing update and installs...'
+    - echo 'Update settings to Debug mode ...'
+    - conan profile update settings.build_type=Debug default
     - echo 'Building ...'
     - if [ -d build ]; then rm build -r; fi
     - mkdir build
@@ -46,7 +49,7 @@ job:clang:build:
       paths:
           - build/
 
-job:clang:test:
+job:clang:debug:test:
   image: arthurviens/hpcai-2021:lob-conan-clang10
 
   stage: test
@@ -55,4 +58,59 @@ job:clang:test:
     - cd build
     - ctest
   dependencies:
-    - job:clang:build
+    - job:clang:debug:build
+
+
+job:gcc:release:build:
+  image: arthurviens/hpcai-2021:lob-conan-gcc9
+
+  stage: build
+  script:
+    - echo 'Building ...'
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install ..
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Release ..
+    - cmake --build . --config "Release"
+  artifacts:
+      paths:
+          - build/
+
+job:gcc:release:test:
+  image: arthurviens/hpcai-2021:lob-conan-gcc9
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - ctest
+  dependencies:
+    - job:gcc:release:build
+
+
+job:clang:release:build:
+  image: arthurviens/hpcai-2021:lob-conan-clang10
+
+  stage: build
+  script:
+    - echo 'Building ...'
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install ..
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Release ..
+    - cmake --build . --config "Release"
+  artifacts:
+      paths:
+          - build/
+
+job:clang:release:test:
+  image: arthurviens/hpcai-2021:lob-conan-clang10
+
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - ctest
+  dependencies:
+    - job:clang:release:build
