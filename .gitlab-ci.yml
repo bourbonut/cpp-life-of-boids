@@ -36,36 +36,36 @@ job:gcc:
 
 job:clang:
   image: conanio/clang10
-    stage: deploy
-    before_script:
-        - echo 'Processing update and installs...'
-        - conan profile new default --detect
-        - conan profile update settings.compiler.libcxx=libstdc++11 default
-        - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-
-    after_script:
-        - echo 'Finished.'
-
-    stage: build
-    script:
-      - echo 'Building ...'
-      - conan profile new --detect default
+  stage: deploy
+  before_script:
+      - echo 'Processing update and installs...'
+      - conan profile new default --detect
       - conan profile update settings.compiler.libcxx=libstdc++11 default
-      - conan profile update settings.build_type=Debug default
       - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-      - echo "Building files"
-      - if [ -d build ]; then rm build -r; fi
-      - mkdir build
-      - cd build
-      - conan install .. --build opencv --build openexr --build ade --build gtest --build gtest --build libtiff --build protobuf
-      - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
-      - cmake --build . --config "Debug"
-    artifacts:
-        paths:
-            - build/
 
-    stage: test
-    script:
-      - echo "Running tests..."
-      - cd build
-      - ctest
+  after_script:
+      - echo 'Finished.'
+
+  stage: build
+  script:
+    - echo 'Building ...'
+    - conan profile new --detect default
+    - conan profile update settings.compiler.libcxx=libstdc++11 default
+    - conan profile update settings.build_type=Debug default
+    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+    - echo "Building files"
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install .. --build opencv --build openexr --build ade --build gtest --build gtest --build libtiff --build protobuf
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - cmake --build . --config "Debug"
+  artifacts:
+      paths:
+          - build/
+
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - ctest
