@@ -26,12 +26,12 @@
 
 job:gcc:
   image: conanio/gcc9
-  stage: gcc
+  stage: deploy
   script:
     - echo "Hello gcc"
 
-job:gcc:
+job:clang:
   image: conanio/clang10
-  stage: clang
+  stage: deploy
   script:
     - echo "Hello clang"
