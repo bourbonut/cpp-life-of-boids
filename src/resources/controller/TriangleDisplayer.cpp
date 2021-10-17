@@ -2,6 +2,9 @@
 #include <array>
 #include "../../lib/myMath/Vec2.hpp"
 
+TriangleDisplayer::TriangleDisplayer(const Agent pAgent) {
+	m_pAgent = &pAgent;
+};
 
 std::array<Vec2, 6> TriangleDisplayer:: drawAgent() const {
 	Vec2 position = (*m_pAgent).getPosition();

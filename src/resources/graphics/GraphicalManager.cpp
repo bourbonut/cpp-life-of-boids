@@ -5,6 +5,8 @@
 #include "glx.hpp"
 #include "graphics.hpp"
 
+#include "../controller/TriangleDisplayer.hpp"
+
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
@@ -152,6 +154,9 @@ bool GraphicalManager::mainLoop(float t) {
             std::vector<triangle::Vertex> vertex_data;
 
             for (auto & bird : *flockPtr) {
+
+                //TriangleDisplayer tDisplay{ bird };
+
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
                 //bird.updatePosition();
                 bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));

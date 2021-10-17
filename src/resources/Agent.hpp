@@ -16,8 +16,8 @@ public:
 	~Agent() {}; // Destructeur
 
 public:
-	Vec2 getPosition();
-	Vec2 getVelocity();
+	Vec2 getPosition() const;
+	Vec2 getVelocity() const;
 
 	void computePosition();
 	void updatePosition();

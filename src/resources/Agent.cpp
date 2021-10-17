@@ -12,11 +12,11 @@ Agent::Agent(Vec2 position, Vec2 velocity) {
 	m_nextPosition = position;
 };
 
-Vec2 Agent::getPosition() {
+Vec2 Agent::getPosition() const{
 	return m_position; // Do we need it ?
 };
 
-Vec2 Agent::getVelocity() {
+Vec2 Agent::getVelocity() const {
 	return m_velocity; // Do we need it?
 };
 
