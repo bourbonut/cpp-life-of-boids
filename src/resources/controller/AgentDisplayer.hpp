@@ -1,12 +1,13 @@
 #pragma once
 #include "../Agent.hpp"
-#include <vector>
+#include <array>
 #include "../../lib/myMath/Vec2.hpp"
 
+template <int m_nbPoints>
 class AgentDisplayer {
 protected:
 	Agent* m_pAgent;
 
 public:
-	virtual std::vector<Vec2> drawAgent() const = 0;
+	virtual std::array<Vec2, m_nbPoints> drawAgent() const = 0;
 };

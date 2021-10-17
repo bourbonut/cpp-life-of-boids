@@ -1,9 +1,9 @@
 #pragma once
 #include "AgentDisplayer.hpp"
-#include <vector>
+#include <array>
 #include "../../lib/myMath/Vec2.hpp"
 
-class TriangleDisplayer : AgentDisplayer {
+class TriangleDisplayer : AgentDisplayer<6> {
 public :
-	std::vector<Vec2> drawAgent() const override;
+	std::array<Vec2, 6> drawAgent() const override;
 };
