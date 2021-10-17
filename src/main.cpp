@@ -24,7 +24,7 @@ int main() {
 
     GraphicalManager GM{};
     
-    int size = 50;
+    int size = 400;
 
     mainFlock.reserve(size);
     for (int i = 0; i < size; ++i) {
