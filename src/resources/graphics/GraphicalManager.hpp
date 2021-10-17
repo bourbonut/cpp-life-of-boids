@@ -8,7 +8,7 @@
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
 
-#include "../Flock.hpp"
+#include "../model/Flock.hpp"
 
 extern Flock* flockPtr;
 

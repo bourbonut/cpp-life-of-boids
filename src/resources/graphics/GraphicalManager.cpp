@@ -5,13 +5,15 @@
 #include "glx.hpp"
 #include "graphics.hpp"
 
+#include "../controller/TriangleDisplayer.hpp"
+
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
 #include <math.h>
 
-#include "../Flock.hpp"
-#include "../Bird.hpp"
+#include "../model/Flock.hpp"
+#include "../model/Bird.hpp"
 #include <string>
 #include <iomanip>
 #include <chrono>
@@ -52,8 +54,8 @@ GraphicalManager::GraphicalManager() {
     int width{};
     int height{};
     glfwGetFramebufferSize(m_window, &width, &height);
-    m_width = (float) width;
-    m_height = (float) height;
+    m_width = (float)width;
+    m_height = (float)height;
 
     triangle_shaderProgram = ShaderProgram_new(triangle::vertex_shader_text, triangle::fragment_shader_text);
     triangle_vertexArray = VertexArray_new();
@@ -75,32 +77,6 @@ GraphicalManager::GraphicalManager() {
     glEnableVertexAttribArray(m_vpos_location);
     glEnableVertexAttribArray(m_vcol_location);
 
-
-
-    // Points part 
-    points_shaderProgram = ShaderProgram_new(points::vertex_shader_text, points::fragment_shader_text);
-    points_vertexArray = VertexArray_new();
-    points_buffer = Buffer_new();
-
-    VertexArray_bind(points_vertexArray);
-    Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
-    ShaderProgram_activate(points_shaderProgram);
-
-    m_transform_location = ShaderProgram_getUniformLocation(points_shaderProgram, "transform");
-    m_pointSize_location = ShaderProgram_getUniformLocation(points_shaderProgram, "pointSize");
-    m_maxSpeedSquared_location = ShaderProgram_getUniformLocation(points_shaderProgram, "maxSpeedSquared");
-    m_position_location = ShaderProgram_getAttribLocation(points_shaderProgram, "position");
-    m_velocity_location = ShaderProgram_getAttribLocation(points_shaderProgram, "velocity");
-
-    glVertexAttribPointer(
-        m_position_location, 2, GL_FLOAT, GL_FALSE, sizeof(points::Point), (void*)offsetof(points::Point, position));
-    glVertexAttribPointer(
-        m_velocity_location, 2, GL_FLOAT, GL_FALSE, sizeof(points::Point), (void*)offsetof(points::Point, velocity));
-
-    glEnableVertexAttribArray(m_position_location);
-    glEnableVertexAttribArray(m_velocity_location);
-
-    glEnable(GL_PROGRAM_POINT_SIZE);
 
     // Lines part
 
@@ -166,21 +142,6 @@ bool GraphicalManager::mainLoop(float t) {
         glViewport(0, 0, m_width, m_height);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        //{  // triangle
-        //    mat4x4 m = triangle::mat4x4_identity();
-        //    m = triangle::mat4x4_rotate_Z(m, (float)glfwGetTime());
-        //    mat4x4 p = triangle::mat4x4_ortho(-ratio, ratio, -1., 1., 1., -1.);
-        //    mat4x4 mvp = triangle::mat4x4_mul(p, m);
-
-        //    VertexArray_bind(triangle_vertexArray);
-        //    Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
-        //    ShaderProgram_activate(triangle_shaderProgram);
-
-        //    glUniformMatrix4fv(m_mvp_location, 1, GL_FALSE, (const GLfloat*)&mvp);
-        //    glBindVertexArray(triangle_vertexArray.vertex_array);
-        //    glDrawArrays(GL_TRIANGLES, 0, 3);
-        //}
-
         {  // lines
             mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
 
@@ -193,16 +154,33 @@ bool GraphicalManager::mainLoop(float t) {
 
             std::vector<triangle::Vertex> vertex_data;
 
-            for (auto & bird : *flockPtr) {
-                //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
-                //bird.updatePosition();
-                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
-                bird.computePosition();
-                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
-                bird.setNextPosition(newPos);
-                bird.updatePosition();
+            for (auto& bird : *flockPtr) {
 
-                mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());
+                //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
+
+
+                //bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
+                //bird.computePosition();
+                //Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
+                //bird.setNextPosition(newPos);
+                //bird.updatePosition();
+
+                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+                //std::cout << "n size : " << aVec.size() << std::endl;
+                (*bird).computeLaws(aVec);// , 50, 50));
+                (*bird).prepareMove();
+                (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
+                (*bird).move();
+                //std::cout << (*bird).getPosition().x << " , " << (*bird).getPosition().y << std::endl;
+//=======
+//                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
+//                bird.computePosition();
+//                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
+//                bird.setNextPosition(newPos);
+//                bird.updatePosition();
+//>>>>>>> dev_issue25_angle_and_id
+
+                mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
 
                 for (int j = 0; j < result.size(); ++j) {
                     vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
@@ -261,11 +239,11 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
     }
     if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
         std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-        (*flockPtr).addAgent();
+        //(*flockPtr).addAgent();
     }
     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
         std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
-        (*flockPtr).destroyAgent(Vec2(5, 10));
+        //(*flockPtr).destroyAgent(Vec2(5, 10));
     }
 }
 
@@ -278,7 +256,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            (*flockPtr).addAgent(xpos, ypos);
+            (*flockPtr).addAgent(new Bird{ xpos, ypos });
         }
     }
 }

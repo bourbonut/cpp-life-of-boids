@@ -1,10 +1,10 @@
+#include "CohesionLaw.hpp"
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
-class Bird;
-#include "../../resources/Bird.hpp"
+#include "../../resources/model/Agent.hpp"
 
-Vec2 CohesionLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
+Vec2 CohesionLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 
 	Vec2 newVelocity{};
 	float distBetwA = 0, weight = 0;
@@ -14,14 +14,14 @@ Vec2 CohesionLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors)
 
 	//for each neighbor bird, add to a final vector the weigthed input of the neighbor bird
 	//std::cout << "m_range : " << m_range << std::endl;
-	for (Bird b : neighbors)
+	for (Agent* b : neighbors)
 	{
-		if (abs(distance(b.getPosition(), currentBird.getPosition())) > 30) { // !(b.getPosition() == currentBird.getPosition())
-			distBetwA = distance(b.getPosition(), currentBird.getPosition());
+		if (abs(distance((*b).getPosition(), currentAgent.getPosition())) > 30) { // !(b.getPosition() == currentBird.getPosition())
+			distBetwA = distance((*b).getPosition(), currentAgent.getPosition());
 
 			weight = (distBetwA / m_range);
 
-			newVelocity = newVelocity + (b.getPosition() - currentBird.getPosition()) * weight;
+			newVelocity = newVelocity + ((*b).getPosition() - currentAgent.getPosition()) * weight;
 		}
 
 	}
