@@ -51,8 +51,8 @@ GraphicalManager::GraphicalManager() {
     int width{};
     int height{};
     glfwGetFramebufferSize(m_window, &width, &height);
-    m_width = (float) width;
-    m_height = (float) height;
+    m_width = (float)width;
+    m_height = (float)height;
 
     triangle_shaderProgram = ShaderProgram_new(triangle::vertex_shader_text, triangle::fragment_shader_text);
     triangle_vertexArray = VertexArray_new();
@@ -192,10 +192,10 @@ bool GraphicalManager::mainLoop(float t) {
 
             std::vector<triangle::Vertex> vertex_data;
 
-            for (auto & bird : *flockPtr) {
+            for (auto& bird : *flockPtr) {
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
                 //bird.updatePosition();
-                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
+                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
                 bird.computePosition();
                 Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
                 bird.setNextPosition(newPos);
