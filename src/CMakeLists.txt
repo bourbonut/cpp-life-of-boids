@@ -7,8 +7,8 @@ FIND_PACKAGE(OpenCV REQUIRED)
 
 add_subdirectory("lib/myLaws")
 add_subdirectory("lib/myMath")
-add_subdirectory("resources")
 add_subdirectory("resources/graphics")
+add_subdirectory("resources/model")
 add_subdirectory("resources/controller")
 
 add_executable(mathPart math_main.cpp)

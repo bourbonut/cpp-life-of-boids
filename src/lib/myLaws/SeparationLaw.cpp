@@ -1,10 +1,10 @@
+#include "SeparationLaw.hpp"
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
-class Bird;
-#include "../../resources/Bird.hpp"
+#include "../../resources/model/Agent.hpp"
 
-Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
+Vec2 SeparationLaw::compute(Agent& currentAgent, const std::vector<Agent*> &neighbors) const {
 
 	Vec2 result{};
 	float distBetwA = 0, weight = 0;
@@ -14,10 +14,10 @@ Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbor
 
 	//for each neighbor bird, add to a final vector the weigthed input of the neighbor bird
 	//std::cout << "m_range : " << m_range << std::endl;
-	for (Bird b : neighbors)
+	for (Agent *b : neighbors)
 	{
-		if (!(b.getPosition() == currentBird.getPosition())) {
-			distBetwA = distance(b.getPosition(), currentBird.getPosition());
+		if (!((*b).getPosition() == currentAgent.getPosition())) {
+			distBetwA = distance((*b).getPosition(), currentAgent.getPosition());
 			//std::cout << "dist : " << distBetwA << std::endl;
 			//Get the weight from the inverse of the square, depending on the distance between the two agents
 			//weight = 1 / ((distBetwA / m_range) * (distBetwA / m_range));
@@ -25,7 +25,7 @@ Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbor
 			//weight = weight * 1000;
 			//std::cout << "weight : " << weight << std::endl;
 			//Calculates a vector between agent b and this, and mutiplies it by the current weight of agent b
-			result = result + (currentBird.getPosition() - b.getPosition()) * weight;
+			result = result + (currentAgent.getPosition() - (*b).getPosition()) * weight;
 		}
 
 	}

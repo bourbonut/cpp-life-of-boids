@@ -11,8 +11,8 @@
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
 
-#include "../Flock.hpp"
-#include "../Bird.hpp"
+#include "../model/Flock.hpp"
+#include "../model/Bird.hpp"
 #include <string>
 #include <iomanip>
 #include <chrono>
@@ -158,14 +158,22 @@ bool GraphicalManager::mainLoop(float t) {
                 //TriangleDisplayer tDisplay{ bird };
 
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
-                //bird.updatePosition();
-                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
-                bird.computePosition();
-                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
-                bird.setNextPosition(newPos);
-                bird.updatePosition();
 
-                mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());
+
+                //bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
+                //bird.computePosition();
+                //Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
+                //bird.setNextPosition(newPos);
+                //bird.updatePosition();
+                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+
+                (*bird).computeLaws(aVec);// , 50, 50));
+                (*bird).prepareMove();
+                (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
+                (*bird).move();
+
+
+                mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
 
                 for (int j = 0; j < result.size(); ++j) {
                     vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
@@ -224,11 +232,11 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
     }
     if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
         std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-        (*flockPtr).addAgent();
+        //(*flockPtr).addAgent();
     }
     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
         std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
-        (*flockPtr).destroyAgent(Vec2(5, 10));
+        //(*flockPtr).destroyAgent(Vec2(5, 10));
     }
 }
 
@@ -241,7 +249,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            (*flockPtr).addAgent(xpos, ypos);
+            (*flockPtr).addAgent(new Bird{ xpos, ypos });
         }
     }
 }

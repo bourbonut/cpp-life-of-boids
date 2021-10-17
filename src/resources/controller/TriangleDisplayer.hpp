@@ -5,6 +5,6 @@
 
 class TriangleDisplayer : AgentDisplayer<6> {
 public :
-	TriangleDisplayer(const Agent agent);
+	TriangleDisplayer(const Agent *pAgent);
 	std::array<Vec2, 6> drawAgent() const override;
 };
