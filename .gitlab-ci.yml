@@ -5,62 +5,62 @@ stages:
 job:gcc:
   image: conanio/gcc9
 
-  build-stage:
-      script:
-        - echo 'Processing update and installs...'
-        - conan profile new default --detect
-        - conan profile update settings.compiler.libcxx=libstdc++11 default
-        - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-        - echo 'Building ...'
-        - conan profile new --detect default
-        - conan profile update settings.compiler.libcxx=libstdc++11 default
-        - conan profile update settings.build_type=Debug default
-        - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-        - echo "Building files"
-        - if [ -d build ]; then rm build -r; fi
-        - mkdir build
-        - cd build
-        - conan install ..
-        - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
-        - cmake --build . --config "Debug"
-      artifacts:
-          paths:
-              - build/
+  stage: build
+  script:
+    - echo 'Processing update and installs...'
+    - conan profile new default --detect
+    - conan profile update settings.compiler.libcxx=libstdc++11 default
+    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+    - echo 'Building ...'
+    - conan profile new --detect default
+    - conan profile update settings.compiler.libcxx=libstdc++11 default
+    - conan profile update settings.build_type=Debug default
+    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+    - echo "Building files"
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install ..
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - cmake --build . --config "Debug"
+  artifacts:
+      paths:
+          - build/
 
-  test-stage:
-      script:
-        - echo "Running tests..."
-        - cd build
-        - ctest
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - ctest
 
 
 job:clang:
   image: conanio/clang10
 
-  build-stage:
-      script:
-        - echo 'Processing update and installs...'
-        - conan profile new default --detect
-        - conan profile update settings.compiler.libcxx=libstdc++11 default
-        - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-        - echo 'Building ...'
-        - conan profile new --detect default
-        - conan profile update settings.compiler.libcxx=libstdc++11 default
-        - conan profile update settings.build_type=Debug default
-        - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-        - echo "Building files"
-        - if [ -d build ]; then rm build -r; fi
-        - mkdir build
-        - cd build
-        - conan install .. --build opencv --build openexr --build ade --build gtest --build gtest --build libtiff --build protobuf
-        - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
-        - cmake --build . --config "Debug"
-      artifacts:
-          paths:
-              - build/
+  stage: build
+  script:
+    - echo 'Processing update and installs...'
+    - conan profile new default --detect
+    - conan profile update settings.compiler.libcxx=libstdc++11 default
+    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+    - echo 'Building ...'
+    - conan profile new --detect default
+    - conan profile update settings.compiler.libcxx=libstdc++11 default
+    - conan profile update settings.build_type=Debug default
+    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+    - echo "Building files"
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install .. --build opencv --build openexr --build ade --build gtest --build gtest --build libtiff --build protobuf
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - cmake --build . --config "Debug"
+  artifacts:
+      paths:
+          - build/
 
-  test-stage:
-      script:
-        - echo "Running tests..."
-        - cd build
-        - ctest
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - ctest
