@@ -33,7 +33,7 @@ Vec2 SeparationLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbor
 	//divide the actual final vector by the number of neighbor birds to get a final vector pointing to the barycenter needed
 	//result = result / neighbors.size();
 	//if (neighbors.size() > 0){ std::cout << "0 : " << neighbors[0].getPosition().string() << '\n'; }
-	
+
 	return result;
 
 }

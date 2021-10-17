@@ -20,6 +20,7 @@ Bird::Bird(const Bird& other) {
 	m_nextPosition = other.m_nextPosition;
 	m_nextVelocity = other.m_nextVelocity;
 	m_bodySize = other.m_bodySize;
+	static int id = 1; _id = id++;
 };
 //NEED CTOR BY COPY (rule of three) BUT ACCESSING TO OTHER BIRD'S DATA SEEMS WEIRD
 //MAYBE WE NEED A STRUCT ?? OR MAYBE WE NEED TO APPLY THE ZERO LAW AND BIRDS ARE NOT THE ONES WHO RANDOMIZE!!
@@ -38,6 +39,10 @@ Vec2 Bird::getVelocity() const {
 	return m_velocity;
 };
 
+int Bird::getId() const {
+	return _id;
+};
+
 Vec2 Bird::getNextPosition() const {
 	return m_nextPosition;
 };
@@ -53,23 +58,29 @@ void Bird::setNextPosition(Vec2 nextPosition) {
 
 void Bird::updateVelocity(const std::vector<Bird>& neighbors) {
 	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors);
+	//std::cout << "coh" << vecCohesion.string() << '\n';
 	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighbors);
+	//std::cout << "ali" << vecAlignment.string() << '\n';
 	Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);
+	//std::cout << "sep" << vecSeparation.string() << '\n';
 	Vec2 vec_displacement = vecCohesion / 10 + vecAlignment + vecSeparation * 1000;
+	//std::cout << "dis"  << vec_displacement.string() << '\n';
+	//std::cout << '\n';
+	//std::cout << '\n';
 	m_nextVelocity = vec_displacement.normalize() * 0.5; // To go real slow to show client, normal : 0.5 + .normalize()
 };
 
 void Bird::computePosition() {
 	m_nextPosition = m_position + m_nextVelocity;
 
-	if (m_position.x - 0.5 < m_nextPosition.x < m_position.x + 0.5)
-	{
-		m_nextPosition.x = m_nextPosition.x + 0.1;
-	}
-	if (m_position.y - 0.5 < m_nextPosition.y < m_position.y + 0.5)
-	{
-		m_nextPosition.y = m_nextPosition.y + 0.1;
-	}
+	//if (m_position.x - 0.5 < m_nextPosition.x < m_position.x + 0.5)
+	//{
+	//	m_nextPosition.x = m_nextPosition.x + 0.1;
+	//}
+	//if (m_position.y - 0.5 < m_nextPosition.y < m_position.y + 0.5)
+	//{
+	//	m_nextPosition.y = m_nextPosition.y + 0.1;
+	//}
 
 	//TO CHANGE !!! ONLY TO SHOW SMHT TO CLIENT
 	//m_nextVelocity += randomVec2Generation(-1, 1);//.normalize(); //Test to randomly move birds
