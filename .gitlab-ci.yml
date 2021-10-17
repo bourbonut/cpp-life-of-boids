@@ -1,12 +1,11 @@
+stages:
+  - build
+  - test
+
 job:gcc:
   image: conanio/gcc9
 
-  stages:
-    - build
-    - test
-
   build-stage:
-      stage: build
       script:
         - echo 'Processing update and installs...'
         - conan profile new default --detect
@@ -29,7 +28,6 @@ job:gcc:
               - build/
 
   test-stage:
-      stage: test
       script:
         - echo "Running tests..."
         - cd build
@@ -39,12 +37,7 @@ job:gcc:
 job:clang:
   image: conanio/clang10
 
-  stages:
-    - build
-    - test
-
   build-stage:
-      stage: build
       script:
         - echo 'Processing update and installs...'
         - conan profile new default --detect
@@ -67,7 +60,6 @@ job:clang:
               - build/
 
   test-stage:
-      stage: test
       script:
         - echo "Running tests..."
         - cd build
