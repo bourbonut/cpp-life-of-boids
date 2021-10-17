@@ -53,8 +53,8 @@ GraphicalManager::GraphicalManager() {
     int width{};
     int height{};
     glfwGetFramebufferSize(m_window, &width, &height);
-    m_width = (float) width;
-    m_height = (float) height;
+    m_width = (float)width;
+    m_height = (float)height;
 
     triangle_shaderProgram = ShaderProgram_new(triangle::vertex_shader_text, triangle::fragment_shader_text);
     triangle_vertexArray = VertexArray_new();
@@ -153,10 +153,14 @@ bool GraphicalManager::mainLoop(float t) {
 
             std::vector<triangle::Vertex> vertex_data;
 
+<<<<<<< HEAD
             for (auto & bird : *flockPtr) {
 
                 //TriangleDisplayer tDisplay{ bird };
 
+=======
+            for (auto& bird : *flockPtr) {
+>>>>>>> dev_issue25_angle_and_id
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
 
 
@@ -165,6 +169,7 @@ bool GraphicalManager::mainLoop(float t) {
                 //Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
                 //bird.setNextPosition(newPos);
                 //bird.updatePosition();
+<<<<<<< HEAD
                 std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
 
                 (*bird).computeLaws(aVec);// , 50, 50));
@@ -172,6 +177,13 @@ bool GraphicalManager::mainLoop(float t) {
                 (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
                 (*bird).move();
 
+=======
+                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
+                bird.computePosition();
+                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
+                bird.setNextPosition(newPos);
+                bird.updatePosition();
+>>>>>>> dev_issue25_angle_and_id
 
                 mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
 
