@@ -2,7 +2,7 @@ stages:
   - build
   - test
 
-job:gcc:
+job:gcc:build:
   image: conanio/gcc9
 
   stage: build
@@ -27,6 +27,8 @@ job:gcc:
       paths:
           - build/
 
+job:gcc:test:
+  image: conanio/gcc9
   stage: test
   script:
     - echo "Running tests..."
@@ -34,7 +36,7 @@ job:gcc:
     - ctest
 
 
-job:clang:
+job:clang:build:
   image: conanio/clang10
 
   stage: build
@@ -59,6 +61,9 @@ job:clang:
       paths:
           - build/
 
+job:clang:test:
+  image: conanio/clang10
+  
   stage: test
   script:
     - echo "Running tests..."
