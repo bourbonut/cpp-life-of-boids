@@ -64,6 +64,6 @@ job:clang:test:
   script:
     - echo "Running tests..."
     - cd build
-    - ctest
+    - ctest -V
   dependencies:
     - job:clang:build

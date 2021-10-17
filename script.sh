@@ -10,8 +10,8 @@ then
 fi
 mkdir build
 cd build
-conan install ..
-# conan install .. --build opencv --build openexr --build ade --build gtest --build libtiff --build protobuf
+# conan install ..
+conan install .. --build opencv --build openexr --build ade --build gtest --build libtiff --build protobuf
 cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
 cmake --build . --config "Debug"
 echo "Running tests..."
