@@ -10,12 +10,9 @@ job:gcc:build:
     - echo 'Processing update and installs...'
     - conan profile new default --detect
     - conan profile update settings.compiler.libcxx=libstdc++11 default
-    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-    - echo 'Building ...'
-    - conan profile new --detect default
-    - conan profile update settings.compiler.libcxx=libstdc++11 default
     - conan profile update settings.build_type=Debug default
     - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+    - echo 'Building ...'
     - echo "Building files"
     - if [ -d build ]; then rm build -r; fi
     - mkdir build
@@ -44,12 +41,9 @@ job:clang:build:
     - echo 'Processing update and installs...'
     - conan profile new default --detect
     - conan profile update settings.compiler.libcxx=libstdc++11 default
-    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-    - echo 'Building ...'
-    - conan profile new --detect default
-    - conan profile update settings.compiler.libcxx=libstdc++11 default
     - conan profile update settings.build_type=Debug default
     - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+    - echo 'Building ...'
     - echo "Building files"
     - if [ -d build ]; then rm build -r; fi
     - mkdir build
@@ -63,7 +57,7 @@ job:clang:build:
 
 job:clang:test:
   image: conanio/clang10
-  
+
   stage: test
   script:
     - echo "Running tests..."
