@@ -9,7 +9,7 @@
 
 class Bird {
 private:
-	int _id;// Use an ID attribute?
+	// Use an ID attribute?
 	Vec2 m_position;
 	Vec2 m_velocity;
 	Vec2 m_nextVelocity;
@@ -31,7 +31,6 @@ public:
 public:
 	Vec2 getPosition() const;
 	Vec2 getVelocity() const;
-	int getId() const;
 
 	void updateVelocity(const std::vector<Bird>& neighbors);
 	void computePosition();
