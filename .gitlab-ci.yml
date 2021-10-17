@@ -1,34 +1,48 @@
-# stages:
-#   - build-and-test
-#
-# before_script:
-#     - echo '#######################-BEGIN-##############################'
-#     - echo 'Processing update and installs...'
-#     - conan profile new default --detect
-#     - conan profile update settings.compiler.libcxx=libstdc++11 default
-#     - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
-#
-# after_script:
-#     - echo '########################-END-#############################'
-#
-# build-and-test-stage:
-#     stage: build-and-test
-#     script:
-#         - echo "Building files..."
-#         - rm -rf buildGCC
-#         - mkdir buildGCC
-#         - cd buildGCC
-#         - conan install ..
-#         - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake ..
-#         - cmake --build . --config "Release"
-#         - echo "Running tests..."
-#         - ctest
-
 job:gcc:
   image: conanio/gcc9
   stage: deploy
+  before_script:
+      - echo 'Processing update and installs...'
+      - conan profile new default --detect
+      - conan profile update settings.compiler.libcxx=libstdc++11 default
+      - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+
+  after_script:
+      - echo 'Finished.'
+
+  stage: build
   script:
-    - echo "Hello gcc"
+    - echo 'Building ...'
+    - conan profile new --detect default
+    - conan profile update settings.compiler.libcxx=libstdc++11 default
+    - conan profile update settings.build_type=Debug default
+    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+    - echo "Building files"
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install ..
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - cmake --build . --config "Debug"
+
+  stage: test
+  script:
+    - echo "Running tests..."
+    - cd build
+    - ctest
+
+  build-and-test-stage:
+      stage: build-and-test
+      script:
+          - echo "Building files..."
+          - rm -rf buildGCC
+          - mkdir buildGCC
+          - cd buildGCC
+          - conan install ..
+          - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake ..
+          - cmake --build . --config "Release"
+          - echo "Running tests..."
+          - ctest
 
 job:clang:
   image: conanio/clang10
