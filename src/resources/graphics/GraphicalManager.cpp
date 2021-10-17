@@ -165,8 +165,8 @@ bool GraphicalManager::mainLoop(float t) {
                 //Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
                 //bird.setNextPosition(newPos);
                 //bird.updatePosition();
-
-                (*bird).computeLaws((*flockPtr).computeNeighbors(*bird));// , 50, 50));
+                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+                (*bird).computeLaws(aVec);// , 50, 50));
                 (*bird).move();
                 (*bird).setPosition(keepPositionInScreen((*bird).getPosition(), m_width, m_height));
 

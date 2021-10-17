@@ -20,4 +20,5 @@ public:
 	double getRange() const;
 
 	Agent& operator=(const Agent& other);
+
 };

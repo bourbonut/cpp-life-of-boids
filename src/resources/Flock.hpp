@@ -13,7 +13,7 @@ private :
 public:
 	void print();
 	int getPopSize() const;
-	Agent* getAgentPtr(int index);
+	Agent* getAgent(int index);
 	//void createPopulation();
 	std::vector<Agent*> computeNeighbors(const Agent& agent);//, const float& range, const float& angle);
 	//void addAgent();

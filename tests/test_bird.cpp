@@ -59,8 +59,10 @@ namespace {
 		ASSERT_EQ(flock.getPopSize(), testSize + loopSize + 2) << "Added one more agents, should be " << testSize << " + " << loopSize << "+ 2";
 		//flock.print();
 		//flock[testSize + loopSize + 1].getPosition()
-		EXPECT_EQ((flock.getAgentPtr(testSize + loopSize + 1))->getPosition(), b.getPosition()) << "Last agent's position should be 0,0";
-		EXPECT_EQ((flock.getAgentPtr(testSize + loopSize + 1))->getVelocity(), b.getVelocity()) << "Last agent's velocity should be 0,0";
+		Vec2 pos = (*flock.getAgent(testSize + loopSize + 1)).getPosition();
+		Vec2 vel = (*flock.getAgent(testSize + loopSize + 1)).getVelocity();
+		EXPECT_EQ(pos, b.getPosition()) << "Last agent's position should be 0,0";
+		EXPECT_EQ(vel, b.getVelocity()) << "Last agent's velocity should be 0,0";
 
 		//flock.addAgent(b);
 		//flock.addAgent(b);

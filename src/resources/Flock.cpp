@@ -22,9 +22,10 @@
 
 
 Flock::Flock(int popSize) : m_agents(popSize){
+
 	for (int i = 0; i < popSize; ++i) {
-		//Bird b = Bird{};
-		//m_agents.emplace_back(b);
+		Bird* b = new Bird{};
+		m_agents.push_back(b);
 	}
 }
 
@@ -71,7 +72,7 @@ int Flock::getPopSize() const {
 
 //see if we need a const &b or not ?
 void Flock::addAgent(Agent *a) {
-	m_agents.emplace_back(a);
+	m_agents.push_back(a);
 };
 
 //void Flock::destroyAgent(Vec2 position) {
@@ -94,7 +95,7 @@ std::vector<Agent*> Flock::computeNeighbors(const Agent& agent){//, const float 
 			//float min_range = 5.0;
 			double a = abs(distWithPotNeighb);
 			if (abs(distWithPotNeighb) <= abs((*potentialNeighbor).getRange())) { //only range because was scared of angle
-				neighbors.emplace_back(potentialNeighbor);
+				neighbors.push_back(potentialNeighbor);
 			}
 		}
 	}
@@ -109,7 +110,7 @@ void Flock::print() {
 	}
 };
 
-Agent* Flock::getAgentPtr(int index) {
+Agent* Flock::getAgent(int index) {
 	return m_agents.at(index);
 };
 
