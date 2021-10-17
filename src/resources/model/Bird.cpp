@@ -9,6 +9,8 @@ Bird::Bird() {
 	Vec2 vel = randomVec2Generation(-5, 5);
 	m_position = pos;
 	m_velocity = vel;
+	m_nextPosition = pos + 1;
+	m_nextVelocity = vel + 1;
 };
 //
 //

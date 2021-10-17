@@ -22,11 +22,10 @@
 Flock::Flock(std::vector<Agent*> population) : m_agents(population) {};
 
 
-Flock::Flock(int popSize) : m_agents(popSize) {
+Flock::Flock(int popSize) {
 
 	for (int i = 0; i < popSize; ++i) { //this doesn't work with ptr
-		Bird* b = new Bird{};
-		m_agents.push_back(b);
+		m_agents.emplace_back(new Bird{});
 	}
 };
 

@@ -31,8 +31,12 @@ void Agent::prepareMove() {
 }
 
 void Agent::setPosition(const Vec2& newPos) {
-	; m_position = newPos;
+	m_position = newPos;
 };
+
+void Agent::setNextPosition(const Vec2& newPos) {
+	m_nextPosition = newPos;
+}
 
 Agent& Agent::operator=(const Agent& other)
 {

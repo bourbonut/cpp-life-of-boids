@@ -166,9 +166,12 @@ bool GraphicalManager::mainLoop(float t) {
                 //bird.setNextPosition(newPos);
                 //bird.updatePosition();
                 std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+
                 (*bird).computeLaws(aVec);// , 50, 50));
+                (*bird).prepareMove();
+                (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
                 (*bird).move();
-                (*bird).setPosition(keepPositionInScreen((*bird).getPosition(), m_width, m_height));
+
 
                 mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
 
@@ -246,8 +249,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            Bird b = Bird{ xpos, ypos };
-            (*flockPtr).addAgent(&b);
+            (*flockPtr).addAgent(new Bird{ xpos, ypos });
         }
     }
 }

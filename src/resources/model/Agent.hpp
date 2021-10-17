@@ -18,6 +18,7 @@ public:
 	void move();
 
 	void setPosition(const Vec2& newPos);
+	void setNextPosition(const Vec2& newPos);
 	Vec2 getPosition() const;
 	Vec2 getVelocity() const;
 	Vec2 getNextVelocity() const;
