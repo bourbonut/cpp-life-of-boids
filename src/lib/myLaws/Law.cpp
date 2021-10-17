@@ -1,7 +1,7 @@
 #include "Law.hpp"
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
-#include "../../resources/Agent.hpp"
+#include "../../resources/model/Agent.hpp"
 #include <vector>
 
 //Return an array of Vec2 based on an array of Birds

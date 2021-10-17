@@ -1,5 +1,5 @@
 #include "Agent.hpp"
-#include "../lib/myMath/Vec2.hpp"
+#include "../../lib/myMath/Vec2.hpp"
 
 Vec2 Agent::getPosition() const{
 	return m_position; 

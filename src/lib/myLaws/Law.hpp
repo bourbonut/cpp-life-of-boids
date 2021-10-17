@@ -1,6 +1,6 @@
 #pragma once
 #include "../myMath/Vec2.hpp"
-#include "../../resources/Agent.hpp"
+#include "../../resources/model/Agent.hpp"
 #include <vector>
 //need to add file in CMake.txt
 

@@ -11,8 +11,8 @@
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
 
-#include "../Flock.hpp"
-#include "../Bird.hpp"
+#include "../model/Flock.hpp"
+#include "../model/Bird.hpp"
 #include <string>
 #include <iomanip>
 #include <chrono>

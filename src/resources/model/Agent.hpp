@@ -1,5 +1,5 @@
 #pragma once
-#include "../lib/myMath/Vec2.hpp"
+#include "../../lib/myMath/Vec2.hpp"
 #include <vector>
 
 class Agent{

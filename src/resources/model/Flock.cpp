@@ -1,8 +1,8 @@
 #include "Flock.hpp"
 #include "Bird.hpp"
-#include "../lib/myMath/utils.hpp"
-#include "../lib/myMath/Vec2.hpp"
-#include "../lib/myLaws/Law.hpp"
+#include "../../lib/myMath/utils.hpp"
+#include "../../lib/myMath/Vec2.hpp"
+#include "../../lib/myLaws/Law.hpp"
 #include <vector>
 #include <cmath>
 #include <random>

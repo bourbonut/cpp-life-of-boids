@@ -3,7 +3,7 @@
 #include "Law.hpp"
 #include "../myMath/Vec2.hpp"
 #include <vector>
-#include "../../resources/Agent.hpp"
+#include "../../resources/model/Agent.hpp"
 
 class AlignmentLaw : public Law {
 public:

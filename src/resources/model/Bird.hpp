@@ -1,10 +1,10 @@
 #pragma once
 #include "Agent.hpp"
-#include "../lib/myMath/Vec2.hpp"
+#include "../../lib/myMath/Vec2.hpp"
 #include <vector>
-#include "../lib/myLaws/SeparationLaw.hpp"
-#include "../lib/myLaws/CohesionLaw.hpp"
-#include "../lib/myLaws/AlignmentLaw.hpp"
+#include "../../lib/myLaws/SeparationLaw.hpp"
+#include "../../lib/myLaws/CohesionLaw.hpp"
+#include "../../lib/myLaws/AlignmentLaw.hpp"
 
 
 class Bird : public Agent{

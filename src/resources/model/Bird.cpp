@@ -1,7 +1,7 @@
 #include <array>
 #include <vector>
-#include "../lib/myMath/Vec2.hpp"
-#include "../lib/myMath/utils.hpp"
+#include "../../lib/myMath/Vec2.hpp"
+#include "../../lib/myMath/utils.hpp"
 #include "Bird.hpp"
 
 Bird::Bird() {

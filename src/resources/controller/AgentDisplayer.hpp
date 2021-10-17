@@ -1,5 +1,5 @@
 #pragma once
-#include "../Agent.hpp"
+#include "../model/Agent.hpp"
 #include <array>
 #include "../../lib/myMath/Vec2.hpp"
 

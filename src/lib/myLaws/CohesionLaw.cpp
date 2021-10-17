@@ -2,7 +2,7 @@
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
-#include "../../resources/Agent.hpp"
+#include "../../resources/model/Agent.hpp"
 
 Vec2 CohesionLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 

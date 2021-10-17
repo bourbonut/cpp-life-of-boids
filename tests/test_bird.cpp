@@ -1,8 +1,8 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "../src/resources/Bird.hpp"
-#include "../src/resources/Agent.hpp"
-#include "../src/resources/Flock.hpp"
+#include "../src/resources/model/Bird.hpp"
+#include "../src/resources/model/Agent.hpp"
+#include "../src/resources/model/Flock.hpp"
 #include <vector>
 
 namespace {
