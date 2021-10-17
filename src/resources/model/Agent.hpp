@@ -15,7 +15,7 @@ protected:
 
 public:
 	int _id = ++id;
-	virtual void computeLaws(const std::vector<Agent*>& neighbors) = 0;
+	virtual void computeLaws(const std::vector<Agent*>& neighbors) = 0; // ADD PREPARE MOVE INTO THIS
 	void prepareMove();
 	void move();
 
