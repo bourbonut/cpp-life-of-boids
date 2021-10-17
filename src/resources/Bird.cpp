@@ -20,7 +20,6 @@ Bird::Bird(const Bird& other) {
 	m_nextPosition = other.m_nextPosition;
 	m_nextVelocity = other.m_nextVelocity;
 	m_bodySize = other.m_bodySize;
-	static int id = 1; _id = id++;
 };
 //NEED CTOR BY COPY (rule of three) BUT ACCESSING TO OTHER BIRD'S DATA SEEMS WEIRD
 //MAYBE WE NEED A STRUCT ?? OR MAYBE WE NEED TO APPLY THE ZERO LAW AND BIRDS ARE NOT THE ONES WHO RANDOMIZE!!
@@ -37,10 +36,6 @@ Vec2 Bird::getPosition() const {
 
 Vec2 Bird::getVelocity() const {
 	return m_velocity;
-};
-
-int Bird::getId() const {
-	return _id;
 };
 
 Vec2 Bird::getNextPosition() const {
@@ -67,14 +62,14 @@ void Bird::updateVelocity(const std::vector<Bird>& neighbors) {
 void Bird::computePosition() {
 	m_nextPosition = m_position + m_nextVelocity;
 
-	//if (m_position.x - 0.5 < m_nextPosition.x < m_position.x + 0.5)
-	//{
-	//	m_nextPosition.x = m_nextPosition.x + 0.1;
-	//}
-	//if (m_position.y - 0.5 < m_nextPosition.y < m_position.y + 0.5)
-	//{
-	//	m_nextPosition.y = m_nextPosition.y + 0.1;
-	//}
+	if (m_position.x - 0.5 < m_nextPosition.x < m_position.x + 0.5)
+	{
+		m_nextPosition.x = m_nextPosition.x + 0.1;
+	}
+	if (m_position.y - 0.5 < m_nextPosition.y < m_position.y + 0.5)
+	{
+		m_nextPosition.y = m_nextPosition.y + 0.1;
+	}
 
 	//TO CHANGE !!! ONLY TO SHOW SMHT TO CLIENT
 	//m_nextVelocity += randomVec2Generation(-1, 1);//.normalize(); //Test to randomly move birds
