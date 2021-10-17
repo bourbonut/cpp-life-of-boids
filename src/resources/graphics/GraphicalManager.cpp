@@ -75,32 +75,6 @@ GraphicalManager::GraphicalManager() {
     glEnableVertexAttribArray(m_vcol_location);
 
 
-
-    // Points part 
-    points_shaderProgram = ShaderProgram_new(points::vertex_shader_text, points::fragment_shader_text);
-    points_vertexArray = VertexArray_new();
-    points_buffer = Buffer_new();
-
-    VertexArray_bind(points_vertexArray);
-    Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
-    ShaderProgram_activate(points_shaderProgram);
-
-    m_transform_location = ShaderProgram_getUniformLocation(points_shaderProgram, "transform");
-    m_pointSize_location = ShaderProgram_getUniformLocation(points_shaderProgram, "pointSize");
-    m_maxSpeedSquared_location = ShaderProgram_getUniformLocation(points_shaderProgram, "maxSpeedSquared");
-    m_position_location = ShaderProgram_getAttribLocation(points_shaderProgram, "position");
-    m_velocity_location = ShaderProgram_getAttribLocation(points_shaderProgram, "velocity");
-
-    glVertexAttribPointer(
-        m_position_location, 2, GL_FLOAT, GL_FALSE, sizeof(points::Point), (void*)offsetof(points::Point, position));
-    glVertexAttribPointer(
-        m_velocity_location, 2, GL_FLOAT, GL_FALSE, sizeof(points::Point), (void*)offsetof(points::Point, velocity));
-
-    glEnableVertexAttribArray(m_position_location);
-    glEnableVertexAttribArray(m_velocity_location);
-
-    glEnable(GL_PROGRAM_POINT_SIZE);
-
     // Lines part
 
     // new
@@ -164,21 +138,6 @@ bool GraphicalManager::mainLoop(float t) {
 
         glViewport(0, 0, m_width, m_height);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        //{  // triangle
-        //    mat4x4 m = triangle::mat4x4_identity();
-        //    m = triangle::mat4x4_rotate_Z(m, (float)glfwGetTime());
-        //    mat4x4 p = triangle::mat4x4_ortho(-ratio, ratio, -1., 1., 1., -1.);
-        //    mat4x4 mvp = triangle::mat4x4_mul(p, m);
-
-        //    VertexArray_bind(triangle_vertexArray);
-        //    Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
-        //    ShaderProgram_activate(triangle_shaderProgram);
-
-        //    glUniformMatrix4fv(m_mvp_location, 1, GL_FALSE, (const GLfloat*)&mvp);
-        //    glBindVertexArray(triangle_vertexArray.vertex_array);
-        //    glDrawArrays(GL_TRIANGLES, 0, 3);
-        //}
 
         {  // lines
             mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
