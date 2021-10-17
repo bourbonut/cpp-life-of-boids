@@ -1,30 +1,19 @@
 #include "Agent.hpp"
-
-#include <array>
-#include <vector>
 #include "../lib/myMath/Vec2.hpp"
-
-// #include "myMath/utils.hpp"
 
 Agent::Agent(Vec2 position, Vec2 velocity) {
 	m_position = position;
 	m_velocity = velocity;
-	m_nextPosition = position;
 };
 
 Vec2 Agent::getPosition() const{
-	return m_position; // Do we need it ?
+	return m_position; 
 };
 
 Vec2 Agent::getVelocity() const {
-	return m_velocity; // Do we need it?
+	return m_velocity;
 };
 
-void Agent::computePosition() {
-	m_nextPosition = m_position + m_velocity;
-};
-
-
-void Agent::updatePosition() {
-	m_position = m_position + m_velocity;
-};
+void Agent::move() {
+	m_position += m_velocity;
+}

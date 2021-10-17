@@ -45,22 +45,6 @@ void Flock::createPopulation() {
 	}
 };
 
-void Flock::calculatePositions() {
-	for (auto & bird : m_birdsVec)
-	{ 
-		const std::vector<Bird> neighbors = this->computeNeighbors(bird, 0,0); //TODO : CHANGE THIS CALL
-		bird.updateVelocity(neighbors);
-		bird.computePosition();
-	}
-};
-
-void Flock::updatePositions() {
-	for (auto & bird : m_birdsVec)
-	{
-		bird.updatePosition();  // replace for a range function
-	}
-
-};
 
 //why double && ? and m_popSize is juste m_birdsVec.size(), so no need ?
 void Flock::addAgent() {
@@ -109,10 +93,6 @@ std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, 
 		}
 	}
 	return neighbors;
-};
-
-void Flock::moveAgents() {
-	//TODO :
 };
 
 void Flock::print() {

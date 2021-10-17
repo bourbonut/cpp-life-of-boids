@@ -14,8 +14,6 @@ public:
 	int getPopSize() const;
 	Bird getAgent(int index);
 	void createPopulation();
-	void calculatePositions();
-	void updatePositions();
 	std::vector<Bird> computeNeighbors(const Bird& bird, const float& range, const float& angle);
 	void addAgent();
 	void addAgent(float xpos, float ypos);

@@ -158,12 +158,17 @@ bool GraphicalManager::mainLoop(float t) {
                 //TriangleDisplayer tDisplay{ bird };
 
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
+
+
+                //bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
+                //bird.computePosition();
+                //Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
+                //bird.setNextPosition(newPos);
                 //bird.updatePosition();
-                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
-                bird.computePosition();
-                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
-                bird.setNextPosition(newPos);
-                bird.updatePosition();
+
+                bird.computeLaws((*flockPtr).computeNeighbors(bird, 50, 50));
+                bird.move();
+                bird.setPosition(keepPositionInScreen(bird.getPosition(), m_width, m_height));
 
                 mat2x6 result = drawAgent(bird.getPosition(), bird.getVelocity());
 
