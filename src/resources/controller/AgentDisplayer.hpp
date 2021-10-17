@@ -5,9 +5,7 @@
 
 template <int m_nbPoints>
 class AgentDisplayer {
-protected:
-	const Agent* m_pAgent;
 
 public:
-	virtual std::array<Vec2, m_nbPoints> drawAgent() const = 0;
+	virtual std::array<Vec2, m_nbPoints> drawAgent(Agent* a) const = 0;
 };

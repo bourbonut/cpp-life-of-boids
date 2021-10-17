@@ -1,14 +1,15 @@
+#include "AgentDisplayer.hpp"
 #include "TriangleDisplayer.hpp"
 #include <array>
 #include "../../lib/myMath/Vec2.hpp"
 
-TriangleDisplayer::TriangleDisplayer(const Agent *pAgent) {
-	m_pAgent = pAgent;
-};
+//TriangleDisplayer::TriangleDisplayer(const Agent *pAgent) {
+//	m_pAgent = pAgent;
+//};
 
-std::array<Vec2, 6> TriangleDisplayer:: drawAgent() const {
-	Vec2 position = (*m_pAgent).getPosition();
-	Vec2 velocity = (*m_pAgent).getVelocity();
+std::array<Vec2, 6> TriangleDisplayer::drawAgent(Agent* a) const {
+	Vec2 position = (*a).getPosition();
+	Vec2 velocity = (*a).getVelocity();
 
 	float size = 7;
 	float angle = (velocity).angle();

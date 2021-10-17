@@ -24,6 +24,7 @@ int main() {
 
     GraphicalManager GM{};
     
+    //Need to do like this because we are using ptr fir the birds in the flock
     int size = 400;
 
     mainFlock.reserve(size);
