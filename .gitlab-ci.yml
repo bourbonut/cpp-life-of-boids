@@ -1,9 +1,10 @@
-stages:
-  - build
-  - test
-
 job:gcc:
   image: conanio/gcc9
+
+  stages:
+    - build
+    - test
+
   build-stage:
       stage: build
       script:
@@ -37,6 +38,11 @@ job:gcc:
 
 job:clang:
   image: conanio/clang10
+
+  stages:
+    - build
+    - test
+
   build-stage:
       stage: build
       script:
