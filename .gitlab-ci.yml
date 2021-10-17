@@ -3,15 +3,10 @@ stages:
   - test
 
 job:gcc:build:
-  image: conanio/gcc9
+  image: arthurviens/hpcai-2021:lob-conan-gcc9
 
   stage: build
   script:
-    - echo 'Processing update and installs...'
-    - conan profile new default --detect
-    - conan profile update settings.compiler.libcxx=libstdc++11 default
-    - conan profile update settings.build_type=Debug default
-    - sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
     - echo 'Building ...'
     - if [ -d build ]; then rm build -r; fi
     - mkdir build
@@ -24,7 +19,7 @@ job:gcc:build:
           - build/
 
 job:gcc:test:
-  image: conanio/gcc9
+  image: arthurviens/hpcai-2021:lob-conan-gcc9
   stage: test
   script:
     - echo "Running tests..."
