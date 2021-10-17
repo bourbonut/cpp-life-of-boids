@@ -2,66 +2,7 @@ stages:
   - build
   - test
 
-job:gcc:debug:build:
-  image: arthurviens/hpcai-2021:lob-conan-gcc9
-
-  stage: build
-  script:
-    - echo 'Update settings to Debug mode ...'
-    - conan profile update settings.build_type=Debug default
-    - echo 'Building ...'
-    - if [ -d build ]; then rm build -r; fi
-    - mkdir build
-    - cd build
-    - conan install ..
-    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
-    - cmake --build . --config "Debug"
-  artifacts:
-      paths:
-          - build/
-
-job:gcc:debug:test:
-  image: arthurviens/hpcai-2021:lob-conan-gcc9
-  stage: test
-  script:
-    - echo "Running tests..."
-    - cd build
-    - ctest
-  dependencies:
-    - job:gcc:debug:build
-
-
-job:clang:debug:build:
-  image: arthurviens/hpcai-2021:lob-conan-clang10
-
-  stage: build
-  script:
-    - echo 'Update settings to Debug mode ...'
-    - conan profile update settings.build_type=Debug default
-    - echo 'Building ...'
-    - if [ -d build ]; then rm build -r; fi
-    - mkdir build
-    - cd build
-    - conan install ..
-    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
-    - cmake --build . --config "Debug"
-  artifacts:
-      paths:
-          - build/
-
-job:clang:debug:test:
-  image: arthurviens/hpcai-2021:lob-conan-clang10
-
-  stage: test
-  script:
-    - echo "Running tests..."
-    - cd build
-    - ctest
-  dependencies:
-    - job:clang:debug:build
-
-
-job:gcc:release:build:
+job:gcc:build:
   image: arthurviens/hpcai-2021:lob-conan-gcc9
 
   stage: build
@@ -77,7 +18,7 @@ job:gcc:release:build:
       paths:
           - build/
 
-job:gcc:release:test:
+job:gcc:test:
   image: arthurviens/hpcai-2021:lob-conan-gcc9
   stage: test
   script:
@@ -85,10 +26,10 @@ job:gcc:release:test:
     - cd build
     - ctest
   dependencies:
-    - job:gcc:release:build
+    - job:gcc:build
 
 
-job:clang:release:build:
+job:clang:build:
   image: arthurviens/hpcai-2021:lob-conan-clang10
 
   stage: build
@@ -104,7 +45,7 @@ job:clang:release:build:
       paths:
           - build/
 
-job:clang:release:test:
+job:clang:test:
   image: arthurviens/hpcai-2021:lob-conan-clang10
 
   stage: test
@@ -113,4 +54,4 @@ job:clang:release:test:
     - cd build
     - ctest
   dependencies:
-    - job:clang:release:build
+    - job:clang:build
