@@ -33,7 +33,7 @@ void Bird::computeLaws(const std::vector<Agent*>& neighbors) {
 	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighbors);
 	Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);
 	Vec2 vec_displacement = vecCohesion / 10 + vecAlignment + vecSeparation * 1000;
-	m_velocity = vec_displacement.normalize() * 0.5;
+	m_nextVelocity = vec_displacement.normalize() * 0.5;
 };
 
 void Bird::print() const {

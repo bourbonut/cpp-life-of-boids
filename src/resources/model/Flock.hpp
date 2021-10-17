@@ -26,6 +26,7 @@ public:
 public:
 	Flock(); // Constructeur avec argument par défaut
 	Flock(int popsize);
+	Flock(std::vector<Agent*> population);
 	~Flock() {}; // Destructeur
 
 	//auto begin() { return m_birdsVec.begin(); };

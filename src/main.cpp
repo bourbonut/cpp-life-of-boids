@@ -18,14 +18,20 @@
 
 
 Flock* flockPtr = nullptr;
-
+std::vector<Agent*> mainFlock;
 
 int main() {
 
     GraphicalManager GM{};
+    
+    int size = 10;
 
-
-    Flock flock{400};
+    mainFlock.reserve(size);
+    for (int i = 0; i < size; ++i) {
+        //Bird b = Bird{};
+        mainFlock.push_back(new Bird{});
+    }
+    Flock flock{ mainFlock };
     flockPtr = &flock;
     //Bird titi(Vec2(400, 400), Vec2(0.2, 0.2));
     //flock.addAgent(titi);

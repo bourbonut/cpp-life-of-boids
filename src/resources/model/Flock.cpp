@@ -19,15 +19,16 @@
 //	//std::cout << "popSize : " << m_birdsVec.size() << "\n";
 //};
 
+Flock::Flock(std::vector<Agent*> population) : m_agents(population) {};
 
 
-Flock::Flock(int popSize) : m_agents(popSize){
+Flock::Flock(int popSize) : m_agents(popSize) {
 
-	for (int i = 0; i < popSize; ++i) {
+	for (int i = 0; i < popSize; ++i) { //this doesn't work with ptr
 		Bird* b = new Bird{};
 		m_agents.push_back(b);
 	}
-}
+};
 
 Flock::Flock() {
 	//m_popSize = RANDOM SINON createPopulation va pas marcher
