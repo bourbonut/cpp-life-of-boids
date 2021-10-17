@@ -153,37 +153,31 @@ bool GraphicalManager::mainLoop(float t) {
 
             std::vector<triangle::Vertex> vertex_data;
 
-<<<<<<< HEAD
-            for (auto & bird : *flockPtr) {
-
-                //TriangleDisplayer tDisplay{ bird };
-
-=======
             for (auto& bird : *flockPtr) {
->>>>>>> dev_issue25_angle_and_id
+
                 //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
 
 
-                //bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 50));
+                //bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
                 //bird.computePosition();
                 //Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
                 //bird.setNextPosition(newPos);
                 //bird.updatePosition();
-<<<<<<< HEAD
-                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
 
+                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+                //std::cout << "n size : " << aVec.size() << std::endl;
                 (*bird).computeLaws(aVec);// , 50, 50));
                 (*bird).prepareMove();
                 (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
                 (*bird).move();
-
-=======
-                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
-                bird.computePosition();
-                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
-                bird.setNextPosition(newPos);
-                bird.updatePosition();
->>>>>>> dev_issue25_angle_and_id
+                //std::cout << (*bird).getPosition().x << " , " << (*bird).getPosition().y << std::endl;
+//=======
+//                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
+//                bird.computePosition();
+//                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
+//                bird.setNextPosition(newPos);
+//                bird.updatePosition();
+//>>>>>>> dev_issue25_angle_and_id
 
                 mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
 

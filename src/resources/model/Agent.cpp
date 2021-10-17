@@ -21,6 +21,10 @@ double Agent::getRange() const {
 	return m_range;
 };
 
+double Agent::getViewAngle() const {
+	return m_viewAngle;
+};
+
 void Agent::move() {
 	m_position = m_nextPosition;
 	m_velocity = m_nextVelocity;

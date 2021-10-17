@@ -84,17 +84,17 @@ void Flock::addAgent(Agent *a) {
 //};
 
 std::vector<Agent*> Flock::computeNeighbors(const Agent& agent){//, const float &range, const float &angle) {
+
 	std::vector<Agent*> neighbors;
 	neighbors.reserve(m_agents.size()); //CHANGE THIS TO SMTHING LIKE popSize*2 OR SMTHNG
 
 	//Like this one bird is going to be its own potential neighbor
-	for (Agent* potentialNeighbor : m_agents){
-		if (!((*potentialNeighbor).getPosition() == agent.getPosition()))
+	for (Agent* potentialNeighbor : m_agents) {
+		if (!(degrees((agent.getPosition() - (*potentialNeighbor).getPosition()).angle()) > agent.getViewAngle() / 2) && !(agent._id == (*potentialNeighbor)._id)) //!(potentialNeighbor.getPosition() == bird.getPosition()) && 
 		{
 			double distWithPotNeighb = distance(agent.getPosition(), (*potentialNeighbor).getPosition());
-			//float min_range = 5.0;
 			double a = abs(distWithPotNeighb);
-			if (abs(distWithPotNeighb) <= abs((*potentialNeighbor).getRange())) { //only range because was scared of angle
+			if (abs(distWithPotNeighb) <= abs(agent.getRange())) { //only range because was scared of angle
 				neighbors.push_back(potentialNeighbor);
 			}
 		}
