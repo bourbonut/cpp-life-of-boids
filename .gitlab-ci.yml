@@ -1,3 +1,7 @@
+stages:
+  - build
+  - test
+
 job:gcc:
   image: conanio/gcc9
   stage: build
