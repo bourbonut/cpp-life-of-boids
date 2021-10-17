@@ -9,7 +9,7 @@
 #include <algorithm>
 
 
-Flock::Flock(int popSize) : m_birdsVec(popSize) { // need to instanciate the vector like this otherwise it won't work ???
+Flock::Flock(int popSize) : m_birdsVec(popSize){ // need to instanciate the vector like this otherwise it won't work ???
 
 	//std::vector<Bird> m_birdsVec(popSize);
 	for (int i = 0; i < popSize; ++i)
@@ -46,16 +46,16 @@ void Flock::createPopulation() {
 };
 
 void Flock::calculatePositions() {
-	for (auto& bird : m_birdsVec)
-	{
-		const std::vector<Bird> neighbors = this->computeNeighbors(bird, 0, 0); //TODO : CHANGE THIS CALL
+	for (auto & bird : m_birdsVec)
+	{ 
+		const std::vector<Bird> neighbors = this->computeNeighbors(bird, 0,0); //TODO : CHANGE THIS CALL
 		bird.updateVelocity(neighbors);
 		bird.computePosition();
 	}
 };
 
 void Flock::updatePositions() {
-	for (auto& bird : m_birdsVec)
+	for (auto & bird : m_birdsVec)
 	{
 		bird.updatePosition();  // replace for a range function
 	}
@@ -92,15 +92,16 @@ void Flock::destroyAgent(Vec2 position) {
 	m_birdsVec.erase(garbageBirdsVec);
 };
 
-std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float& range, const float& angle) {
+std::vector<Bird> Flock::computeNeighbors(const Bird& bird, const float &range, const float &angle) {
 	std::vector<Bird> neighbors;
 	neighbors.reserve(m_birdsVec.size()); //CHANGE THIS TO SMTHING LIKE popSize*2 OR SMTHNG
 
 	//Like this one bird is going to be its own potential neighbor
-	for (Bird potentialNeighbor : m_birdsVec) {
-		if (!(degrees((bird.getPosition() - potentialNeighbor.getPosition()).angle()) > angle / 2) && !(bird.getId() == potentialNeighbor.getId())) //!(potentialNeighbor.getPosition() == bird.getPosition()) && 
+	for (Bird potentialNeighbor : m_birdsVec){
+		if (!(potentialNeighbor.getPosition() == bird.getPosition()))
 		{
 			double distWithPotNeighb = distance(bird.getPosition(), potentialNeighbor.getPosition());
+			//float min_range = 5.0;
 			double a = abs(distWithPotNeighb);
 			if (abs(distWithPotNeighb) <= abs(range)) { //only range because was scared of angle
 				neighbors.emplace_back(potentialNeighbor);
