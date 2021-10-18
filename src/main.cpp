@@ -25,11 +25,10 @@ int main() {
     GraphicalManager GM{};
     
     //Need to do like this because we are using ptr fir the birds in the flock
-    int size = 400;
+    int size = 2;
 
     mainFlock.reserve(size);
     for (int i = 0; i < size; ++i) {
-        //Bird b = Bird{};
         mainFlock.push_back(new Bird{});
     }
     Flock flock{ mainFlock };
@@ -38,14 +37,13 @@ int main() {
     //flock.addAgent(titi);
     //Bird toto(Vec2(200, 400), Vec2(-0.2, 0.2));
     //flock.addAgent(toto);
-
+    (*flockPtr).print();
 
     float t = 0;
     bool shouldClose = false;
-    while (!shouldClose) {
+    do {
         shouldClose = GM.mainLoop(t);
         ++t;
-
-    }
+    } while (!shouldClose);
 }
 
