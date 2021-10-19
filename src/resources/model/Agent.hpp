@@ -16,6 +16,7 @@ protected:
 public:
 	int _id = ++id;
 	virtual void computeLaws(const std::vector<Agent*>& neighbors) = 0;
+	virtual Vec2 computeAlignment(const std::vector<Agent*>& neighbors) = 0;
 	void prepareMove();
 	void move();
 
@@ -27,6 +28,7 @@ public:
 	Vec2 getNextPosition() const;
 	double getRange() const;
 	double getViewAngle() const;
+
 
 	Agent& operator=(const Agent& other);
 

@@ -19,6 +19,7 @@ public:
 	Bird(const Vec2& position, const Vec2& velocity);
 
 	void computeLaws(const std::vector<Agent*>& neighbors) override;
+	Vec2 computeAlignment(const std::vector<Agent*>& neighbors) override; // Obligé de rajouter cette méthode pour la tester unitairement
 
 	void print() const;
 
