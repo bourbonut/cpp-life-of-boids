@@ -1,1 +1,1 @@
-add_library(myControllers "AgentDisplayer.cpp" "AgentDisplayer.hpp" "TriangleDisplayer.cpp" "TriangleDisplayer.hpp")
+add_library(myControllers "AgentDisplayer.cpp" "AgentDisplayer.hpp" "TriangleDisplayer.cpp" "TriangleDisplayer.hpp" "DotDisplayer.hpp" "DotDisplayer.cpp")

@@ -6,6 +6,7 @@
 #include "graphics.hpp"
 
 #include "../controller/TriangleDisplayer.hpp"
+#include "../controller/DotDisplayer.hpp"
 
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
@@ -129,6 +130,7 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
 
 bool GraphicalManager::mainLoop(float t) {
     TriangleDisplayer triangleDisplay{};
+    DotDisplayer dotDisplayer{};
 
     if (!glfwWindowShouldClose(m_window)) {
         auto start = high_resolution_clock::now();
@@ -153,44 +155,44 @@ bool GraphicalManager::mainLoop(float t) {
             glUniformMatrix3fv(m_transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
             glBindVertexArray(lines_vertexArray.vertex_array);
 
-            std::vector<triangle::Vertex> vertex_data;
+            //std::vector<triangle::Vertex> vertex_data;
+            std::vector<points::Vertex> vertex_data;
 
             for (auto& bird : *flockPtr) {
 
-                //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
+                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird); //this costs performance
 
 
-                //bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
-                //bird.computePosition();
-                //Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
-                //bird.setNextPosition(newPos);
-                //bird.updatePosition();
-
-                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
-                //std::cout << "n size : " << aVec.size() << std::endl;
-                (*bird).computeLaws(aVec);// , 50, 50));
+                (*bird).computeLaws(aVec);
                 (*bird).prepareMove();
                 (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
                 (*bird).move();
 
-                //mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
-                mat2x6 result = triangleDisplay.drawAgent(bird);
-                for (int j = 0; j < result.size(); ++j) {
-                    vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
-                }
+
+                Vec2 result = (dotDisplayer.drawAgent(bird))[0];
+
+                vertex_data.push_back(points::Vertex{ {result.x, result.y}, {1.0, 1.0, 1.0} });
+                //Drawing a triangle
+                //mat2x6 result = triangleDisplay.drawAgent(bird);
+                //for (int j = 0; j < result.size(); ++j) {
+                //    vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
+                //}
             }
 
-            glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
-            glDrawArrays(GL_TRIANGLES, 0, vertex_data.size());
+            //glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
+            //glDrawArrays(GL_TRIANGLES, 0, vertex_data.size());
+
+            glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(points::Vertex), vertex_data.data(), GL_STREAM_DRAW);
+            glDrawArrays(GL_POINTS, 0, vertex_data.size());
 
         }
 
         auto stop = high_resolution_clock::now();
         auto duration = duration_cast<microseconds>(stop - start);
-        /*std::ostringstream oss;
-        oss << "FPS is : " << 1 / (duration.count() * 10e-6) << " seconds. " << std::endl;
-        glfwSetWindowTitle(m_window, oss.str().c_str());*/
-        glfwSetWindowTitle(m_window, "mon blabla");
+        std::ostringstream oss;
+        oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
+        glfwSetWindowTitle(m_window, oss.str().c_str());
+
         // Swap buffers
         glfwSwapBuffers(m_window);
         glfwPollEvents();
