@@ -11,8 +11,8 @@
 #include "../model/Flock.hpp"
 #include "../controller/AgentDisplayer.hpp"
 
-extern Flock* flockPtr;
-enum class Color { Red, Green, Blue }; //TODO : make some colors
+extern Flock* MAIN_pFLOCK;
+enum class Color { Red, Green, Blue, Default }; //TODO : make some colors
 static bool prettyAgents;
 
 class GraphicalManager {
@@ -23,7 +23,7 @@ private:
 	int m_width;
 	Color m_background_color;
 	Color m_agent_color;
-	vec3 m_agent_GLcolor = {1.f,1.f,1.f};
+	vec3 m_agent_GLcolor;
 
 	GLint m_mvp_location;
 	GLint m_vpos_location;
@@ -53,9 +53,8 @@ public:
 	Buffer lines_buffer;
 
 public:
-	GraphicalManager();
 	~GraphicalManager();
-	GraphicalManager(Color m_background_color, Color m_bird_color);
+	GraphicalManager(Color myBackgroundColor, Color myAgentColor);
 	bool mainLoop();
 };
 

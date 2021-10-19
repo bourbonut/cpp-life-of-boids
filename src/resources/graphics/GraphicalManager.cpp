@@ -22,8 +22,14 @@
 
 using namespace std::chrono;
 
+//GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor, Flock* myFlock) {
+//
+//};
 
-GraphicalManager::GraphicalManager() {
+GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor) {
+
+    m_background_color = myBackgroundColor;
+    m_agent_color = myAgentColor;
     std::cout << "Constructing GraphicalManager object" << std::endl;
     glfwSetErrorCallback(error_callback);
 
@@ -81,6 +87,7 @@ GraphicalManager::GraphicalManager() {
         m_agent_GLcolor = { 0.f, 0.f, 1.f };
         break;
     default:
+        m_agent_GLcolor = { 1.0f,1.0f,1.0f };
         break;
     }
 
@@ -144,9 +151,9 @@ bool GraphicalManager::mainLoop() {
             glBindVertexArray(lines_vertexArray.vertex_array);
 
 
-            for (auto& bird : *flockPtr) {
+            for (auto& bird : *MAIN_pFLOCK) {
 
-                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird); //this costs performance
+                std::vector<Agent*> aVec = (*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
                 
 
                 (*bird).computeLaws(aVec);
@@ -243,11 +250,11 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        if (flockPtr != nullptr) {
+        if (MAIN_pFLOCK != nullptr) {
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            (*flockPtr).addAgent(new Bird{ xpos, ypos });
+            (*MAIN_pFLOCK).addAgent(new Bird{ xpos, ypos });
         }
     }
 }

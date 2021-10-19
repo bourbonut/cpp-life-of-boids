@@ -17,12 +17,12 @@
 #include "resources/graphics/oglTypes.hpp"
 
 
-Flock* flockPtr = nullptr;
+Flock* MAIN_pFLOCK= nullptr;
 std::vector<Agent*> mainFlock;
 
 int main() {
 
-    GraphicalManager GM{};
+
     
     //Need to do like this because we are using ptr fir the birds in the flock
     int size = 400;
@@ -32,7 +32,9 @@ int main() {
         mainFlock.push_back(new Bird{});
     }
     Flock flock{ mainFlock };
-    flockPtr = &flock;
+
+    GraphicalManager GM{ Color::Default, Color::Default};
+    MAIN_pFLOCK = &flock;
 
     
     float t = 0;
