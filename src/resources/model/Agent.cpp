@@ -1,5 +1,21 @@
 #include "Agent.hpp"
 #include "../../lib/myMath/Vec2.hpp"
+#include "../../lib/myMath/utils.hpp"
+
+Agent::Agent(const int &lVelocity, const int& uVelocity) {
+	Vec2 pos = randomVec2Generation(0, 1000);
+	Vec2 vel = randomVec2Generation(lVelocity, uVelocity);
+	m_position = pos;
+	m_velocity = vel;
+	m_nextPosition = pos + 1;
+	m_nextVelocity = vel + 1;
+};
+
+Agent::Agent(const Vec2& position, const Vec2& velocity) {
+	m_position = position;
+	m_velocity = velocity;
+};
+
 
 Vec2 Agent::getPosition() const{
 	return m_position; 
