@@ -4,14 +4,7 @@
 #include "../../lib/myMath/utils.hpp"
 #include "Bird.hpp"
 
-Bird::Bird() {
-	Vec2 pos = randomVec2Generation(0, 1000);
-	Vec2 vel = randomVec2Generation(-5, 5);
-	m_position = pos;
-	m_velocity = vel;
-	m_nextPosition = pos + 1;
-	m_nextVelocity = vel + 1;
-};
+Bird::Bird() : Agent(-5, 5, 1, 270, 50) {};
 //
 //
 //Bird::Bird(const Bird& other) {
@@ -24,10 +17,8 @@ Bird::Bird() {
 //Bird::Bird(const Bird& other) {
 //m_position
 //};
-Bird::Bird(const Vec2& position, const Vec2& velocity) {
-	m_position = position;
-	m_velocity = velocity;
-};
+Bird::Bird(const Vec2& position, const Vec2& velocity) : 
+	Agent(position, velocity, 1, 270, 50) {};
 
 
 void Bird::computeLaws(const std::vector<Agent*>& neighbors) {
