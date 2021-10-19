@@ -49,6 +49,10 @@ double Agent::getViewAngle() const {
 	return m_viewAngle;
 };
 
+double Agent::getBodySize() const {
+	return m_bodySize;
+}
+
 void Agent::move() {
 	m_position = m_nextPosition;
 	m_velocity = m_nextVelocity;

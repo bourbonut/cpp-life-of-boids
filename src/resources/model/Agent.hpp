@@ -22,7 +22,7 @@ protected:
 
 public:
 	int _id = ++id;
-	virtual void computeLaws(const std::vector<Agent*>& neighbors) = 0;
+	virtual void computeLaws(const std::vector<Agent*>& neighbors) = 0; // ADD PREPARE MOVE INTO THIS
 	void prepareMove();
 	void move();
 
@@ -33,6 +33,7 @@ public:
 	Vec2 getNextVelocity() const;
 	Vec2 getNextPosition() const;
 	double getRange() const;
+	double getBodySize() const;
 	double getViewAngle() const;
 
 	Agent& operator=(const Agent& other);
