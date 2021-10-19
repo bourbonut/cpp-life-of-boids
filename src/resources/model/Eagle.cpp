@@ -4,10 +4,10 @@
 #include "../../lib/myMath/utils.hpp"
 #include "Eagle.hpp"
 
-Eagle::Eagle() : Agent(-8, 8) {};
+Eagle::Eagle() : Agent(-8, 8, 2, 180, 30) {};
 
 Eagle::Eagle(const Vec2& position, const Vec2& velocity) :
-	Agent(position, velocity) {};
+	Agent(position, velocity, 2, 180, 30) {};
 
 void Eagle::print() const {
 	std::cout << ">>>Printing eagle : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";

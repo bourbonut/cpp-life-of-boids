@@ -4,7 +4,7 @@
 #include "../../lib/myMath/utils.hpp"
 #include "Bird.hpp"
 
-Bird::Bird() : Agent(-5, 5) {};
+Bird::Bird() : Agent(-5, 5, 1, 270, 50) {};
 //
 //
 //Bird::Bird(const Bird& other) {
@@ -18,7 +18,7 @@ Bird::Bird() : Agent(-5, 5) {};
 //m_position
 //};
 Bird::Bird(const Vec2& position, const Vec2& velocity) : 
-	Agent(position, velocity) {};
+	Agent(position, velocity, 1, 270, 50) {};
 
 
 void Bird::computeLaws(const std::vector<Agent*>& neighbors) {
