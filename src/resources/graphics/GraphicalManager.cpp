@@ -128,6 +128,7 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
 }
 
 bool GraphicalManager::mainLoop(float t) {
+    TriangleDisplayer triangleDisplay{};
 
     if (!glfwWindowShouldClose(m_window)) {
         auto start = high_resolution_clock::now();
@@ -171,17 +172,9 @@ bool GraphicalManager::mainLoop(float t) {
                 (*bird).prepareMove();
                 (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
                 (*bird).move();
-                //std::cout << (*bird).getPosition().x << " , " << (*bird).getPosition().y << std::endl;
-//=======
-//                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
-//                bird.computePosition();
-//                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
-//                bird.setNextPosition(newPos);
-//                bird.updatePosition();
-//>>>>>>> dev_issue25_angle_and_id
 
-                mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
-
+                //mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
+                mat2x6 result = triangleDisplay.drawAgent(bird);
                 for (int j = 0; j < result.size(); ++j) {
                     vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
                 }

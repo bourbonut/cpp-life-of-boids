@@ -9,13 +9,14 @@
 #include "shaders/triangle.hpp"
 
 #include "../model/Flock.hpp"
+#include "../controller/AgentDisplayer.hpp"
 
 extern Flock* flockPtr;
 
 class GraphicalManager {
 private:
 	GLFWwindow* m_window;
-
+	//AgentDisplayer<> m_displayer;
 	float m_height;
 	float m_width;
 
