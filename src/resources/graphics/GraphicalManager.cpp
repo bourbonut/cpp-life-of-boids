@@ -49,9 +49,9 @@ GraphicalManager::GraphicalManager() {
     glfwMakeContextCurrent(m_window);
     gladLoadGL();
     glfwSwapInterval(1);
+    glfwGetFramebufferSize(m_window, &m_width, &m_height);
 
     //BACKGROUND COLOR
-
     switch (m_background_color)
     {
     case Color::Red:
@@ -68,7 +68,21 @@ GraphicalManager::GraphicalManager() {
         break;
     }
 
-    glfwGetFramebufferSize(m_window, &m_width, &m_height);
+    //AGENT COLOR
+    switch (m_agent_color)
+    {
+    case Color::Red:
+        m_agent_GLcolor = { 1.f, 0.f, 0.f };
+        break;
+    case Color::Green:
+        m_agent_GLcolor = { 0.f, 1.f, 0.f };
+        break;
+    case Color::Blue:
+        m_agent_GLcolor = { 0.f, 0.f, 1.f };
+        break;
+    default:
+        break;
+    }
 
     // Lines part
     // new
@@ -145,13 +159,13 @@ bool GraphicalManager::mainLoop() {
                     //Drawing a triangle
                     mat2x6 result = triangleDisplay.drawAgent(bird);
                     for (int j = 0; j < result.size(); ++j) {
-                        vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, {1.0, 1.0, 1.0} });
+                        vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, m_agent_GLcolor });
                     }
                 }
                 else {
                     //Drawing a dot
                     Vec2 res = (dotDisplayer.drawAgent(bird))[0];
-                    vertex_data_dots.push_back(points::Vertex{ {res.x + 10, res.y + 10}, {1.0, 1.0, 1.0} });
+                    vertex_data_dots.push_back(points::Vertex{ {res.x + 10, res.y + 10}, m_agent_GLcolor });
 
                 }
             }
