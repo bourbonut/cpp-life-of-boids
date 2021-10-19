@@ -155,8 +155,8 @@ bool GraphicalManager::mainLoop(float t) {
             glUniformMatrix3fv(m_transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
             glBindVertexArray(lines_vertexArray.vertex_array);
 
-            //std::vector<triangle::Vertex> vertex_data;
-            std::vector<points::Vertex> vertex_data;
+            std::vector<triangle::Vertex> vertex_data_triangle;
+            std::vector<points::Vertex> vertex_data_dots;
 
             for (auto& bird : *flockPtr) {
 
@@ -168,22 +168,23 @@ bool GraphicalManager::mainLoop(float t) {
                 (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
                 (*bird).move();
 
+                //Drawing a dot
+                Vec2 res = (dotDisplayer.drawAgent(bird))[0];
+                vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, {1.0, 1.0, 1.0} });
 
-                Vec2 result = (dotDisplayer.drawAgent(bird))[0];
-
-                vertex_data.push_back(points::Vertex{ {result.x, result.y}, {1.0, 1.0, 1.0} });
                 //Drawing a triangle
-                //mat2x6 result = triangleDisplay.drawAgent(bird);
-                //for (int j = 0; j < result.size(); ++j) {
-                //    vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
-                //}
+                mat2x6 result = triangleDisplay.drawAgent(bird);
+                for (int j = 0; j < result.size(); ++j) {
+                    vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x +10, result[j].y +10}, {1.0, 1.0, 1.0} });
+                }
             }
 
-            //glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
-            //glDrawArrays(GL_TRIANGLES, 0, vertex_data.size());
+            glBufferData(GL_ARRAY_BUFFER, vertex_data_triangle.size() * sizeof(triangle::Vertex), vertex_data_triangle.data(), GL_STREAM_DRAW);
+            glDrawArrays(GL_TRIANGLES, 0, vertex_data_triangle.size());
 
-            glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(points::Vertex), vertex_data.data(), GL_STREAM_DRAW);
-            glDrawArrays(GL_POINTS, 0, vertex_data.size());
+            //DRAW DOTS
+            glBufferData(GL_ARRAY_BUFFER, vertex_data_dots.size() * sizeof(points::Vertex), vertex_data_dots.data(), GL_STREAM_DRAW);
+            glDrawArrays(GL_POINTS, 0, vertex_data_dots.size());
 
         }
 
