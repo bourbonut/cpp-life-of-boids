@@ -12,13 +12,17 @@
 #include "../controller/AgentDisplayer.hpp"
 
 extern Flock* flockPtr;
+static enum class Color { Red, Green, Blue }; //TODO : make some colors
+static bool prettyAgents;
 
 class GraphicalManager {
 private:
 	GLFWwindow* m_window;
 	//AgentDisplayer<> m_displayer;
-	float m_height;
-	float m_width;
+	int m_height;
+	int m_width;
+	bool m_prettyBirds = false;
+	Color m_background_color;
 
 	GLint m_mvp_location;
 	GLint m_vpos_location;
@@ -50,9 +54,8 @@ public:
 public:
 	GraphicalManager();
 	~GraphicalManager();
-	
-	std::vector<points::Point> createPoints(unsigned int number);
-	bool mainLoop(float t);
+	GraphicalManager(bool prettyBirds, Color m_background_color, Color m_bird_color);
+	bool mainLoop();
 };
 
 

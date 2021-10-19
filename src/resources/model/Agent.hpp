@@ -33,6 +33,7 @@ public:
 	Vec2 getNextVelocity() const;
 	Vec2 getNextPosition() const;
 	double getRange() const;
+	double getBodySize() const;
 	double getViewAngle() const;
 
 	Agent& operator=(const Agent& other);
