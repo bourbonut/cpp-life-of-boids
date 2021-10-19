@@ -12,7 +12,7 @@
 #include "../controller/AgentDisplayer.hpp"
 
 extern Flock* flockPtr;
-static enum class Color { Red, Green, Blue }; //TODO : make some colors
+enum class Color { Red, Green, Blue }; //TODO : make some colors
 static bool prettyAgents;
 
 class GraphicalManager {
