@@ -29,7 +29,6 @@ int main() {
 
     mainFlock.reserve(size);
     for (int i = 0; i < size; ++i) {
-        //Bird b = Bird{};
         mainFlock.push_back(new Bird{});
     }
     Flock flock{ mainFlock };
@@ -38,14 +37,13 @@ int main() {
     //flock.addAgent(titi);
     //Bird toto(Vec2(200, 400), Vec2(-0.2, 0.2));
     //flock.addAgent(toto);
-
-
+    //(*flockPtr).print();
+    
     float t = 0;
     bool shouldClose = false;
-    while (!shouldClose) {
+    do {
         shouldClose = GM.mainLoop(t);
         ++t;
-
-    }
+    } while (!shouldClose);
 }
 
