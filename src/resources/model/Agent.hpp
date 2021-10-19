@@ -15,7 +15,7 @@ protected:
 	double m_range = 50;
 
 protected:
-	Agent(const int& lVelocity, const int& uVelocity);
+	Agent(const int& lVelocity, const int& uVelocity); 
 	Agent(const Vec2& position, const Vec2& velocity);
 
 public:
