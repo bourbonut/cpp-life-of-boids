@@ -1,15 +1,28 @@
-image: conanio/gcc9
-
 stages:
   - build
   - test
 
-job:gcc:build:
+job:gcc:build-debug:
   image: arthurviens/hpcai-2021:lob-conan-gcc9
 
   stage: build
   script:
     - echo 'Building ...'
+    - conan profile update settings.build_type=Debug default
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build && cd build
+    - conan install ..
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - cmake --build . --config "Debug"
+
+
+job:gcc:build-release:
+  image: arthurviens/hpcai-2021:lob-conan-gcc9
+
+  stage: build
+  script:
+    - echo 'Building ...'
+    - conan profile update settings.build_type=Release default
     - if [ -d build ]; then rm build -r; fi
     - mkdir build
     - cd build
@@ -28,15 +41,31 @@ job:gcc:test:
     - cd build
     - ctest
   dependencies:
-    - job:gcc:build
+    - job:gcc:build-release
 
 
-job:clang:build:
+job:clang:build-debug:
   image: arthurviens/hpcai-2021:lob-conan-clang10
 
   stage: build
   script:
     - echo 'Building ...'
+    - conan profile update settings.build_type=Debug default
+    - if [ -d build ]; then rm build -r; fi
+    - mkdir build
+    - cd build
+    - conan install ..
+    - cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - cmake --build . --config "Debug"
+
+
+job:clang:build-release:
+  image: arthurviens/hpcai-2021:lob-conan-clang10
+
+  stage: build
+  script:
+    - echo 'Building ...'
+    - conan profile update settings.build_type=Release default
     - if [ -d build ]; then rm build -r; fi
     - mkdir build
     - cd build
@@ -54,6 +83,6 @@ job:clang:test:
   script:
     - echo "Running tests..."
     - cd build
-    - ctest
+    - ctest 
   dependencies:
-    - job:clang:build
+    - job:clang:build-release

@@ -6,6 +6,7 @@
 #include "graphics.hpp"
 
 #include "../controller/TriangleDisplayer.hpp"
+#include "../controller/DotDisplayer.hpp"
 
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
@@ -21,8 +22,14 @@
 
 using namespace std::chrono;
 
+//GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor, Flock* myFlock) {
+//
+//};
 
-GraphicalManager::GraphicalManager() {
+GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor) {
+
+    m_background_color = myBackgroundColor;
+    m_agent_color = myAgentColor;
     std::cout << "Constructing GraphicalManager object" << std::endl;
     glfwSetErrorCallback(error_callback);
 
@@ -30,10 +37,10 @@ GraphicalManager::GraphicalManager() {
         exit(EXIT_FAILURE);
 
     // Specifying some OpenGL variables
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     m_window = glfwCreateWindow(800, 600, "OpenGL Triangle", nullptr, nullptr);
 
@@ -48,38 +55,43 @@ GraphicalManager::GraphicalManager() {
     glfwMakeContextCurrent(m_window);
     gladLoadGL();
     glfwSwapInterval(1);
+    glfwGetFramebufferSize(m_window, &m_width, &m_height);
 
-    glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+    //BACKGROUND COLOR
+    switch (m_background_color)
+    {
+    case Color::Red:
+        glClearColor(1.f, 0.f, 0.f, 1.0f);
+        break;
+    case Color::Green:
+        glClearColor(0.f, 1.f, 0.f, 1.0f);
+        break;
+    case Color::Blue:
+        glClearColor(0.f, 0.f, 1.f, 1.0f);
+        break;
+    default:
+        glClearColor(0.07f, 0.13f, 0.17f, 1.f);
+        break;
+    }
 
-    int width{};
-    int height{};
-    glfwGetFramebufferSize(m_window, &width, &height);
-    m_width = (float)width;
-    m_height = (float)height;
-
-    triangle_shaderProgram = ShaderProgram_new(triangle::vertex_shader_text, triangle::fragment_shader_text);
-    triangle_vertexArray = VertexArray_new();
-    triangle_buffer = Buffer_new();
-
-    VertexArray_bind(triangle_vertexArray);
-    Buffer_bind(triangle_buffer, GL_ARRAY_BUFFER);
-    ShaderProgram_activate(triangle_shaderProgram);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle::vertices), triangle::vertices.data(), GL_STATIC_DRAW);
-
-    m_mvp_location = ShaderProgram_getUniformLocation(triangle_shaderProgram, "MVP");
-    m_vpos_location = ShaderProgram_getAttribLocation(triangle_shaderProgram, "vPos");
-    m_vcol_location = ShaderProgram_getAttribLocation(triangle_shaderProgram, "vCol");
-
-    glVertexAttribPointer(
-        m_vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, pos));
-    glVertexAttribPointer(
-        m_vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(triangle::Vertex), (void*)offsetof(triangle::Vertex, col));
-    glEnableVertexAttribArray(m_vpos_location);
-    glEnableVertexAttribArray(m_vcol_location);
-
+    //AGENT COLOR
+    switch (m_agent_color)
+    {
+    case Color::Red:
+        m_agent_GLcolor = { 1.f, 0.f, 0.f };
+        break;
+    case Color::Green:
+        m_agent_GLcolor = { 0.f, 1.f, 0.f };
+        break;
+    case Color::Blue:
+        m_agent_GLcolor = { 0.f, 0.f, 1.f };
+        break;
+    default:
+        m_agent_GLcolor = { 1.0f,1.0f,1.0f };
+        break;
+    }
 
     // Lines part
-
     // new
     lines_shaderProgram = ShaderProgram_new(lines::vertex_shader_text, lines::fragment_shader_text);
     lines_vertexArray = VertexArray_new();
@@ -111,32 +123,18 @@ GraphicalManager::~GraphicalManager() {
 }
 
 
+bool GraphicalManager::mainLoop() {
+    TriangleDisplayer triangleDisplay{};
+    DotDisplayer dotDisplayer{};
 
-std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
-    std::vector<points::Point> points(number);
-    auto get_pos = [=](float t) {
-        return Vec2{ (float)(m_width * (0.5 + 0.4 * cos(t))), (float)(m_height * (0.5 + 0.4 * sin(t))) };
-    };
+    std::vector<triangle::Vertex> vertex_data_triangle;
+    std::vector<points::Vertex> vertex_data_dots;
 
-    float v = 0;
-    for (auto& p : points) {
-        v += 1.0;
-        p = points::Point{ get_pos(v), Vec2{} };
-    }
-
-    return points;
-}
-
-bool GraphicalManager::mainLoop(float t) {
 
     if (!glfwWindowShouldClose(m_window)) {
         auto start = high_resolution_clock::now();
 
-        int width{};
-        int height{};
-        glfwGetFramebufferSize(m_window, &width, &height);
-        m_width = (float)width;
-        m_height = (float)height;
+        glfwGetFramebufferSize(m_window, &m_width, &m_height);
         const float ratio = m_width / m_height;
 
         glViewport(0, 0, m_width, m_height);
@@ -152,52 +150,50 @@ bool GraphicalManager::mainLoop(float t) {
             glUniformMatrix3fv(m_transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
             glBindVertexArray(lines_vertexArray.vertex_array);
 
-            std::vector<triangle::Vertex> vertex_data;
 
-            for (auto& bird : *flockPtr) {
+            for (auto& bird : *MAIN_pFLOCK) {
 
-                //bird.computePosition(); //NEED TO CHANGE THIS , CALLING 2 METHODS FOR 1 THING !!
+                std::vector<Agent*> aVec = (*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
+                
 
-
-                //bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
-                //bird.computePosition();
-                //Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
-                //bird.setNextPosition(newPos);
-                //bird.updatePosition();
-
-                std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
-                //std::cout << "n size : " << aVec.size() << std::endl;
-                (*bird).computeLaws(aVec);// , 50, 50));
+                (*bird).computeLaws(aVec);
                 (*bird).prepareMove();
                 (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
                 (*bird).move();
-                //std::cout << (*bird).getPosition().x << " , " << (*bird).getPosition().y << std::endl;
-//=======
-//                bird.updateVelocity((*flockPtr).computeNeighbors(bird, 50, 270));
-//                bird.computePosition();
-//                Vec2 newPos = keepPositionInScreen(bird.getNextPosition(), m_width, m_height);
-//                bird.setNextPosition(newPos);
-//                bird.updatePosition();
-//>>>>>>> dev_issue25_angle_and_id
 
-                mat2x6 result = drawAgent((*bird).getPosition(), (*bird).getVelocity());
 
-                for (int j = 0; j < result.size(); ++j) {
-                    vertex_data.push_back(triangle::Vertex{ {result[j].x, result[j].y}, {1.0, 1.0, 1.0} });
+                if (prettyAgents) {
+                    //Drawing a triangle
+                    mat2x6 result = triangleDisplay.drawAgent(bird);
+                    for (int j = 0; j < result.size(); ++j) {
+                        vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, m_agent_GLcolor });
+                    }
+                }
+                else {
+                    //Drawing a dot
+                    Vec2 res = (dotDisplayer.drawAgent(bird))[0];
+                    vertex_data_dots.push_back(points::Vertex{ {res.x + 10, res.y + 10}, m_agent_GLcolor });
+
                 }
             }
 
-            glBufferData(GL_ARRAY_BUFFER, vertex_data.size() * sizeof(triangle::Vertex), vertex_data.data(), GL_STREAM_DRAW);
-            glDrawArrays(GL_TRIANGLES, 0, vertex_data.size());
+            glBufferData(GL_ARRAY_BUFFER, vertex_data_triangle.size() * sizeof(triangle::Vertex), vertex_data_triangle.data(), GL_STREAM_DRAW);
+            glDrawArrays(GL_TRIANGLES, 0, vertex_data_triangle.size());
+
+            //DRAW DOTS
+            glBufferData(GL_ARRAY_BUFFER, vertex_data_dots.size() * sizeof(points::Vertex), vertex_data_dots.data(), GL_STREAM_DRAW);
+            glDrawArrays(GL_POINTS, 0, vertex_data_dots.size());
 
         }
 
+
+        //FPS calculations
         auto stop = high_resolution_clock::now();
         auto duration = duration_cast<microseconds>(stop - start);
-        /*std::ostringstream oss;
-        oss << "FPS is : " << 1 / (duration.count() * 10e-6) << " seconds. " << std::endl;
-        glfwSetWindowTitle(m_window, oss.str().c_str());*/
-        glfwSetWindowTitle(m_window, "mon blabla");
+        std::ostringstream oss;
+        oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
+        glfwSetWindowTitle(m_window, oss.str().c_str());
+
         // Swap buffers
         glfwSwapBuffers(m_window);
         glfwPollEvents();
@@ -205,6 +201,7 @@ bool GraphicalManager::mainLoop(float t) {
 
     return glfwWindowShouldClose(m_window);
 }
+
 
 
 /** Prints the error number and description
@@ -224,8 +221,6 @@ static void error_callback(int error, const char* description) {
   * @param scancode
   * @param action action taken (press, unpress, repeat...)
   */
-
-
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
     // If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -245,18 +240,21 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
         std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
         //(*flockPtr).destroyAgent(Vec2(5, 10));
     }
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+        //change l'affichage de triangles à dots
+        prettyAgents = !prettyAgents;
+    }
 }
-
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        if (flockPtr != nullptr) {
+        if (MAIN_pFLOCK != nullptr) {
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            (*flockPtr).addAgent(new Bird{ xpos, ypos });
+            (*MAIN_pFLOCK).addAgent(new Bird{ xpos, ypos });
         }
     }
 }

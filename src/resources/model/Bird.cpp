@@ -4,21 +4,21 @@
 #include "../../lib/myMath/utils.hpp"
 #include "Bird.hpp"
 
-
-Bird::Bird() {
-	Vec2 pos = randomVec2Generation(0, 1000);
-	Vec2 vel = randomVec2Generation(-5, 5);
-	m_position = pos;
-	m_velocity = vel;
-	m_nextPosition = pos + 1;
-	m_nextVelocity = vel + 1;
-};
-
-
-Bird::Bird(const Vec2& position, const Vec2& velocity) {
-	m_position = position;
-	m_velocity = velocity;
-};
+Bird::Bird() : Agent(-5, 5, 6, 270, 50) {};
+//
+//
+//Bird::Bird(const Bird& other) {
+//	m_position = other.m_position;
+//	m_velocity = other.m_velocity;
+//	m_bodySize = other.m_bodySize;
+//};
+////NEED CTOR BY COPY (rule of three) BUT ACCESSING TO OTHER BIRD'S DATA SEEMS WEIRD
+////MAYBE WE NEED A STRUCT ?? OR MAYBE WE NEED TO APPLY THE ZERO LAW AND BIRDS ARE NOT THE ONES WHO RANDOMIZE!!
+//Bird::Bird(const Bird& other) {
+//m_position
+//};
+Bird::Bird(const Vec2& position, const Vec2& velocity) : 
+	Agent(position, velocity, 6, 270, 50) {};
 
 
 void Bird::computeLaws(const std::vector<Agent*>& neighbors) {
@@ -38,8 +38,6 @@ void Bird::computeLaws(const std::vector<Agent*>& neighbors) {
 		m_nextVelocity = m_nextVelocity.normalize() * 10;
 	}
 };
-
-
 
 void Bird::print() const {
 	std::cout << ">>>Printing bird : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";
