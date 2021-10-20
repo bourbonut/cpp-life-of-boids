@@ -37,10 +37,10 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor) 
         exit(EXIT_FAILURE);
 
     // Specifying some OpenGL variables
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     m_window = glfwCreateWindow(800, 600, "OpenGL Triangle", nullptr, nullptr);
 
@@ -55,6 +55,8 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor) 
     glfwMakeContextCurrent(m_window);
     gladLoadGL();
     glfwSwapInterval(1);
+
+
     glfwGetFramebufferSize(m_window, &m_width, &m_height);
 
     //BACKGROUND COLOR
@@ -254,7 +256,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            (*MAIN_pFLOCK).addAgent(new Bird{ xpos, ypos });
+            (*MAIN_pFLOCK).addAgent(new Bird{ Vec2{(float)xpos, (float)ypos}, Vec2{2.f,2.f} });
         }
     }
 }
