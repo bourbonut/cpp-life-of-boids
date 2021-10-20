@@ -68,15 +68,15 @@ Vec2 Agent::getNextVelocity() const {
 	return m_nextVelocity;
 };
 
-double Agent::getRange() const {
+int Agent::getRange() const {
 	return m_range;
 };
 
-double Agent::getViewAngle() const {
+int Agent::getViewAngle() const {
 	return m_viewAngle;
 };
 
-double Agent::getBodySize() const {
+int Agent::getBodySize() const {
 	return m_bodySize;
 }
 
@@ -96,6 +96,10 @@ void Agent::setPosition(const Vec2& newPos) {
 void Agent::setNextPosition(const Vec2& newPos) {
 	m_nextPosition = newPos;
 }
+
+std::array<float, 3> Agent::getGLColor() const {
+	return m_GLColor;
+};
 
 Agent& Agent::operator=(const Agent& other)
 {

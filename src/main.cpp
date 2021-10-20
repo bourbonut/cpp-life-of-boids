@@ -37,7 +37,7 @@ int main() {
 
     Flock flock = generate_dove_flock(size);
 
-    GraphicalManager GM{ Color::Default, Color::Default};
+    GraphicalManager GM{ Color::Default};
     MAIN_pFLOCK = &flock;
 
     

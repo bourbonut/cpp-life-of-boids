@@ -39,9 +39,10 @@ public:
 	Vec2 getVelocity() const;
 	Vec2 getNextVelocity() const;
 	Vec2 getNextPosition() const;
-	double getRange() const;
-	double getBodySize() const;
-	double getViewAngle() const;
+	int getRange() const;
+	int getBodySize() const;
+	int getViewAngle() const;
+	std::array<float, 3> getGLColor() const;
 
 
 	Agent& operator=(const Agent& other);

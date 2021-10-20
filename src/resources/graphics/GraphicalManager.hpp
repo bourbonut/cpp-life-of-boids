@@ -54,7 +54,7 @@ public:
 
 public:
 	~GraphicalManager();
-	GraphicalManager(Color myBackgroundColor, Color myAgentColor);
+	GraphicalManager(Color myBackgroundColor);
 	bool mainLoop();
 };
 
