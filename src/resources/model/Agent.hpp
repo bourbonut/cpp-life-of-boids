@@ -1,6 +1,8 @@
 #pragma once
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myMath/utils.hpp"
+#include "../controller/Color.h"
+#include <array>
 #include <vector>
 static int id = 0;
 
@@ -13,12 +15,17 @@ protected:
 	int m_bodySize;
 	int m_viewAngle;
 	int  m_range;
+	Color m_color;
+	std::array<float, 3> m_GLColor;
+	
 
 protected:
 	Agent(const int& lVelocity, const int& uVelocity, const double& bodySize,
 		const double& viewAngle);
 	Agent(const Vec2& position, const Vec2& velocity, const double& bodySize,
 		const double& viewAngle, const double& range);
+	Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
+		const int& viewAngle, const int& range, const Color& color);
 
 public:
 	int _id = ++id;

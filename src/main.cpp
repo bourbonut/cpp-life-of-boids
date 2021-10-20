@@ -27,12 +27,15 @@ int main() {
     
     //Need to do like this because we are using ptr fir the birds in the flock
     int size = 400;
-
     mainFlock.reserve(size);
-    for (int i = 0; i < size; ++i) {
+
+
+    /*for (int i = 0; i < size; ++i) {
         mainFlock.push_back(new Bird{});
     }
-    Flock flock{ mainFlock };
+    Flock flock{ mainFlock };*/
+
+    Flock flock = generate_dove_flock(size);
 
     GraphicalManager GM{ Color::Default, Color::Default};
     MAIN_pFLOCK = &flock;

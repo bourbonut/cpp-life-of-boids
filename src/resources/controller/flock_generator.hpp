@@ -1,11 +1,10 @@
 #pragma once
 #include "../model/Flock.hpp"
+#include "Color.h"
 
 
-enum class Color { Red, Green, Blue, Default }; //TODO : make some colors
-
-//Creates a complex flock with all options, including the actual flock, this function will be called by all the others 
-Flock create_flock(int size, Color agent_colors, int agent_size, int agent_range, int agent_angle_view);
+//Creates a complex bird flock with all options, including the actual flock, this function will be called by all the others 
+Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, Vec2 agent_position, Vec2 agent_velocity);
 
 //Flock will be white
 Flock generate_flock(int size, int agent_size, int agent_range, int agent_angle_view);

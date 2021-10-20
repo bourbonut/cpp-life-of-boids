@@ -17,6 +17,7 @@ public:
 	Bird(); // Constructeur sans arguments
 	//Bird(const Bird& other);
 	Bird(const Vec2& position, const Vec2& velocity);
+	Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const Color& color);
 
 	void computeLaws(const std::vector<Agent*>& neighbors) override;
 
