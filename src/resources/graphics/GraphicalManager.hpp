@@ -10,9 +10,9 @@
 
 #include "../model/Flock.hpp"
 #include "../controller/AgentDisplayer.hpp"
+#include "../controller/flock_generator.hpp"
 
 extern Flock* MAIN_pFLOCK;
-enum class Color { Red, Green, Blue, Default }; //TODO : make some colors
 static bool prettyAgents;
 
 class GraphicalManager {

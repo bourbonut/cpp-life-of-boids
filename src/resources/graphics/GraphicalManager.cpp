@@ -236,11 +236,11 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
     }
     if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
         std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-        //(*flockPtr).addAgent();
+        //(*MAIN_pFLOCK).addAgent();
     }
     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
         std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
-        //(*flockPtr).destroyAgent(Vec2(5, 10));
+        //(*MAIN_pFLOCK).destroyAgent();
     }
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         //change l'affichage de triangles à dots

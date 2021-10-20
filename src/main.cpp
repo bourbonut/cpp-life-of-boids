@@ -15,6 +15,7 @@
 #include "resources/graphics/graphics.hpp"
 #include "resources/graphics/GraphicalManager.hpp"
 #include "resources/graphics/oglTypes.hpp"
+#include "resources/controller/flock_generator.hpp"
 
 
 Flock* MAIN_pFLOCK= nullptr;

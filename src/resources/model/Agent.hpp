@@ -10,9 +10,9 @@ protected:
 	Vec2 m_velocity;
 	Vec2 m_nextPosition;
 	Vec2 m_nextVelocity;
-	double m_bodySize;
-	double m_viewAngle;
-	double m_range;
+	int m_bodySize;
+	int m_viewAngle;
+	int  m_range;
 
 protected:
 	Agent(const int& lVelocity, const int& uVelocity, const double& bodySize,
