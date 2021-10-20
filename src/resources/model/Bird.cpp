@@ -43,7 +43,4 @@ void Bird::print() const {
 	std::cout << ">>>Printing bird : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";
 };
 
-Vec2 Bird::computeAlignment(const std::vector<Agent*>& neighbors) {
-	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighbors);
-	return vecAlignment;
-}
+
