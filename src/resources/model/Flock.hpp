@@ -14,7 +14,7 @@ public:
 	void print();
 	int getPopSize() const;
 	Agent* getAgent(int index);
-	//void createPopulation();
+	Agent* operator[](int index) { return m_agents.at(index); };
 	std::vector<Agent*> computeNeighbors(const Agent& agent);//, const float& range, const float& angle);
 	//void addAgent();
 	//void addAgent(float xpos, float ypos);

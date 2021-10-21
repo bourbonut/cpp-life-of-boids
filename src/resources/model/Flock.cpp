@@ -78,10 +78,14 @@ void Flock::addAgent(Agent *a) {
 void Flock::destroyAgent(Vec2 position) {
 	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
 		[pos = position](Agent *a) {
-			// If distance < 1, destroy bird 
-			return ((*a).getPosition() - pos).norm() < 1; });
-	delete &garbageAgents;
-	m_agents.erase(garbageAgents);
+			// If distance < 1, destroy bird
+			bool destroyBool = ((*a).getPosition() - pos).norm() < 1;
+			if (destroyBool) { delete a; };
+
+			return destroyBool; });
+
+	m_agents.erase(garbageAgents, m_agents.end());
+
 };
 
 void Flock::destroyLastAgent() {

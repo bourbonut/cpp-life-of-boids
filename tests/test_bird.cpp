@@ -91,17 +91,18 @@ namespace {
 		Flock flock{ mainFlock };
 
 		ASSERT_EQ(flock.getPopSize(), 3);
-		flock.print();
+		//flock.print();
 		flock.destroyLastAgent();
-		flock.print();
+		//flock.print();
 		ASSERT_EQ(flock.getPopSize(), 2) << "Error in destroyLastAgent: PopSize = " << flock.getPopSize();
 		ASSERT_EQ((*flock.getAgent(1)).getPosition().x, 2);
-		/*Bird b4 = Bird(Vec2(1.5, 1), Vec2(1, 1));
-		Bird b5 = Bird(Vec2(1, 1), Vec2(1, 1));
-		flock.addAgent(b4);
-		flock.addAgent(b5);*/
-		/*flock.destroyAgent(Vec2(1, 1));
-		ASSERT_EQ(flock.getPopSize(), 1) << "Error in destroyAgent: PopSize = " << flock.getPopSize();
+
+		flock.addAgent(new Bird(Vec2(1.5, 1), Vec2(1, 1)));
+		//flock.addAgent(new Bird(Vec2(1, 1), Vec2(1, 1)));
+		flock.print();
+		flock.destroyAgent(Vec2(1, 1));
+		flock.print();
+		/*ASSERT_EQ(flock.getPopSize(), 1) << "Error in destroyAgent: PopSize = " << flock.getPopSize();
 		ASSERT_EQ(flock[0].getPosition().x, 2);
 		flock.updatePositions();
 		ASSERT_EQ(flock[0].getPosition().x, 2);
