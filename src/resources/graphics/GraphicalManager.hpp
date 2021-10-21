@@ -8,13 +8,22 @@
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
 
-#include "../Flock.hpp"
+#include "../model/Flock.hpp"
+#include "../controller/AgentDisplayer.hpp"
+#include "../controller/flock_generator.hpp"
+
+extern Flock* MAIN_pFLOCK;
+static bool prettyAgents = true;
 
 class GraphicalManager {
 private:
 	GLFWwindow* m_window;
-	float m_height;
-	float m_width;
+	//AgentDisplayer<> m_displayer;
+	int m_height;
+	int m_width;
+	Color m_background_color;
+	Color m_agent_color;
+	vec3 m_agent_GLcolor;
 
 	GLint m_mvp_location;
 	GLint m_vpos_location;
@@ -44,12 +53,10 @@ public:
 	Buffer lines_buffer;
 
 public:
-	GraphicalManager();
 	~GraphicalManager();
-	
-
+	GraphicalManager(Color myBackgroundColor, bool fullScreen);
+	bool mainLoop();
 	std::vector<points::Point> createPoints(unsigned int number);
-	bool mainLoop(float t, Flock & flock);
 };
 
 
@@ -57,3 +64,4 @@ static void error_callback(int error, const char* description);
 
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/);
 
+static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);

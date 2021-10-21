@@ -1,23 +1,21 @@
+#include "AlignmentLaw.hpp"
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
-class Bird;
-#include "../../resources/Bird.hpp"
-#include "AlignmentLaw.hpp"
+#include "../../resources/model/Agent.hpp"
 
+AlignmentLaw::AlignmentLaw(const float& relaxation) : Law(relaxation){};
+AlignmentLaw::AlignmentLaw() : Law(1.f){};
 
-Vec2 AlignmentLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
+Vec2 AlignmentLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 
-	float ALIGNMENT_RADIUS = 50;
-		Vec2 nextVelocity(0, 0);
-
-
-	for (int i = 0; i < neighbors.size(); ++i) {
-		//if ((currentBird.getPosition() - neighbors[i].getPosition()) < m_range) {
-			Vec2 nextVelocity = currentBird.getVelocity() + neighbors[i].getVelocity();
-			nextVelocity = nextVelocity / neighbors.size();
-		//}
+	Vec2 nextVelocity(0, 0);
+	if (neighbors.size() > 0) {
+		for (int i = 0; i < neighbors.size(); ++i) {
+			nextVelocity = nextVelocity + (*neighbors[i]).getVelocity();
+		}
+		nextVelocity = nextVelocity / neighbors.size();
 	}
 
-	return nextVelocity;
+	return nextVelocity * m_relaxation;
 };

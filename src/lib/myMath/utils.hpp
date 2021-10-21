@@ -13,3 +13,5 @@ float degrees(float angle);
 bool isAntiClockwise(Vec2 a, Vec2 b);
 
 Vec2 randomVec2Generation(const int& infBoundary, const int& supBoundary);
+
+float random_float(int inf, int sup);

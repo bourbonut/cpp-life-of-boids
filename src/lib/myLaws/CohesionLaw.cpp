@@ -1,17 +1,32 @@
+#include "CohesionLaw.hpp"
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
-class Bird;
-#include "../../resources/Bird.hpp"
+#include "../../resources/model/Agent.hpp"
 
-Vec2 CohesionLaw::compute(Bird& currentBird, const std::vector<Bird>& neighbors) const {
+CohesionLaw::CohesionLaw(const float& relaxation) : Law(relaxation) {};
+CohesionLaw::CohesionLaw() : Law(1.f) {};
 
-	//We get the barycenter of all the VALID neighbors
-	Vec2 barycenter = computeAgentsBarycenter(neighbors);
+Vec2 CohesionLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 
-	//We calculate the coordinates of the velocity vector
-	//We want to use barycenter.x, or even barycenter - this.position 
-	Vec2 newVelocity{ barycenter.x - currentBird.getPosition().x, barycenter.y - currentBird.getPosition().y };
+	Vec2 newVelocity{};
 
-	return newVelocity;
+	if (neighbors.size() > 0) {
+		float distBetwA = 0, weight = 0;
+
+		for (Agent* b : neighbors)
+		{
+			if (distance((*b).getPosition(), currentAgent.getPosition()) > 30) { // !(b.getPosition() == currentBird.getPosition())
+
+				newVelocity = newVelocity + ((*b).getPosition() - currentAgent.getPosition());
+
+			}
+
+		}
+
+		// Divide by the size of neighbors to get the barycenter
+		newVelocity = newVelocity / neighbors.size();
+
+	}
+	return newVelocity * m_relaxation;
 };

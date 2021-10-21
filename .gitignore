@@ -4,6 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 build/
+buildGCC/
+buildClang/
 
 # User-specific files
 *.rsuser
@@ -372,3 +374,4 @@ conan-config/
 CMakeSettings.json
 
 Testing/
+buildGCC/

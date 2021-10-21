@@ -4,12 +4,8 @@
 #include <vector>
 #include "../../resources/model/Agent.hpp"
 
-class CohesionLaw : public Law {
-protected:
-	//float m_range = 10;
-	//float m_relaxation = 0.9;
+class HuntingLaw : public Law {  // A changer
 public:
-	CohesionLaw(const float& relaxation);
-	CohesionLaw();
+	HuntingLaw();
 	Vec2 compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const override;
 };

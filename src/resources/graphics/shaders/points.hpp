@@ -10,6 +10,11 @@ namespace points {
         Vec2 velocity;
     };
 
+    struct Vertex {
+        vec2 pos;
+        vec3 col;
+    };
+
     mat3x3 vertex_transform_2d(float, float); 
 
     // Shader sources
