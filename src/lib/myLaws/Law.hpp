@@ -6,11 +6,11 @@
 
 class Law {
 protected:
-	float m_range;
-	float m_angle;
 	float m_relaxation;
 	std::vector<Vec2> getCoordinatesArray(const std::vector<Agent>&neighbors) const;
 	Vec2 computeAgentsBarycenter(const std::vector<Agent>& neighbors) const;
+	Law(const float &relaxation);
+
 
 public:
 	virtual Vec2 compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const = 0;

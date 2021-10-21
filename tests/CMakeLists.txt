@@ -23,7 +23,7 @@ gtest_discover_tests(test_math) # helps to split one ctest executable into multi
 
 
 add_executable(test_bird test_bird.cpp)
-target_link_libraries(test_bird myBirds myLaws myMath GTest::GTest)
+target_link_libraries(test_bird myBirds myLaws myMath GTest::GTest flockGenerator)
 target_include_directories(test_bird PUBLIC ${CMAKE_SOURCE_DIR}/src)
 add_test(NAME test_bird COMMAND test_bird)
 gtest_discover_tests(test_bird) 

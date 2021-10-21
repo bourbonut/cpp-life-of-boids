@@ -6,8 +6,10 @@
 
 class CohesionLaw : public Law {
 protected:
-	float m_range = 10;
-	float m_relaxation = 0.9;
+	//float m_range = 10;
+	//float m_relaxation = 0.9;
 public:
+	CohesionLaw(const float& relaxation);
+	CohesionLaw();
 	Vec2 compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const override;
 };

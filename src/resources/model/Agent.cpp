@@ -29,8 +29,8 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 
 };
 
-Agent::Agent(const int &lVelocity, const int& uVelocity, const double& bodySize,
-	const double& viewAngle) {
+Agent::Agent(const int &lVelocity, const int& uVelocity, const int& bodySize,
+	const int& viewAngle) {
 	Vec2 pos = randomVec2Generation(0, 1000);
 	Vec2 vel = randomVec2Generation(lVelocity, uVelocity);
 	m_position = pos;
@@ -42,8 +42,8 @@ Agent::Agent(const int &lVelocity, const int& uVelocity, const double& bodySize,
 	m_range = 50;
 };
 
-Agent::Agent(const Vec2& position, const Vec2& velocity, const double& bodySize, 
-	const double& viewAngle, const double& range) {
+Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, 
+	const int& viewAngle, const int& range) {
 	m_position = position;
 	m_velocity = velocity;
 	m_bodySize = bodySize;

@@ -4,6 +4,8 @@
 #include "../../resources/model/Agent.hpp"
 #include <vector>
 
+Law::Law(const float& relaxation) : m_relaxation{ relaxation } {};
+
 //Return an array of Vec2 based on an array of Birds
 std::vector<Vec2> Law::getCoordinatesArray(const std::vector<Agent>& neighbors) const {
 	//We create a new array with a size of the number of neighbors
