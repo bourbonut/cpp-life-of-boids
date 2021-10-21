@@ -16,6 +16,7 @@
 
 #include "../model/Flock.hpp"
 #include "../model/Bird.hpp"
+#include "../model/Eagle.hpp"
 #include <string>
 #include <iomanip>
 #include <chrono>
@@ -258,7 +259,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            (*MAIN_pFLOCK).addAgent(new Bird{ xpos, ypos });
+            (*MAIN_pFLOCK).addAgent(new Eagle{ xpos, ypos });
         }
     }
 }
