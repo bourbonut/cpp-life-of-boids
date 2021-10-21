@@ -104,6 +104,7 @@ namespace {
 		//flock.print();
 		ASSERT_EQ(flock.getPopSize(), 1) << "Error in destroyLastAgent: PopSize = " << flock.getPopSize();
 		ASSERT_EQ((*flock.getAgent(0)).getPosition().x, 2);
+
 	}
 
 	TEST(TestFlock, NeighborhoodComputing) {
