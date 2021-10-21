@@ -4,7 +4,7 @@
 #include "../../lib/myMath/utils.hpp"
 #include "Eagle.hpp"
 
-Eagle::Eagle() : Agent(-8, 8, 2, 180, 30) {};
+Eagle::Eagle() : Agent(-8, 8, 2, 180) {};
 
 Eagle::Eagle(const Vec2& position, const Vec2& velocity) :
 	Agent(position, velocity, 2, 180, 30) {};

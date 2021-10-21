@@ -2,13 +2,12 @@
 
 #include "Agent.hpp"
 #include "../../lib/myMath/Vec2.hpp"
+#include "../../lib/myLaws/SeparationLaw.hpp"
 #include <vector>
 
 class Eagle : public Agent {
 private:
-	//CohesionLaw m_cohesionLaw;// = CohesionLaw{};
-	//SeparationLaw m_separationLaw;// = SeparationLaw{};
-	//AlignmentLaw m_AlignmentLaw;
+	HuntingLaw m_huntingLaw;
 
 public:
 	Eagle(); // Constructeur sans arguments
