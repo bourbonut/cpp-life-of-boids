@@ -50,7 +50,7 @@ Flock generate_fully_random_bird_flock()
 		agent_size = random_float(2, 20);
 		position = randomVec2Generation(0, 500);
 		velocity = randomVec2Generation(-10, 10);
-		//agent_color = random_color();
+		agent_color = random_color();
 
 		agents.push_back(new Bird{ position, velocity, agent_size, angle_view, range, agent_color });
 	}
@@ -69,7 +69,7 @@ Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf
 	int agent_size = random_float(inf_sup_agent_size.x, inf_sup_agent_size.y);
 	
 	//Change to random color 
-	return create_bird_flock(flock_size, Color::Default, agent_size, range, angle_view);
+	return create_bird_flock(flock_size, random_color(), agent_size, range, angle_view);
 }
 
 
@@ -85,4 +85,39 @@ Flock generate_dove_flock(int size) {
 Flock generate_duck_flock(int size)
 {
 	return create_bird_flock(size, Color::White, 6, 70, 360);
+}
+
+
+Color random_color() {
+
+	int randomNb = random_float(0, 5);
+	Color result;
+
+	switch (randomNb)
+	{
+	case 0:
+		result = Color::Blue;
+		break;
+
+	case 1:
+		result = Color::Red;
+		break;
+
+	case 2:
+		result =  Color::Green;
+		break;
+
+	case 3:
+	    result = Color::White;
+		break;
+
+	case 4:
+	    result = Color::Default;
+		break;
+
+	default:
+		break;
+	}
+
+	return result;
 }
