@@ -23,17 +23,17 @@ std::vector<Agent*> mainFlock;
 
 int main() {
 
-    int size = 1000;
+    int size = 500;
     mainFlock.reserve(size);
 
 
     //Flock flock = generate_dove_flock(size);
-    //Flock flock = generate_parrot_flock(size);
+    Flock flock = generate_parrot_flock(size);
     //Flock flock = generate_duck_flock(size);
     //Flock flock = create_bird_flock(size, Color::Blue, 3, 50, 180, Vec2{ 0,0 }, Vec2{ 1,1 });
     //Flock flock = generate_fully_random_bird_flock();
     //Flock flock = generate_ant_flock(size);
-    Flock flock = generate_fly_flock(size);
+    //Flock flock = generate_fly_flock(size);
 
     bool fullScreen = false;
     GraphicalManager GM{ Color::Default, fullScreen};

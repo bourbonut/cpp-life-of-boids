@@ -2,7 +2,7 @@
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myMath/utils.hpp"
 
-Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const Color& color)
+Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float & maxSpeed, const Color& color)
 {
 	m_color = color;
 	switch (m_color)
@@ -26,6 +26,7 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	m_bodySize = bodySize;
 	m_viewAngle = viewAngle;
 	m_range = range;
+	m_maxSpeed = maxSpeed;
 
 };
 

@@ -15,6 +15,7 @@ protected:
 	int m_bodySize;
 	int m_viewAngle;
 	int  m_range;
+	float m_maxSpeed;
 	Color m_color;
 	std::array<float, 3> m_GLColor;
 	
@@ -25,7 +26,7 @@ protected:
 	Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
 		const int& viewAngle, const int& range);
 	Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
-		const int& viewAngle, const int& range, const Color& color);
+		const int& viewAngle, const int& range, const float & maxSpeed, const Color& color);
 
 public:
 	int _id = ++id;
