@@ -90,7 +90,7 @@ Flock generate_duck_flock(int size)
 
 Color random_color() {
 
-	int randomNb = random_float(0, 5);
+	int randomNb = random_float(0, 7);
 	Color result;
 
 	switch (randomNb)
@@ -113,6 +113,18 @@ Color random_color() {
 
 	case 4:
 	    result = Color::Default;
+		break;
+
+	case 5:
+		result = Color::Purple;
+		break;
+
+	case 6:
+		result = Color::Yellow;
+		break;
+
+	case 7:
+		result = Color::Grey;
 		break;
 
 	default:
