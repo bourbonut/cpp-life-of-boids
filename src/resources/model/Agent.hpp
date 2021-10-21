@@ -19,6 +19,8 @@ protected:
 		const double& viewAngle);
 	Agent(const Vec2& position, const Vec2& velocity, const double& bodySize,
 		const double& viewAngle, const double& range);
+public:
+	virtual ~Agent() { std::cout << "Agent actually destroyed" << std::endl; };
 
 public:
 	int _id = ++id;

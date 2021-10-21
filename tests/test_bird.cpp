@@ -80,6 +80,33 @@ namespace {
 		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(1000)
 	}
 
+	TEST(TestFlock, Destroy) {
+		Flock* MAIN_pFLOCK = nullptr;
+		std::vector<Agent*> mainFlock;
+
+		mainFlock.push_back(new Bird(Vec2(1, 1), Vec2(1, 1)));
+		mainFlock.push_back(new Bird(Vec2(2, 2), Vec2(2, 2)));
+		mainFlock.push_back(new Bird(Vec2(3, 3), Vec2(3, 3)));
+	
+		Flock flock{ mainFlock };
+
+		ASSERT_EQ(flock.getPopSize(), 3);
+		flock.print();
+		flock.destroyLastAgent();
+		flock.print();
+		ASSERT_EQ(flock.getPopSize(), 2) << "Error in destroyLastAgent: PopSize = " << flock.getPopSize();
+		ASSERT_EQ((*flock.getAgent(1)).getPosition().x, 2);
+		/*Bird b4 = Bird(Vec2(1.5, 1), Vec2(1, 1));
+		Bird b5 = Bird(Vec2(1, 1), Vec2(1, 1));
+		flock.addAgent(b4);
+		flock.addAgent(b5);*/
+		/*flock.destroyAgent(Vec2(1, 1));
+		ASSERT_EQ(flock.getPopSize(), 1) << "Error in destroyAgent: PopSize = " << flock.getPopSize();
+		ASSERT_EQ(flock[0].getPosition().x, 2);
+		flock.updatePositions();
+		ASSERT_EQ(flock[0].getPosition().x, 2);
+		ASSERT_EQ(flock[0].getPosition().y, 2);*/
+	}
 
 	TEST(TestFlock, NeighborhoodComputing) {
 

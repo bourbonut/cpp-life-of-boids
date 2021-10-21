@@ -76,12 +76,22 @@ void Flock::addAgent(Agent *a) {
 };
 
 //void Flock::destroyAgent(Vec2 position) {
-//	auto garbageBirdsVec = std::remove_if(m_birdsVec.begin(), m_birdsVec.end(),
+//	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
 //		[pos = position](Bird bird) {
 //			// If distance < 1, destroy bird 
 //			return (bird.getPosition() - pos).norm() < 1; });
-//	m_birdsVec.erase(garbageBirdsVec);
+//	m_agents.erase(garbageAgents);
 //};
+
+void Flock::destroyLastAgent() {
+	//std::cout << "called destroyLastAgent function" << std::endl;
+	Agent *ptr = getAgent(getPopSize() - 1);
+	//std::cout << "ptr defined" << std::endl;
+	delete ptr;
+	//std::cout << "ptr deleted" << std::endl;
+	m_agents.pop_back();
+	//std::cout << "finished destroyLastAgent function" << std::endl;
+};
 
 std::vector<Agent*> Flock::computeNeighbors(const Agent& agent){//, const float &range, const float &angle) {
 

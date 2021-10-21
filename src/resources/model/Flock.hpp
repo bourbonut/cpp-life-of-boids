@@ -21,6 +21,7 @@ public:
 
 	void addAgent(Agent *a);
 	//void destroyAgent(Vec2 position);
+	void destroyLastAgent();
 	//void moveAgents();
 
 public:
