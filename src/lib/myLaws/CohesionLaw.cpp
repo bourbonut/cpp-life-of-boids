@@ -1,8 +1,12 @@
 #include "CohesionLaw.hpp"
+#include "CohesionLaw.hpp"
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
 #include "../../resources/model/Agent.hpp"
+
+CohesionLaw::CohesionLaw(const float& relaxation) : Law(relaxation) {};
+CohesionLaw::CohesionLaw() : Law(1.f) {};
 
 Vec2 CohesionLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 
@@ -25,6 +29,5 @@ Vec2 CohesionLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighb
 		newVelocity = newVelocity / neighbors.size();
 
 	}
-
-	return newVelocity;
+	return newVelocity * m_relaxation;
 };

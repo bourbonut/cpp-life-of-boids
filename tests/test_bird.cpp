@@ -4,6 +4,7 @@
 #include "../src/resources/model/Agent.hpp"
 #include "../src/resources/model/Flock.hpp"
 #include <vector>
+#include "../src/resources/controller/flock_generator.hpp"
 
 namespace {
 	TEST(TestBird, Instanciation) {
@@ -34,7 +35,8 @@ namespace {
 		int testSize = 300;
 		int loopSize = 1000;
 
-		Flock flock(testSize);
+		//Flock flock(testSize);
+		Flock flock = generate_dove_flock(testSize);
 		//flock.print();
 		//Initializing a flock with pop size 300 and checking size of vector population
 		ASSERT_EQ(flock.getPopSize(), testSize) << "Population size should be " << testSize;
