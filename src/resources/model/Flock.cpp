@@ -113,6 +113,8 @@ std::vector<Agent*> Flock::computeNeighbors(const Agent& agent){//, const float 
 	return neighbors;
 };
 
+//Agent* Flock::computeNearestNeighbors(const Agent& agent, const std::vector<Agent*> neighbors) {}
+
 void Flock::print() {
 	std::cout << "Printing Flock :\n";
 	int i = 0;

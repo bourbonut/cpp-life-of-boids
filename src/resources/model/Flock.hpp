@@ -16,6 +16,7 @@ public:
 	Agent* getAgent(int index);
 	//void createPopulation();
 	std::vector<Agent*> computeNeighbors(const Agent& agent);//, const float& range, const float& angle);
+	//Agent* Flock::computeNearestNeighbors(const Agent& agent, const std::vector<Agent*> neighbors);
 	//void addAgent();
 	//void addAgent(float xpos, float ypos);
 
