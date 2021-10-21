@@ -4,7 +4,7 @@
 #include <vector>
 #include "../../resources/model/Agent.hpp"
 
-class HuntingLaw : public Law {
+class HuntingLaw : public Law {  // A changer
 protected:
 	float m_range = 10;
 	float m_relaxation = 0.9;
