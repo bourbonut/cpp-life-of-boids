@@ -76,6 +76,33 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor) {
         break;
     }
 
+    // Points part
+    // new
+    points_shaderProgram = ShaderProgram_new(points::vertex_shader_text, points::fragment_shader_text);
+    points_vertexArray = VertexArray_new();
+    points_buffer = Buffer_new();
+
+    VertexArray_bind(points_vertexArray);
+    Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
+    ShaderProgram_activate(points_shaderProgram);
+
+    m_transform_location = ShaderProgram_getUniformLocation(points_shaderProgram, "transform");
+    m_pointSize_location = ShaderProgram_getUniformLocation(points_shaderProgram, "pointSize");
+    m_maxSpeedSquared_location = ShaderProgram_getUniformLocation(points_shaderProgram, "maxSpeedSquared");
+    m_position_location = ShaderProgram_getAttribLocation(points_shaderProgram, "position");
+    m_velocity_location = ShaderProgram_getAttribLocation(points_shaderProgram, "velocity");
+
+    glVertexAttribPointer(
+        m_position_location, 2, GL_FLOAT, GL_FALSE, sizeof(points::Vertex), (void*)offsetof(points::Vertex, pos));
+    glVertexAttribPointer(
+        m_velocity_location, 2, GL_FLOAT, GL_FALSE, sizeof(points::Vertex), (void*)offsetof(points::Vertex, col));
+
+    glEnableVertexAttribArray(m_position_location);
+    glEnableVertexAttribArray(m_velocity_location);
+
+    glEnable(GL_PROGRAM_POINT_SIZE);
+
+
     // Lines part
     // new
     lines_shaderProgram = ShaderProgram_new(lines::vertex_shader_text, lines::fragment_shader_text);
@@ -122,20 +149,13 @@ bool GraphicalManager::mainLoop() {
         glfwGetFramebufferSize(m_window, &m_width, &m_height);
         const float ratio = m_width / m_height;
 
+        mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
+
         glViewport(0, 0, m_width, m_height);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        {  // lines
-            mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
 
-            VertexArray_bind(lines_vertexArray);
-            Buffer_bind(lines_buffer, GL_ARRAY_BUFFER);
-            ShaderProgram_activate(lines_shaderProgram);
-
-            glUniformMatrix3fv(m_transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
-            glBindVertexArray(lines_vertexArray.vertex_array);
-
-
+        {  // line
             for (auto& bird : *MAIN_pFLOCK) {
 
                 std::vector<Agent*> aVec = (*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
@@ -148,27 +168,46 @@ bool GraphicalManager::mainLoop() {
 
 
                 if (prettyAgents) {
-                    //Drawing a triangle
+                    // Fill vertex array of groups of 6 points each for double triangles
                     mat2x6 result = triangleDisplay.drawAgent(bird);
                     for (int j = 0; j < result.size(); ++j) {
                         vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, (*bird).getGLColor() });
                     }
                 }
                 else {
-                    //Drawing a dot
+                    // Fill vertex array of points for each agents
                     Vec2 res = (dotDisplayer.drawAgent(bird))[0];
-                    vertex_data_dots.push_back(points::Vertex{ {res.x + 10, res.y + 10}, (*bird).getGLColor() });
-
+                    vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, (*bird).getGLColor() });
                 }
             }
 
-            glBufferData(GL_ARRAY_BUFFER, vertex_data_triangle.size() * sizeof(triangle::Vertex), vertex_data_triangle.data(), GL_STREAM_DRAW);
-            glDrawArrays(GL_TRIANGLES, 0, vertex_data_triangle.size());
 
-            //DRAW DOTS
-            glBufferData(GL_ARRAY_BUFFER, vertex_data_dots.size() * sizeof(points::Vertex), vertex_data_dots.data(), GL_STREAM_DRAW);
-            glDrawArrays(GL_POINTS, 0, vertex_data_dots.size());
+            if (prettyAgents) {
+                // DRAW AGENTS AS TRIANGLES
+                VertexArray_bind(lines_vertexArray);
+                Buffer_bind(lines_buffer, GL_ARRAY_BUFFER);
+                ShaderProgram_activate(lines_shaderProgram);
 
+                glUniformMatrix3fv(m_transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
+                glBindVertexArray(lines_vertexArray.vertex_array);
+                glBufferData(GL_ARRAY_BUFFER, vertex_data_triangle.size() * sizeof(triangle::Vertex), vertex_data_triangle.data(), GL_STREAM_DRAW);
+                glDrawArrays(GL_TRIANGLES, 0, vertex_data_triangle.size());
+            }
+            else {
+                // DRAW AGENTS AS DOTS
+                VertexArray_bind(points_vertexArray);
+                Buffer_bind(points_buffer, GL_ARRAY_BUFFER);
+                ShaderProgram_activate(points_shaderProgram);
+
+                glUniformMatrix3fv(m_transform_location, 1, GL_FALSE, (const GLfloat*)&transform);
+                glUniform1f(m_pointSize_location, 3.f);
+                glUniform1f(m_maxSpeedSquared_location, 10.f);
+                glBindVertexArray(points_vertexArray.vertex_array);
+
+                glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STREAM_DRAW);
+                glBufferData(GL_ARRAY_BUFFER, vertex_data_dots.size() * sizeof(points::Vertex), vertex_data_dots.data(), GL_STREAM_DRAW);
+                glDrawArrays(GL_POINTS, 0, vertex_data_dots.size());
+            }
         }
 
 
@@ -187,6 +226,20 @@ bool GraphicalManager::mainLoop() {
     return glfwWindowShouldClose(m_window);
 }
 
+std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
+    std::vector<points::Point> points(number);
+    auto get_pos = [=](float t) {
+        return Vec2{ (float)(m_width * (0.5 + 0.4 * cos(t))), (float)(m_height * (0.5 + 0.4 * sin(t))) };
+    };
+
+    float v = 0;
+    for (auto& p : points) {
+        v += 1.0;
+        p = points::Point{ get_pos(v), Vec2{} };
+    }
+
+    return points;
+}
 
 
 /** Prints the error number and description

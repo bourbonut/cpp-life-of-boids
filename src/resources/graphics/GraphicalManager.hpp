@@ -56,6 +56,7 @@ public:
 	~GraphicalManager();
 	GraphicalManager(Color myBackgroundColor);
 	bool mainLoop();
+	std::vector<points::Point> createPoints(unsigned int number);
 };
 
 
