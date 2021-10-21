@@ -19,7 +19,7 @@ public:
 	Bird(const Vec2& position, const Vec2& velocity);
 	~Bird() { std::cout << "Bird actually destroyed" << std::endl; };
 
-	void computeLaws(const std::vector<Agent*>& neighbors, const std::vector<Agent*>& neighborsPredator) override;
+	void computeLaws(const std::vector<Agent*>& neighborsBird, const std::vector<Agent*>& neighborsPredator) override;
 
 	void print() const;
 

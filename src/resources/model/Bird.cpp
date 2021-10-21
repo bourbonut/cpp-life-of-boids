@@ -21,12 +21,13 @@ Bird::Bird(const Vec2& position, const Vec2& velocity) :
 	Agent(position, velocity, 6, 270, 50) {};
 
 
-void Bird::computeLaws(const std::vector<Agent*>& neighbors,
+void Bird::computeLaws(const std::vector<Agent*>& neighborsBird,
 					  const std::vector<Agent*>& neighborsPredator) {
-	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors);
-	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighbors);
-	Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);
-	Vec2 vec_displacement = vecAlignment * 0.01 + vecCohesion * 0.005 + vecSeparation * 1.f;
+	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighborsBird);
+	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighborsBird);
+	Vec2 vecSeparation = m_separationLaw.compute(*this, neighborsBird);
+	Vec2 vecFleeing = m_separationLaw.compute(*this, neighborsPredator);
+	Vec2 vec_displacement = vecAlignment * 0.01 + vecCohesion * 0.005 + vecSeparation * 1.f + vecFleeing * 5.f;
 	float norm = vec_displacement.norm();
 
 	if (norm > 5) {

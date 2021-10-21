@@ -4,16 +4,16 @@
 #include "../../lib/myMath/utils.hpp"
 #include "Eagle.hpp"
 
-Eagle::Eagle() : Agent(-8, 8, 2, 180) {};
+Eagle::Eagle() : Agent(-8, 8, 2, 50) {};
 
 Eagle::Eagle(const Vec2& position, const Vec2& velocity) :
-	Agent(position, velocity, 2, 180, 30) {};
+	Agent(position, velocity, 2, 50, 30) {};
 
-void Eagle::computeLaws(const std::vector<Agent*>& allNeighbors, const std::vector<Agent*>& preyNeighbors) {
+void Eagle::computeLaws(const std::vector<Agent*>& neighborsBird) {
 	Vec2 vec_displacement{};
 	
-	if (preyNeighbors.size() > 0) { vec_displacement = vec_displacement + m_huntingLaw.compute(*this, preyNeighbors) * 1.f; }
-	if (allNeighbors.size() > 0) { vec_displacement = vec_displacement + m_separationLaw.compute(*this, allNeighbors) * 0.1f; }
+	if (neighborsBird.size() > 0) { vec_displacement = vec_displacement + m_huntingLaw.compute(*this, neighborsBird) * 1.f; }
+	//if (allNeighbors.size() > 0) { vec_displacement = vec_displacement + m_separationLaw.compute(*this, allNeighbors) * 0.1f; }
 	
 	float norm = vec_displacement.norm();
 
