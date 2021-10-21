@@ -22,8 +22,8 @@ Flock* MAIN_pFLOCK= nullptr;
 std::vector<Agent*> mainFlock;
 
 int main() {
-
-    int size = 1000;
+    
+    int size = 400;
     mainFlock.reserve(size);
 
 
@@ -37,7 +37,6 @@ int main() {
     GraphicalManager GM{ Color::Default, fullScreen};
     MAIN_pFLOCK = &flock;
 
-    
     float t = 0;
     bool shouldClose = false;
     do {
