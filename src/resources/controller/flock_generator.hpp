@@ -11,7 +11,7 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, float sep_relax, float cohe_relax, float align_relax, float max_speed);
 
 //Generates a flock with random colors for each agent
-Flock created_bird_flock_random_colors(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, float sep_relax, float cohe_relax, float align_relax, float speed_relax);
+Flock created_bird_flock_random_colors(int size, int agent_size, int agent_range, int agent_angle_view, float sep_relax, float cohe_relax, float align_relax, float speed_relax);
 
 //everything randomized
 Flock generate_fully_random_bird_flock();

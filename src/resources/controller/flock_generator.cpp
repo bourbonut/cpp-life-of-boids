@@ -23,6 +23,23 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 	return Flock{ agents };
 };
 
+Flock created_bird_flock_random_colors(int size, int agent_size, int agent_range, int agent_angle_view, float sep_relax, float cohe_relax, float align_relax, float speed_relax) {
+	std::vector<Agent*> agents;
+	
+	CohesionLaw coLaw(cohe_relax);
+	SeparationLaw sepLaw(sep_relax);
+	AlignmentLaw aligLaw(align_relax);
+
+	int reserve_size = size * 2;
+	agents.reserve(reserve_size);
+
+	for (int i = 0; i < size; ++i) {
+		agents.push_back(new Bird{ randomVec2Generation(-500, 500), randomVec2Generation(-10, 10), agent_size, agent_angle_view, agent_range, speed_relax, random_color(), coLaw, aligLaw, sepLaw });
+	}
+
+	return Flock{ agents };
+}
+
 Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, float sep_relax, float cohe_relax, float align_relax, float maxSpeed) {
 	std::vector<Agent*> agents;
 
@@ -99,7 +116,7 @@ Flock generate_parrot_flock(int size)
 	float cohesion_relax = 0.0002f;
 	float sep_relax = 0.9f ;
 	float align_relax = 0.3;
-	return create_bird_flock(size, Color::Green, 6, 50, 320, sep_relax, cohesion_relax, align_relax, 1.f);
+	return created_bird_flock_random_colors(size, 6, 50, 320, sep_relax, cohesion_relax, align_relax, 5.f);
 }
 
 Flock generate_dove_flock(int size) {
@@ -122,7 +139,7 @@ Flock generate_ant_flock(int size) {
 	float cohesion_relax = 0.0000008f;
 	float sep_relax = 2.5f;
 	float align_relax = -1.f;
-	return create_bird_flock(size, Color::White, 4, 20, 360, sep_relax, cohesion_relax, align_relax, 15.f);
+	return create_bird_flock(size, Color::White, 4, 20, 360, sep_relax, cohesion_relax, align_relax, 10.f);
 }
 
 Flock generate_fly_flock(int size) {
@@ -172,6 +189,7 @@ Color random_color() {
 		break;
 
 	default:
+		result = Color::Default;
 		break;
 	}
 

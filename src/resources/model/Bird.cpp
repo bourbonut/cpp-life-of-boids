@@ -25,7 +25,7 @@ void Bird::computeLaws(const std::vector<Agent*>& neighbors) {
 	Vec2 vec_displacement{};
 	if (neighbors.size() > 0) {
 		Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors);
-		Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighbors);
+		Vec2 vecAlignment = m_alignmentLaw.compute(*this, neighbors);
 		Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);
 		vec_displacement = vecAlignment + vecCohesion  + vecSeparation;
 		float norm = vec_displacement.norm();
