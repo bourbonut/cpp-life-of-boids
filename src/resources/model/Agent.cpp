@@ -8,16 +8,25 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	switch (m_color)
 	{
 	case Color::Red:
-		m_GLColor = { 1.f, 0.f, 0.f };
+		m_GLColor = { 0.91f, 0.12f, 0.39f };
 		break;
 	case Color::Green:
-		m_GLColor = { 0.f, 1.f, 0.f };
+		m_GLColor = { 0.39f, 0.99f, 0.85f };
 		break;
 	case Color::Blue:
-		m_GLColor = { 0.f, 0.f, 1.f };
+		m_GLColor = { 0.09f, 0.99f, 0.99f };
+		break;
+	case Color::Yellow:
+		m_GLColor = { 0.95f, 0.99f, 0.50f };
+		break;
+	case Color::Purple:
+		m_GLColor = { 0.87f, 0.25f, 0.98f };
+		break;
+	case Color::Grey:
+		m_GLColor = { 0.62f, 0.62f, 0.62f };
 		break;
 	default:
-		m_GLColor = { 1.0f,1.0f,1.0f };
+		m_GLColor = { 0.97f, 0.97f, 0.97f };
 		break;
 	}
 

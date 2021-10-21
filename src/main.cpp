@@ -27,11 +27,11 @@ int main() {
     mainFlock.reserve(size);
 
 
-    Flock flock = generate_dove_flock(size);
+    //Flock flock = generate_dove_flock(size);
     //Flock flock = generate_pigeons_flock(size);
     //Flock flock = generate_duck_flock(size);
-    //Flock flock = create_bird_flock(size, Color::Blue, 3, 50, 180, Vec2{ 0,0 }, Vec2{ 1,1 });
-    //Flock flock = generate_fully_random_bird_flock();
+    //Flock flock = create_bird_flock(size, Color::Red, 3, 50, 180, Vec2{ 0,0 }, Vec2{ 1,1 });
+    Flock flock = generate_fully_random_bird_flock();
 
     bool fullScreen = false;
     GraphicalManager GM{ Color::Default, fullScreen};
