@@ -6,7 +6,7 @@
 #include "../../resources/model/Agent.hpp"
 
 CohesionLaw::CohesionLaw(const float& relaxation) : Law(relaxation) {};
-CohesionLaw::CohesionLaw() : Law(0.001f) {};
+CohesionLaw::CohesionLaw() : Law(1.f) {};
 
 Vec2 CohesionLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 

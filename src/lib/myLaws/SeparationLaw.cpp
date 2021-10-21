@@ -6,7 +6,7 @@
 
 
 SeparationLaw::SeparationLaw(const float& relaxation) : Law(relaxation) {};
-SeparationLaw::SeparationLaw() : Law(1.2f) {};
+SeparationLaw::SeparationLaw() : Law(1.f) {};
 
 Vec2 SeparationLaw::compute(Agent& currentAgent, const std::vector<Agent*> &neighbors) const {
 

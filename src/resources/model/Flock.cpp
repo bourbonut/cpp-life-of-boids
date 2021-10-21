@@ -22,19 +22,6 @@
 Flock::Flock(std::vector<Agent*> population) : m_agents(population) {};
 
 
-Flock::Flock(int popSize) {
-
-	//for (int i = 0; i < popSize; ++i) { //this doesn't work with ptr
-	//	m_agents.emplace_back(new Bird{});
-	//}
-};
-
-Flock::Flock() {
-	//m_popSize = RANDOM SINON createPopulation va pas marcher
-	//std::vector<Bird> m_agents(0);
-
-};
-
 int Flock::getPopSize() const {
 	return m_agents.size();
 };

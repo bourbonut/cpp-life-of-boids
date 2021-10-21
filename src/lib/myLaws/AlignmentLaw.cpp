@@ -5,7 +5,7 @@
 #include "../../resources/model/Agent.hpp"
 
 AlignmentLaw::AlignmentLaw(const float& relaxation) : Law(relaxation){};
-AlignmentLaw::AlignmentLaw() : Law(0.01f){};
+AlignmentLaw::AlignmentLaw() : Law(1.f){};
 
 Vec2 AlignmentLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 

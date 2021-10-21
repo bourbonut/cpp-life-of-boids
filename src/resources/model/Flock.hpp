@@ -23,8 +23,6 @@ public:
 	//void moveAgents();
 
 public:
-	Flock(); // Constructeur avec argument par défaut
-	Flock(int popsize);
 	Flock(std::vector<Agent*> population);
 	~Flock() {}; // Destructeur
 
