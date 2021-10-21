@@ -80,6 +80,16 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
     case Color::Blue:
         glClearColor(0.f, 0.f, 1.f, 1.0f);
         break;
+    case Color::Black:
+        glClearColor(0.25882f, 0.25882f, 0.25882f, 1.0f);
+        break;
+    case Color::BlueGrey:
+        //glClearColor(0.1019607f, 0.1372549f, 0.4941176f, 1.0f);
+        glClearColor(0.128f, 0.128f, 0.128f, 1.0f);
+        break;
+    case Color::Grey:
+        glClearColor(0.62f, 0.62f, 0.62f, 1.0f );
+        break;
     default:
         glClearColor(0.07f, 0.13f, 0.17f, 1.f);
         break;
@@ -301,7 +311,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            (*MAIN_pFLOCK).addAgent(new Bird{ Vec2{(float)xpos, (float)ypos}, Vec2{2.f,2.f} });
+            (*MAIN_pFLOCK).addAgent(new Bird{ Vec2{(float)xpos, (float)ypos}, Vec2{2.f,2.f},6, 270,50, 1.f, Color::Default });
         }
     }
 }

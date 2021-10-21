@@ -2,7 +2,7 @@
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myMath/utils.hpp"
 
-Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const Color& color)
+Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float & maxSpeed, const Color& color)
 {
 	m_color = color;
 	switch (m_color)
@@ -25,6 +25,9 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	case Color::Grey:
 		m_GLColor = { 0.62f, 0.62f, 0.62f };
 		break;
+	case Color::Predator:
+		m_GLColor = { 0.63f, 0.53f, 0.4980f };
+		break;
 	default:
 		m_GLColor = { 0.97f, 0.97f, 0.97f };
 		break;
@@ -35,11 +38,12 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	m_bodySize = bodySize;
 	m_viewAngle = viewAngle;
 	m_range = range;
+	m_maxSpeed = maxSpeed;
 
 };
 
-Agent::Agent(const int &lVelocity, const int& uVelocity, const double& bodySize,
-	const double& viewAngle) {
+Agent::Agent(const int &lVelocity, const int& uVelocity, const int& bodySize,
+	const int& viewAngle) {
 	Vec2 pos = randomVec2Generation(0, 1000);
 	Vec2 vel = randomVec2Generation(lVelocity, uVelocity);
 	m_position = pos;
@@ -51,8 +55,8 @@ Agent::Agent(const int &lVelocity, const int& uVelocity, const double& bodySize,
 	m_range = 50;
 };
 
-Agent::Agent(const Vec2& position, const Vec2& velocity, const double& bodySize, 
-	const double& viewAngle, const double& range) {
+Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, 
+	const int& viewAngle, const int& range) {
 	m_position = position;
 	m_velocity = velocity;
 	m_bodySize = bodySize;
