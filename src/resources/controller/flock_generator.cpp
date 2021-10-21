@@ -87,26 +87,41 @@ Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf
 	return create_bird_flock(flock_size, Color::Default, agent_size, range, angle_view, sep_relax, cohesion_relax, align_relax);
 }
 
-
-Flock generate_pigeons_flock(int size)
+//TODO : Change 
+Flock generate_parrot_flock(int size)
 {
-	float cohesion_relax = 1;
-	float sep_relax = 1 ;
-	float align_relax = 1;
-	return create_bird_flock(size, Color::White, 6, 50, 320, sep_relax, cohesion_relax, align_relax);
+	float cohesion_relax = 0.0002f;
+	float sep_relax = 0.9f ;
+	float align_relax = 0.3;
+	return create_bird_flock(size, Color::Green, 6, 50, 320, sep_relax, cohesion_relax, align_relax);
 }
 
 Flock generate_dove_flock(int size) {
-	float cohesion_relax =1 ;
-	float sep_relax = 1;
-	float align_relax = 1;
+	float cohesion_relax = 0.0004;
+	float sep_relax = 1.f;
+	float align_relax = 0.05;
 	return create_bird_flock(size, Color::White, 6, 50, 270, sep_relax, cohesion_relax, align_relax);
 }
 
 Flock generate_duck_flock(int size)
 {
-	float cohesion_relax = 1 / random_float(-10, 10);
-	float sep_relax = 1 / random_float(-10, 10);
-	float align_relax = 1 / random_float(-10, 10);
+	float cohesion_relax = 0.00008f;
+	float sep_relax = 0.5f;
+	float align_relax = 0.9f;
 	return create_bird_flock(size, Color::White, 6, 70, 360, sep_relax, cohesion_relax, align_relax);
+}
+
+//TODO : Change color to black or grey
+Flock generate_ant_flock(int size) {
+	float cohesion_relax = 0.0000008f;
+	float sep_relax = 2.5f;
+	float align_relax = -1.f;
+	return create_bird_flock(size, Color::White, 4, 20, 360, sep_relax, cohesion_relax, align_relax);
+}
+
+Flock generate_fly_flock(int size) {
+	float cohesion_relax = 0.08f;
+	float sep_relax = 1.f;
+	float align_relax = 0.2f;
+	return create_bird_flock(size, Color::White, 4, 40, 360, sep_relax, cohesion_relax, align_relax);
 }
