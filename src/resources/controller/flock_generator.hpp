@@ -5,10 +5,10 @@
 
 //Creates a complex bird flock with all options, including the actual flock
 //ALL flocks are in same position
-Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, Vec2 agent_position, Vec2 agent_velocity);
+Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, Vec2 agent_position, Vec2 agent_velocity, float sep_relax, float cohe_relax, float align_relax);
 
 //Same with random positions
-Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view);
+Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, float sep_relax, float cohe_relax, float align_relax);
 
 //everything randomized
 Flock generate_fully_random_bird_flock();
