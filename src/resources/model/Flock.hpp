@@ -20,7 +20,7 @@ public:
 	//void addAgent(float xpos, float ypos);
 
 	void addAgent(Agent *a);
-	//void destroyAgent(Vec2 position);
+	void destroyAgent(Vec2 position);
 	void destroyLastAgent();
 	//void moveAgents();
 

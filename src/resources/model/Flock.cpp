@@ -75,13 +75,14 @@ void Flock::addAgent(Agent *a) {
 	m_agents.push_back(a);
 };
 
-//void Flock::destroyAgent(Vec2 position) {
-//	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
-//		[pos = position](Bird bird) {
-//			// If distance < 1, destroy bird 
-//			return (bird.getPosition() - pos).norm() < 1; });
-//	m_agents.erase(garbageAgents);
-//};
+void Flock::destroyAgent(Vec2 position) {
+	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
+		[pos = position](Agent *a) {
+			// If distance < 1, destroy bird 
+			return ((*a).getPosition() - pos).norm() < 1; });
+	delete &garbageAgents;
+	m_agents.erase(garbageAgents);
+};
 
 void Flock::destroyLastAgent() {
 	//std::cout << "called destroyLastAgent function" << std::endl;
