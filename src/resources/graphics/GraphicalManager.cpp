@@ -26,7 +26,7 @@ using namespace std::chrono;
 //
 //};
 
-GraphicalManager::GraphicalManager(Color myBackgroundColor) {
+GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
 
     m_background_color = myBackgroundColor;
 
@@ -42,12 +42,21 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    m_window = glfwCreateWindow(800, 600, "OpenGL Triangle", nullptr, nullptr);
+    GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+
+    if (fullScreen) {
+        m_window = glfwCreateWindow(800, 600, "Life-of-boids", primaryMonitor, nullptr);
+    }
+    else {
+        m_window = glfwCreateWindow(800, 600, "Life-of-boids", nullptr, nullptr);
+    }
+
 
     if (!m_window) {
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
+
 
     glfwSetKeyCallback(m_window, key_callback);
     glfwSetMouseButtonCallback(m_window, mouse_button_callback);

@@ -54,7 +54,7 @@ public:
 
 public:
 	~GraphicalManager();
-	GraphicalManager(Color myBackgroundColor);
+	GraphicalManager(Color myBackgroundColor, bool fullScreen);
 	bool mainLoop();
 	std::vector<points::Point> createPoints(unsigned int number);
 };
