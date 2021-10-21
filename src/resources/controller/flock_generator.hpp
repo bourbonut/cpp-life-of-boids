@@ -10,11 +10,11 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 //Same with random positions
 Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view);
 
-//Agents will be given a random position and a random color, size of 5 and birds are doves
-Flock generate_random_flock();
-
 //everything randomized
-Flock generate_fully_random_flock();
+Flock generate_fully_random_bird_flock();
+
+//everything randomized but in between the values given by the user
+Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf_sup_agent_size, Vec2 inf_sup_agent_angle_view, Vec2 inf_sup_agent_position, Vec2 inf_sup_agent_velocity);
 
 //angle view is about 320, range 50
 Flock generate_pigeons_flock(int size);

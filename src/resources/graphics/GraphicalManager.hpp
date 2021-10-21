@@ -13,7 +13,7 @@
 #include "../controller/flock_generator.hpp"
 
 extern Flock* MAIN_pFLOCK;
-static bool prettyAgents;
+static bool prettyAgents = true;
 
 class GraphicalManager {
 private:

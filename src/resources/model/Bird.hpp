@@ -9,8 +9,8 @@
 
 class Bird : public Agent{
 private:
-	CohesionLaw m_cohesionLaw;// = CohesionLaw{};
-	SeparationLaw m_separationLaw;// = SeparationLaw{};
+	CohesionLaw m_cohesionLaw;
+	SeparationLaw m_separationLaw;
 	AlignmentLaw m_AlignmentLaw;
 
 public:

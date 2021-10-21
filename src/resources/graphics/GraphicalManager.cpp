@@ -29,7 +29,7 @@ using namespace std::chrono;
 GraphicalManager::GraphicalManager(Color myBackgroundColor) {
 
     m_background_color = myBackgroundColor;
-    //m_agent_color = myAgentColor;
+
     std::cout << "Constructing GraphicalManager object" << std::endl;
     glfwSetErrorCallback(error_callback);
 
