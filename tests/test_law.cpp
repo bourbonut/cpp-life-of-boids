@@ -4,6 +4,7 @@
 #include "../src/resources/model/Flock.hpp"
 #include "../src/resources/model/Agent.hpp"
 #include <vector>
+#include <tuple>
 #include "../src/lib/myLaws/AlignmentLaw.hpp"
 #include "../src/lib/myMath/Vec2.hpp"
 
@@ -60,9 +61,11 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
+            std::vector<Agent*> bVec = std::get<0>(allNeighbors);
+            std::vector<Agent*> eVec = std::get<1>(allNeighbors);
             CohesionLaw cLaw;
-            Vec2 vecCohesion = cLaw.compute(*bird, aVec);
+            Vec2 vecCohesion = cLaw.compute(*bird, bVec);
             cohesions.push_back(vecCohesion);
             //std::cout << "Bird " << (*bird)._id << " | Cohesion Law : " << vecCohesion << '\n';
         }
@@ -93,9 +96,11 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
+            std::vector<Agent*> bVec = std::get<0>(allNeighbors);
+            std::vector<Agent*> eVec = std::get<1>(allNeighbors);
             SeparationLaw law;
-            Vec2 vecSeparation = law.compute(*bird, aVec);
+            Vec2 vecSeparation = law.compute(*bird, bVec);
             separations.push_back(vecSeparation);
             //std::cout << "Bird " << (*bird)._id << " | Separation Law : " << vecSeparation << '\n';
         }

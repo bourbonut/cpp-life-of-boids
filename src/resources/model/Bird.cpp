@@ -12,19 +12,28 @@ Bird::Bird(const Vec2& position, const Vec2& velocity) :
 Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float &maxSpeed, const Color& color) :
 	Agent(position, velocity, bodySize, viewAngle, range, maxSpeed, color), m_alignmentLaw(), m_cohesionLaw(), m_separationLaw(){};
 
+Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float& maxSpeed, const Color& color, const CohesionLaw& cohesionLaw, const AlignmentLaw& alignmentLaw, const SeparationLaw& separationLaw) :
+	Bird(position, velocity, bodySize, viewAngle, range, maxSpeed, color) {
+	m_alignmentLaw = alignmentLaw;
+	m_cohesionLaw = cohesionLaw;
+	m_separationLaw = separationLaw;
+};
+
+
+
 void Bird::computeLaws(const std::vector<Agent*>& neighborsBird,
 					  const std::vector<Agent*>& neighborsPredator) {
 	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighborsBird);
-	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighborsBird);
+	Vec2 vecAlignment = m_alignmentLaw.compute(*this, neighborsBird);
 	Vec2 vecSeparation = m_separationLaw.compute(*this, neighborsBird);
 	Vec2 vecFleeing = m_separationLaw.compute(*this, neighborsPredator);
-	Vec2 vec_displacement = vecAlignment + vecCohesion + vecSeparation + vecFleeing * 5.f;
+	Vec2 vec_displacement = vecAlignment + vecCohesion + vecSeparation + vecFleeing * 50.f;
 	float norm = vec_displacement.norm();
 
-		if (norm > 5) {
-			vec_displacement = vec_displacement / norm;
-		}
+	if (norm > 5) {
+		vec_displacement = vec_displacement / norm;
 	}
+	
 
 	//std::cout << "Bird id " << this->_id << " | nb neigh : " << neighbors.size() << " | alignment vec " << vecAlignment << " | cohesion vec " << vecCohesion << " | Separation vec " << vecSeparation << '\n';
 	m_nextVelocity = (m_velocity * 0.99 + vec_displacement) ; 

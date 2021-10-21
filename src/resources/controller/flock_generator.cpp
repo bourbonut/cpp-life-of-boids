@@ -1,5 +1,6 @@
 #include "flock_generator.hpp"
 #include "../model/Flock.hpp"
+#include "../model/Bird.hpp"
 #include "../../lib/myLaws/AlignmentLaw.hpp"
 #include "../../lib/myLaws/CohesionLaw.hpp"
 #include "../../lib/myLaws/SeparationLaw.hpp"

@@ -5,14 +5,15 @@
 #include "../../resources/model/Agent.hpp"
 #include "../../resources/model/Flock.hpp"
 
+HuntingLaw::HuntingLaw() : Law(20.f) {};
+
 Vec2 HuntingLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 	Vec2 newVelocity{};
-	float weight;
 
 	if (neighbors.size() > 0) {
-		weight = distance((currentAgent).getPosition(), (*neighbors[0]).getPosition());
-		newVelocity = (*neighbors[0]).getVelocity() + ((currentAgent).getPosition() - (currentAgent).getPosition()) * weight / m_range;
+		float weight = distance((currentAgent).getPosition(), (*neighbors[0]).getPosition());
+		newVelocity = (*neighbors[0]).getVelocity() + ((currentAgent).getPosition() - (currentAgent).getPosition()) * weight;
 	}
 
-	return newVelocity;
+	return newVelocity * m_relaxation;
 };
