@@ -66,11 +66,11 @@ namespace {
         }
 
         EXPECT_EQ(cohesions[0].x, 0.f);
-        EXPECT_NEAR(cohesions[0].y, 250.f, 5);
-        EXPECT_NEAR(cohesions[1].x, -125.f, 5);
-        EXPECT_NEAR(cohesions[1].y, -125.f, 5);
-        EXPECT_NEAR(cohesions[2].x, 0.f, 5); //0 because out of range from [1] (60 > 50) and angle from [0] (135,001 > 135 or 135 !< 270/2)
-        EXPECT_NEAR(cohesions[2].y, 0.f, 5);
+        EXPECT_NEAR(cohesions[0].y, 30.f, 1);
+        EXPECT_NEAR(cohesions[1].x, -30.f, 1);
+        EXPECT_NEAR(cohesions[1].y, -30.f, 1);
+        EXPECT_NEAR(cohesions[2].x, 0.f, 1); //0 because out of range from [1] (60 > 50) and angle from [0] (135,001 > 135 or 135 !< 270/2)
+        EXPECT_NEAR(cohesions[2].y, 0.f, 1);
     }
 
     TEST(SeparationLaw, BasicTests) {
