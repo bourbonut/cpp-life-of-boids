@@ -44,10 +44,10 @@ Vec2 randomVec2Generation(const int& infBoundary, const int& supBoundary)
     return Vec2(dis(gen), dis(gen));
 }
 
-//double random()
-//{
-//    std::random_device rd;
-//    std::mt19937 gen(rd());
-//    std::uniform_real_distribution<> dis(-3, 3);
-//    return dis(gen);
-//}
+float random_float(int inf, int sup)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(inf, sup);
+    return dis(gen);
+}

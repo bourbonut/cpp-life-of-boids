@@ -21,7 +21,7 @@ add_executable(graphicsTest graphics_main.cpp)
 target_link_libraries(graphicsTest PUBLIC libGLX myMath shaders)
 
 add_executable(life-of-boids main.cpp)
-target_link_libraries(life-of-boids PUBLIC libGLX myMath shaders myBirds myLaws opencv::opencv)
+target_link_libraries(life-of-boids PUBLIC libGLX myMath shaders myBirds myLaws opencv::opencv flockGenerator)
 
 #add_executable(main_opencv main_opencv.cpp)
 #target_link_libraries(main_opencv PUBLIC opencv::opencv)

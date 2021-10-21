@@ -26,10 +26,10 @@ using namespace std::chrono;
 //
 //};
 
-GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor) {
+GraphicalManager::GraphicalManager(Color myBackgroundColor) {
 
     m_background_color = myBackgroundColor;
-    m_agent_color = myAgentColor;
+
     std::cout << "Constructing GraphicalManager object" << std::endl;
     glfwSetErrorCallback(error_callback);
 
@@ -37,10 +37,10 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor) 
         exit(EXIT_FAILURE);
 
     // Specifying some OpenGL variables
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     m_window = glfwCreateWindow(800, 600, "OpenGL Triangle", nullptr, nullptr);
 
@@ -55,6 +55,8 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor) 
     glfwMakeContextCurrent(m_window);
     gladLoadGL();
     glfwSwapInterval(1);
+
+
     glfwGetFramebufferSize(m_window, &m_width, &m_height);
 
     //BACKGROUND COLOR
@@ -71,23 +73,6 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor) 
         break;
     default:
         glClearColor(0.07f, 0.13f, 0.17f, 1.f);
-        break;
-    }
-
-    //AGENT COLOR
-    switch (m_agent_color)
-    {
-    case Color::Red:
-        m_agent_GLcolor = { 1.f, 0.f, 0.f };
-        break;
-    case Color::Green:
-        m_agent_GLcolor = { 0.f, 1.f, 0.f };
-        break;
-    case Color::Blue:
-        m_agent_GLcolor = { 0.f, 0.f, 1.f };
-        break;
-    default:
-        m_agent_GLcolor = { 1.0f,1.0f,1.0f };
         break;
     }
 
@@ -166,13 +151,13 @@ bool GraphicalManager::mainLoop() {
                     //Drawing a triangle
                     mat2x6 result = triangleDisplay.drawAgent(bird);
                     for (int j = 0; j < result.size(); ++j) {
-                        vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, m_agent_GLcolor });
+                        vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, (*bird).getGLColor() });
                     }
                 }
                 else {
                     //Drawing a dot
                     Vec2 res = (dotDisplayer.drawAgent(bird))[0];
-                    vertex_data_dots.push_back(points::Vertex{ {res.x + 10, res.y + 10}, m_agent_GLcolor });
+                    vertex_data_dots.push_back(points::Vertex{ {res.x + 10, res.y + 10}, (*bird).getGLColor() });
 
                 }
             }
@@ -234,11 +219,11 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
     }
     if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
         std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-        //(*flockPtr).addAgent();
+        //(*MAIN_pFLOCK).addAgent();
     }
     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
         std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
-        //(*flockPtr).destroyAgent(Vec2(5, 10));
+        //(*MAIN_pFLOCK).destroyAgent();
     }
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
         //change l'affichage de triangles à dots
@@ -254,7 +239,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             double xpos, ypos;
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
-            (*MAIN_pFLOCK).addAgent(new Bird{ xpos, ypos });
+            (*MAIN_pFLOCK).addAgent(new Bird{ Vec2{(float)xpos, (float)ypos}, Vec2{2.f,2.f} });
         }
     }
 }

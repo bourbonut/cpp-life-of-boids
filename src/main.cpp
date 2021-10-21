@@ -15,6 +15,7 @@
 #include "resources/graphics/graphics.hpp"
 #include "resources/graphics/GraphicalManager.hpp"
 #include "resources/graphics/oglTypes.hpp"
+#include "resources/controller/flock_generator.hpp"
 
 
 Flock* MAIN_pFLOCK= nullptr;
@@ -22,18 +23,18 @@ std::vector<Agent*> mainFlock;
 
 int main() {
 
-
-    
-    //Need to do like this because we are using ptr fir the birds in the flock
     int size = 400;
-
     mainFlock.reserve(size);
-    for (int i = 0; i < size; ++i) {
-        mainFlock.push_back(new Bird{});
-    }
-    Flock flock{ mainFlock };
 
-    GraphicalManager GM{ Color::Default, Color::Default};
+
+    Flock flock = generate_dove_flock(size);
+    //Flock flock = generate_pigeons_flock(size);
+    //Flock flock = generate_duck_flock(size);
+    //Flock flock = create_bird_flock(size, Color::Blue, 3, 50, 180, Vec2{ 0,0 }, Vec2{ 1,1 });
+    //Flock flock = generate_fully_random_bird_flock();
+
+
+    GraphicalManager GM{ Color::Default};
     MAIN_pFLOCK = &flock;
 
     
