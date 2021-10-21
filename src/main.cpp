@@ -23,7 +23,7 @@ std::vector<Agent*> mainFlock;
 
 int main() {
 
-    int size = 400;
+    int size = 1000;
     mainFlock.reserve(size);
 
 
@@ -33,8 +33,8 @@ int main() {
     //Flock flock = create_bird_flock(size, Color::Blue, 3, 50, 180, Vec2{ 0,0 }, Vec2{ 1,1 });
     //Flock flock = generate_fully_random_bird_flock();
 
-
-    GraphicalManager GM{ Color::Default};
+    bool fullScreen = false;
+    GraphicalManager GM{ Color::Default, fullScreen};
     MAIN_pFLOCK = &flock;
 
     
