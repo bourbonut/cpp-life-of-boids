@@ -14,7 +14,6 @@ public:
 	void print();
 	int getPopSize() const;
 	Agent* getAgent(int index);
-	//void createPopulation();
 	std::vector<Agent*> computeNeighbors(const Agent& agent);//, const float& range, const float& angle);
 	//void addAgent();
 	//void addAgent(float xpos, float ypos);
@@ -29,9 +28,7 @@ public:
 	Flock(std::vector<Agent*> population);
 	~Flock() {}; // Destructeur
 
-	//auto begin() { return m_birdsVec.begin(); };
 	auto begin() { return m_agents.begin(); };
-	//auto end() { return m_birdsVec.end(); };
 	auto end() { return m_agents.end(); };
 
 };

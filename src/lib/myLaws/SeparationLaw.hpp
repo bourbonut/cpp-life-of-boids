@@ -6,5 +6,7 @@
 
 class SeparationLaw : public Law {
 public:
+	SeparationLaw(const float& relaxation);
+	SeparationLaw();
 	Vec2 compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const override;
 };

@@ -4,6 +4,8 @@
 #include <vector>
 #include "../../resources/model/Agent.hpp"
 
+AlignmentLaw::AlignmentLaw(const float& relaxation) : Law(relaxation){};
+AlignmentLaw::AlignmentLaw() : Law(0.01f){};
 
 Vec2 AlignmentLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const {
 
@@ -11,11 +13,9 @@ Vec2 AlignmentLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neigh
 	if (neighbors.size() > 0) {
 		for (int i = 0; i < neighbors.size(); ++i) {
 			nextVelocity = nextVelocity + (*neighbors[i]).getVelocity();
-			// std::cout << "I'm here with neighbor " << (*neighbors[i])._id << " its velocity is " << (*neighbors[i]).getVelocity() << " and nextVelocity is " << nextVelocity << '\n';
 		}
 		nextVelocity = nextVelocity / neighbors.size();
 	}
 
-	//std::cout << "Returning nextvelocity : " << nextVelocity << '\n';
-	return nextVelocity;
+	return nextVelocity * m_relaxation;
 };

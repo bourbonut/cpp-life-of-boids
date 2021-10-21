@@ -5,18 +5,27 @@
 #include "Bird.hpp"
 
 Bird::Bird() : Agent(-5, 5, 6, 270, 50) {};
-
-Bird::Bird(const Vec2& position, const Vec2& velocity) : 
-	Agent(position, velocity, 6, 270, 50) {};
+//
+//Bird::Bird(const Vec2& position, const Vec2& velocity) : 
+//	Agent(position, velocity, 6, 270, 50) {};
 
 Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const Color& color) :
-	Agent(position, velocity, bodySize, viewAngle, range, color) {};
+	Agent(position, velocity, bodySize, viewAngle, range, color), m_alignmentLaw(), m_cohesionLaw(), m_separationLaw(){};
+
+Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const Color& color, const CohesionLaw &cohesionLaw, const AlignmentLaw &alignmentLaw, const SeparationLaw &separationLaw) :
+	Bird(position, velocity, bodySize, viewAngle, range, color) {
+	m_alignmentLaw = alignmentLaw;
+	m_cohesionLaw = cohesionLaw;
+	m_separationLaw = separationLaw;
+};
+
+
 
 void Bird::computeLaws(const std::vector<Agent*>& neighbors) {
 	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors);
-	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighbors);
+	Vec2 vecAlignment = m_alignmentLaw.compute(*this, neighbors);
 	Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);
-	Vec2 vec_displacement = vecAlignment * 0.01 + vecCohesion * 0.0005 + vecSeparation * 1.f;
+	Vec2 vec_displacement = vecAlignment/* * 0.01*/ + vecCohesion /** 0.0005 */+ vecSeparation /** 1.f*/;
 	float norm = vec_displacement.norm();
 
 	if (norm > 5) {

@@ -11,13 +11,15 @@ class Bird : public Agent{
 private:
 	CohesionLaw m_cohesionLaw;
 	SeparationLaw m_separationLaw;
-	AlignmentLaw m_AlignmentLaw;
+	AlignmentLaw m_alignmentLaw;
 
 public:
 	Bird(); // Constructeur sans arguments
 	//Bird(const Bird& other);
-	Bird(const Vec2& position, const Vec2& velocity);
+	//Bird(const Vec2& position, const Vec2& velocity);
 	Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const Color& color);
+	Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const Color& color, const CohesionLaw &cohesionLaw, const AlignmentLaw &alignmentLaw, const SeparationLaw &separationLaw);;
+
 
 	void computeLaws(const std::vector<Agent*>& neighbors) override;
 

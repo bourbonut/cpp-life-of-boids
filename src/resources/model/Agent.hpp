@@ -20,10 +20,10 @@ protected:
 	
 
 protected:
-	Agent(const int& lVelocity, const int& uVelocity, const double& bodySize,
-		const double& viewAngle);
-	Agent(const Vec2& position, const Vec2& velocity, const double& bodySize,
-		const double& viewAngle, const double& range);
+	Agent(const int& lVelocity, const int& uVelocity, const int& bodySize,
+		const int& viewAngle);
+	Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
+		const int& viewAngle, const int& range);
 	Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
 		const int& viewAngle, const int& range, const Color& color);
 

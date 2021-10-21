@@ -7,5 +7,7 @@
 
 class AlignmentLaw : public Law {
 public:
+	AlignmentLaw(const float& relaxation);
+	AlignmentLaw();
 	Vec2 compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const override;
 };

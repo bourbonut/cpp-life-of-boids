@@ -1,5 +1,8 @@
 #include "flock_generator.hpp"
 #include "../model/Flock.hpp"
+#include "../../lib/myLaws/AlignmentLaw.hpp"
+#include "../../lib/myLaws/CohesionLaw.hpp"
+#include "../../lib/myLaws/SeparationLaw.hpp"
 #include <vector>
 
 Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, Vec2 agent_position, Vec2 agent_velocity)
@@ -18,6 +21,10 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 
 Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view) {
 	std::vector<Agent*> agents;
+
+	CohesionLaw coLaw();
+	SeparationLaw sepLaw();
+	AlignmentLaw aligLaw();
 
 	int reserve_size = size * 2;
 	agents.reserve(reserve_size);
