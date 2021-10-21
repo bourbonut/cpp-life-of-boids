@@ -2,7 +2,7 @@
 
 #include "Agent.hpp"
 #include "../../lib/myMath/Vec2.hpp"
-#include "../../lib/myLaws/SeparationLaw.hpp"
+#include "../../lib/myLaws/HuntingLaw.hpp"
 #include <vector>
 
 class Eagle : public Agent {

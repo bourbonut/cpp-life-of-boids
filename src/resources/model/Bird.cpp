@@ -4,7 +4,7 @@
 #include "../../lib/myMath/utils.hpp"
 #include "Bird.hpp"
 
-Bird::Bird() : Agent(-5, 5, 6, 270, 50) {};
+Bird::Bird() : Agent(-5, 5, 6, 270) {};
 //
 //
 //Bird::Bird(const Bird& other) {
