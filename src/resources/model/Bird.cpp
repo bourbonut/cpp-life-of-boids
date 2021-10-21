@@ -21,7 +21,8 @@ Bird::Bird(const Vec2& position, const Vec2& velocity) :
 	Agent(position, velocity, 6, 270, 50) {};
 
 
-void Bird::computeLaws(const std::vector<Agent*>& neighbors) {
+void Bird::computeLaws(const std::vector<Agent*>& neighbors,
+					  const std::vector<Agent*>& neighborsPredator) {
 	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighbors);
 	Vec2 vecAlignment = m_AlignmentLaw.compute(*this, neighbors);
 	Vec2 vecSeparation = m_separationLaw.compute(*this, neighbors);

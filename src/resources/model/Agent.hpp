@@ -24,7 +24,8 @@ public:
 
 public:
 	int _id = ++id;
-	virtual void computeLaws(const std::vector<Agent*>& neighbors) = 0;
+	virtual void computeLaws(const std::vector<Agent*>& neighbors, 
+							 const std::vector<Agent*>& neighborsPredator) = 0;
 	void prepareMove();
 	void move();
 

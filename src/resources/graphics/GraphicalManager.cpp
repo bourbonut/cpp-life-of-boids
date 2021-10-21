@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <tuple>
 #include "GraphicalManager.hpp"
 #include "glx.hpp"
 #include "graphics.hpp"
@@ -153,10 +154,13 @@ bool GraphicalManager::mainLoop() {
 
             for (auto& bird : *MAIN_pFLOCK) {
 
-                std::vector<Agent*> aVec = (*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
+                std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = 
+                    (*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
+                std::vector<Agent*> bVec = std::get<0> (allNeighbors);
+                std::vector<Agent*> eVec = std::get<1>(allNeighbors);
                 
 
-                (*bird).computeLaws(aVec);
+                (*bird).computeLaws(bVec, eVec);
                 (*bird).prepareMove();
                 (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
                 (*bird).move();

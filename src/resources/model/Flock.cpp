@@ -1,5 +1,6 @@
 #include "Flock.hpp"
 #include "Bird.hpp"
+#include "Eagle.hpp"
 #include "../../lib/myMath/utils.hpp"
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myLaws/Law.hpp"
@@ -7,6 +8,7 @@
 #include <cmath>
 #include <random>
 #include <algorithm>
+#include <tuple>
 
 
 //Flock::Flock(int popSize) : m_birdsVec(popSize){ // need to instanciate the vector like this otherwise it won't work ???
@@ -78,10 +80,14 @@ void Flock::addAgent(Agent *a) {
 void Flock::destroyAgent(Vec2 position) {
 	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
 		[pos = position](Agent *a) {
-			// If distance < 1, destroy bird 
-			return ((*a).getPosition() - pos).norm() < 1; });
-	delete &garbageAgents;
-	m_agents.erase(garbageAgents);
+			// If distance < 1, destroy bird
+			bool destroyBool = ((*a).getPosition() - pos).norm() < 1;
+			if (destroyBool) { delete a; };
+
+			return destroyBool; });
+
+	m_agents.erase(garbageAgents, m_agents.end());
+
 };
 
 void Flock::destroyLastAgent() {
@@ -94,9 +100,11 @@ void Flock::destroyLastAgent() {
 	//std::cout << "finished destroyLastAgent function" << std::endl;
 };
 
-std::vector<Agent*> Flock::computeNeighbors(const Agent& agent){//, const float &range, const float &angle) {
+std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(
+			const Agent& agent){//, const float &range, const float &angle) {
 
 	std::vector<Agent*> neighbors;
+	std::vector<Agent*> neighborsPredators;
 	neighbors.reserve(m_agents.size()); //CHANGE THIS TO SMTHING LIKE popSize*2 OR SMTHNG
 
 	//Like this one bird is going to be its own potential neighbor
@@ -106,11 +114,16 @@ std::vector<Agent*> Flock::computeNeighbors(const Agent& agent){//, const float 
 			double distWithPotNeighb = distance(agent.getPosition(), (*potentialNeighbor).getPosition());
 			double a = abs(distWithPotNeighb);
 			if (abs(distWithPotNeighb) <= abs(agent.getRange())) { //only range because was scared of angle
-				neighbors.push_back(potentialNeighbor);
-			}
+				if (dynamic_cast<Bird*> (potentialNeighbor) != nullptr) {
+					neighbors.push_back(potentialNeighbor);
+				}
+				else if (dynamic_cast<Eagle*> (potentialNeighbor) != nullptr) {
+					neighborsPredators.push_back(potentialNeighbor);
+				}
+			}	
 		}
 	}
-	return neighbors;
+	return std::make_tuple( neighbors, neighborsPredators );
 };
 
 //Agent* Flock::computeNearestNeighbors(const Agent& agent, const std::vector<Agent*> neighbors) {}
