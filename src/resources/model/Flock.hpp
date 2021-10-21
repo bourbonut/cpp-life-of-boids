@@ -2,6 +2,7 @@
 
 #include "../../lib/myMath/Vec2.hpp"
 #include "vector"
+#include <tuple>
 #include "Bird.hpp"
 // #include "myMath/utils.hpp"
 
@@ -14,12 +15,14 @@ public:
 	void print();
 	int getPopSize() const;
 	Agent* getAgent(int index);
-	std::vector<Agent*> computeNeighbors(const Agent& agent);//, const float& range, const float& angle);
+	Agent* operator[](int index) { return m_agents.at(index); };
+	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighbors(const Agent& agent);//, const float& range, const float& angle);
 	//void addAgent();
 	//void addAgent(float xpos, float ypos);
 
 	void addAgent(Agent *a);
-	//void destroyAgent(Vec2 position);
+	void destroyAgent(Vec2 position);
+	void destroyLastAgent();
 	//void moveAgents();
 
 public:

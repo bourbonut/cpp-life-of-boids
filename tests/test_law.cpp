@@ -26,9 +26,11 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
+            std::vector<Agent*> bVec = std::get<0>(allNeighbors);
+            std::vector<Agent*> eVec = std::get<1>(allNeighbors);
             AlignmentLaw law;
-            Vec2 vecAlignment = law.compute(*bird, aVec);
+            Vec2 vecAlignment = law.compute(*bird, bVec);
             alignments.push_back(vecAlignment);
             //std::cout << "Bird " << (*bird)._id << " | Alignment Law : " << vecAlignment << '\n';
         }
