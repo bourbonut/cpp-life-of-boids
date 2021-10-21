@@ -8,84 +8,101 @@
 #include "../src/lib/myMath/Vec2.hpp"
 
 namespace {
-	TEST(AlignmentLaw,BasicsTests) {
+    TEST(AlignmentLaw, BasicsTests) {
+        int size = 2;
+        Flock* flockPtr = nullptr;
+        std::vector<Agent*> mainFlock;
 
-	}
+        mainFlock.reserve(size);
+        mainFlock.push_back(new Bird{ Vec2(0.f, 0.f), Vec2(0.f, 1.f) });
+        mainFlock.push_back(new Bird{ Vec2(0.5f, 0.5f), Vec2(1.f, -1.f) });
+        mainFlock.push_back(new Bird{ Vec2(-0.5f, 0.5f), Vec2(0.f, -1.f) });
+
+
+        Flock flock{ mainFlock };
+        flockPtr = &flock;
+
+        std::vector<Vec2> alignments;
+
+        for (auto& bird : *flockPtr) {
+
+            std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+            AlignmentLaw law;
+            Vec2 vecAlignment = law.compute(*bird, aVec);
+            alignments.push_back(vecAlignment);
+            //std::cout << "Bird " << (*bird)._id << " | Alignment Law : " << vecAlignment << '\n';
+        }
+
+        EXPECT_EQ(alignments[0].x, 0.5f);
+        EXPECT_EQ(alignments[0].y, -1.f);
+        EXPECT_EQ(alignments[1].x, 0.f);
+        EXPECT_EQ(alignments[1].y, 0.f);
+        EXPECT_EQ(alignments[2].x, 1.f);
+        EXPECT_EQ(alignments[2].y, -1.f);
+    }
 
     TEST(CohesionLaw, BasicTests) {
-        Flock* TEST_pFLOCK = nullptr;
-        std::vector<Agent*> testFlock;
+        int size = 2;
+        Flock* flockPtr = nullptr;
+        std::vector<Agent*> mainFlock;
 
-        int size = 400;
+        mainFlock.reserve(size);
+        mainFlock.push_back(new Bird{ Vec2(0.f, 0.f), Vec2(0.f, 1.f) });
+        mainFlock.push_back(new Bird{ Vec2(30.0f, 30.0f), Vec2(1.f, -1.f) });
+        mainFlock.push_back(new Bird{ Vec2(-30.0f, 30.0f), Vec2(0.f, -1.f) });
 
-        testFlock.reserve(size);
-        for (int i = 0; i < size; ++i) {
-            testFlock.push_back(new Bird{});
+        Flock flock{ mainFlock };
+        flockPtr = &flock;
+
+        std::vector<Vec2> cohesions;
+
+        for (auto& bird : *flockPtr) {
+
+            std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+            CohesionLaw cLaw;
+            Vec2 vecCohesion = cLaw.compute(*bird, aVec);
+            cohesions.push_back(vecCohesion);
+            //std::cout << "Bird " << (*bird)._id << " | Cohesion Law : " << vecCohesion << '\n';
         }
-        Flock flock{ testFlock };
 
-        TEST_pFLOCK = &flock;
-
-        Vec2 v1 = Vec2(4., 3.);
-        Vec2 v2 = Vec2(0., 1.);
-        Agent& b1 = Bird(v1, v2);
-        Vec2 v3 = Vec2(5., 3.);
-        Vec2 v4 = Vec2(0., 1.);
-        Agent& b2 = Bird(v3, v4);
-        Vec2 v5 = Vec2(36., 3.);
-        Vec2 v6 = Vec2(6., 2.);
-        Bird b3 = Bird(v5, v6);
-        std::vector<Agent*> n{};
-        n.push_back(new Bird(v5, v6));
-        std::cout << distance(b1.getPosition(),b3.getPosition()) << '\n';
-        CohesionLaw m_cohesionLaw;
-        Vec2 vecCohesion = m_cohesionLaw.compute(b1, n);
-        EXPECT_NEAR(vecCohesion.x, 100, 3);
+        EXPECT_EQ(cohesions[0].x, 0.f);
+        EXPECT_NEAR(cohesions[0].y, 250.f, 5);
+        EXPECT_NEAR(cohesions[1].x, -125.f, 5);
+        EXPECT_NEAR(cohesions[1].y, -125.f, 5);
+        EXPECT_NEAR(cohesions[2].x, 0.f, 5); //0 because out of range from [1] (60 > 50) and angle from [0] (135,001 > 135 or 135 !< 270/2)
+        EXPECT_NEAR(cohesions[2].y, 0.f, 5);
     }
 
     TEST(SeparationLaw, BasicTests) {
-        Flock* TEST_pFLOCK = nullptr;
-        std::vector<Agent*> testFlock;
+        int size = 2;
+        Flock* flockPtr = nullptr;
+        std::vector<Agent*> mainFlock;
 
-        int size = 400;
+        mainFlock.reserve(size);
+        mainFlock.push_back(new Bird{ Vec2(0.f, 0.f), Vec2(0.f, 1.f) });
+        mainFlock.push_back(new Bird{ Vec2(0.5f, 0.5f), Vec2(1.f, -1.f) });
+        mainFlock.push_back(new Bird{ Vec2(-0.5f, 0.5f), Vec2(0.f, -1.f) });
 
-        testFlock.reserve(size);
-        for (int i = 0; i < size; ++i) {
-            testFlock.push_back(new Bird{});
+
+        Flock flock{ mainFlock };
+        flockPtr = &flock;
+
+        std::vector<Vec2> separations;
+
+        for (auto& bird : *flockPtr) {
+
+            std::vector<Agent*> aVec = (*flockPtr).computeNeighbors(*bird);
+            SeparationLaw law;
+            Vec2 vecSeparation = law.compute(*bird, aVec);
+            separations.push_back(vecSeparation);
+            //std::cout << "Bird " << (*bird)._id << " | Separation Law : " << vecSeparation << '\n';
         }
-        Flock flock{ testFlock };
 
-        TEST_pFLOCK = &flock;
-
-        Vec2 v1 = Vec2(4., 3.);
-        Vec2 v2 = Vec2(0., 1.);
-        Agent &b1 = Bird(v1, v2);
-        Vec2 v3 = Vec2(5., 3.);
-        Vec2 v4 = Vec2(0., 1.);
-        Agent &b2 = Bird(v3, v4);
-        //Vec2 v5 = Vec2(1., 3.);
-        //Vec2 v6 = Vec2(6., 2.);
-        //Bird b3 = Bird(v5, v6);
-        //Vec2 v7 = Vec2(4., 2.);
-        //Vec2 v8 = Vec2(6., 2.);
-        //Bird b4 = Bird(v7, v8);
-        //Vec2 v9 = Vec2(6., 7.);
-        //Vec2 v10 = Vec2(6., 2.);
-        //Agent &b5 = Bird(v9, v10);
-        //Vec2 v11 = Vec2(0., 3.);
-        //Vec2 v12 = Vec2(6., 2.);
-        //Bird b6 = Bird(v11, v12);
-        std::vector<Agent*> n{}; //= { b2 }; ou { b2, b3 };
-        //n.push_back(b3);
-        //n.emplace_back(b2);
-        n.push_back(new Bird(v3, v4));
-        SeparationLaw m_separationLaw;
-        Vec2 vecSeparation = m_separationLaw.compute(b1, n);
-        EXPECT_NEAR(vecSeparation.x, -1, 0.1);
-        //n.push_back(b2);
-        //EXPECT_NEAR(n.size(), 3, 3);
-        //n.push_back(b4);
-        //n.push_back(b5);
-        //n.push_back(b6);
+        EXPECT_EQ(separations[0].x, 0.f);
+        EXPECT_NEAR(separations[0].y, -2.f, 0.1f);
+        EXPECT_NEAR(separations[1].x, 2.f, 0.1f);
+        EXPECT_NEAR(separations[1].y, 1.f, 0.1f);
+        EXPECT_NEAR(separations[2].x, -1.f, 0.1f);  //-1.f and not -2.f because a neighbor is not a viable neighbor
+        EXPECT_NEAR(separations[2].y, 0.f, 0.1f);   //0.f and not -1.f because a neighbor is not a viable neighbor
     }
 }
