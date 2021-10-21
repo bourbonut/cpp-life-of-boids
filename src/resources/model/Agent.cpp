@@ -25,6 +25,9 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	case Color::Grey:
 		m_GLColor = { 0.62f, 0.62f, 0.62f };
 		break;
+	case Color::Predator:
+		m_GLColor = { 0.63f, 0.53f, 0.4980f };
+		break;
 	default:
 		m_GLColor = { 0.97f, 0.97f, 0.97f };
 		break;

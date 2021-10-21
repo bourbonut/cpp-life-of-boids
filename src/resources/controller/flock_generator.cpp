@@ -131,7 +131,7 @@ Flock generate_duck_flock(int size)
 	float cohesion_relax = 0.00008f;
 	float sep_relax = 0.5f;
 	float align_relax = 0.9f;
-	return create_bird_flock(size, Color::White, 6, 70, 360, sep_relax, cohesion_relax, align_relax, 5.f);
+	return create_bird_flock(size, Color::Green, 6, 70, 360, sep_relax, cohesion_relax, align_relax, 5.f);
 }
 
 //TODO : Change color to black or grey
@@ -139,7 +139,7 @@ Flock generate_ant_flock(int size) {
 	float cohesion_relax = 0.0000008f;
 	float sep_relax = 2.5f;
 	float align_relax = -1.f;
-	return create_bird_flock(size, Color::White, 4, 20, 360, sep_relax, cohesion_relax, align_relax, 10.f);
+	return create_bird_flock(size, Color::Grey, 4, 20, 360, sep_relax, cohesion_relax, align_relax, 10.f);
 }
 
 Flock generate_fly_flock(int size) {
@@ -151,7 +151,7 @@ Flock generate_fly_flock(int size) {
 
 Color random_color() {
 
-	int randomNb = random_float(0, 7);
+	int randomNb = random_float(0, 6);
 	Color result;
 
 	switch (randomNb)
@@ -161,30 +161,26 @@ Color random_color() {
 		break;
 
 	case 1:
-		result = Color::Red;
-		break;
-
-	case 2:
 		result =  Color::Green;
 		break;
 
-	case 3:
+	case 2:
 	    result = Color::White;
 		break;
 
-	case 4:
+	case 3:
 	    result = Color::Default;
 		break;
 
-	case 5:
+	case 4:
 		result = Color::Purple;
 		break;
 
-	case 6:
+	case 5:
 		result = Color::Yellow;
 		break;
 
-	case 7:
+	case 6:
 		result = Color::Grey;
 		break;
 
