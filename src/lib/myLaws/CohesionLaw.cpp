@@ -1,5 +1,4 @@
 #include "CohesionLaw.hpp"
-#include "CohesionLaw.hpp"
 #include "../myMath/Vec2.hpp"
 #include "../myMath/utils.hpp"
 #include <vector>
