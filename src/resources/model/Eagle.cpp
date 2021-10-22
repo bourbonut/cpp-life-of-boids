@@ -32,8 +32,8 @@ void Eagle::computeLaws(const std::vector<Agent*>& neighborsBird, const std::vec
 	}
 
 	m_nextVelocity = (m_velocity + vec_displacement);
-	if (m_nextVelocity.norm() > 10) {
-		m_nextVelocity = m_nextVelocity.normalize() * 10;
+	if (m_nextVelocity.norm() > m_maxSpeed) {
+		m_nextVelocity = m_nextVelocity.normalize() * m_maxSpeed;
 	}
 }
 

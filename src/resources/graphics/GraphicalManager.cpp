@@ -24,8 +24,10 @@
 
 using namespace std::chrono;
 bool run_boids = true;
+bool manual_hunt = false;
+//bool 
 //HuntingLaw hunt(MAIN_pFLOCK);
-Eagle* e;// = new Eagle{ Vec2{(float)100, (float)100}, Vec2{0.f,0.f},10, 50,100, 50.f, Color::Red , hunt };
+Agent* e;// = new Eagle{ Vec2{(float)100, (float)100}, Vec2{0.f,0.f},10, 50,100, 50.f, Color::Red , hunt };
 
 
 //GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor, Flock* myFlock) {
@@ -220,7 +222,7 @@ bool GraphicalManager::mainLoop() {
 					vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, (*bird).getGLColor() });
 				}
 
-				if (next_size < initial_size) break;
+				if (next_size < initial_size) break; //To avoid trying to write the vector if we destroyed some agents
 			}
 
 
@@ -317,29 +319,42 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 		//(*MAIN_pFLOCK).addAgent();
 	}
 	if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-		std::puts("Touche DOWN pressee : Diminuer le nombre d'oiseaux");
-		run_boids = !run_boids;
-		//(*MAIN_pFLOCK).destroyAgent();
-	}
-	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
-		//change l'affichage de triangles à dots
+		//Change l'affichage de triangles en points
 		prettyAgents = !prettyAgents;
 	}
+
+
+	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+		//Met l'affichage en pause
+		run_boids = !run_boids;
+	}
+
+	//Deplacement du predator principal
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-		e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y + 50 });
-		//(*MAIN_pFLOCK).destroyAgent();
+		e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y + 30 });
 	}
 	if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-		e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y - 50 });
+		e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y - 30 });
 		//(*MAIN_pFLOCK).destroyAgent();
 	}
 	if (key == GLFW_KEY_A && action == GLFW_PRESS) {
-		e->setVelocity(Vec2{ e->getVelocity().x - 50, e->getVelocity().y});
+		e->setVelocity(Vec2{ e->getVelocity().x - 30, e->getVelocity().y});
 		//(*MAIN_pFLOCK).destroyAgent();
 	}
 	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-		e->setVelocity(Vec2{ e->getVelocity().x + 50, e->getVelocity().y });
+		e->setVelocity(Vec2{ e->getVelocity().x + 30, e->getVelocity().y });
 		//(*MAIN_pFLOCK).destroyAgent();
+	}
+
+
+	//Option pour générer des manual pedators ou non
+	if (key == GLFW_KEY_LEFT_CONTROL && action == GLFW_PRESS) {
+		//Met l'affichage en pause
+		manual_hunt = !manual_hunt;
+	}
+	if (key == GLFW_KEY_LEFT_CONTROL && action == GLFW_RELEASE) {
+		//Met l'affichage en pause
+		manual_hunt = !manual_hunt;
 	}
 }
 
@@ -351,9 +366,21 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 			double xpos, ypos;
 			//getting cursor position
 			glfwGetCursorPos(window, &xpos, &ypos);
-			//(*MAIN_pFLOCK).addAgent(new Bird{ Vec2{(float)xpos, (float)ypos}, Vec2{2.f,2.f},6, 270,50, 1.f, Color::Default });
-			HuntingLaw hunt(MAIN_pFLOCK);
-			(*MAIN_pFLOCK).addAgent(e = new Eagle{ Vec2{(float)xpos, (float)ypos}, Vec2{-10.f,0.f},10, 50,100, 50.f, Color::Red , hunt });
+			//Adding a new eagle and setting it to e so we can control it with ZQSD keys
+			
+			HuntingLaw hunt(MAIN_pFLOCK, manual_hunt);			
+			Color eagleColor = manual_hunt ? Color::LightRed : Color::Red;
+
+			(*MAIN_pFLOCK).addAgent(e = new Eagle{ Vec2{(float)xpos, (float)ypos}, Vec2{-10.f,0.f},10, 50,100, 15.f, eagleColor , hunt });
+		}
+	}
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+	{
+		if (MAIN_pFLOCK != nullptr) {
+			double xpos, ypos;
+			//adding a smart bird which goes fast and has a lot of separation, it'll most likely dodge the eagles
+			glfwGetCursorPos(window, &xpos, &ypos);
+			(*MAIN_pFLOCK).addAgent(new Bird{ Vec2{(float)xpos, (float)ypos}, Vec2{2.f,2.f},6, 270,150, 20.f, Color::Predator, CohesionLaw{0.001}, AlignmentLaw{2}, SeparationLaw{200} });
 		}
 	}
 }
