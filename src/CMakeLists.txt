@@ -20,6 +20,9 @@ add_subdirectory("resources/graphics/shaders")
 add_executable(graphicsTest graphics_main.cpp)
 target_link_libraries(graphicsTest PUBLIC libGLX myMath shaders)
 
+add_executable(main_profiling main_profiling.cpp)
+target_link_libraries(main_profiling PUBLIC libGLX myMath shaders myBirds myLaws opencv::opencv flockGenerator)
+
 add_executable(life-of-boids main.cpp)
 target_link_libraries(life-of-boids PUBLIC libGLX myMath shaders myBirds myLaws opencv::opencv flockGenerator)
 
