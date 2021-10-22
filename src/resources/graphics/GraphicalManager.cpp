@@ -177,6 +177,11 @@ bool GraphicalManager::mainLoop() {
 
 
         {  // line
+
+            //std::vector<Agent*>
+
+
+
             for (auto& bird : *MAIN_pFLOCK) {
 
                 std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = 
@@ -317,7 +322,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             //getting cursor position
             glfwGetCursorPos(window, &xpos, &ypos);
             //(*MAIN_pFLOCK).addAgent(new Bird{ Vec2{(float)xpos, (float)ypos}, Vec2{2.f,2.f},6, 270,50, 1.f, Color::Default });
-            (*MAIN_pFLOCK).addAgent(new Eagle{ Vec2{(float)xpos, (float)ypos}, Vec2{10.f,10.f},10, 50,100, 50.f, Color::Red });
+            (*MAIN_pFLOCK).addAgent(new Eagle{ Vec2{(float)xpos, (float)ypos}, Vec2{-10.f,0.f},10, 50,100, 50.f, Color::Red });
         }
     }
 }
