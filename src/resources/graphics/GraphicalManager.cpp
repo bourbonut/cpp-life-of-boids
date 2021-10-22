@@ -196,7 +196,6 @@ bool GraphicalManager::mainLoop() {
 				std::vector<Agent*> bVec = std::get<0>(allNeighbors);
 				std::vector<Agent*> eVec = std::get<1>(allNeighbors);
 
-
 				if (run_boids) {
 					(*bird).computeLaws(bVec, eVec);
 					(*bird).prepareMove();
@@ -205,7 +204,7 @@ bool GraphicalManager::mainLoop() {
 
 				}
 
-				next_size = (*MAIN_pFLOCK).getPopSize();
+
 
 
 
@@ -222,7 +221,10 @@ bool GraphicalManager::mainLoop() {
 					vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, (*bird).getGLColor() });
 				}
 
-				if (next_size < initial_size) break; //To avoid trying to write the vector if we destroyed some agents
+				next_size = (*MAIN_pFLOCK).getPopSize();
+
+
+				if (next_size != initial_size) break;  //To avoid trying to write the vector if we destroyed some agents
 			}
 
 
@@ -309,11 +311,7 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 		// Sets the window into "closing mode"
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 	}
-	//if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-	//	std::puts("Export current display");
-	//	char export_filename[] = "export.png";
-	//	saveImage(export_filename, window);
-	//}
+
 	if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
 		std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
 		//(*MAIN_pFLOCK).addAgent();

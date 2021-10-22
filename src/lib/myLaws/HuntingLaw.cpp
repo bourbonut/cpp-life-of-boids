@@ -4,6 +4,7 @@
 #include <vector>
 #include "../../resources/model/Agent.hpp"
 #include "../../resources/model/Flock.hpp"
+#include "../../resources/model/Eagle.hpp"
 
 HuntingLaw::HuntingLaw() : Law(20.f), m_manualHunting(false){};
 
@@ -26,8 +27,17 @@ Vec2 HuntingLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbo
 		if (weight < currentAgent.getBodySize()*1.5) {
 			(*m_pFlock).destroyAgent((*neighbors[0]).getPosition());
 
-			if(currentAgent.getBodySize() < 50)
-				currentAgent.setSize((currentAgent.getBodySize()+1));
+			if (currentAgent.getBodySize() < 26)
+				currentAgent.setSize((currentAgent.getBodySize() + 5));
+			else {
+				currentAgent.setSize(10);
+				currentAgent.setVelocity(Vec2{ 5,0 });
+				Vec2 pos = currentAgent.getPosition();
+				Vec2 vel = Vec2{-5,-5};
+
+				(*m_pFlock).addAgent(new Eagle{ pos, vel,10,50,100, 15.f, Color::Red, HuntingLaw{m_pFlock, false}});
+				(*m_pFlock).addAgent(new Eagle{ pos, Vec2{ 5,5 },10,50,100, 15.f, Color::Red, HuntingLaw{m_pFlock, false}});
+			}
 		}
 
 		//If we are not in manual mode, we set the speed to be going to the agent's next position
