@@ -11,12 +11,12 @@ Vec2::Vec2() {
     this->y = 0.;
 }
 
-Vec2::Vec2(float x, float y) {
+Vec2::Vec2(const float x, const float y) {
     this->x = x;
     this->y = y;
 }
 
-Vec2::Vec2(float a) {
+Vec2::Vec2(const float a) {
     this->x = a;
     this->y = a;
 }
@@ -28,7 +28,7 @@ Vec2& Vec2::operator=(const Vec2& other)
     return *this;
 }
 
-Vec2 Vec2::operator+(const Vec2& other)
+Vec2 Vec2::operator+(const Vec2& other) const
 {
     return Vec2(this->x + other.x, this->y + other.y);
 }
@@ -38,12 +38,12 @@ Vec2 Vec2::operator-(const Vec2& other) const
     return Vec2(this->x - other.x, this->y - other.y);
 }
 
-Vec2 Vec2::operator*(const Vec2& other)
+Vec2 Vec2::operator*(const Vec2& other) const 
 {
     return Vec2(this->x * other.x, this->y * other.y);
 }
 
-Vec2 Vec2::operator*(float other)
+Vec2 Vec2::operator*(const float& other)
 {
     return Vec2(this->x * other, this->y * other);
 }
@@ -69,19 +69,19 @@ Vec2& Vec2::operator*=(const Vec2& other)
     return *this;
 }
 
-Vec2& Vec2::operator*=(float other)
+Vec2& Vec2::operator*=(float &other)
 {
     this->x *= other;
     this->y *= other;
     return *this;
 }
 
-Vec2 Vec2::operator/(const Vec2& other)
+Vec2 Vec2::operator/(const Vec2& other) const 
 {
     return Vec2(this->x / other.x, this->y / other.y);
 }
 
-Vec2 Vec2::operator/(float other)
+Vec2 Vec2::operator/(const float &other)
 {
     return Vec2(this->x / other, this->y / other);
 }
@@ -93,7 +93,7 @@ Vec2& Vec2::operator/=(const Vec2& other)
     return *this;
 }
 
-Vec2& Vec2::operator/=(float other)
+Vec2& Vec2::operator/=(float &other)
 {
     this->x /= other;
     this->y /= other;
@@ -119,17 +119,18 @@ float Vec2::dot(const Vec2& other) {
     return this->x * other.x + this->y * other.y;
 }
 
-float Vec2::norm() {
+float Vec2::norm() const {
     return std::sqrt(this->x * this->x + this->y * this->y);
 }
 
-Vec2 Vec2::normalize() {
+Vec2& Vec2::normalize() {
     float norm = this->norm();
-    Vec2 normalized = Vec2(this->x / (norm + EPS_), this->y / (norm + EPS_));
-    if (std::isnan(normalized.x) | std::isnan(normalized.y)) {
+    this->x /= (norm + EPS_);
+    this->y /= (norm + EPS_);
+    if (std::isnan(this->x) | std::isnan(this->y)) {
         throw std::domain_error("Undefined coordinate");
     }
-    return normalized;
+    return *this;
 }
 
 float Vec2::angle() {
