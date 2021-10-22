@@ -115,7 +115,7 @@ std::ostream& operator<<(std::ostream& os, const Vec2& obj)
     return os << obj.string();
 }
 
-float Vec2::dot(const Vec2& other) {
+float Vec2::dot(const Vec2& other) const {
     return this->x * other.x + this->y * other.y;
 }
 
@@ -125,20 +125,22 @@ float Vec2::norm() const {
 
 Vec2& Vec2::normalize() {
     float norm = this->norm();
-    this->x /= (norm + EPS_);
-    this->y /= (norm + EPS_);
+    if (norm != 0) {
+        this->x /= norm;
+        this->y /= norm;
+    }
     if (std::isnan(this->x) | std::isnan(this->y)) {
         throw std::domain_error("Undefined coordinate");
     }
     return *this;
 }
 
-float Vec2::angle() {
+float Vec2::angle() const {
     float angle = std::acos(std::min(1., std::max(-1., (double)this->x / this->norm())));
     return (this->y > 0) ? angle : -angle;
 }
 
-float Vec2::angle(Vec2& other) {
+float Vec2::angle(const Vec2& other) const {
     float norm = this->norm() * other.norm();
     if (norm == 0.) {
         return 0.;
@@ -148,7 +150,7 @@ float Vec2::angle(Vec2& other) {
     }
 }
 
-Vec2 Vec2::rotate(float angle) {
+Vec2 Vec2::rotate(const float angle) {
     return Vec2(std::cos(angle) * this->x - std::sin(angle) * this->y, std::sin(angle) * this->x + std::cos(angle) * this->y);
 }
 
