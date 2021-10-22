@@ -106,6 +106,19 @@ void Agent::setPosition(const Vec2& newPos) {
 	m_position = newPos;
 };
 
+void Agent::setVelocity(const Vec2& newVel) {
+	m_velocity = newVel;
+}
+
+void Agent::setSize(int size) {
+	m_bodySize = size;
+}
+
+void Agent::setNextVelocity(const Vec2& newVel)
+{
+	m_nextVelocity = newVel;
+}
+
 void Agent::setNextPosition(const Vec2& newPos) {
 	m_nextPosition = newPos;
 }

@@ -36,7 +36,7 @@ void Bird::computeLaws(const std::vector<Agent*>& neighborsBird,
 	
 
 	//std::cout << "Bird id " << this->_id << " | nb neigh : " << neighbors.size() << " | alignment vec " << vecAlignment << " | cohesion vec " << vecCohesion << " | Separation vec " << vecSeparation << '\n';
-	m_nextVelocity = (m_velocity * 0.99 + vec_displacement) ; 
+	m_nextVelocity = (m_velocity + vec_displacement) ; 
 	if (m_nextVelocity.norm() > m_maxSpeed) {
 		m_nextVelocity = m_nextVelocity.normalize() * m_maxSpeed;
 	}
