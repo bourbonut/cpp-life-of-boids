@@ -8,7 +8,7 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	switch (m_color)
 	{
 	case Color::Red:
-		m_GLColor = { 0.91f, 0.12f, 0.39f };
+		m_GLColor = { 0.82745f, 0.184313f, 0.184313f };
 		break;
 	case Color::Green:
 		m_GLColor = { 0.39f, 0.99f, 0.85f };
@@ -27,6 +27,9 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 		break;
 	case Color::Predator:
 		m_GLColor = { 0.63f, 0.53f, 0.4980f };
+		break;
+	case Color::LightRed:
+		m_GLColor = {0.8980f, 0.4509f, 0.4509f};
 		break;
 	default:
 		m_GLColor = { 0.97f, 0.97f, 0.97f };
@@ -105,6 +108,19 @@ void Agent::prepareMove() {
 void Agent::setPosition(const Vec2& newPos) {
 	m_position = newPos;
 };
+
+void Agent::setVelocity(const Vec2& newVel) {
+	m_velocity = newVel;
+}
+
+void Agent::setSize(int size) {
+	m_bodySize = size;
+}
+
+void Agent::setNextVelocity(const Vec2& newVel)
+{
+	m_nextVelocity = newVel;
+}
 
 void Agent::setNextPosition(const Vec2& newPos) {
 	m_nextPosition = newPos;
