@@ -123,22 +123,13 @@ float Vec2::norm() const {
     return std::sqrt(this->x * this->x + this->y * this->y);
 }
 
-Vec2& Vec2::normalize() {
+Vec2 Vec2::normalize() {
     float norm = this->norm();
     Vec2 normalized_vec = Vec2(0, 0);
     if (norm != 0) {
-        normalized_vec = *this / norm;
+        normalized_vec = Vec2(this->x / norm, this->y / norm);
     }
     return normalized_vec;
-}
-
-Vec2 Vec2::normalized() {
-    float norm = this->norm();
-    if (norm != 0) {
-        this->x /= norm;
-        this->y /= norm;
-    }
-    return *this;
 }
 
 float Vec2::angle() const {
