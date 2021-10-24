@@ -125,12 +125,18 @@ float Vec2::norm() const {
 
 Vec2& Vec2::normalize() {
     float norm = this->norm();
+    Vec2 normalized_vec = Vec2(0, 0);
+    if (norm != 0) {
+        normalized_vec = *this / norm;
+    }
+    return normalized_vec;
+}
+
+Vec2 Vec2::normalized() {
+    float norm = this->norm();
     if (norm != 0) {
         this->x /= norm;
         this->y /= norm;
-    }
-    if (std::isnan(this->x) | std::isnan(this->y)) {
-        throw std::domain_error("Undefined coordinate");
     }
     return *this;
 }

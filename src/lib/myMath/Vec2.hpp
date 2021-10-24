@@ -36,7 +36,8 @@ public:
 
     float dot(const Vec2& other) const; // return the scalar product
     float norm() const; // return the norm of the vector
-    Vec2& normalize(); // return the current vector normalized
+    Vec2& normalize();  // Normalizes the vector in-place
+    Vec2 normalized(); // return the current vector normalized
     float angle() const; // return the angle between the current vector and `Vec2(1, 0)`
     float angle(const Vec2& other) const; // return the angle between the current vector and an other vector
     Vec2 rotate(const float angle); // rotate the vector anti-clockwise
