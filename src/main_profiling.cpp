@@ -42,7 +42,6 @@ int main() {
             std::vector<Agent*> bVec = std::get<0>(allNeighbors);
             std::vector<Agent*> eVec = std::get<1>(allNeighbors);
 
-
             (*bird).computeLaws(bVec, eVec);
             (*bird).prepareMove();
             (*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), 800, 800));

@@ -12,8 +12,8 @@ int main() {
     std::cout << "x: " << a.x << std::endl; // return the x value
     std::cout << "y: " << a.y << std::endl; // return the y value
     std::cout << "norm: " << a.norm() << std::endl; // return the norm of the vector
-    std::cout << a.normalize() << std::endl; // display normalized `a` vector
-    std::cout << "norm of normalized vector: " << a.normalize().norm() << std::endl; // return `1` because `a.normalized()` has a norm equal to 1
+    std::cout << a.normalized() << std::endl; // display normalized `a` vector
+    std::cout << "norm of normalized vector: " << a.normalized().norm() << std::endl; // return `1` because `a.normalized()` has a norm equal to 1
     std::cout << "angle: " << a.angle() << std::endl; //return the angle between `a` and `Vec2(1, 0)`
     std::cout << "angle: " << a.angle(b) << std::endl; //return the angle between `a` and `b`
     std::cout << "dot: " << a.dot(b) << std::endl; //return the scalar product

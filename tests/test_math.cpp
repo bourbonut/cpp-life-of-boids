@@ -19,8 +19,8 @@ namespace {
 		Vec2 a = Vec2(4., 3.);
 		Vec2 b = Vec2(0., 1.);
 		ASSERT_NEAR(a.norm(), 5., 1e-3) << "Norm";
-		ASSERT_NEAR(a.normalize().x, 0.8, 0.0001) << "Normalized x";
-		ASSERT_NEAR(a.normalize().y, 0.6, 0.0001) << "Normalized x";
+		ASSERT_NEAR(a.normalized().x, 0.8, 0.0001) << "Normalized x";
+		ASSERT_NEAR(a.normalized().y, 0.6, 0.0001) << "Normalized x";
 		ASSERT_NEAR(a.angle(), 0.6435, 1e-3) << "angle";
 		ASSERT_NEAR(a.angle(b), 0.9272, 1e-3) << "angle with other vector";
 		ASSERT_NEAR(a.dot(b), 3., 1e-3) << "dot";
