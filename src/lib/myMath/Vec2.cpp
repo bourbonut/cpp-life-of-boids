@@ -6,27 +6,32 @@
 
 float EPS_ = 0.00001;
 
-Vec2::Vec2() {
-    this->x = 0.;
-    this->y = 0.;
-}
+Vec2::Vec2() : x{ 0 }, y{ 0 } {}
 
-Vec2::Vec2(const float x, const float y) {
-    this->x = x;
-    this->y = y;
-}
+Vec2::Vec2(const float x, const float y) : x{ x }, y{ y } {}
 
-Vec2::Vec2(const float a) {
-    this->x = a;
-    this->y = a;
-}
+Vec2::Vec2(const float a) : x{ a }, y{ a } {}
 
-Vec2& Vec2::operator=(const Vec2& other)
+// Constructeur par copie
+Vec2::Vec2(const Vec2& other) noexcept : x{ other.x }, y{ other.y } {}
+
+Vec2& Vec2::operator=(const Vec2& other) // Opérateur par copie
 {
     this->x = other.x;
     this->y = other.y;
     return *this;
 }
+
+// Constructeur par déplacement
+Vec2::Vec2(Vec2&& other) noexcept : x{ std::move(other.x) }, y{ std::move(other.y) } {}
+
+Vec2& Vec2::operator=(Vec2&& other) noexcept // Opérateur par déplacement
+{
+    this->x = std::move(other.x);
+    this->y = std::move(other.y);
+    return *this;
+}
+
 
 Vec2 Vec2::operator+(const Vec2& other) const
 {

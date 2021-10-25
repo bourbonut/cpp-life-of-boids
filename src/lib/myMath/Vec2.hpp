@@ -10,6 +10,8 @@ public:
     Vec2();
     Vec2(const float, const float);
     Vec2(const float);
+    Vec2(const Vec2& other) noexcept;
+    Vec2(Vec2&& other) noexcept;
     ~Vec2() {};
 
 public:
@@ -32,6 +34,7 @@ public:
     Vec2& operator/=(float& other); // scale the vector
 
     Vec2& operator=(const Vec2& other); // assign vector
+    Vec2& operator=(Vec2&& other) noexcept;
     bool operator==(const Vec2& other) const; // compare current vector with vector
 
     float dot(const Vec2& other) const; // return the scalar product
