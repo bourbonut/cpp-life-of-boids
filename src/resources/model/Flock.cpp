@@ -79,11 +79,11 @@ std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(
 
 	//Like this one bird is going to be its own potential neighbor
 	for (Agent* potentialNeighbor : m_agents) {
-		if (!(degrees((agent.getPosition() - (*potentialNeighbor).getPosition()).angle()) > agent.getViewAngle() / 2) && !(agent._id == (*potentialNeighbor)._id)) //!(potentialNeighbor.getPosition() == bird.getPosition()) && 
+		if (!(degrees((agent.getPosition() - (*potentialNeighbor).getPosition()).angle()) > agent.getViewAngle() / 2) && !(agent._id == (*potentialNeighbor)._id))
 		{
 			double distWithPotNeighb = distance(agent.getPosition(), (*potentialNeighbor).getPosition());
 			double a = abs(distWithPotNeighb);
-			if (abs(distWithPotNeighb) <= abs(agent.getRange())) { //only range because was scared of angle
+			if (abs(distWithPotNeighb) <= abs(agent.getRange())) { 
 				if (dynamic_cast<Bird*> (potentialNeighbor) != nullptr) {
 					neighbors.push_back(potentialNeighbor);
 				}
