@@ -60,6 +60,6 @@ int main() {
     std::cout << isAntiClockwise(X, a) << "\n";
     std::cout << isAntiClockwise(b, X) << "\n";
     std::cout << isAntiClockwise(X, a) << "\n";
-
+    
     return 0;
 }

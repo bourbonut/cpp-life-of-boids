@@ -23,7 +23,7 @@ std::vector<Agent*> mainFlock;
 
 int main() {
 
-    int size = 600;
+    int size = 500;
     mainFlock.reserve(size);
 
 

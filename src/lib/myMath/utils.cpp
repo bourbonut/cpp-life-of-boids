@@ -9,11 +9,11 @@
 #include <random>
 #include "utils.hpp"
 
-float distance(Vec2 a, Vec2 b) {
+float distance(const Vec2 a, const Vec2 b) {
     return (a - b).norm();
 }
 
-Vec2 barycenter(std::vector<Vec2> vecs) {
+Vec2 barycenter(const std::vector<Vec2> vecs) {
     int size = vecs.size();
     float xg = 0;
     float yg = 0;
@@ -24,15 +24,15 @@ Vec2 barycenter(std::vector<Vec2> vecs) {
     return Vec2(xg / size, yg / size);
 }
 
-float radians(float angle) {
-    return angle * 3.14 / 180; //CHANGED M_PI because it causes error with gcc compiler, will try to add it again later
+float radians(const float angle) {
+    return angle * 3.141592f / 180; //CHANGED M_PI because it causes error with gcc compiler, will try to add it again later
 }
 
-float degrees(float angle) {
-    return angle * 180/ 3.14;
+float degrees(const float angle) {
+    return angle * 180 / 3.141592f;
 }
 
-bool isAntiClockwise(Vec2 a, Vec2 b){
+bool isAntiClockwise(const Vec2 a, const Vec2 b){
   return (a.x * b.y - a.y * b.x >=0);
 }
 
@@ -44,7 +44,7 @@ Vec2 randomVec2Generation(const int& infBoundary, const int& supBoundary)
     return Vec2(dis(gen), dis(gen));
 }
 
-float random_float(int inf, int sup)
+float random_float(const int &inf, const int &sup)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
