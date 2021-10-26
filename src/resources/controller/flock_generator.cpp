@@ -195,9 +195,10 @@ Color random_color() {
 }
 
 //Sert a convertir une chaine de caractere en entier pour le comparer dans un switch case
+//On va assigner une valeur à chaque caractere et créer un int unique pour chaque chaine de caractere
 constexpr unsigned int str2int(const char* str, int h = 0)
 {
-	return !str[h] ? 5381 : (str2int(str, h + 1) * 33) ^ str[h];
+	return !str[h] ? 0/*5381*/ : (str2int(str, h + 1) /** 33*/) ^ str[h];
 }
 
 Color str_to_color(char* color) {
@@ -253,7 +254,8 @@ Flock generate_flock_with_args(int argc, char* argv[])
 	switch (argc)
 	{
 	case 1://no arguments
-		return generate_ant_flock(400);
+		std::cout << "Generating a flock of 400 parrots, to change the flock's type, use arguments ./life-of-boids.exe SIZE TYPE\nAvailable types can be found in the readme file." << std::endl;
+		return generate_parrot_flock(400);
 
 	case 2:
 		//Only flock size, or fully random if arg is 'r'
@@ -280,14 +282,19 @@ Flock generate_flock_with_args(int argc, char* argv[])
 		switch (str2int(bird_type))
 		{
 		case str2int("parrot"):
+		case str2int("Parrot"):
 			return generate_parrot_flock(size);
 		case str2int("ant"):
+		case str2int("Ant"):
 			return generate_ant_flock(size);
 		case str2int("fly"):
+		case str2int("Fly"):
 			return generate_fly_flock(size);
 		case str2int("dove"):
+		case str2int("Dove"):
 			return generate_dove_flock(size);
 		case str2int("duck"):
+		case str2int("Duck"):
 			return generate_duck_flock(size);
 		default:
 			throw std::invalid_argument("Error : second argument is bird type, read the readme file to know what types are available.");
