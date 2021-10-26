@@ -27,6 +27,7 @@ public:
 
 public:
 	Flock(std::vector<Agent*> population);
+	Flock();
 	~Flock() {}; // Destructeur
 
 	auto begin() { return m_agents.begin(); };

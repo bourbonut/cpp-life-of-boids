@@ -28,6 +28,8 @@ int Flock::getPopSize() const {
 	return m_agents.size();
 };
 
+Flock::Flock() {};
+
 
 //void Flock::addAgent() {
 //	Vec2 position = Vec2(500, 500);  
