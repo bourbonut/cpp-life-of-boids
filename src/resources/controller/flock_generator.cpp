@@ -18,7 +18,7 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 	agents.reserve(reserve_size);
 
 	for (int i = 0; i < size; ++i) {
-		agents.push_back(new Bird{agent_position, agent_velocity, agent_size, agent_angle_view, agent_range, maxSpeed, agent_color, coLaw, aligLaw, sepLaw });
+		agents.push_back(new Bird{ agent_position, agent_velocity, agent_size, agent_angle_view, agent_range, maxSpeed, agent_color, coLaw, aligLaw, sepLaw });
 	}
 
 	return Flock{ agents };
@@ -26,7 +26,7 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 
 Flock created_bird_flock_random_colors(int size, int agent_size, int agent_range, int agent_angle_view, float sep_relax, float cohe_relax, float align_relax, float speed_relax) {
 	std::vector<Agent*> agents;
-	
+
 	CohesionLaw coLaw(cohe_relax);
 	SeparationLaw sepLaw(sep_relax);
 	AlignmentLaw aligLaw(align_relax);
@@ -61,8 +61,8 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 Flock generate_fully_random_bird_flock()
 {
 	int flock_size = random_float(20, 500);
-	int range; 
-	int angle_view; 
+	int range;
+	int angle_view;
 	int agent_size;
 	float cohesion_relax;
 	float sep_relax;
@@ -101,9 +101,9 @@ Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf
 	int range = random_float(inf_sup_range.x, inf_sup_range.y);
 	int angle_view = random_float(inf_sup_agent_angle_view.x, inf_sup_agent_angle_view.y);
 	int agent_size = random_float(inf_sup_agent_size.x, inf_sup_agent_size.y);
-	float cohesion_relax = 1/random_float(-10,10);
-	float sep_relax = 1/random_float(-10,10);
-	float align_relax = 1/random_float(-10,10);
+	float cohesion_relax = 1 / random_float(-10, 10);
+	float sep_relax = 1 / random_float(-10, 10);
+	float align_relax = 1 / random_float(-10, 10);
 	float speed_relax = random_float(inf_sup_speed_relax.x, inf_sup_speed_relax.y);
 
 
@@ -115,7 +115,7 @@ Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf
 Flock generate_parrot_flock(int size)
 {
 	float cohesion_relax = 0.0002f;
-	float sep_relax = 0.9f ;
+	float sep_relax = 0.9f;
 	float align_relax = 0.3;
 	return created_bird_flock_random_colors(size, 6, 50, 320, sep_relax, cohesion_relax, align_relax, 5.f);
 }
@@ -162,15 +162,15 @@ Color random_color() {
 		break;
 
 	case 1:
-		result =  Color::Green;
+		result = Color::Green;
 		break;
 
 	case 2:
-	    result = Color::White;
+		result = Color::White;
 		break;
 
 	case 3:
-	    result = Color::Default;
+		result = Color::Default;
 		break;
 
 	case 4:
@@ -192,3 +192,86 @@ Color random_color() {
 
 	return result;
 }
+
+//Sert a convertir une chaine de caractere en entier pour le comparer dans un switch case
+constexpr unsigned int str2int(const char* str, int h = 0)
+{
+	return !str[h] ? 5381 : (str2int(str, h + 1) * 33) ^ str[h];
+}
+
+
+
+Flock generate_flock_with_args(int argc, char* argv[])
+{
+
+	switch (argc)
+	{
+	case 1://no arguments
+		return generate_ant_flock(400);
+
+	case 2:
+		//Only flock size, or fully random if arg is 'r'
+		if (*(argv[1]) == 'r') {
+			return generate_fully_random_bird_flock();
+		}
+		else {
+			int size = atoi(argv[1]);
+
+			if (size > 0)
+				return generate_parrot_flock(size);
+			else
+				throw std::invalid_argument("Error : argument should be an int > 0 (size of the flock).");
+		}
+	case 3:
+	{
+		//only flock size and type of birds
+		int size = atoi(argv[1]);
+		char* bird_type = argv[2];
+
+		if (size <= 0)
+			throw std::invalid_argument("Error : first argument is size and should be an int > 0");
+
+		switch (str2int(bird_type))
+		{
+		case str2int("parrot"):
+			return generate_parrot_flock(size);
+		case str2int("ant"):
+			return generate_ant_flock(size);
+		case str2int("fly"):
+			return generate_fly_flock(size);
+		case str2int("dove"):
+			return generate_dove_flock(size);
+		case str2int("duck"):
+			return generate_duck_flock(size);
+		default:
+			throw std::invalid_argument("Error : second argument is bird type, read the readme file to know what types are available.");
+		}
+
+
+	}
+	case 10:
+		//flock size, color, bird size, range , angle of view + relaxation alignment, separation, cohesion, and max speed
+		int size = atoi(argv[1]);
+		char* pColor = argv[2];
+
+		Color color;
+
+		int bird_size = atoi(argv[3]);
+		int range = atoi(argv[4]);
+		int angle_view = atoi(argv[5]);
+		int r_align = atoi(argv[6]);
+		int r_sep = atoi(argv[7]);
+		int r_cohe = atoi(argv[8]);
+		int max_speed = atoi(argv[9]);
+
+		std::cout << "Generating a flock with\n\t" << size << " " << color << "agents\n\twith range : " << range << " and angle view : " << angle_view << '\n';
+		std::cout << "\t>> Alignment : " << r_align << "\n\t>> Separation : " << r_sep << "\n\t>> Cohesion : " << r_cohe << std::endl;
+		return create_bird_flock(size, color, bird_size, range, angle_view, r_sep, r_cohe, r_align, max_speed);
+
+	default:
+		//error
+		std::cout << ">> Error : Number of argument can only be 0, 1, 2 or 9.\n>> Read the readme file to know what are the arguments.\n";
+		throw std::domain_error("Wrong number of arguments");
+	}
+}
+
