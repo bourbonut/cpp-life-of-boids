@@ -5,6 +5,7 @@
 #include "../../lib/myLaws/CohesionLaw.hpp"
 #include "../../lib/myLaws/SeparationLaw.hpp"
 #include <vector>
+#include <string>
 
 Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_range, int agent_angle_view, Vec2 agent_position, Vec2 agent_velocity, float sep_relax, float cohe_relax, float align_relax, float maxSpeed)
 {
@@ -199,7 +200,52 @@ constexpr unsigned int str2int(const char* str, int h = 0)
 	return !str[h] ? 5381 : (str2int(str, h + 1) * 33) ^ str[h];
 }
 
+Color str_to_color(char* color) {
 
+	Color result;
+
+	switch (str2int(color))
+	{
+	case str2int("Blue"):
+	case str2int("blue"):
+		result = Color::Blue;
+		break;
+
+	case str2int("Green"):
+	case str2int("green"):
+		result = Color::Green;
+		break;
+
+	case str2int("White"):
+	case str2int("white"):
+		result = Color::White;
+		break;
+
+	case str2int("Purple"):
+	case str2int("purple"):
+		result = Color::Purple;
+		break;
+
+	case str2int("Yellow"):
+	case str2int("yellow"):
+		result = Color::Yellow;
+		break;
+
+	case str2int("Grey"):
+	case str2int("grey"):
+		result = Color::Grey;
+		break;
+	case str2int("red"):
+	case str2int("Red"):
+		result = Color::Red;
+		break;
+	default:
+		result = Color::Default;
+		break;
+	}
+
+	return result;
+}
 
 Flock generate_flock_with_args(int argc, char* argv[])
 {
@@ -250,24 +296,25 @@ Flock generate_flock_with_args(int argc, char* argv[])
 
 	}
 	case 10:
+	{
 		//flock size, color, bird size, range , angle of view + relaxation alignment, separation, cohesion, and max speed
 		int size = atoi(argv[1]);
 		char* pColor = argv[2];
-
-		Color color;
+		Color color = str_to_color(pColor);
 
 		int bird_size = atoi(argv[3]);
 		int range = atoi(argv[4]);
 		int angle_view = atoi(argv[5]);
-		int r_align = atoi(argv[6]);
-		int r_sep = atoi(argv[7]);
-		int r_cohe = atoi(argv[8]);
+		float r_align = std::stof(argv[6]);
+		float r_sep = std::stof(argv[7]);
+		float r_cohe = std::stof(argv[8]);
 		int max_speed = atoi(argv[9]);
 
-		std::cout << "Generating a flock with\n\t" << size << " " << color << "agents\n\twith range : " << range << " and angle view : " << angle_view << '\n';
-		std::cout << "\t>> Alignment : " << r_align << "\n\t>> Separation : " << r_sep << "\n\t>> Cohesion : " << r_cohe << std::endl;
+		std::cout << "\nGenerating a flock with\n\t" << size << " " << pColor << " agents\n\trange : " << range << " / angle view : " << angle_view << '\n';
+		std::cout << "\tmax speed : " << max_speed <<"\n\n\t >> Alignment : " << r_align << "\n\t >> Separation : " << r_sep << "\n\t >> Cohesion : " << r_cohe << std::endl;
+		
 		return create_bird_flock(size, color, bird_size, range, angle_view, r_sep, r_cohe, r_align, max_speed);
-
+	}
 	default:
 		//error
 		std::cout << ">> Error : Number of argument can only be 0, 1, 2 or 9.\n>> Read the readme file to know what are the arguments.\n";

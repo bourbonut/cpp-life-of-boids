@@ -37,8 +37,6 @@ Agent* e;// = new Eagle{ Vec2{(float)100, (float)100}, Vec2{0.f,0.f},10, 50,100,
 GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
 
 	m_background_color = myBackgroundColor;
-
-	std::cout << "Constructing GraphicalManager object" << std::endl;
 	glfwSetErrorCallback(error_callback);
 
 	if (!glfwInit())
