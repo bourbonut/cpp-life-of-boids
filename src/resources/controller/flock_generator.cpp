@@ -299,16 +299,44 @@ Flock generate_flock_with_args(int argc, char* argv[])
 	{
 		//flock size, color, bird size, range , angle of view + relaxation alignment, separation, cohesion, and max speed
 		int size = atoi(argv[1]);
+		if (size <= 0) {
+			size = 0;
+			std::cout << "WARNING : Your flock's size will be 0, check your arguments." << std::endl;
+		}
+
 		char* pColor = argv[2];
 		Color color = str_to_color(pColor);
+		if (color == Color::Default) {
+			std::cout << "WARNING : Color unknown, default color will be applied" << std::endl;
+		}
 
 		int bird_size = atoi(argv[3]);
+
+		if (bird_size <= 0) {
+			bird_size = 0;
+			std::cout << "WARNING : Agent's size will be 0, check your arguments." << std::endl;
+		}
+
 		int range = atoi(argv[4]);
+		if (range <= 0) {
+			range = 0;
+			std::cout << "WARNING : Agent's range of view will be 0, check your arguments." << std::endl;
+		}
 		int angle_view = atoi(argv[5]);
+		if (angle_view <= 0) {
+			angle_view = 0;
+			std::cout << "WARNING : Agent's angle view will be 0, check your arguments." << std::endl;
+		}
+
 		float r_align = std::stof(argv[6]);
 		float r_sep = std::stof(argv[7]);
 		float r_cohe = std::stof(argv[8]);
+
 		int max_speed = atoi(argv[9]);
+		if (max_speed <= 0) {
+			max_speed = 0;
+			std::cout << "WARNING :Agent's max speed (int) will be 0, they won't move, check your arguments." << std::endl;
+		}
 
 		std::cout << "\nGenerating a flock with\n\t" << size << " " << pColor << " agents\n\trange : " << range << " / angle view : " << angle_view << '\n';
 		std::cout << "\tmax speed : " << max_speed <<"\n\n\t >> Alignment : " << r_align << "\n\t >> Separation : " << r_sep << "\n\t >> Cohesion : " << r_cohe << std::endl;
