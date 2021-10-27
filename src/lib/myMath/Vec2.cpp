@@ -137,7 +137,7 @@ float Vec2::angle() const {
     return (this->y > 0) ? angle : -angle;
 }
 
-float Vec2::angle(const Vec2& other) const {
+float Vec2::angle(Vec2& other) {
     float norm = this->norm() * other.norm();
     if (norm == 0.) {
         return 0.;
