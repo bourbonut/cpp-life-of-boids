@@ -1,3 +1,12 @@
+## Build
+
+sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+conan profile new default --detect
+conan profile update settings.compiler.libcxx=libstdc++11 default
+conan install ..
+cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake _DCMAKE_BUILD_TYPE=Debug ..
+cmake --build .
+
 # life-of-boids in C++
 
 ## Overview
