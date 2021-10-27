@@ -8,6 +8,7 @@
 #include <vector>
 #include <random>
 #include "utils.hpp"
+#include <tuple>
 
 float distance(const Vec2 a, const Vec2 b) {
     return (a - b).norm();
@@ -50,4 +51,57 @@ float random_float(const int &inf, const int &sup)
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(inf, sup);
     return dis(gen);
+}
+
+
+int researchX(const float& target, const std::vector<std::tuple<float, float, int>>& v){
+  int size = (int) v.size();
+  if (std::get<0>(v[0]) > target){
+    return 0;
+  }
+  else if (std::get<0>(v[size - 1]) < target) {
+    return size - 1;
+  }
+  else{
+    int d = 4;
+    float a;
+    int middle = (int) size / 2;
+    while (!(std::get<0>(v[middle - 1]) < target  && target <= std::get<0>(v[middle]))){
+      a = (int) size / d;
+      if (target < std::get<0>(v[middle])) {
+        middle -= (a!=0) ? a : 1;
+      }
+      else {
+        middle += (a!=0) ? a : 1;
+      }
+      d *= 2;
+    }
+    return middle;
+  }
+}
+
+int researchY(const float& target, const std::vector<std::tuple<float, float, int>>& v){
+  int size = (int) v.size();
+  if (std::get<1>(v[0]) > target){
+    return 0;
+  }
+  else if (std::get<1>(v[size - 1]) < target) {
+    return size - 1;
+  }
+  else{
+    int d = 4;
+    float a;
+    int middle = (int) size / 2;
+    while (!(std::get<1>(v[middle - 1]) < target  && target <= std::get<1>(v[middle]))){
+      a = (int) size / d;
+      if (target < std::get<1>(v[middle])) {
+        middle -= (a!=0) ? a : 1;
+      }
+      else {
+        middle += (a!=0) ? a : 1;
+      }
+      d *= 2;
+    }
+    return middle;
+  }
 }

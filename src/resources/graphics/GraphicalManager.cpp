@@ -185,7 +185,7 @@ bool GraphicalManager::mainLoop() {
 			//std::vector<Agent*>
 
 
-
+			(*MAIN_pFLOCK).updateAgents();
 			for (auto& bird : *MAIN_pFLOCK) {
 				initial_size = (*MAIN_pFLOCK).getPopSize();
 
