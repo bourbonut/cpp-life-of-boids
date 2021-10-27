@@ -147,16 +147,6 @@ float Vec2::angle(Vec2& other) {
     }
 }
 
-float Vec2::angle(Vec2 other) {
-    float norm = this->norm() * other.norm();
-    if (norm == 0.) {
-        return 0.;
-    }
-    else {
-        return std::acos(std::min(1., std::max(-1., (double)this->dot(other) / norm)));
-    }
-}
-
 Vec2 Vec2::rotate(const float angle) {
     return Vec2(std::cos(angle) * this->x - std::sin(angle) * this->y, std::sin(angle) * this->x + std::cos(angle) * this->y);
 }

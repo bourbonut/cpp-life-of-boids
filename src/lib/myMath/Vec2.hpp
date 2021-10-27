@@ -39,7 +39,6 @@ public:
     Vec2 normalize(); // return the current vector normalized
     float angle() const; // return the angle between the current vector and `Vec2(1, 0)`
     float angle(Vec2& other); // return the angle between the current vector and an other vector
-    float angle(Vec2 other); // return the angle between the current vector and an other vector
     Vec2 rotate(const float angle); // rotate the vector anti-clockwise
     std::string string() const; // return a string useful when you need to display the vector
 };
