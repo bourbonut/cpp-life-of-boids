@@ -306,20 +306,21 @@ static void error_callback(int error, const char* description) {
 static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
 	// If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		// Sets the window into "closing mode"
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 	}
 
 	if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-		std::puts("Touche UP pressee : augmenter le nombre d'oiseaux");
-		//(*MAIN_pFLOCK).addAgent();
+		(*MAIN_pFLOCK).addAgent(new Bird{ Vec2{0 , 0}, Vec2{2.f,2.f},6, 300,50, 15.f, Color::Predator, CohesionLaw{0.0002f}, AlignmentLaw{0.3f}, SeparationLaw{0.9f} });
 	}
+
 	if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+		//Change l'affichage de triangles en points
+		(*MAIN_pFLOCK).destroyLastAgent();
+	}
+	if (key == GLFW_KEY_P && action == GLFW_PRESS) {
 		//Change l'affichage de triangles en points
 		prettyAgents = !prettyAgents;
 	}
-
-
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
 		//Met l'affichage en pause
 		run_boids = !run_boids;
@@ -327,19 +328,20 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 
 	//Deplacement du predator principal
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-		e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y + 30 });
+		if(e != nullptr)
+			e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y + 30 });
 	}
 	if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-		e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y - 30 });
-		//(*MAIN_pFLOCK).destroyAgent();
+		if (e != nullptr)
+			e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y - 30 });
 	}
 	if (key == GLFW_KEY_A && action == GLFW_PRESS) {
-		e->setVelocity(Vec2{ e->getVelocity().x - 30, e->getVelocity().y});
-		//(*MAIN_pFLOCK).destroyAgent();
+		if (e != nullptr)
+			e->setVelocity(Vec2{ e->getVelocity().x - 30, e->getVelocity().y});
 	}
 	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-		e->setVelocity(Vec2{ e->getVelocity().x + 30, e->getVelocity().y });
-		//(*MAIN_pFLOCK).destroyAgent();
+		if (e != nullptr)
+			e->setVelocity(Vec2{ e->getVelocity().x + 30, e->getVelocity().y });
 	}
 
 
@@ -367,16 +369,16 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 			HuntingLaw hunt(MAIN_pFLOCK, manual_hunt);			
 			Color eagleColor = manual_hunt ? Color::LightRed : Color::Red;
 
-			(*MAIN_pFLOCK).addAgent(e = new Eagle{ Vec2{(float)xpos, (float)ypos}, Vec2{-10.f,0.f},10, 50,100, 15.f, eagleColor , hunt });
+			(*MAIN_pFLOCK).addAgent(e = new Eagle{ Vec2{(float)xpos, (float)ypos}, Vec2{-10.f,0.f},10, 50,100, 10.f, eagleColor , hunt });
 		}
 	}
-	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+	else if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
 	{
 		if (MAIN_pFLOCK != nullptr) {
 			double xpos, ypos;
-			//adding a smart bird which goes fast and has a lot of separation, it'll most likely dodge the eagles
 			glfwGetCursorPos(window, &xpos, &ypos);
-			(*MAIN_pFLOCK).addAgent(new Bird{ Vec2{(float)xpos, (float)ypos}, Vec2{2.f,2.f},6, 270,150, 20.f, Color::Predator, CohesionLaw{0.001}, AlignmentLaw{2}, SeparationLaw{200} });
+			(*MAIN_pFLOCK).destroyAgent(Vec2{ (float)xpos, (float)ypos }, 100);
 		}
 	}
+
 }
