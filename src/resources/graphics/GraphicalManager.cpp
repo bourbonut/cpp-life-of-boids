@@ -25,7 +25,7 @@
 using namespace std::chrono;
 bool run_boids = true;
 bool manual_hunt = false;
-//bool 
+//bool
 //HuntingLaw hunt(MAIN_pFLOCK);
 Agent* e;// = new Eagle{ Vec2{(float)100, (float)100}, Vec2{0.f,0.f},10, 50,100, 50.f, Color::Red , hunt };
 
@@ -197,6 +197,11 @@ bool GraphicalManager::mainLoop() {
 				if (run_boids) {
 					(*bird).computeLaws(bVec, eVec);
 					(*bird).prepareMove();
+
+			}
+			for (auto& bird : *MAIN_pFLOCK) {
+				}
+				if (run_boids) {
 					(*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
 					(*bird).move();
 
@@ -345,7 +350,7 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 	}
 
 
-	//Option pour générer des manual pedators ou non
+	//Option pour gï¿½nï¿½rer des manual pedators ou non
 	if (key == GLFW_KEY_LEFT_CONTROL && action == GLFW_PRESS) {
 		//Met l'affichage en pause
 		manual_hunt = !manual_hunt;
@@ -365,8 +370,8 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 			//getting cursor position
 			glfwGetCursorPos(window, &xpos, &ypos);
 			//Adding a new eagle and setting it to e so we can control it with ZQSD keys
-			
-			HuntingLaw hunt(MAIN_pFLOCK, manual_hunt);			
+
+			HuntingLaw hunt(MAIN_pFLOCK, manual_hunt);
 			Color eagleColor = manual_hunt ? Color::LightRed : Color::Red;
 
 			(*MAIN_pFLOCK).addAgent(e = new Eagle{ Vec2{(float)xpos, (float)ypos}, Vec2{-10.f,0.f},10, 50,100, 10.f, eagleColor , hunt });
