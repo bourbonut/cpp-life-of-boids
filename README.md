@@ -12,7 +12,7 @@
     - [Graphical Manager](#graphical-manager)
 - [IV.  Continuous Integration](#continuous-intergration)
 - [V.   Profiling/performance computing](#profiling-performance)
-- [VI.  Conclusion and openings](#conclusion-and-openings)
+- [VI.  Conclusion and openings](#limits-and-ameliorations)
 
 <a name="overview"/>
 
@@ -270,7 +270,7 @@ The intersection has a complexity of `2 * (m1 + m2)` where `m1` is the size of t
 
 Finally, what takes the most of the time is to sort arrays before intersection
 To get an idea :
-- without sorting part : `~ 2500 µs`
+- without sorting part : `~ 2.5 ms`
 - with sorting part : `~ 100 ms`
 
 There is an issue. When we compute angles, they are spread on `[-pi, pi]`. So what happened when `gamma - alpha < -pi`, `gamma + alpha > pi`, `norm < range` ?
@@ -366,14 +366,16 @@ Flock generate_fully_random_bird_flock();
 
 # User configuration
 Now that we have implemented a flock generator, which can be used in many ways in the code, we want to be able to let the user configure his flock. This can be done by using options (c.f. chapter **Running the program - Options**).
-To implement this, we used ```argv``` and ```argc[]``` parameter of the ```main``` function.
+To implement this, we used ```argc``` and ```argv[]``` parameter of the ```main``` function.
 The order of the options are specific, and a different code is triggered depending on the number of arguments the user gave.
 
-![Switch/case using argc parameter](assets/readme/switch_case_parameter)
 These options are thought to be user-friendly, which means that the user will be informed if he/she entered a wrong number of arguments, of a weird number (e.g. a size of flock of 0). The program will either warn the user if he/she is fully configurating the flock (with all options possible), or it will throw an exception if the user wants to use the _easy_ options (0, 1, or 2 arguments).
 
-![User warning for configuration](assets/readme/user_warning_parameter)
+![User warning for configuration](assets/readme/user_warning_parameter.png)
 To be the most user friendly possible, we created some birds template, with given values for eveything (range and angle of view, size, color, laws' relaxations) so the user can try the program without knowing about the _complex_ options like laws' relaxations.
+If the user uses the most complex generation of flock, he/she will be informed on the flock, to be able to adjust new parameters easily.
+
+![Generation informations](assets/readme/user_friendly_generation.png)
 
 These options could have been managed in a easier way using the C++ library ```options```, allowing the user to mark the option he/she wanted with a dash ```-```. This will be integrated next release.
 
@@ -424,7 +426,7 @@ The idea was to make a new branch ```dev```, in which no one is allowed to push,
 
 The ```master``` branch is unlocked when we have a stable version of the program, that we know can be delivered. In such a case, we allow ```master``` to be merged, and when it is, we re-block it again. This both separates our final product, and our development product on two different branches, but it also covers us against accidental pushes on a branch that compiles and runs.
 
-**IMAGE BRANCH BLOCKED ON GIT LAB**
+![GitLab branch management](assets/readme/gitlab_branch_management.png)
 
 Although this git management was way better than what we did at the beggining of the project, we were only building and testing our program on one compiler, MSVC. And all this had to be done by hand. The next thing we needed was to integrate continuous integration to our project.
 
@@ -473,18 +475,15 @@ We tried to implement the move constructor and move operator but it did not seem
 
 After taking a step back, we can determine some parts to improve and limits.
 
-<a name="conclusion-and-openings"/>
+<a name="limits-and-ameliorations"/>
 
-# VI.   Conclusion and openings
-## Limits
-For instance, when we calculate angle between two vectors, we have to use the `acos` function. Also, the distance between two vectors needs the `sqrt` function.
-So even if we try to optimize the code, we couldn't not be quicker than the time spent to calculate fundamental mathematic functions. Also the time spent to access memory is significant.
+# VI.   Limits and ameliorations
 
-## Parts to improve
-We could try to implement a new algorithm to compute neighbors. For instance, there is the [_k-d tree_](https://en.wikipedia.org/wiki/K-d_tree) algorithm which partitions our agents array as a binary tree. The complexity to build it, is `O(log n)`. After having the binary tree, we must look for neighbors through it.
-So the complexity should be after all `O(n log n)`.
-
-Also we could use _threads_ to speed up the computation of neighbors. Each thread should compute neighbors of one given agent.
-
-## Next step
-We develop a project which is modular, in other words, we add or change easily new features. It allows for the client to do different simulations according to inputs. Thanks to the documentation, a new team could go back over the project and work on it. The continuous integration with _Docker_ is completely integrated. There is only one thing that must be improved is the diversity of tests.
+Theses are the next amelioration we aim for our project :
+- Threads (up to 4 times faster)
+- Global performance ([_k-d tree_](https://en.wikipedia.org/wiki/K-d_tree) algorithm to compute neighbors)
+- More user configuration
+- Dynamic informations on screen (laws' relaxations, speed, etc...)
+- More class independance (mainly on OpenGL)
+- More code covered in the tests
+- ...
