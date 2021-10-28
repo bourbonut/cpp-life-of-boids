@@ -20,7 +20,6 @@ Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, cons
 };
 
 
-
 void Bird::computeLaws(const std::vector<Agent*>& neighborsBird,
 					  const std::vector<Agent*>& neighborsPredator) {
 	Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighborsBird);

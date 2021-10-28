@@ -30,7 +30,7 @@ protected:
 		const int& viewAngle, const int& range, const float & maxSpeed, const Color& color);
 
 public:
-	//virtual ~Agent();
+	virtual ~Agent() = default;
 	int _id = ++id;
 	virtual void computeLaws(const std::vector<Agent*>& neighbors, 
 							 const std::vector<Agent*>& neighborsPredator) = 0;
