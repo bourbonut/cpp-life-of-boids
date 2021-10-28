@@ -2,16 +2,16 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
+- [I. Overview](#overview)
 - [Build](#build)
 - [Running the program](#running-the-program)
 - [Commands](#commands)
-- [Work Methodology](#work-methodology)
-- [Code Architecture](#code-architecture)
+- [II. Work Methodology](#work-methodology)
+- [III. Code Architecture](#code-architecture)
 - [Graphical Manager](#graphical-manager)
-- [Continuous Intergration](#continuous-intergration)
-- [Profiling/performance computing](#profiling-performance)
-- [Conclusion and openings](#conclusion-and-openings)
+- [IV. Continuous Intergration](#continuous-intergration)
+- [V. Profiling/performance computing](#profiling-performance)
+- [VI. Conclusion and openings](#conclusion-and-openings)
 
 <a name="overview"/>
 ## I. Overview
