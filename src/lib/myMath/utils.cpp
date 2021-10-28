@@ -15,7 +15,7 @@ float distance(const Vec2 a, const Vec2 b) {
 }
 
 Vec2 barycenter(const std::vector<Vec2> vecs) {
-    int size = vecs.size();
+    int size = (int)vecs.size();
     float xg = 0;
     float yg = 0;
     for (Vec2 v : vecs) {
@@ -42,7 +42,7 @@ Vec2 randomVec2Generation(const int& infBoundary, const int& supBoundary)
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(infBoundary, supBoundary);
-    return Vec2(dis(gen), dis(gen));
+    return Vec2((float)dis(gen), (float)dis(gen));
 }
 
 float random_float(const int &inf, const int &sup)
@@ -50,24 +50,24 @@ float random_float(const int &inf, const int &sup)
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(inf, sup);
-    return dis(gen);
+    return (float)dis(gen);
 }
 
 
 int researchX(const float& target, const std::vector<std::tuple<float, float, int>>& v){
-  int size = (int) v.size();
-  if (std::get<0>(v[0]) > target){
+  long int size = (long int)v.size();
+  if (std::get<0>(v[0]) >= target){
     return 0;
   }
-  else if (std::get<0>(v[size - 1]) < target) {
+  else if (std::get<0>(v[size - 1]) <= target) {
     return size - 1;
   }
   else{
     int d = 4;
-    float a;
+    int a;
     int middle = (int) size / 2;
     while (!(std::get<0>(v[middle - 1]) < target  && target <= std::get<0>(v[middle]))){
-      a = (int) size / d;
+      a = (int)size / d;
       if (target < std::get<0>(v[middle])) {
         middle -= (a!=0) ? a : 1;
       }
@@ -85,14 +85,14 @@ int researchY(const float& target, const std::vector<std::tuple<float, float, in
   if (std::get<1>(v[0]) > target){
     return 0;
   }
-  else if (std::get<1>(v[size - 1]) < target) {
+  else if (std::get<1>(v[size - 1]) <= target) {
     return size - 1;
   }
   else{
     int d = 4;
-    float a;
+    int a;
     int middle = (int) size / 2;
-    while (!(std::get<1>(v[middle - 1]) < target  && target <= std::get<1>(v[middle]))){
+    while (!(std::get<1>(v[middle - 1]) <= target  && target <= std::get<1>(v[middle]))){
       a = (int) size / d;
       if (target < std::get<1>(v[middle])) {
         middle -= (a!=0) ? a : 1;

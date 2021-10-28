@@ -22,12 +22,8 @@
 #include <chrono>
 #include <sstream>
 
-using namespace std::chrono;
 bool run_boids = true;
 bool manual_hunt = false;
-//bool compute_opti = true;
-//bool
-//HuntingLaw hunt(MAIN_pFLOCK);
 Agent* e;// = new Eagle{ Vec2{(float)100, (float)100}, Vec2{0.f,0.f},10, 50,100, 50.f, Color::Red , hunt };
 
 
@@ -82,7 +78,7 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
 		glClearColor(1.f, 0.f, 0.f, 1.0f);
 		break;
 	case Color::Green:
-		glClearColor(0.f, 1.f, 0.f, 1.0f);
+		glClearColor(0.219607f, 0.55686f, 0.235294f, 1.0f);
 		break;
 	case Color::Blue:
 		glClearColor(0.f, 0.f, 1.f, 1.0f);
@@ -169,55 +165,50 @@ bool GraphicalManager::mainLoop() {
 	std::vector<points::Vertex> vertex_data_dots;
 
 	if (!glfwWindowShouldClose(m_window)) {
-		auto start = high_resolution_clock::now();
+		auto start = std::chrono::high_resolution_clock::now();
 		int initial_size, next_size;
 
 		glfwGetFramebufferSize(m_window, &m_width, &m_height);
-		const float ratio = m_width / m_height;
 
-		mat3x3 transform = points::vertex_transform_2d(m_width, m_height);
+		mat3x3 transform = points::vertex_transform_2d((float)m_width, (float)m_height);
 
 		glViewport(0, 0, m_width, m_height);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
-		{  // line
-
-			//std::vector<Agent*>
-
-			if ((*MAIN_pFLOCK).optimized_computing){
+		{
+			if ((*MAIN_pFLOCK).optimized_computing) {
 				(*MAIN_pFLOCK).updateAgents();
 			}
+
+			initial_size = (*MAIN_pFLOCK).getPopSize();
+
 			for (auto& bird : *MAIN_pFLOCK) {
-				initial_size = (*MAIN_pFLOCK).getPopSize();
 				std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors;
+
 				if ((*MAIN_pFLOCK).optimized_computing) {
-					
-					allNeighbors = (*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
+
+					allNeighbors = (*MAIN_pFLOCK).computeNeighbors(*bird);
 				}
 				else {
-					allNeighbors = (*MAIN_pFLOCK).computeNeighborsOrigin(*bird); //this costs performance
+					allNeighbors = (*MAIN_pFLOCK).computeNeighborsOrigin(*bird);
 				}
-				
+
 				std::vector<Agent*> bVec = std::get<0>(allNeighbors);
 				std::vector<Agent*> eVec = std::get<1>(allNeighbors);
 
 				if (run_boids) {
 					(*bird).computeLaws(bVec, eVec);
 					(*bird).prepareMove();
-
-			}
-			for (auto& bird : *MAIN_pFLOCK) {
 				}
+			//}
+
+			//for (auto& bird : *MAIN_pFLOCK) {
+
 				if (run_boids) {
-					(*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), m_width, m_height));
+					(*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), (float)m_width, (float)m_height));
 					(*bird).move();
-
 				}
-
-
-
-
 
 				if (prettyAgents) {
 					// Fill vertex array of groups of 6 points each for double triangles
@@ -248,7 +239,7 @@ bool GraphicalManager::mainLoop() {
 				glUniformMatrix3fv(m_transform_location2, 1, GL_FALSE, (const GLfloat*)&transform);
 				glBindVertexArray(lines_vertexArray.vertex_array);
 				glBufferData(GL_ARRAY_BUFFER, vertex_data_triangle.size() * sizeof(triangle::Vertex), vertex_data_triangle.data(), GL_STREAM_DRAW);
-				glDrawArrays(GL_TRIANGLES, 0, vertex_data_triangle.size());
+				glDrawArrays(GL_TRIANGLES, 0, (GLsizei)vertex_data_triangle.size());
 			}
 			else if (!prettyAgents) {
 				// DRAW AGENTS AS DOTS
@@ -263,14 +254,13 @@ bool GraphicalManager::mainLoop() {
 
 				glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STREAM_DRAW);
 				glBufferData(GL_ARRAY_BUFFER, vertex_data_dots.size() * sizeof(points::Vertex), vertex_data_dots.data(), GL_STREAM_DRAW);
-				glDrawArrays(GL_POINTS, 0, vertex_data_dots.size());
+				glDrawArrays(GL_POINTS, 0, (GLsizei)vertex_data_dots.size());
 			}
 		}
 
-
 		//FPS calculations
-		auto stop = high_resolution_clock::now();
-		auto duration = duration_cast<microseconds>(stop - start);
+		auto stop = std::chrono::high_resolution_clock::now();
+		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 		std::ostringstream oss;
 		oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
 		glfwSetWindowTitle(m_window, oss.str().c_str());
@@ -341,7 +331,7 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 
 	//Deplacement du predator principal
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-		if(e != nullptr)
+		if (e != nullptr)
 			e->setVelocity(Vec2{ e->getVelocity().x, e->getVelocity().y + 30 });
 	}
 	if (key == GLFW_KEY_W && action == GLFW_PRESS) {
@@ -350,7 +340,7 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 	}
 	if (key == GLFW_KEY_A && action == GLFW_PRESS) {
 		if (e != nullptr)
-			e->setVelocity(Vec2{ e->getVelocity().x - 30, e->getVelocity().y});
+			e->setVelocity(Vec2{ e->getVelocity().x - 30, e->getVelocity().y });
 	}
 	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
 		if (e != nullptr)
@@ -358,7 +348,7 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 	}
 
 
-	//Option pour g�n�rer des manual pedators ou non
+	//Option pour generer des manual pedators ou non
 	if (key == GLFW_KEY_LEFT_CONTROL && action == GLFW_PRESS) {
 		//Met l'affichage en pause
 		manual_hunt = !manual_hunt;
@@ -369,7 +359,7 @@ static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int acti
 	}
 }
 
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+void mouse_button_callback(GLFWwindow* window, int button, int action, int /*mods*/)
 {
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{

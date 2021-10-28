@@ -50,7 +50,7 @@ Flock::Flock(std::vector<Agent*> population) : m_agents(population) {
 
 
 int Flock::getPopSize() const {
-	return m_agents.size();
+	return (int)m_agents.size();
 };
 
 Flock::Flock() {};
@@ -80,7 +80,7 @@ void Flock::destroyLastAgent() {
 
 std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(const Agent& agent){
   Vec2 pos = agent.getPosition();
-	float range = agent.getRange();
+	int range = agent.getRange();
   float x = pos.x;
   float y = pos.y;
   int indexXInf = researchX(x - range, m_x);
@@ -134,7 +134,6 @@ std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighborsOrig
 		if (!(degrees((agent.getPosition() - (*potentialNeighbor).getPosition()).angle()) > agent.getViewAngle() / 2) && !(agent._id == (*potentialNeighbor)._id))
 		{
 			double distWithPotNeighb = distance(agent.getPosition(), (*potentialNeighbor).getPosition());
-			double a = abs(distWithPotNeighb);
 			if (abs(distWithPotNeighb) <= abs(agent.getRange())) {
 				if (dynamic_cast<Bird*> (potentialNeighbor) != nullptr) {
 					neighbors.push_back(potentialNeighbor);

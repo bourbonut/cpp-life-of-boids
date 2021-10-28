@@ -11,7 +11,7 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 		m_GLColor = { 0.82745f, 0.184313f, 0.184313f };
 		break;
 	case Color::Green:
-		m_GLColor = { 0.39f, 0.99f, 0.85f };
+		m_GLColor = { 0.219607f, 0.55686f, 0.235294f };
 		break;
 	case Color::Blue:
 		m_GLColor = { 0.09f, 0.99f, 0.99f };

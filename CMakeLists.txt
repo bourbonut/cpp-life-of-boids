@@ -11,7 +11,7 @@ message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
 
 #------------------------------------------------------
 project(life_of_boids
-        VERSION "0.0.0")
+        VERSION "12.5.9")
 #------------------------------------------------------
 
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")

@@ -83,7 +83,6 @@ namespace {
 	}
 
 	TEST(TestFlock, Destroy) {
-		Flock* MAIN_pFLOCK = nullptr;
 		std::vector<Agent*> mainFlock;
 
 		mainFlock.push_back(new Bird(Vec2(1, 1), Vec2(1, 1)));

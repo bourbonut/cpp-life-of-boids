@@ -19,7 +19,7 @@ Eagle::Eagle(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	Agent(position, velocity, bodySize, viewAngle, range, maxSpeed, color), m_huntingLaw(), m_separationLaw() {};
 
 
-void Eagle::computeLaws(const std::vector<Agent*>& neighborsBird, const std::vector<Agent*>& neighborsPredator) {
+void Eagle::computeLaws(const std::vector<Agent*>& neighborsBird, const std::vector<Agent*>&) {
 	Vec2 vec_displacement{};
 	
 	if (neighborsBird.size() > 0) { vec_displacement = vec_displacement + m_huntingLaw.compute(*this, neighborsBird) ; }
