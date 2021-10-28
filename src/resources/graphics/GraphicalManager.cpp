@@ -187,7 +187,6 @@ bool GraphicalManager::mainLoop() {
 				std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors;
 
 				if ((*MAIN_pFLOCK).optimized_computing) {
-
 					allNeighbors = (*MAIN_pFLOCK).computeNeighbors(*bird);
 				}
 				else {
@@ -201,9 +200,7 @@ bool GraphicalManager::mainLoop() {
 					(*bird).computeLaws(bVec, eVec);
 					(*bird).prepareMove();
 				}
-			//}
 
-			//for (auto& bird : *MAIN_pFLOCK) {
 
 				if (run_boids) {
 					(*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), (float)m_width, (float)m_height));
@@ -224,11 +221,8 @@ bool GraphicalManager::mainLoop() {
 				}
 
 				next_size = (*MAIN_pFLOCK).getPopSize();
-
-
-				if (next_size != initial_size) break;  //To avoid trying to write the vector if we destroyed some agents
+				
 			}
-
 
 			if (prettyAgents) {
 				// DRAW AGENTS AS TRIANGLES
@@ -257,6 +251,7 @@ bool GraphicalManager::mainLoop() {
 				glDrawArrays(GL_POINTS, 0, (GLsizei)vertex_data_dots.size());
 			}
 		}
+		(*MAIN_pFLOCK).destroyAgents();
 
 		//FPS calculations
 		auto stop = std::chrono::high_resolution_clock::now();
@@ -380,7 +375,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int /*mod
 		if (MAIN_pFLOCK != nullptr) {
 			double xpos, ypos;
 			glfwGetCursorPos(window, &xpos, &ypos);
-			(*MAIN_pFLOCK).destroyAgent(Vec2{ (float)xpos, (float)ypos }, 100);
+			(*MAIN_pFLOCK).setAgentsToBeDestroyed(Vec2{ (float)xpos, (float)ypos }, 100);
 		}
 	}
 

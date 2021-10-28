@@ -18,6 +18,7 @@ protected:
 	float m_maxSpeed;
 	Color m_color;
 	std::array<float, 3> m_GLColor;
+	bool m_toDestroy;
 	
 
 protected:
@@ -44,6 +45,8 @@ public:
 	Vec2 getVelocity() const;
 	Vec2 getNextVelocity() const;
 	Vec2 getNextPosition() const;
+	bool getDestruction() const;
+	void setDestruction();
 	int getRange() const;
 	int getBodySize() const;
 	int getViewAngle() const;

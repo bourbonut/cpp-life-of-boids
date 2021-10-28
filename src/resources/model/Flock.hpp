@@ -23,7 +23,8 @@ public:
 	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighborsOrigin(const Agent& agent);
 
 	void addAgent(Agent *a);
-	void destroyAgent(const Vec2& position, const int& destroyRadius);
+	void setAgentsToBeDestroyed(const Vec2& position, const int& destroyRadius);
+	void destroyAgents();
 	void destroyLastAgent();
 	void updateAgents();
 

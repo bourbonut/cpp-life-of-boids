@@ -25,7 +25,7 @@ Vec2 HuntingLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbo
 
 
 		if (weight < currentAgent.getBodySize()*1.5) {
-			(*m_pFlock).destroyAgent((*neighbors[0]).getPosition(), 1);
+			(*m_pFlock).setAgentsToBeDestroyed((*neighbors[0]).getPosition(), 1);
 
 			if (currentAgent.getBodySize() < 26)
 				currentAgent.setSize((currentAgent.getBodySize() + 5));
