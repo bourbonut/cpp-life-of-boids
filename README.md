@@ -7,7 +7,7 @@
 - [     Running the program](#running-the-program)
 - [     Commands](#commands)
 - [II.  Work Methodology](#work-methodology)
-- [III. Code Architecture](#code-architecture)
+- [III. Code Logic and Architecture](#code-architecture)
 - [     Agent and Flock](#agent-flock)
 - [     Graphical Manager](#graphical-manager)
 - [IV.  Continuous Inte gration](#continuous-intergration)
@@ -107,7 +107,7 @@ Example : Aymeric/Julian : Insertion of predators
 ```
 <a name="code-architecture"/>
 
-## III. Code Architecture
+## III. Code Logic and Architecture
 ## Class Vec2
 
 This class is the foundation class used in all other classes. It manages the calculation of 2-D vectors.
@@ -340,6 +340,20 @@ The color of the birds can be chosen to be random.
 
 ![Colors](assets/readme/colorsOfFlock.png)
 
+# User configuration
+Now that we have implemented a flock generator, which can be used in many ways in the code, we want to be able to let the user configure his flock. This can be done by using options (c.f. chapter **Running the program - Options**).
+To implement this, we used ```argv``` and ```argc[]``` parameter of the ```main``` function.
+The order of the options are specific, and a different code is triggered depending on the number of arguments the user gave.
+
+![Switch/case using argc parameter](assets/readme/switch_case_parameter)
+These options are thought to be user-friendly, which means that the user will be informed if he/she entered a wrong number of arguments, of a weird number (e.g. a size of flock of 0). The program will either warn the user if he/she is fully configurating the flock (with all options possible), or it will throw an exception if the user wants to use the _easy_ options (0, 1, or 2 arguments).
+
+![User warning for configuration](assets/readme/user_warning_parameter)
+To be the most user friendly possible, we created some birds template, with given values for eveything (range and angle of view, size, color, laws' relaxations) so the user can try the program without knowing about the _complex_ options like laws' relaxations.
+
+These options could have been managed in a easier way using the C++ library ```options```, allowing the user to mark the option he/she wanted with a dash ```-```. This will be integrated next release.
+
+
 <a name="graphical-manager"/>
 
 ## Graphical Manager
@@ -389,30 +403,6 @@ FPS calculates the time needed to create an image and calculates the number of i
 <a name="continuous-intergration"/>
 
 # IV.   Continuous integration
-## Docker
-In order to run the builds in Continuous Integration Pipelines, docker images are needed in order to execute the commands of the pipeline. Namely the different stages needed are : 
-- The installation of the dependencies with conan
-- The building job with various compilers
-- Executing the tests
-
-The first continuous integration pipelines were really time-consuming because it included downloading all the packages with conan commands. With the introduction of the <em> Clang </em> compiler, some of the dependencies weren't directly downloadable via conan. These packages needed to be downloaded as source code, and then built from source. This stage of building from source the missing packages is extremely long ( $\simeq$ 20 minutes) and it wasn't possible to wait this long at each pipeline. 
-
-We decided to build new docker images, with prebuilt and installed dependencies for both compilers <em> GCC </em> and <em>Clang</em>. Two images were build from <em>conanio/gcc9</em> and <em>conanio/clang10</em> with our files.<br>
-It enabled us to iterate faster on our portability with other compilers.
-
-# User configuration
-Now that we have implemented a flock generator, which can be used in many ways in the code, we want to be able to let the user configure his flock. This can be done by using options (c.f. chapter **Running the program - Options**).
-To implement this, we used ```argv``` and ```argc[]``` parameter of the ```main``` function.
-The order of the options are specific, and a different code is triggered depending on the number of arguments the user gave.
-
-![Switch/case using argc parameter](assets/readme/switch_case_parameter)
-These options are thought to be user-friendly, which means that the user will be informed if he/she entered a wrong number of arguments, of a weird number (e.g. a size of flock of 0). The program will either warn the user if he/she is fully configurating the flock (with all options possible), or it will throw an exception if the user wants to use the _easy_ options (0, 1, or 2 arguments).
-
-![User warning for configuration](assets/readme/user_warning_parameter)
-To be the most user friendly possible, we created some birds template, with given values for eveything (range and angle of view, size, color, laws' relaxations) so the user can try the program without knowing about the _complex_ options like laws' relaxations.
-
-These options could have been managed in a easier way using the C++ library ```options```, allowing the user to mark the option he/she wanted with a dash ```-```. This will be integrated next release.
-
 ## Git management
 It is not trivial to work in a team of seven people. At first, there we had no particular git management, the rule was to make a merge request on master when we felt our changes was good (compiles and runs on MSVC). Due to some accidental pushes on master, making the master branch not compilable, we started to think of a way to manage our git branches.
 The idea was to make a new branch ```dev```, in which no one is allowed to push, one can only update it using merge requests. This ```dev``` branch is our main development branch, while the ```master``` branch is blocked both for pushing **and** merging.
@@ -429,6 +419,18 @@ Now that we have a nice branch management, and a good merge request system, the 
  Some external packages are needed to compile and run our program : ```libgtk2.0-dev``` and ```libgl1-mesa-dev```. The installation of these files take a few minutes (about 5). Since the docker image is cleared at the beginning of a new pipeline, we had to make these installation everytime. Since a new pipeline is created for **every pull**, which means that the developper has to wait **5 minutes** everytime he/she pushes. Better not miss a semi-colon ! We will develop what actions we decided to take in order to palliate this issue. 
 Now, when a developer pushes his/her branch, the new pipeline is triggered, the code is compiled on both GCC9 and Clang10 compilers, and tests are run on both these environments. In a merge request process, if the pipeline has not succeeded, the request is blocked until someone pushes a commit to fix the issue. This workflow allows us to continuously keep a clean code, which is portable on 3 different compilers. 
 All of this experience has shown us that some compilers do work that other won”t do, in which case we have to make this work explicit it in the code (most often is include problems, MSVC will automatically include some files and library needed for the project, which Clang won’t do).
+
+## Docker
+In order to run the builds in Continuous Integration Pipelines, docker images are needed in order to execute the commands of the pipeline. Namely the different stages needed are : 
+- The installation of the dependencies with conan
+- The building job with various compilers
+- Executing the tests
+
+The first continuous integration pipelines were really time-consuming because it included downloading all the packages with conan commands. With the introduction of the <em> Clang </em> compiler, some of the dependencies weren't directly downloadable via conan. These packages needed to be downloaded as source code, and then built from source. This stage of building from source the missing packages is extremely long ( $\simeq$ 20 minutes) and it wasn't possible to wait this long at each pipeline. 
+
+We decided to build new docker images, with prebuilt and installed dependencies for both compilers <em> GCC </em> and <em>Clang</em>. Two images were build from <em>conanio/gcc9</em> and <em>conanio/clang10</em> with our files.<br>
+It enabled us to iterate faster on our portability with other compilers.
+
 
 <a name="profiling-performance"/>
 
