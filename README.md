@@ -4,7 +4,7 @@
 
 - [Overview](#Overview)
 - [Build](#build)
-- [Running the program](#Running-the-program)
+- [Running the program](#running-the-program)
 - [Commands](#Commands)
 - [Code Architecture](#Code-Architecture)
 - [Graphical Manager](#Graphical-Manager)
@@ -16,6 +16,7 @@ life-of-boids is an application/software developped in C++ to simulate a flock o
 In general lines, the project corresponds to an artificial life experience which permits to analyse collective and individual behaviour, in addition to providing fun user interaction.
 
 <a name="build"/>
+
 ## Build
 
 sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
@@ -24,6 +25,8 @@ conan profile update settings.compiler.libcxx=libstdc++11 default
 conan install ..
 cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake _DCMAKE_BUILD_TYPE=Debug ..
 cmake --build .
+
+<a name="running-the-program"/>
 
 ## Running the program
 
