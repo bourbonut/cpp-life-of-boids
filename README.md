@@ -190,7 +190,7 @@ with differents attributes (flock_size, range, angle_view, agent_size, cohesion_
 
 The color of the birds can be chosen to be random.
 
-![Colors](assets/readme/colors.png)
+![Colors](assets/readme/colorsOfFlock.png)
 
 ## Graphical Manager
 The goal of the GraphicalManager class is to wrap-up all the OpenGL components of the code to make development easier.
