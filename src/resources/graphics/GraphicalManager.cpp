@@ -44,10 +44,10 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
 	GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
 
 	if (fullScreen) {
-		m_window = glfwCreateWindow(800, 600, "Life-of-boids", primaryMonitor, nullptr);
+		m_window = glfwCreateWindow(1000, 850, "Life-of-boids", primaryMonitor, nullptr);
 	}
 	else {
-		m_window = glfwCreateWindow(800, 600, "Life-of-boids", nullptr, nullptr);
+		m_window = glfwCreateWindow(1000, 850, "Life-of-boids", nullptr, nullptr);
 	}
 
 
