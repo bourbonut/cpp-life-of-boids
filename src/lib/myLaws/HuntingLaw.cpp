@@ -25,7 +25,7 @@ Vec2 HuntingLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbo
 
 
 		if (weight < currentAgent.getBodySize()*1.5) {
-			(*m_pFlock).destroyAgent((*neighbors[0]).getPosition());
+			(*m_pFlock).destroyAgent((*neighbors[0]).getPosition(), 1);
 
 			if (currentAgent.getBodySize() < 26)
 				currentAgent.setSize((currentAgent.getBodySize() + 5));
@@ -42,7 +42,7 @@ Vec2 HuntingLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbo
 
 		//If we are not in manual mode, we set the speed to be going to the agent's next position
 		if(!m_manualHunting)
-			newVelocity = (*neighbors[0]).getVelocity() + ((currentAgent).getPosition() - (currentAgent).getPosition()) * weight;
+			newVelocity = (*neighbors[0]).getVelocity() * weight;
 	}
 
 	return newVelocity * m_relaxation;

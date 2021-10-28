@@ -9,7 +9,7 @@
 #include "../src/lib/myMath/Vec2.hpp"
 
 namespace {
-	TEST(AlignmentLaw,BasicsTests) {
+    TEST(AlignmentLaw, BasicsTests) {
         int size = 2;
         Flock* flockPtr = nullptr;
         std::vector<Agent*> mainFlock;
@@ -42,7 +42,7 @@ namespace {
         EXPECT_EQ(alignments[1].y, 0.f);
         EXPECT_EQ(alignments[2].x, 1.f);
         EXPECT_EQ(alignments[2].y, -1.f);
-	}
+    }
 
     TEST(CohesionLaw, BasicTests) {
         int size = 2;

@@ -33,3 +33,5 @@ Flock generate_ant_flock(int size);
 Flock generate_fly_flock(int size);
 
 Color random_color();
+
+Flock generate_flock_with_args(int argc, char* argv[]);

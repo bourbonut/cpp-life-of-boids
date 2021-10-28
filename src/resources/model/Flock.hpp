@@ -16,17 +16,15 @@ public:
 	int getPopSize() const;
 	Agent* getAgent(int index);
 	Agent* operator[](int index) { return m_agents.at(index); };
-	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighbors(const Agent& agent);//, const float& range, const float& angle);
-	//void addAgent();
-	//void addAgent(float xpos, float ypos);
+	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighbors(const Agent& agent);
 
 	void addAgent(Agent *a);
-	void destroyAgent(Vec2 position);
+	void destroyAgent(const Vec2& position, const int& destroyRadius);
 	void destroyLastAgent();
-	//void moveAgents();
 
 public:
 	Flock(std::vector<Agent*> population);
+	Flock();
 	~Flock() {}; // Destructeur
 
 	auto begin() { return m_agents.begin(); };
