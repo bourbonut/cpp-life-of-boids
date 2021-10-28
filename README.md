@@ -359,7 +359,7 @@ Flock generate_parrot_flock(int size);
 
 ![Parrots](assets/readme/parrots.png)
 
-Everything randomized'<br />
+Everything randomized<br />
 Flock generate_fully_random_bird_flock();
 
 ![Randomized](assets/readme/randomized.png)
