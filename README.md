@@ -213,11 +213,11 @@ In technical terms, the Law class includes in particular a protected relaxation 
 Having considered that, it is important to notice the interactions between the laws and not a law by itself, and in particular the complementary laws affecting a Bird.
 The weighted outputs of these laws form, after theirs respectives relaxation are applied, the displacement, which is a change in velocity enabling Birds to form clusters and Eagles to track their prey.
 
-![Colors](assets/readme/colorsOfFlock.png)
-
 ### Compute neighbors
 In order to be able to calculate the laws of alignment, cohesion and separation, it was necessary to create the method "compute neighbors".
 This method consists in going through a list of agents and checking the existence of a neighbor according to a precise range and to the angle of view of the agent (according to type of bird).
+
+![Colors](assets/readme/colorsOfFlock.png)
 
 [Link to the file](https://git.sophia.mines-paristech.fr/hpc-ai_21/cpp-life-of-boids/-/blob/master/src/resources/model/Flock.cpp)
 
@@ -340,7 +340,7 @@ This code contributes to generate different types of Birds in a Flock (Duck, Ant
 with differents attributes (flock_size, range, angle_view, agent_size, cohesion_relax, sep_relax, align_relax, speed_relax, position, velocity, agent_color).
 The color of the birds can be chosen to be random.
 
-Range 70
+Angle view is 360, range 70
 Flock generate_duck_flock(int size);
 ![Ducks](assets/readme/ducks.png)
 
