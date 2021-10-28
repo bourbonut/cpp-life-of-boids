@@ -89,7 +89,6 @@ This is a list of available commandes when in runtime :
 - **LEFT CLIC** : Adds a predator to the flock, press **CTRL** while clicking to add a predator with no law (easier to control with ZQSD).
 - **Z, Q, S, D** : Moves the last added predator respectively : up, left, down, right.
 
-
 <a name="work-methodology"/>
 
 ## II.  Work methodology
@@ -104,7 +103,6 @@ Here are the methods we used to make our teamwork more effective :
 Two people work simultaneously on the code, one writes the code while the other checks it in real time.
 Example : Aymeric/Julian : Insertion of predators
 
-```
 <a name="code-architecture"/>
 
 ## III. Code Logic and Architecture
