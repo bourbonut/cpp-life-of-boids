@@ -2,14 +2,14 @@
 
 ## Table of Contents
 
-<a name="overview"/>
-
 - [Overview](#overview)
 - [Build](#build)
 - [Running the program](#running-the-program)
 - [Commands](#commands)
 - [Code Architecture](#code-architecture)
 - [Graphical Manager](#graphical-manager)
+
+<a name="overview"/>
 
 ## I. Overview
 
