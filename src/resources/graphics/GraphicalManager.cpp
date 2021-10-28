@@ -25,6 +25,7 @@
 using namespace std::chrono;
 bool run_boids = true;
 bool manual_hunt = false;
+//bool compute_opti = true;
 //bool
 //HuntingLaw hunt(MAIN_pFLOCK);
 Agent* e;// = new Eagle{ Vec2{(float)100, (float)100}, Vec2{0.f,0.f},10, 50,100, 50.f, Color::Red , hunt };
@@ -184,13 +185,20 @@ bool GraphicalManager::mainLoop() {
 
 			//std::vector<Agent*>
 
-
-			(*MAIN_pFLOCK).updateAgents();
+			if ((*MAIN_pFLOCK).optimized_computing){
+				(*MAIN_pFLOCK).updateAgents();
+			}
 			for (auto& bird : *MAIN_pFLOCK) {
 				initial_size = (*MAIN_pFLOCK).getPopSize();
-
-				std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors =
-					(*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
+				std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors;
+				if ((*MAIN_pFLOCK).optimized_computing) {
+					
+					allNeighbors = (*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
+				}
+				else {
+					allNeighbors = (*MAIN_pFLOCK).computeNeighborsOrigin(*bird); //this costs performance
+				}
+				
 				std::vector<Agent*> bVec = std::get<0>(allNeighbors);
 				std::vector<Agent*> eVec = std::get<1>(allNeighbors);
 

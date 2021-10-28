@@ -254,13 +254,20 @@ Flock generate_flock_with_args(int argc, char* argv[])
 	switch (argc)
 	{
 	case 1://no arguments
-		std::cout << "Generating a flock of 400 parrots, to change the flock's type, use arguments ./life-of-boids.exe SIZE TYPE\nAvailable types can be found in the readme file." << std::endl;
+		std::cout << "Generating a flock of 400 parrots. To change the flock's type, use arguments ./life-of-boids.exe SIZE TYPE\nAvailable types can be found in the readme file." << std::endl;
 		return generate_parrot_flock(400);
 
 	case 2:
 		//Only flock size, or fully random if arg is 'r'
 		if (*(argv[1]) == 'r') {
 			return generate_fully_random_bird_flock();
+		}
+		else if (*(argv[1]) == 'f') {
+			float cohesion_relax = 0.0004;
+			float sep_relax = 1.f;
+			float align_relax = 0.05;
+			return create_bird_flock(600, Color::White, 6, 50, 270, Vec2{ 250, 250 }, Vec2{ 1,1 }, sep_relax, cohesion_relax, align_relax, 8.f);
+			//return create_bird_flock(400, Color::White, 6, int agent_range, int agent_angle_view, Vec2 agent_position, Vec2 agent_velocity, float sep_relax, float cohe_relax, float align_relax, float max_speed);
 		}
 		else {
 			int size = atoi(argv[1]);

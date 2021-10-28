@@ -14,6 +14,7 @@ private :
 	std::vector<std::tuple<float, float, int>> m_y;
 
 public:
+	bool optimized_computing = false;
 	void print();
 	int getPopSize() const;
 	Agent* getAgent(int index);
