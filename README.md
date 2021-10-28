@@ -128,6 +128,41 @@ FPS calculates the time needed to create an image and calculates the number of i
 <a name="code-architecture"/>
 
 ## III. Code Architecture
+## Class Vec2
+
+This class is the foundation class used in all other classes. It manages the calculation of 2-D vectors.
+It is used mainly to store coordinates of points.
+We tried to override a maximum of operator methods to manipulate the class easier.
+
+### Main methods
+- Operator `+, -, *, /` are override
+- Operator `<<` is override to display easier
+- scalar product
+- get norm
+- normalize vector
+- get angle between current vector and X axis
+- get angle between two vectors
+- rotate given an angle
+
+
+[Link to the file](https://git.sophia.mines-paristech.fr/hpc-ai_21/cpp-life-of-boids/-/blob/master/src/lib/myMath/Vec2.cpp)
+
+
+## Functions in utils
+
+All following functions are presented in different parts of the project.
+
+[Link to the file](https://git.sophia.mines-paristech.fr/hpc-ai_21/cpp-life-of-boids/-/blob/master/src/lib/myMath/utils.cpp)
+
+- `distance` it calculates the distance between two `Vec2`
+- `barycenter` it calculates the barycenter given a set of `Vec2`
+- `radians` it converts a degrees angle into radians angle
+- `degrees` it converts a radians angle into degrees angle
+- `isAntiClockwise` it allows to know if two `Vec2` are anti clockwise
+- `randomVec2Generation` it generates a random `Vec2`
+- `random_float` it generates a random float
+- `researchX` it looks for a target given a sorted set of `Vec2` (according to x values)
+- `researchY` it looks for a target given a sorted set of `Vec2` (according to y values)
 
 ![ULM diagram](assets/readme/ulmDiagram.png)
 
