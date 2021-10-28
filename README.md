@@ -6,11 +6,14 @@
 - [Build](#build)
 - [Running the program](#running-the-program)
 - [Commands](#commands)
+- [Work Methodology](#work-methodology)
 - [Code Architecture](#code-architecture)
 - [Graphical Manager](#graphical-manager)
+- [Continuous Intergration](#continuous-intergration)
+- [Profiling/performance computing](#profiling-performance)
+- [Conclusion and openings](#conclusion-and-openings)
 
 <a name="overview"/>
-
 ## I. Overview
 
 life-of-boids is an application/software developped in C++ to simulate a flock of birds in animation mode in order to show their individual behaviour and interaction with each other and the environment surrounding them.
@@ -18,7 +21,6 @@ life-of-boids is an application/software developped in C++ to simulate a flock o
 In general lines, the project corresponds to an artificial life experience which permits to analyse collective and individual behaviour, in addition to providing fun user interaction.
 
 <a name="build"/>
-
 ## Build
 
 sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
@@ -71,7 +73,6 @@ Special usage : ```./life-of-boids r``` to generate a _fully_ random flock, with
   - **max_speed** : The maximum speed of an agent (int)
 
 <a name="commands"/>
-
 ## Commands
 
 This is a list of available commandes when in runtime :
@@ -84,6 +85,7 @@ This is a list of available commandes when in runtime :
 - **Z, Q, S, D** : Moves the last added predator respectively : up, left, down, right.
 
 
+<a name="work-methodology"/>
 ## II. Work methodology
 Here are the methods we used to make our teamwork more effective :
 - *Agile methods* : An agile project is organized in iterative and incremental development cycles, in which the end customer and the user are integrated and actively participate.
@@ -199,13 +201,13 @@ The first idea was to implement a _brute-force_ function. We keeped it during th
 
 This algorithm has a complexity of `O(n²)`.
 
-## Second idea
+### Second idea
 
 A second approach was to compute neighbors at the initialization and for next iteration, to compute new neighbors according to the previous computation.
 But there was a main issue. If a new neighbor approaches a agent and was not detected at the last iteration, it will not be taken into account.
 So this idea has been given up.
 
-## Third idea
+### Third idea
 
 The third approach was to calculate **all norms of positions** and angles with the **X axis** and store them in two arrays `[norm, angle, index_of_agent]`.
 The next step is to sort them :
@@ -253,7 +255,7 @@ In the end, the complexity is `O(n * m * log(m))` where `m = max(m1, m2)` where 
 
 We don't go in detail, we prefer to explain the last idea.
 
-## Final idea
+### Final idea
 Instead of using polar coordinates, we used cartesian coordinates. Thus, the goal is to start to sort according to X values and Y values and after it's the same idea but without difficulties of angle values overlapping and proximity with center `O(0, 0)`.
 
 Here is a diagram :
@@ -270,7 +272,7 @@ The algorithm is simplified with this approach :
 
 So we have the same complexity (`O(n * m log (m))`) as the last algorithm (with polar coordinates) and same problem of sorting data. But it's easier to understand with less problems of overlapping values.
 
-## Time comparaison
+### Time comparison
 
 Size = 4000
 Mode = Release
@@ -314,7 +316,6 @@ The color of the birds can be chosen to be random.
 ![Colors](assets/readme/colorsOfFlock.png)
 
 <a name="graphical-manager"/>
-
 ## Graphical Manager
 The goal of the GraphicalManager class is to wrap-up all the OpenGL components of the code to make development easier.
 The GraphicalManager constructor initializes and manages OpenGL variables and our graphical variables to help us draw the shapes we want.
@@ -337,6 +338,8 @@ It supports the display in windowed screen or fullscreen, and the Agent drawing 
 
 Finally, the GraphicalManager destructor takes care of closing the window and cleaning the OpenGL variables before ending the program.
 
+<a name="continuous-intergration"/>
+# V. Continuous intergration
 ## Docker
 In order to run the builds in Continuous Integration Pipelines, docker images are needed in order to execute the commands of the pipeline. Namely the different stages needed are : 
 - The installation of the dependencies with conan
@@ -378,6 +381,7 @@ Now that we have a nice branch management, and a good merge request system, the 
 Now, when a developer pushes his/her branch, the new pipeline is triggered, the code is compiled on both GCC9 and Clang10 compilers, and tests are run on both these environments. In a merge request process, if the pipeline has not succeeded, the request is blocked until someone pushes a commit to fix the issue. This workflow allows us to continuously keep a clean code, which is portable on 3 different compilers. 
 All of this experience has shown us that some compilers do work that other won”t do, in which case we have to make this work explicit it in the code (most often is include problems, MSVC will automatically include some files and library needed for the project, which Clang won’t do).
 
+<a name="profiling-performance"/>
 # VI. Profiling/performance computing
 ## Valgrind
 In order to improve the performances of the program, it is necessary to discover the sections of code that use the most resources. Valgrind is a Linux tool designed to help programmers analyze their code at runtime to get these precious informations.
@@ -402,7 +406,8 @@ We tried to implement the move constructor and move operator but it did not seem
 
 After taking a step back, we can determine some parts to improve and limits.
 
-# VII.  Conclusion and openings
+<a name="conclusion-and-openings"/>
+# VII. Conclusion and openings
 ## Limits
 For instance, when we calculate angle between two vectors, we have to use the `acos` function. Also, the distance between two vectors needs the `sqrt` function.
 So even if we try to optimize the code, we couldn't not be quicker than the time spent to calculate fundamental mathematic functions. Also the time spent to access memory is significant.
