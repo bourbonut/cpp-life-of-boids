@@ -342,21 +342,26 @@ The color of the birds can be chosen to be random.
 
 Angle view is 360, range 70
 Flock generate_duck_flock(int size);
+
 ![Ducks](assets/readme/ducks.png)
 
 Flock generate_ant_flock(int size);
+
 ![Ants](assets/readme/ants.png)
 
 Angle view is 270, range is 50
 Flock generate_dove_flock(int size);
+
 ![Doves](assets/readme/doves.png)
 
 Angle view is about 300, range 50
 Flock generate_parrot_flock(int size);
+
 ![Parrots](assets/readme/parrots.png)
 
 Everything randomized
 Flock generate_fully_random_bird_flock();
+
 ![Randomized](assets/readme/randomized.png)
 
 # User configuration
