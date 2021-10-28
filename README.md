@@ -5,9 +5,9 @@
 - [Overview](#Overview)
 - [Build](#build)
 - [Running the program](#running-the-program)
-- [Commands](#Commands)
-- [Code Architecture](#Code-Architecture)
-- [Graphical Manager](#Graphical-Manager)
+- [Commands](#commands)
+- [Code Architecture](#code-architecture)
+- [Graphical Manager](#graphical-manager)
 
 ## Overview
 
@@ -27,7 +27,6 @@ cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake _DCMAKE_BUILD_TYPE=Debug ..
 cmake --build .
 
 <a name="running-the-program"/>
-
 ## Running the program
 
 When built, the executable file to launch is **life-of-boids.exe**. By default, the program will be generated with a flock of 400 parrots.
@@ -68,6 +67,8 @@ Special usage : ```./life-of-boids r``` to generate a _fully_ random flock, with
   - **r_sep** : Relaxation of the separation law (float)
   - **r_cohe** : Relaxation of the cohesion law (float)
   - **max_speed** : The maximum speed of an agent (int)
+
+<a name="commands"/>
 
 ## Commands
 
@@ -120,7 +121,7 @@ FPS calculates the time needed to create an image and calculates the number of i
 		oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
 		glfwSetWindowTitle(m_window, oss.str().c_str());
 ```
-
+<a name="code-architecture"/>
 ## Code Architecture
 
 ![ULM diagram](assets/readme/ulmDiagram.png)
@@ -202,6 +203,8 @@ with differents attributes (flock_size, range, angle_view, agent_size, cohesion_
 The color of the birds can be chosen to be random.
 
 ![Colors](assets/readme/colorsOfFlock.png)
+
+<a name="graphical-manager"/>
 
 ## Graphical Manager
 The goal of the GraphicalManager class is to wrap-up all the OpenGL components of the code to make development easier.
