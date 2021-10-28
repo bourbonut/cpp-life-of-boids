@@ -18,14 +18,9 @@
 #include <sstream>
 #pragma endregion
 
-bool run_boids = true;
-bool manual_hunt = false;
-Agent* e;// = new Eagle{ Vec2{(float)100, (float)100}, Vec2{0.f,0.f},10, 50,100, 50.f, Color::Red , hunt };
-
-
-//GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor, Flock* myFlock) {
-//
-//};
+bool run_boids = true; //used to pause the runtime
+bool manual_hunt = false; //used when user presses or relase CTRL to generate a manual predator or one with a law
+Agent* e; //used to add a new eagle in the key callback
 
 GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
 

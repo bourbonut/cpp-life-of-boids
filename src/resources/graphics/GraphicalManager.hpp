@@ -18,14 +18,9 @@ static bool prettyAgents = true;
 class GraphicalManager {
 private:
 	GLFWwindow* m_window;
-	//AgentDisplayer<> m_displayer;
 	int m_height;
 	int m_width;
 	Color m_background_color;
-
-	//GLint m_mvp_location;
-	//GLint m_vpos_location;
-	//GLint m_vcol_location;
 
 	GLint m_transform_location;
 	GLint m_pointSize_location;
@@ -38,10 +33,6 @@ private:
 	GLint m_vcol_location2;
 
 public:
-	//ShaderProgram triangle_shaderProgram;
-	//VertexArray triangle_vertexArray;
-	//Buffer triangle_buffer;
-
 	ShaderProgram points_shaderProgram;
 	VertexArray points_vertexArray;
 	Buffer points_buffer;

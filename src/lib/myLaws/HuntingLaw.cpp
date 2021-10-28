@@ -6,7 +6,7 @@
 #include "../../resources/model/Flock.hpp"
 #include "../../resources/model/Eagle.hpp"
 
-HuntingLaw::HuntingLaw() : Law(20.f), m_manualHunting(false){};
+HuntingLaw::HuntingLaw() : Law(20.f), m_manualHunting(false) { m_pFlock = nullptr; };
 
 HuntingLaw::HuntingLaw(Flock* pFlock) : Law(20.f), m_manualHunting(false) {
 	m_pFlock = pFlock;

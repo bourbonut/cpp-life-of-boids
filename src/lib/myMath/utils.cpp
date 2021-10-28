@@ -59,14 +59,14 @@ int researchX(const float& target, const std::vector<std::tuple<float, float, in
   if (std::get<0>(v[0]) >= target){
     return 0;
   }
-  else if (std::get<0>(v[size - 1]) <= target) {
+  else if (std::get<0>(v[(int)(size - 1.0)]) <= target) {
     return size - 1;
   }
   else{
     int d = 4;
     int a;
     int middle = (int) size / 2;
-    while (!(std::get<0>(v[middle - 1]) < target  && target <= std::get<0>(v[middle]))){
+    while (!(std::get<0>(v[(int)(middle - 1.0)]) < target  && target <= std::get<0>(v[middle]))){
       a = (int)size / d;
       if (target < std::get<0>(v[middle])) {
         middle -= (a!=0) ? a : 1;
@@ -85,14 +85,14 @@ int researchY(const float& target, const std::vector<std::tuple<float, float, in
   if (std::get<1>(v[0]) > target){
     return 0;
   }
-  else if (std::get<1>(v[size - 1]) <= target) {
+  else if (std::get<1>(v[(int)(size - 1.0)]) <= target) {
     return size - 1;
   }
   else{
     int d = 4;
     int a;
     int middle = (int) size / 2;
-    while (!(std::get<1>(v[middle - 1]) <= target  && target <= std::get<1>(v[middle]))){
+    while (!(std::get<1>(v[(int)(middle - 1.0)]) <= target  && target <= std::get<1>(v[middle]))){
       a = (int) size / d;
       if (target < std::get<1>(v[middle])) {
         middle -= (a!=0) ? a : 1;
