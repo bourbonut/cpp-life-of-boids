@@ -8,7 +8,8 @@
 - [     Commands](#commands)
 - [II.  Work Methodology](#work-methodology)
 - [III. Code Architecture](#code-architecture)
-- [Graphical Manager](#graphical-manager)
+- [     Agent and Flock](#agent-flock)
+- [     Graphical Manager](#graphical-manager)
 - [IV.  Continuous Inte gration](#continuous-intergration)
 - [V.   Profiling/performance computing](#profiling-performance)
 - [VI.  Conclusion and openings](#conclusion-and-openings)
@@ -103,27 +104,6 @@ Here are the methods we used to make our teamwork more effective :
 Two people work simultaneously on the code, one writes the code while the other checks it in real time.
 Example : Aymeric/Julian : Insertion of predators
 
-## Keyboard and mouse commands
-This is a list of available commandes when in runtime :
-- *SPACE* : Pauses the movment of agents
-- *P* : Switches to triangle/dot display
-- *UP ARROW* : Adds a parrot in position (0,0)
-- *DOWN ARROW* : Removes the last added agent of the flock
-- *RIGHT CLIC* : Destroys agents within a 100 pixel range
-- *LEFT CLIC* : Adds a predator to the flock, press *CTRL* while clicking to add a predator with no law (easier to control with ZQSD).
-- *Z, Q, S, D* : Moves the last added predator respectively : up, left, down, right.
-
-## FPS
-FPS calculates the time needed to create an image and calculates the number of images created per second.
-```cpp
-		auto start = high_resolution_clock::now();
-```
-```cpp
-		auto stop = high_resolution_clock::now();
-		auto duration = duration_cast<microseconds>(stop - start);
-		std::ostringstream oss;
-		oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
-		glfwSetWindowTitle(m_window, oss.str().c_str());
 ```
 <a name="code-architecture"/>
 
@@ -163,6 +143,10 @@ All following functions are presented in different parts of the project.
 - `random_float` it generates a random float
 - `researchX` it looks for a target given a sorted set of `Vec2` (according to x values)
 - `researchY` it looks for a target given a sorted set of `Vec2` (according to y values)
+
+<a name="agent-flock"/>
+
+## Agent and Flock
 
 ![ULM diagram](assets/readme/ulmDiagram.png)
 
@@ -379,6 +363,28 @@ It's possible to draw the agents either as triangles or as points, even though a
 It supports the display in windowed screen or fullscreen, and the Agent drawing as triangles or points.
 
 Finally, the GraphicalManager destructor takes care of closing the window and cleaning the OpenGL variables before ending the program.
+
+## Keyboard and mouse commands
+This is a list of available commandes when in runtime :
+- *SPACE* : Pauses the movment of agents
+- *P* : Switches to triangle/dot display
+- *UP ARROW* : Adds a parrot in position (0,0)
+- *DOWN ARROW* : Removes the last added agent of the flock
+- *RIGHT CLIC* : Destroys agents within a 100 pixel range
+- *LEFT CLIC* : Adds a predator to the flock, press *CTRL* while clicking to add a predator with no law (easier to control with ZQSD).
+- *Z, Q, S, D* : Moves the last added predator respectively : up, left, down, right.
+
+## FPS
+FPS calculates the time needed to create an image and calculates the number of images created per second.
+```cpp
+		auto start = high_resolution_clock::now();
+```
+```cpp
+		auto stop = high_resolution_clock::now();
+		auto duration = duration_cast<microseconds>(stop - start);
+		std::ostringstream oss;
+		oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
+		glfwSetWindowTitle(m_window, oss.str().c_str());
 
 <a name="continuous-intergration"/>
 
