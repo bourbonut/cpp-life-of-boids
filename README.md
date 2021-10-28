@@ -2,25 +2,27 @@
 
 ## Table of Contents
 
-- [I. Overview](#overview)
-- [Build](#build)
-- [Running the program](#running-the-program)
-- [Commands](#commands)
-- [II. Work Methodology](#work-methodology)
+- [I.   Overview](#overview)
+- [     Build](#build)
+- [     Running the program](#running-the-program)
+- [     Commands](#commands)
+- [II.  Work Methodology](#work-methodology)
 - [III. Code Architecture](#code-architecture)
 - [Graphical Manager](#graphical-manager)
-- [IV. Continuous Intergration](#continuous-intergration)
-- [V. Profiling/performance computing](#profiling-performance)
-- [VI. Conclusion and openings](#conclusion-and-openings)
+- [IV.  Continuous Inte gration](#continuous-intergration)
+- [V.   Profiling/performance computing](#profiling-performance)
+- [VI.  Conclusion and openings](#conclusion-and-openings)
 
 <a name="overview"/>
-## I. Overview
+
+## I.   Overview
 
 life-of-boids is an application/software developped in C++ to simulate a flock of birds in animation mode in order to show their individual behaviour and interaction with each other and the environment surrounding them.
 
 In general lines, the project corresponds to an artificial life experience which permits to analyse collective and individual behaviour, in addition to providing fun user interaction.
 
 <a name="build"/>
+
 ## Build
 
 sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
@@ -31,6 +33,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake _DCMAKE_BUILD_TYPE=Debug ..
 cmake --build .
 
 <a name="running-the-program"/>
+
 ## Running the program
 
 When built, the executable file to launch is **life-of-boids.exe**. By default, the program will be generated with a flock of 400 parrots.
@@ -73,6 +76,7 @@ Special usage : ```./life-of-boids r``` to generate a _fully_ random flock, with
   - **max_speed** : The maximum speed of an agent (int)
 
 <a name="commands"/>
+
 ## Commands
 
 This is a list of available commandes when in runtime :
@@ -86,7 +90,8 @@ This is a list of available commandes when in runtime :
 
 
 <a name="work-methodology"/>
-## II. Work methodology
+
+## II.  Work methodology
 Here are the methods we used to make our teamwork more effective :
 - *Agile methods* : An agile project is organized in iterative and incremental development cycles, in which the end customer and the user are integrated and actively participate.
 - *Scrum methods* : Scrum is an Agile methodology and provides a project management framework with roles, meetings and an iterative development cycle. The advantage of working in a Scrum framework is that this methodology is simple, transparent and pragmatic.
@@ -121,6 +126,7 @@ FPS calculates the time needed to create an image and calculates the number of i
 		glfwSetWindowTitle(m_window, oss.str().c_str());
 ```
 <a name="code-architecture"/>
+
 ## III. Code Architecture
 
 ![ULM diagram](assets/readme/ulmDiagram.png)
@@ -316,6 +322,7 @@ The color of the birds can be chosen to be random.
 ![Colors](assets/readme/colorsOfFlock.png)
 
 <a name="graphical-manager"/>
+
 ## Graphical Manager
 The goal of the GraphicalManager class is to wrap-up all the OpenGL components of the code to make development easier.
 The GraphicalManager constructor initializes and manages OpenGL variables and our graphical variables to help us draw the shapes we want.
@@ -339,7 +346,8 @@ It supports the display in windowed screen or fullscreen, and the Agent drawing 
 Finally, the GraphicalManager destructor takes care of closing the window and cleaning the OpenGL variables before ending the program.
 
 <a name="continuous-intergration"/>
-# V. Continuous intergration
+
+# IV.   Continuous integration
 ## Docker
 In order to run the builds in Continuous Integration Pipelines, docker images are needed in order to execute the commands of the pipeline. Namely the different stages needed are : 
 - The installation of the dependencies with conan
@@ -382,7 +390,8 @@ Now, when a developer pushes his/her branch, the new pipeline is triggered, the 
 All of this experience has shown us that some compilers do work that other won”t do, in which case we have to make this work explicit it in the code (most often is include problems, MSVC will automatically include some files and library needed for the project, which Clang won’t do).
 
 <a name="profiling-performance"/>
-# VI. Profiling/performance computing
+
+# V.    Profiling/performance computing
 ## Valgrind
 In order to improve the performances of the program, it is necessary to discover the sections of code that use the most resources. Valgrind is a Linux tool designed to help programmers analyze their code at runtime to get these precious informations.
 Valgrind simulates every single instruction the program executes. Because of this, the active tool checks, or profiles, not only the code in the application but also in all supporting dynamically-linked libraries, including the C libraries, and so on.
@@ -407,7 +416,8 @@ We tried to implement the move constructor and move operator but it did not seem
 After taking a step back, we can determine some parts to improve and limits.
 
 <a name="conclusion-and-openings"/>
-# VII. Conclusion and openings
+
+# VI.   Conclusion and openings
 ## Limits
 For instance, when we calculate angle between two vectors, we have to use the `acos` function. Also, the distance between two vectors needs the `sqrt` function.
 So even if we try to optimize the code, we couldn't not be quicker than the time spent to calculate fundamental mathematic functions. Also the time spent to access memory is significant.
