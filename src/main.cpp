@@ -3,7 +3,6 @@
 #include "resources/graphics/GraphicalManager.hpp"
 #include "resources/controller/flock_generator.hpp"
 
-
 Flock* MAIN_pFLOCK = nullptr;
 
 int main(int argc, char* argv[]) {
@@ -38,5 +37,4 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 	return 0;
-
 }

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Agent.hpp"
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myLaws/HuntingLaw.hpp"

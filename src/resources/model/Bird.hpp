@@ -11,8 +11,8 @@
 class Bird : public Agent{
 private:
 	CohesionLaw m_cohesionLaw;
-	SeparationLaw m_separationLaw;
 	AlignmentLaw m_alignmentLaw;
+	SeparationLaw m_separationLaw;
 
 public:
 	Bird(); // Constructeur sans arguments

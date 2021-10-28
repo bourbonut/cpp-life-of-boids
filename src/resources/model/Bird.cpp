@@ -14,8 +14,8 @@ Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, cons
 
 Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float& maxSpeed, const Color& color, const CohesionLaw& cohesionLaw, const AlignmentLaw& alignmentLaw, const SeparationLaw& separationLaw) :
 	Bird(position, velocity, bodySize, viewAngle, range, maxSpeed, color) {
-	m_alignmentLaw = alignmentLaw;
 	m_cohesionLaw = cohesionLaw;
+	m_alignmentLaw = alignmentLaw;
 	m_separationLaw = separationLaw;
 };
 

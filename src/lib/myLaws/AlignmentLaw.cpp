@@ -11,7 +11,7 @@ Vec2 AlignmentLaw::compute(Agent&, const std::vector<Agent*>& neighbors) const {
 
 	Vec2 nextVelocity(0, 0);
 	if (neighbors.size() > 0) {
-		for (int i = 0; i < neighbors.size(); ++i) {
+		for (int i = 0; i < (int)neighbors.size(); ++i) {
 			nextVelocity = nextVelocity + (*neighbors[i]).getVelocity();
 		}
 		nextVelocity = nextVelocity / (float)neighbors.size();

@@ -96,7 +96,7 @@ Flock generate_fully_random_bird_flock()
 	return Flock{ agents };
 }
 
-Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf_sup_agent_size, Vec2 inf_sup_agent_angle_view, Vec2 inf_sup_agent_position, Vec2 inf_sup_agent_velocity, Vec2 inf_sup_speed_relax)
+Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf_sup_agent_size, Vec2 inf_sup_agent_angle_view, Vec2 inf_sup_speed_relax)
 {
 	int flock_size = (int)random_float((int)inf_sup_size.x, (int)inf_sup_size.y);
 	int range = (int)random_float((int)inf_sup_range.x, (int)inf_sup_range.y);

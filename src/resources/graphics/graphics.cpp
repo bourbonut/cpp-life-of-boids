@@ -1,5 +1,3 @@
-#pragma once
-
 #include "graphics.hpp"
 #include "../../lib/myMath/Vec2.hpp"
 #include "oglTypes.hpp"

@@ -1,9 +1,3 @@
-//#include "utils.hpp"
-////#define _USE_MATH_DEFINES
-////#include <cmath>
-//#include "Vec2.hpp"
-//#include <vector>
-//#include <random>
 #include "Vec2.hpp"
 #include <vector>
 #include <random>

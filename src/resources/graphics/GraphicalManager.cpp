@@ -1,4 +1,6 @@
+#ifndef __GNUC__
 #pragma region declarations
+#endif
 #include <vector>
 #include <tuple>
 #include "GraphicalManager.hpp"
@@ -16,10 +18,13 @@
 #include <iomanip>
 #include <chrono>
 #include <sstream>
+#ifndef __GNUC__
 #pragma endregion
+#endif
 
 bool run_boids = true; //used to pause the runtime
 bool manual_hunt = false; //used when user presses or relase CTRL to generate a manual predator or one with a law
+bool prettyAgents = true; //to change agent display
 Agent* e; //used to add a new eagle in the key callback
 
 GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
@@ -157,7 +162,6 @@ bool GraphicalManager::mainLoop() {
 
 	if (!glfwWindowShouldClose(m_window)) {
 		auto start = std::chrono::high_resolution_clock::now();
-		int initial_size, next_size;
 
 		glfwGetFramebufferSize(m_window, &m_width, &m_height);
 
@@ -171,8 +175,6 @@ bool GraphicalManager::mainLoop() {
 			if ((*MAIN_pFLOCK).optimized_computing) {
 				(*MAIN_pFLOCK).updateAgents();
 			}
-
-			initial_size = (*MAIN_pFLOCK).getPopSize();
 
 			for (int i = 0; i < (*MAIN_pFLOCK).getPopSize(); ++i){
 				Agent *bird = (*MAIN_pFLOCK)[i];
@@ -202,7 +204,7 @@ bool GraphicalManager::mainLoop() {
 				if (prettyAgents) {
 					// Fill vertex array of groups of 6 points each for double triangles
 					mat2x6 result = triangleDisplay.drawAgent(bird);
-					for (int j = 0; j < result.size(); ++j) {
+					for (int j = 0; j < (int)result.size(); ++j) {
 						vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, (*bird).getGLColor() });
 					}
 				}
@@ -210,11 +212,7 @@ bool GraphicalManager::mainLoop() {
 					// Fill vertex array of points for each agents
 					Vec2 res = (dotDisplayer.drawAgent(bird))[0];
 					vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, (*bird).getGLColor() });
-				}
-
-				next_size = (*MAIN_pFLOCK).getPopSize();
-
-				
+				}				
 			}
 
 			(*MAIN_pFLOCK).destroyAgents();
@@ -283,7 +281,7 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
   * @param error Error ID.
   * @param description Error text description.
   */
-static void error_callback(int error, const char* description) {
+void error_callback(int error, const char* description) {
 	std::cerr << "Error[" << error << "]: " << description << "\n";
 }
 
@@ -295,7 +293,7 @@ static void error_callback(int error, const char* description) {
   * @param scancode
   * @param action action taken (press, unpress, repeat...)
   */
-static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
+void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
 	// If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);

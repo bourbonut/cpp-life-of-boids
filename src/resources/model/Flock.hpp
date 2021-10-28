@@ -1,10 +1,9 @@
 #pragma once
-
 #include "../../lib/myMath/Vec2.hpp"
 #include "vector"
 #include <tuple>
 #include "Bird.hpp"
-// #include "myMath/utils.hpp"
+
 
 class Flock {
 private :
