@@ -376,16 +376,6 @@ It supports the display in windowed screen or fullscreen, and the Agent drawing 
 
 Finally, the GraphicalManager destructor takes care of closing the window and cleaning the OpenGL variables before ending the program.
 
-## Keyboard and mouse commands
-This is a list of available commandes when in runtime :
-- *SPACE* : Pauses the movment of agents
-- *P* : Switches to triangle/dot display
-- *UP ARROW* : Adds a parrot in position (0,0)
-- *DOWN ARROW* : Removes the last added agent of the flock
-- *RIGHT CLIC* : Destroys agents within a 100 pixel range
-- *LEFT CLIC* : Adds a predator to the flock, press *CTRL* while clicking to add a predator with no law (easier to control with ZQSD).
-- *Z, Q, S, D* : Moves the last added predator respectively : up, left, down, right.
-
 ## FPS
 FPS calculates the time needed to create an image and calculates the number of images created per second.
 ```cpp
