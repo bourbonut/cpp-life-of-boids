@@ -219,6 +219,8 @@ The weighted outputs of these laws form, after theirs respectives relaxation are
 In order to be able to calculate the laws of alignment, cohesion and separation, it was necessary to create the method "compute neighbors".
 This method consists in going through a list of agents and checking the existence of a neighbor according to a precise range and to the angle of view of the agent (according to type of bird).
 
+[Link to the file](https://git.sophia.mines-paristech.fr/hpc-ai_21/cpp-life-of-boids/-/blob/master/src/resources/model/Flock.cpp)
+
 ### First idea
 There were different algorithms which were tested to try to reduce the time for looking for neighbors of a particular agent.
 
@@ -340,22 +342,22 @@ The color of the birds can be chosen to be random.
 
 Range 70
 Flock generate_duck_flock(int size);
-![Ducks](assets/readme/colorsOfFlock.png)
+![Ducks](assets/readme/ducks.png)
 
 Flock generate_ant_flock(int size);
-![Ants](assets/readme/colorsOfFlock.png)
+![Ants](assets/readme/ants.png)
 
 Angle view is 270, range is 50
 Flock generate_dove_flock(int size);
-![Doves](assets/readme/colorsOfFlock.png)
+![Doves](assets/readme/doves.png)
 
 Angle view is about 300, range 50
 Flock generate_parrot_flock(int size);
-![Parrots](assets/readme/colorsOfFlock.png)
+![Parrots](assets/readme/parrots.png)
 
 Everything randomized
 Flock generate_fully_random_bird_flock();
-![Randomized](assets/readme/colorsOfFlock.png)
+![Randomized](assets/readme/randomized.png)
 
 # User configuration
 Now that we have implemented a flock generator, which can be used in many ways in the code, we want to be able to let the user configure his flock. This can be done by using options (c.f. chapter **Running the program - Options**).
