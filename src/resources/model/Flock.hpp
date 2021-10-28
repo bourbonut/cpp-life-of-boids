@@ -10,17 +10,22 @@ class Flock {
 private :
 	//std::vector<Bird> m_birdsVec;
 	std::vector<Agent*> m_agents;
+	std::vector<std::tuple<float, float, int>> m_x;
+	std::vector<std::tuple<float, float, int>> m_y;
 
 public:
+	bool optimized_computing = false;
 	void print();
 	int getPopSize() const;
 	Agent* getAgent(int index);
 	Agent* operator[](int index) { return m_agents.at(index); };
 	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighbors(const Agent& agent);
+	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighborsOrigin(const Agent& agent);
 
 	void addAgent(Agent *a);
 	void destroyAgent(const Vec2& position, const int& destroyRadius);
 	void destroyLastAgent();
+	void updateAgents();
 
 public:
 	Flock(std::vector<Agent*> population);

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Law.hpp"
 #include "../myMath/Vec2.hpp"
 #include <vector>

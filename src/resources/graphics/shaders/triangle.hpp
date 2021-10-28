@@ -11,7 +11,7 @@ inline mat4x4 mat4x4_identity() {
   mat4x4 M;
   for (int i = 0; i < 4; ++i)
     for (int j = 0; j < 4; ++j)
-      M[i][j] = i == j ? 1. : 0.;
+      M[i][j] = i == j ? 1.f : 0.f;
   return M;
 }
 

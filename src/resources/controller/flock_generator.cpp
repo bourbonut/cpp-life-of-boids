@@ -61,7 +61,7 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 
 Flock generate_fully_random_bird_flock()
 {
-	int flock_size = random_float(20, 500);
+	int flock_size = (int)random_float(20, 500);
 	int range;
 	int angle_view;
 	int agent_size;
@@ -79,14 +79,14 @@ Flock generate_fully_random_bird_flock()
 	agents.reserve(reserve_size);
 
 	for (int i = 0; i < flock_size; ++i) {
-		range = random_float(5, 100);
-		angle_view = random_float(100, 360);
-		agent_size = random_float(2, 20);
+		range = (int)random_float(5, 100);
+		angle_view = (int)random_float(100, 360);
+		agent_size = (int)random_float(2, 20);
 		position = randomVec2Generation(0, 500);
 		velocity = randomVec2Generation(-10, 10);
 		speed_relax = random_float(1, 30);
-		align_relax = random_float(-0.5, 2);
-		sep_relax = random_float(-0.5, 2);
+		align_relax = random_float(-2, 2);
+		sep_relax = random_float(-2, 2);
 		cohesion_relax = random_float(0, 1);
 		agent_color = random_color();
 
@@ -98,14 +98,14 @@ Flock generate_fully_random_bird_flock()
 
 Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf_sup_agent_size, Vec2 inf_sup_agent_angle_view, Vec2 inf_sup_agent_position, Vec2 inf_sup_agent_velocity, Vec2 inf_sup_speed_relax)
 {
-	int flock_size = random_float(inf_sup_size.x, inf_sup_size.y);
-	int range = random_float(inf_sup_range.x, inf_sup_range.y);
-	int angle_view = random_float(inf_sup_agent_angle_view.x, inf_sup_agent_angle_view.y);
-	int agent_size = random_float(inf_sup_agent_size.x, inf_sup_agent_size.y);
+	int flock_size = (int)random_float((int)inf_sup_size.x, (int)inf_sup_size.y);
+	int range = (int)random_float((int)inf_sup_range.x, (int)inf_sup_range.y);
+	int angle_view = (int)random_float((int)inf_sup_agent_angle_view.x, (int)inf_sup_agent_angle_view.y);
+	int agent_size = (int)random_float((int)inf_sup_agent_size.x, (int)inf_sup_agent_size.y);
 	float cohesion_relax = 1 / random_float(-10, 10);
 	float sep_relax = 1 / random_float(-10, 10);
 	float align_relax = 1 / random_float(-10, 10);
-	float speed_relax = random_float(inf_sup_speed_relax.x, inf_sup_speed_relax.y);
+	float speed_relax = random_float((int)inf_sup_speed_relax.x, (int)inf_sup_speed_relax.y);
 
 
 	//Change to random color 
@@ -117,14 +117,14 @@ Flock generate_parrot_flock(int size)
 {
 	float cohesion_relax = 0.0002f;
 	float sep_relax = 0.9f;
-	float align_relax = 0.3;
+	float align_relax = 0.3f;
 	return created_bird_flock_random_colors(size, 6, 50, 320, sep_relax, cohesion_relax, align_relax, 5.f);
 }
 
 Flock generate_dove_flock(int size) {
-	float cohesion_relax = 0.0004;
+	float cohesion_relax = 0.0004f;
 	float sep_relax = 1.f;
-	float align_relax = 0.05;
+	float align_relax = 0.05f;
 	return create_bird_flock(size, Color::White, 6, 50, 270, sep_relax, cohesion_relax, align_relax, 10.f);
 }
 
@@ -153,7 +153,7 @@ Flock generate_fly_flock(int size) {
 
 Color random_color() {
 
-	int randomNb = random_float(0, 6);
+	int randomNb = (int)random_float(0, 6);
 	Color result;
 
 	switch (randomNb)
@@ -254,13 +254,19 @@ Flock generate_flock_with_args(int argc, char* argv[])
 	switch (argc)
 	{
 	case 1://no arguments
-		std::cout << "Generating a flock of 400 parrots, to change the flock's type, use arguments ./life-of-boids.exe SIZE TYPE\nAvailable types can be found in the readme file." << std::endl;
+		std::cout << "Generating a flock of 400 parrots. To change the flock's type, use arguments ./life-of-boids.exe SIZE TYPE\nAvailable types can be found in the readme file." << std::endl;
 		return generate_parrot_flock(400);
 
 	case 2:
 		//Only flock size, or fully random if arg is 'r'
 		if (*(argv[1]) == 'r') {
 			return generate_fully_random_bird_flock();
+		}
+		else if (*(argv[1]) == 'f') {
+			float cohesion_relax = 0.0004f;
+			float sep_relax = 1.f;
+			float align_relax = 0.05f;
+			return create_bird_flock(600, Color::White, 6, 50, 270, Vec2{ 250, 250 }, Vec2{ 1,1 }, sep_relax, cohesion_relax, align_relax, 8.f);
 		}
 		else {
 			int size = atoi(argv[1]);
@@ -339,7 +345,7 @@ Flock generate_flock_with_args(int argc, char* argv[])
 		float r_sep = std::stof(argv[7]);
 		float r_cohe = std::stof(argv[8]);
 
-		int max_speed = atoi(argv[9]);
+		float max_speed = std::stof(argv[9]);
 		if (max_speed <= 0) {
 			max_speed = 0;
 			std::cout << "WARNING :Agent's max speed (int) will be 0, they won't move, check your arguments." << std::endl;
@@ -348,7 +354,7 @@ Flock generate_flock_with_args(int argc, char* argv[])
 		std::cout << "\nGenerating a flock with\n\t" << size << " " << pColor << " agents\n\trange : " << range << " / angle view : " << angle_view << '\n';
 		std::cout << "\tmax speed : " << max_speed <<"\n\n\t >> Alignment : " << r_align << "\n\t >> Separation : " << r_sep << "\n\t >> Cohesion : " << r_cohe << std::endl;
 		
-		return create_bird_flock(size, color, bird_size, range, angle_view, r_sep, r_cohe, r_align, max_speed);
+		return create_bird_flock((int)size, color, (int)bird_size, (int)range, (int)angle_view, r_sep, r_cohe, r_align, max_speed);
 	}
 	default:
 		//error
