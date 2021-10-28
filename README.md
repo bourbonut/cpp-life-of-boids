@@ -213,6 +213,8 @@ In technical terms, the Law class includes in particular a protected relaxation 
 Having considered that, it is important to notice the interactions between the laws and not a law by itself, and in particular the complementary laws affecting a Bird.
 The weighted outputs of these laws form, after theirs respectives relaxation are applied, the displacement, which is a change in velocity enabling Birds to form clusters and Eagles to track their prey.
 
+![Colors](assets/readme/colorsOfFlock.png)
+
 ### Compute neighbors
 In order to be able to calculate the laws of alignment, cohesion and separation, it was necessary to create the method "compute neighbors".
 This method consists in going through a list of agents and checking the existence of a neighbor according to a precise range and to the angle of view of the agent (according to type of bird).
@@ -336,7 +338,24 @@ This code contributes to generate different types of Birds in a Flock (Duck, Ant
 with differents attributes (flock_size, range, angle_view, agent_size, cohesion_relax, sep_relax, align_relax, speed_relax, position, velocity, agent_color).
 The color of the birds can be chosen to be random.
 
-![Colors](assets/readme/colorsOfFlock.png)
+Range 70
+Flock generate_duck_flock(int size);
+![Ducks](assets/readme/colorsOfFlock.png)
+
+Flock generate_ant_flock(int size);
+![Ants](assets/readme/colorsOfFlock.png)
+
+Angle view is 270, range is 50
+Flock generate_dove_flock(int size);
+![Doves](assets/readme/colorsOfFlock.png)
+
+Angle view is about 300, range 50
+Flock generate_parrot_flock(int size);
+![Parrots](assets/readme/colorsOfFlock.png)
+
+Everything randomized
+Flock generate_fully_random_bird_flock();
+![Randomized](assets/readme/colorsOfFlock.png)
 
 # User configuration
 Now that we have implemented a flock generator, which can be used in many ways in the code, we want to be able to let the user configure his flock. This can be done by using options (c.f. chapter **Running the program - Options**).
