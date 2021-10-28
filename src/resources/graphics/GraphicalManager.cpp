@@ -249,7 +249,7 @@ bool GraphicalManager::mainLoop() {
 		auto stop = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 		std::ostringstream oss;
-		oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
+		oss << "Population : " << (int)(*MAIN_pFLOCK).getPopSize() << "                                                       FPS : " << (int)(1 / (duration.count() * 10e-7)) << std::endl;
 		glfwSetWindowTitle(m_window, oss.str().c_str());
 
 		// Swap buffers
