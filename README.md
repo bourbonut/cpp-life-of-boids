@@ -3,11 +3,11 @@
 ## Table of Contents
 
 - [Overview](#Overview)
-- [Build](#Build)
-- [Running the program](#Running the program)
+- [Build](#build)
+- [Running the program](#Running-the-program)
 - [Commands](#Commands)
-- [Code Architecture](#Code Architecture)
-- [Graphical Manager](#Graphical Manager)
+- [Code Architecture](#Code-Architecture)
+- [Graphical Manager](#Graphical-Manager)
 
 ## Overview
 
@@ -15,6 +15,7 @@ life-of-boids is an application/software developped in C++ to simulate a flock o
 
 In general lines, the project corresponds to an artificial life experience which permits to analyse collective and individual behaviour, in addition to providing fun user interaction.
 
+<a name="build"/>
 ## Build
 
 sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
