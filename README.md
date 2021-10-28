@@ -3,14 +3,14 @@
 ## Table of Contents
 
 - [I.   Overview](#overview)
-- [     Build](#build)
-- [     Running the program](#running-the-program)
-- [     Commands](#commands)
+    - [Build](#build)
+    - [Running the program](#running-the-program)
+    - [Commands](#commands)
 - [II.  Work Methodology](#work-methodology)
 - [III. Code Logic and Architecture](#code-architecture)
-- [     Agent and Flock](#agent-flock)
-- [     Graphical Manager](#graphical-manager)
-- [IV.  Continuous Inte gration](#continuous-intergration)
+    - [Agent and Flock](#agent-flock)
+    - [Graphical Manager](#graphical-manager)
+- [IV.  Continuous Integration](#continuous-intergration)
 - [V.   Profiling/performance computing](#profiling-performance)
 - [VI.  Conclusion and openings](#conclusion-and-openings)
 
