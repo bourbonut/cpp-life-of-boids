@@ -12,7 +12,6 @@ public:
     Vec2(const float);
     Vec2(const Vec2& other) noexcept;
     Vec2(Vec2&& other) noexcept;
-    //constexpr Vec2(const Vec2& other) = default;
     ~Vec2() {};
 
 public:
