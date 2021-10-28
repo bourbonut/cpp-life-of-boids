@@ -340,7 +340,7 @@ This code contributes to generate different types of Birds in a Flock (Duck, Ant
 with differents attributes (flock_size, range, angle_view, agent_size, cohesion_relax, sep_relax, align_relax, speed_relax, position, velocity, agent_color).
 The color of the birds can be chosen to be random.
 
-Angle view is 360, range 70'\n'
+Angle view is 360, range 70<br />
 Flock generate_duck_flock(int size);
 
 ![Ducks](assets/readme/ducks.png)
@@ -349,17 +349,17 @@ Flock generate_ant_flock(int size);
 
 ![Ants](assets/readme/ants.png)
 
-Angle view is 270, range is 50'\n'
+Angle view is 270, range is 50<br />
 Flock generate_dove_flock(int size);
 
 ![Doves](assets/readme/doves.png)
 
-Angle view is about 300, range 50'\n'
+Angle view is about 300, range 50<br />
 Flock generate_parrot_flock(int size);
 
 ![Parrots](assets/readme/parrots.png)
 
-Everything randomized'\n'
+Everything randomized'<br />
 Flock generate_fully_random_bird_flock();
 
 ![Randomized](assets/readme/randomized.png)
