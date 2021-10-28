@@ -61,7 +61,7 @@ Flock create_bird_flock(int size, Color agent_color, int agent_size, int agent_r
 
 Flock generate_fully_random_bird_flock()
 {
-	int flock_size = (int)random_float(20, 500);
+	int flock_size = (int)random_float(20, 5000);
 	int range;
 	int angle_view;
 	int agent_size;
@@ -96,7 +96,7 @@ Flock generate_fully_random_bird_flock()
 	return Flock{ agents };
 }
 
-Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf_sup_agent_size, Vec2 inf_sup_agent_angle_view, Vec2 inf_sup_agent_position, Vec2 inf_sup_agent_velocity, Vec2 inf_sup_speed_relax)
+Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf_sup_agent_size, Vec2 inf_sup_agent_angle_view, Vec2 inf_sup_speed_relax)
 {
 	int flock_size = (int)random_float((int)inf_sup_size.x, (int)inf_sup_size.y);
 	int range = (int)random_float((int)inf_sup_range.x, (int)inf_sup_range.y);
@@ -254,8 +254,8 @@ Flock generate_flock_with_args(int argc, char* argv[])
 	switch (argc)
 	{
 	case 1://no arguments
-		std::cout << "Generating a flock of 400 parrots. To change the flock's type, use arguments ./life-of-boids.exe SIZE TYPE\nAvailable types can be found in the readme file." << std::endl;
-		return generate_parrot_flock(400);
+		std::cout << "\nGenerating a flock of 600 parrots. To change the flock's type, use arguments ./life-of-boids.exe SIZE TYPE\nAvailable types can be found in the readme file.\nFor a more detailed configuration of the flock, read the readme file.\n\n" << std::endl;
+		return generate_parrot_flock(600);
 
 	case 2:
 		//Only flock size, or fully random if arg is 'r'
@@ -352,7 +352,7 @@ Flock generate_flock_with_args(int argc, char* argv[])
 		}
 
 		std::cout << "\nGenerating a flock with\n\t" << size << " " << pColor << " agents\n\trange : " << range << " / angle view : " << angle_view << '\n';
-		std::cout << "\tmax speed : " << max_speed <<"\n\n\t >> Alignment : " << r_align << "\n\t >> Separation : " << r_sep << "\n\t >> Cohesion : " << r_cohe << std::endl;
+		std::cout << "\tmax speed : " << max_speed <<"\n\n\t >> Alignment : " << r_align << "\n\t >> Separation : " << r_sep << "\n\t >> Cohesion : " << r_cohe << "\n\n" << std::endl;
 		
 		return create_bird_flock((int)size, color, (int)bird_size, (int)range, (int)angle_view, r_sep, r_cohe, r_align, max_speed);
 	}

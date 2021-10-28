@@ -1,3 +1,6 @@
+#ifndef __GNUC__
+#pragma region declarations
+#endif
 #include <glad/glad.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -7,7 +10,6 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-
 #include "lib/myMath/Vec2.hpp"
 #include "lib/myMath/utils.hpp"
 #include "resources/model/Flock.hpp"
@@ -16,7 +18,9 @@
 #include "resources/graphics/GraphicalManager.hpp"
 #include "resources/graphics/oglTypes.hpp"
 #include "resources/controller/flock_generator.hpp"
-
+#ifndef __GNUC__
+#pragma endregion
+#endif
 
 Flock* MAIN_pFLOCK = nullptr;
 std::vector<Agent*> mainFlock;

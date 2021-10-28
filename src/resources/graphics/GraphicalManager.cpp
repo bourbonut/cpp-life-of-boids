@@ -1,19 +1,16 @@
-#include <iostream>
+#ifndef __GNUC__
+#pragma region declarations
+#endif
 #include <vector>
-#include <array>
 #include <tuple>
 #include "GraphicalManager.hpp"
 #include "glx.hpp"
 #include "graphics.hpp"
-
 #include "../controller/TriangleDisplayer.hpp"
 #include "../controller/DotDisplayer.hpp"
-
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
-#include <math.h>
-
 #include "../model/Flock.hpp"
 #include "../model/Bird.hpp"
 #include "../model/Eagle.hpp"
@@ -21,15 +18,14 @@
 #include <iomanip>
 #include <chrono>
 #include <sstream>
+#ifndef __GNUC__
+#pragma endregion
+#endif
 
-bool run_boids = true;
-bool manual_hunt = false;
-Agent* e;// = new Eagle{ Vec2{(float)100, (float)100}, Vec2{0.f,0.f},10, 50,100, 50.f, Color::Red , hunt };
-
-
-//GraphicalManager::GraphicalManager(Color myBackgroundColor, Color myAgentColor, Flock* myFlock) {
-//
-//};
+bool run_boids = true; //used to pause the runtime
+bool manual_hunt = false; //used when user presses or relase CTRL to generate a manual predator or one with a law
+bool prettyAgents = true; //to change agent display
+Agent* e; //used to add a new eagle in the key callback
 
 GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
 
@@ -48,10 +44,10 @@ GraphicalManager::GraphicalManager(Color myBackgroundColor, bool fullScreen) {
 	GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
 
 	if (fullScreen) {
-		m_window = glfwCreateWindow(800, 600, "Life-of-boids", primaryMonitor, nullptr);
+		m_window = glfwCreateWindow(1000, 850, "Life-of-boids", primaryMonitor, nullptr);
 	}
 	else {
-		m_window = glfwCreateWindow(800, 600, "Life-of-boids", nullptr, nullptr);
+		m_window = glfwCreateWindow(1000, 850, "Life-of-boids", nullptr, nullptr);
 	}
 
 
@@ -166,7 +162,6 @@ bool GraphicalManager::mainLoop() {
 
 	if (!glfwWindowShouldClose(m_window)) {
 		auto start = std::chrono::high_resolution_clock::now();
-		int initial_size, next_size;
 
 		glfwGetFramebufferSize(m_window, &m_width, &m_height);
 
@@ -180,8 +175,6 @@ bool GraphicalManager::mainLoop() {
 			if ((*MAIN_pFLOCK).optimized_computing) {
 				(*MAIN_pFLOCK).updateAgents();
 			}
-
-			initial_size = (*MAIN_pFLOCK).getPopSize();
 
 			for (int i = 0; i < (*MAIN_pFLOCK).getPopSize(); ++i){
 				Agent *bird = (*MAIN_pFLOCK)[i];
@@ -211,7 +204,7 @@ bool GraphicalManager::mainLoop() {
 				if (prettyAgents) {
 					// Fill vertex array of groups of 6 points each for double triangles
 					mat2x6 result = triangleDisplay.drawAgent(bird);
-					for (int j = 0; j < result.size(); ++j) {
+					for (int j = 0; j < (int)result.size(); ++j) {
 						vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, (*bird).getGLColor() });
 					}
 				}
@@ -219,11 +212,7 @@ bool GraphicalManager::mainLoop() {
 					// Fill vertex array of points for each agents
 					Vec2 res = (dotDisplayer.drawAgent(bird))[0];
 					vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, (*bird).getGLColor() });
-				}
-
-				next_size = (*MAIN_pFLOCK).getPopSize();
-
-				
+				}				
 			}
 
 			(*MAIN_pFLOCK).destroyAgents();
@@ -260,7 +249,7 @@ bool GraphicalManager::mainLoop() {
 		auto stop = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 		std::ostringstream oss;
-		oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
+		oss << "Population : " << (int)(*MAIN_pFLOCK).getPopSize() << "                                                       FPS : " << (int)(1 / (duration.count() * 10e-7)) << std::endl;
 		glfwSetWindowTitle(m_window, oss.str().c_str());
 
 		// Swap buffers
@@ -292,7 +281,7 @@ std::vector<points::Point> GraphicalManager::createPoints(unsigned int number) {
   * @param error Error ID.
   * @param description Error text description.
   */
-static void error_callback(int error, const char* description) {
+void error_callback(int error, const char* description) {
 	std::cerr << "Error[" << error << "]: " << description << "\n";
 }
 
@@ -304,7 +293,7 @@ static void error_callback(int error, const char* description) {
   * @param scancode
   * @param action action taken (press, unpress, repeat...)
   */
-static void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
+void key_callback(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
 	// If the user presses (GLFW_PRESS) escape key (GLFW_KEY_ESCAPE)
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);

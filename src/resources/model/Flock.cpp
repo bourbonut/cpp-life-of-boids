@@ -139,7 +139,7 @@ std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighborsOrig
 		if (!(degrees((agent.getPosition() - (*potentialNeighbor).getPosition()).angle()) > agent.getViewAngle() / 2) && !(agent._id == (*potentialNeighbor)._id))
 		{
 			double distWithPotNeighb = distance(agent.getPosition(), (*potentialNeighbor).getPosition());
-			if (abs(distWithPotNeighb) <= abs(agent.getRange())) {
+			if (fabs(distWithPotNeighb) <= (float)abs(agent.getRange())) {
 				if (dynamic_cast<Bird*> (potentialNeighbor) != nullptr) {
 					neighbors.push_back(potentialNeighbor);
 				}

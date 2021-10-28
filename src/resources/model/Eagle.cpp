@@ -14,7 +14,6 @@ Eagle::Eagle(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	m_huntingLaw = huntLaw;
 }
 
-
 Eagle::Eagle(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float& maxSpeed, const Color& color) :
 	Agent(position, velocity, bodySize, viewAngle, range, maxSpeed, color), m_huntingLaw(), m_separationLaw() {};
 
