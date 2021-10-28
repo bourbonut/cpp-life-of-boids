@@ -2,12 +2,12 @@
 
 ## Table of Contents
 
-- [Overview](##Overview)
-- [Build](##Build)
-- [Running the program](##Running the program)
-- [Commands](##Commands)
-- [Code Architecture](##Code Architecture)
-- [Graphical Manager](##Graphical Manager)
+- [Overview](#Overview)
+- [Build](#Build)
+- [Running the program](#Running the program)
+- [Commands](#Commands)
+- [Code Architecture](#Code Architecture)
+- [Graphical Manager](#Graphical Manager)
 
 ## Overview
 
