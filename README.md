@@ -188,10 +188,122 @@ In technical terms, the Law class includes in particular a protected relaxation 
 Having considered that, it is important to notice the interactions between the laws and not a law by itself, and in particular the complementary laws affecting a Bird.
 The weighted outputs of these laws form, after theirs respectives relaxation are applied, the displacement, which is a change in velocity enabling Birds to form clusters and Eagles to track their prey.
 
-### Compute neighbors, first version
+### Compute neighbors
 In order to be able to calculate the laws of alignment, cohesion and separation, it was necessary to create the method "compute neighbors".
 This method consists in going through a list of agents and checking the existence of a neighbor according to a precise range and to the angle of view of the agent (according to type of bird).
-The first version of this method checked these conditions for all the viable agents (viable means here that only Birds will be considered for the cohesion law of a Bird).
+
+### First idea
+There were different algorithms which were tested to try to reduce the time for looking for neighbors of a particular agent.
+
+The first idea was to implement a _brute-force_ function. We keeped it during the project to guarantee that we could find all neighbors for each iteration of a agent.
+
+This algorithm has a complexity of `O(n²)`.
+
+## Second idea
+
+A second approach was to compute neighbors at the initialization and for next iteration, to compute new neighbors according to the previous computation.
+But there was a main issue. If a new neighbor approaches a agent and was not detected at the last iteration, it will not be taken into account.
+So this idea has been given up.
+
+## Third idea
+
+The third approach was to calculate **all norms of positions** and angles with the **X axis** and store them in two arrays `[norm, angle, index_of_agent]`.
+The next step is to sort them :
+- the first one according to _norm_ criteria
+- the second one according to _angle_ criteria
+
+Now, for each agent, we look for 4 indexes thanks to dichotomy functions:
+
+`agent.norm - agent.range < neighbor.norm < agent.norm + agent.range` so 2 indexes:
+- the lower index where the norm of the neighbor is the closest to `agent.norm - agent.range`
+- the greater index where the norm of the neighbor is the closest to `agent.norm + agent.range`
+
+Let gamma the angle between the current agent and the **X axis** `float gamma = pos.angle();`
+Let alpha the angle between the current agent and the straight line through `O(0, 0)` tangent with the _proximity circle_
+`float alpha = std::asin(range / norm);`
+
+`gamma - alpha < neighbor.angle < gamma + alpha` so 2 indexes:
+- the lower index where the angle of the neighbor with X axis with is the closest to `gamma - alpha`
+- the greater index where the angle of the neighbor with X axis is the closest to `gamma + alpha`
+
+So here is a diagram :
+
+![Polar diagram](assets/readme/polar-approach.png)
+
+Once indexes obtained, we can do an intersection between the two last sorted arrays but limited by the last computed indexes.
+At the end, we iterate on the intersected array and check if they are really neighbors.
+
+So we reduced time of looking for _potential neighbors_.
+The complexity of sorting is `O(n log(n))`. It is done only once per main iteration.
+For each agent, we look for indexes with a complexity of `O(log(n))`. So in total we have `O(n log(n))`.
+To do the intersection, we have to sort arrays (`O(m log m)` with `m < n`)
+The intersection has a complexity of `2 * (m1 + m2)` where `m1` is the size of the first array and `m2` is the size of the second array.
+
+Finally, what takes the most of the time is to sort arrays before intersection
+To get an idea :
+- without sorting part : `~ 2500 µs`
+- with sorting part : `~ 100 ms`
+
+There is an issue. When we compute angles, they are spread on `[-pi, pi]`. So what happened when `gamma - alpha < -pi`, `gamma + alpha > pi`, `norm < range` ?
+- `norm < range` implies that the agent is close to `O(0, 0)` and also neighbors are close to the center. So our research is only on radius.
+- `gamma - alpha < -pi` implies that the agent is near and under -X axis. So there are some neighbors between `[beta, pi]` and some neighbors between `[-pi, gamma + alpha]` where `beta = 2 * pi - alpha + gamma`. So we must get agents in these two intervals
+- `gamma + alpha > pi` same idea but the agent is near and over -X axis.
+
+In the end, the complexity is `O(n * m * log(m))` where `m = max(m1, m2)` where `m1` is the size of the first array (norm criteria) and `m2` is the size of the second array (angle criteria).
+
+We don't go in detail, we prefer to explain the last idea.
+
+## Final idea
+Instead of using polar coordinates, we used cartesian coordinates. Thus, the goal is to start to sort according to X values and Y values and after it's the same idea but without difficulties of angle values overlapping and proximity with center `O(0, 0)`.
+
+Here is a diagram :
+
+![Cartesian diagram](assets/readme/cartesian-approach.png)
+
+So we form 2 arrays : one sorted according x values and one sorted according y values.
+The algorithm is simplified with this approach :
+
+
+[Link to the file](https://git.sophia.mines-paristech.fr/hpc-ai_21/cpp-life-of-boids/-/blob/master/src/resources/model/Flock.cpp)
+
+
+
+So we have the same complexity (`O(n * m log (m))`) as the last algorithm (with polar coordinates) and same problem of sorting data. But it's easier to understand with less problems of overlapping values.
+
+## Time comparaison
+
+Size = 4000
+Mode = Release
+Number of iterations : 5
+
+Origin algorithm:
+```
+t = 0
+855526 microseconds
+t = 1
+857578 microseconds
+t = 2
+858058 microseconds
+t = 3
+858655 microseconds
+t = 4
+861274 microseconds
+```
+
+New algorithm :
+```
+t = 0
+106210 microseconds
+t = 1
+106332 microseconds
+t = 2
+108424 microseconds
+t = 3
+107619 microseconds
+t = 4
+106723 microseconds
+```
+
 
 ### Flock generator and color
 There are differents level of personalization of Flocks generating according to the choice of the user :
@@ -225,7 +337,6 @@ It supports the display in windowed screen or fullscreen, and the Agent drawing 
 
 Finally, the GraphicalManager destructor takes care of closing the window and cleaning the OpenGL variables before ending the program.
 
-# I. 
 ## Docker
 In order to run the builds in Continuous Integration Pipelines, docker images are needed in order to execute the commands of the pipeline. Namely the different stages needed are : 
 - The installation of the dependencies with conan
@@ -250,7 +361,7 @@ To be the most user friendly possible, we created some birds template, with give
 
 These options could have been managed in a easier way using the C++ library ```options```, allowing the user to mark the option he/she wanted with a dash ```-```. This will be integrated next release.
 
-# Git management
+## Git management
 It is not trivial to work in a team of seven people. At first, there we had no particular git management, the rule was to make a merge request on master when we felt our changes was good (compiles and runs on MSVC). Due to some accidental pushes on master, making the master branch not compilable, we started to think of a way to manage our git branches.
 The idea was to make a new branch ```dev```, in which no one is allowed to push, one can only update it using merge requests. This ```dev``` branch is our main development branch, while the ```master``` branch is blocked both for pushing **and** merging.
 
@@ -260,14 +371,14 @@ The ```master``` branch is unlocked when we have a stable version of the program
 
 Although this git management was way better than what we did at the beggining of the project, we were only building and testing our program on one compiler, MSVC. And all this had to be done by hand. The next thing we needed was to integrate continuous integration to our project.
 
-# CI Pipeline
+## CI Pipeline
 Now that we have a nice branch management, and a good merge request system, the only thing missing is a good pipeline which gets triggered for every push and merge request.
  We started by using the Docker image ```conanio/gcc9``` so conan and gcc are both included and we don't have to start an image from scratch.
  Some external packages are needed to compile and run our program : ```libgtk2.0-dev``` and ```libgl1-mesa-dev```. The installation of these files take a few minutes (about 5). Since the docker image is cleared at the beginning of a new pipeline, we had to make these installation everytime. Since a new pipeline is created for **every pull**, which means that the developper has to wait **5 minutes** everytime he/she pushes. Better not miss a semi-colon ! We will develop what actions we decided to take in order to palliate this issue. 
 Now, when a developer pushes his/her branch, the new pipeline is triggered, the code is compiled on both GCC9 and Clang10 compilers, and tests are run on both these environments. In a merge request process, if the pipeline has not succeeded, the request is blocked until someone pushes a commit to fix the issue. This workflow allows us to continuously keep a clean code, which is portable on 3 different compilers. 
 All of this experience has shown us that some compilers do work that other won”t do, in which case we have to make this work explicit it in the code (most often is include problems, MSVC will automatically include some files and library needed for the project, which Clang won’t do).
 
-# VI. Profiling/calcul de performances
+# VI. Profiling/performance computing
 ## Valgrind
 In order to improve the performances of the program, it is necessary to discover the sections of code that use the most resources. Valgrind is a Linux tool designed to help programmers analyze their code at runtime to get these precious informations.
 Valgrind simulates every single instruction the program executes. Because of this, the active tool checks, or profiles, not only the code in the application but also in all supporting dynamically-linked libraries, including the C libraries, and so on.
@@ -282,9 +393,25 @@ The right pannel contains more detailed informations about the function we selec
 For example, as we can see in the image, there is all the functions that `Flock::computeNeighbors ` called. We see that 30% of the processors instructions fetch is used to calculate the angle of our vectors `Vec2`.
 Another view of this type of information is the <em> Call Graph </em> of which we can see an example below :
 
-![Callgraph](assets/readme/callgraph.png "title")
+![Callgraph](assets/readme/callgraph.png)
 
 We can easily and rapidly see who called who, and what are the share of resources each callee uses.
 These informations were used to perform some minor optimisations in term of copies/references. However, the test and development iteration process of this methode is slow because we have to re-build on Linux, re-run valgrind at each development. It is also difficult to see wether the change did or did not have an impact on program performance, because the weights of the instruction fetches are relative and not absolute.
 Even though we knew `Flock::computeNeighbors` was the function using most of the resources, we have not managed to reduce significantly the computational cost of this method. It was difficult to pinpoint where to reduce cost in, for example, `getPosition`, `angle`, `distance` etc. 
 We tried to implement the move constructor and move operator but it did not seem to have an impact on performance.
+
+After taking a step back, we can determine some parts to improve and limits.
+
+# VII.  COnclusion and openings
+## Limits
+For instance, when we calculate angle between two vectors, we have to use the `acos` function. Also, the distance between two vectors needs the `sqrt` function.
+So even if we try to optimize the code, we couldn't not be quicker than the time spent to calculate fundamental mathematic functions. Also the time spent to access memory is significant.
+
+## Parts to improve
+We could try to implement a new algorithm to compute neighbors. For instance, there is the [_k-d tree_](https://en.wikipedia.org/wiki/K-d_tree) algorithm which partitions our agents array as a binary tree. The complexity to build it, is `O(log n)`. After having the binary tree, we must look for neighbors through it.
+So the complexity should be after all `O(n log n)`.
+
+Also we could use _threads_ to speed up the computation of neighbors. Each thread should compute neighbors of one given agent.
+
+## Next step
+We develop a project which is modular, in other words, we add or change easily new features. It allows for the client to do different simulations according to inputs. Thanks to the documentation, a new team could go back over the project and work on it. The continuous integration with _Docker_ is completely integrated. There is only one thing that must be improved is the diversity of tests.
