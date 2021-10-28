@@ -45,7 +45,7 @@ public:
 	Vec2 getVelocity() const;
 	Vec2 getNextVelocity() const;
 	Vec2 getNextPosition() const;
-	bool getDestruction() const;
+	bool getDestruction();
 	void setDestruction();
 	int getRange() const;
 	int getBodySize() const;

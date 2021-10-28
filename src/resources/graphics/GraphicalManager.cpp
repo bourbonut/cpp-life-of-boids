@@ -183,7 +183,8 @@ bool GraphicalManager::mainLoop() {
 
 			initial_size = (*MAIN_pFLOCK).getPopSize();
 
-			for (auto& bird : *MAIN_pFLOCK) {
+			for (int i = 0; i < (*MAIN_pFLOCK).getPopSize(); ++i){
+				Agent *bird = (*MAIN_pFLOCK)[i];
 				std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors;
 
 				if ((*MAIN_pFLOCK).optimized_computing) {
@@ -221,8 +222,11 @@ bool GraphicalManager::mainLoop() {
 				}
 
 				next_size = (*MAIN_pFLOCK).getPopSize();
+
 				
 			}
+
+			(*MAIN_pFLOCK).destroyAgents();
 
 			if (prettyAgents) {
 				// DRAW AGENTS AS TRIANGLES
@@ -251,7 +255,6 @@ bool GraphicalManager::mainLoop() {
 				glDrawArrays(GL_POINTS, 0, (GLsizei)vertex_data_dots.size());
 			}
 		}
-		(*MAIN_pFLOCK).destroyAgents();
 
 		//FPS calculations
 		auto stop = std::chrono::high_resolution_clock::now();

@@ -56,7 +56,7 @@ int Flock::getPopSize() const {
 Flock::Flock() {};
 
 void Flock::addAgent(Agent *a) {
-	m_agents.push_back(a);
+	m_agents.emplace_back(a);
 };
 
 void Flock::setAgentsToBeDestroyed(const Vec2& position, const int& destroyRadius) {

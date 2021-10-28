@@ -99,7 +99,7 @@ int Agent::getBodySize() const {
 	return m_bodySize;
 }
 
-bool Agent::getDestruction() const {
+bool Agent::getDestruction() {
 	return m_toDestroy;
 }
 
