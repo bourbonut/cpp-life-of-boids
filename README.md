@@ -367,12 +367,15 @@ Flock generate_fully_random_bird_flock();
 # User configuration
 Now that we have implemented a flock generator, which can be used in many ways in the code, we want to be able to let the user configure his flock. This can be done by using options (c.f. chapter **Running the program - Options**).
 To implement this, we used ```argc``` and ```argv[]``` parameter of the ```main``` function.
+
 The order of the options are specific, and a different code is triggered depending on the number of arguments the user gave.
 
 These options are thought to be user-friendly, which means that the user will be informed if he/she entered a wrong number of arguments, of a weird number (e.g. a size of flock of 0). The program will either warn the user if he/she is fully configurating the flock (with all options possible), or it will throw an exception if the user wants to use the _easy_ options (0, 1, or 2 arguments).
 
 ![User warning for configuration](assets/readme/user_warning_parameter.png)
+
 To be the most user friendly possible, we created some birds template, with given values for eveything (range and angle of view, size, color, laws' relaxations) so the user can try the program without knowing about the _complex_ options like laws' relaxations.
+
 If the user uses the most complex generation of flock, he/she will be informed on the flock, to be able to adjust new parameters easily.
 
 ![Generation informations](assets/readme/user_friendly_generation.png)
@@ -486,4 +489,3 @@ Theses are the next amelioration we aim for our project :
 - Dynamic informations on screen (laws' relaxations, speed, etc...)
 - More class independance (mainly on OpenGL)
 - More code covered in the tests
-- ...
