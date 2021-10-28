@@ -321,13 +321,13 @@ The goal of the GraphicalManager class is to wrap-up all the OpenGL components o
 The GraphicalManager constructor initializes and manages OpenGL variables and our graphical variables to help us draw the shapes we want.
 
 Some of the tasks it is assigned are :
-- Creates the window
-- Sets up the shaders programs
-- Activates the shaders programs
-- Creates the OpenGL buffers
-- Initializes and defines variables needed to draw our shapes
-- Links our key and mouse callback functions with OpenGL event management
-- Sets up the colors
+- Creating the window
+- Setting up the shaders programs
+- Activating the shaders programs
+- Creating the OpenGL buffers
+- Initializing and defines variables needed to draw our shapes
+- Linking our key and mouse callback functions with OpenGL event management
+- Setting up the colors
 
 This class also implements a method called "mainLoop" that, when called, executes one loop. Namely, it launches the calculations of the next positions of the Agents making them move and then proceeds to draw them. </br>
 It's possible to draw the agents either as triangles or as points, even though at small number of agents it does not affect performance. We created a class "AgentDisplayer", called by GraphicalManager, implementing DotDisplayer and TriangleDisplayer to take care of the correct display conditionally. 
