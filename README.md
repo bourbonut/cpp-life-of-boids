@@ -85,7 +85,7 @@ This is a list of available commandes when in runtime :
 
 
 ## II. Work methodology
-This is a list of available commandes when in runtime :
+Here are the methods we used to make our teamwork more effective :
 - *Agile methods* : An agile project is organized in iterative and incremental development cycles, in which the end customer and the user are integrated and actively participate.
 - *Scrum methods* : Scrum is an Agile methodology and provides a project management framework with roles, meetings and an iterative development cycle. The advantage of working in a Scrum framework is that this methodology is simple, transparent and pragmatic.
 	To summarize, the content of an iteration (or "scrum sprint") is defined in terms of functionalities, which are developed and then validated at the end of the sprint. An assessment of the sprint is made before continuing with the next sprint
@@ -402,7 +402,7 @@ We tried to implement the move constructor and move operator but it did not seem
 
 After taking a step back, we can determine some parts to improve and limits.
 
-# VII.  COnclusion and openings
+# VII.  Conclusion and openings
 ## Limits
 For instance, when we calculate angle between two vectors, we have to use the `acos` function. Also, the distance between two vectors needs the `sqrt` function.
 So even if we try to optimize the code, we couldn't not be quicker than the time spent to calculate fundamental mathematic functions. Also the time spent to access memory is significant.
