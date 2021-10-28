@@ -387,6 +387,7 @@ FPS calculates the time needed to create an image and calculates the number of i
 		std::ostringstream oss;
 		oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
 		glfwSetWindowTitle(m_window, oss.str().c_str());
+```
 
 <a name="continuous-intergration"/>
 
