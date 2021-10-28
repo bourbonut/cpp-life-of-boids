@@ -42,6 +42,7 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	m_viewAngle = viewAngle;
 	m_range = range;
 	m_maxSpeed = maxSpeed;
+	m_toDestroy = false;
 
 };
 
@@ -55,6 +56,7 @@ Agent::Agent(const int &lVelocity, const int& uVelocity, const int& bodySize,
 	m_nextVelocity = vel + 1;
 	m_bodySize = bodySize;
 	m_viewAngle = viewAngle;
+	m_toDestroy = false;
 	m_range = 50;
 };
 
@@ -65,6 +67,7 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
 	m_bodySize = bodySize;
 	m_viewAngle = viewAngle;
 	m_range = range;
+	m_toDestroy = false;
 };
 
 
@@ -94,6 +97,14 @@ int Agent::getViewAngle() const {
 
 int Agent::getBodySize() const {
 	return m_bodySize;
+}
+
+bool Agent::getDestruction() {
+	return m_toDestroy;
+}
+
+void Agent::setDestruction() {
+	m_toDestroy = true;
 }
 
 void Agent::move() {
@@ -139,6 +150,7 @@ Agent& Agent::operator=(const Agent& other)
 	m_bodySize = other.m_bodySize;
 	m_range = other.m_range;
 	m_viewAngle = other.m_viewAngle;
+	m_toDestroy = false;
 
 	return *this;
 };
