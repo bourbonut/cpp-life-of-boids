@@ -18,7 +18,7 @@ In general lines, the project corresponds to an artificial life experience which
 
 ## Code Architecture
 
-![ULM diagram](assets/readme/ulm.png)
+![ULM diagram](assets/readme/ulmDiagram.png)
 
 ### The flock
 
