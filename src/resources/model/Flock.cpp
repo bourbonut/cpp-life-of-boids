@@ -56,20 +56,25 @@ int Flock::getPopSize() const {
 Flock::Flock() {};
 
 void Flock::addAgent(Agent *a) {
-	m_agents.push_back(a);
+	m_agents.emplace_back(a);
 };
 
-void Flock::destroyAgent(const Vec2& position, const int& destroyRadius) {
-	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
-		[pos = position, destroyRadius](Agent* a) {
-			// If distance < 1, destroy bird
-			bool destroyBool = ((*a).getPosition() - pos).norm() < destroyRadius;
-			if (destroyBool) { delete a; };
+void Flock::setAgentsToBeDestroyed(const Vec2& position, const int& destroyRadius) {
+	for (auto& bird : m_agents) {
+		bool destroyBool = ((*bird).getPosition() - position).norm() < destroyRadius;
+		if (destroyBool) { (*bird).setDestruction(); };
+	}
+}
 
+void Flock::destroyAgents() {
+	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
+		[](Agent* a) {
+			// If distance < 1, destroy bird
+			bool destroyBool = ((*a).getDestruction());
+			if (destroyBool) { delete a; };
 			return destroyBool; });
 
 	m_agents.erase(garbageAgents, m_agents.end());
-
 };
 
 void Flock::destroyLastAgent() {
