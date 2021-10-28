@@ -2,14 +2,16 @@
 
 ## Table of Contents
 
-- [Overview](#Overview)
+<a name="overview"/>
+
+- [Overview](#overview)
 - [Build](#build)
 - [Running the program](#running-the-program)
 - [Commands](#commands)
 - [Code Architecture](#code-architecture)
 - [Graphical Manager](#graphical-manager)
 
-## Overview
+## I. Overview
 
 life-of-boids is an application/software developped in C++ to simulate a flock of birds in animation mode in order to show their individual behaviour and interaction with each other and the environment surrounding them.
 
@@ -82,12 +84,7 @@ This is a list of available commandes when in runtime :
 - **Z, Q, S, D** : Moves the last added predator respectively : up, left, down, right.
 
 
-
-## Introduction
-life-of-boids is an application/software developped in C++ to simulate a flock of birds in animation mode in order to show their individual behaviour and interaction with each other and the environment surrounding them.
-In general lines, the project corresponds to an artificial life experience which permits to analyse collective and individual behaviour, in addition to providing fun user interaction.
-
-## Work methodology
+## II. Work methodology
 This is a list of available commandes when in runtime :
 - *Agile methods* : An agile project is organized in iterative and incremental development cycles, in which the end customer and the user are integrated and actively participate.
 - *Scrum methods* : Scrum is an Agile methodology and provides a project management framework with roles, meetings and an iterative development cycle. The advantage of working in a Scrum framework is that this methodology is simple, transparent and pragmatic.
@@ -122,7 +119,7 @@ FPS calculates the time needed to create an image and calculates the number of i
 		glfwSetWindowTitle(m_window, oss.str().c_str());
 ```
 <a name="code-architecture"/>
-## Code Architecture
+## III. Code Architecture
 
 ![ULM diagram](assets/readme/ulmDiagram.png)
 
@@ -228,6 +225,7 @@ It supports the display in windowed screen or fullscreen, and the Agent drawing 
 
 Finally, the GraphicalManager destructor takes care of closing the window and cleaning the OpenGL variables before ending the program.
 
+# I. 
 ## Docker
 In order to run the builds in Continuous Integration Pipelines, docker images are needed in order to execute the commands of the pipeline. Namely the different stages needed are : 
 - The installation of the dependencies with conan
