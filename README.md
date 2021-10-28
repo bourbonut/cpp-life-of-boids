@@ -85,7 +85,7 @@ This is a list of available commandes when in runtime :
 
 
 ## II. Work methodology
-This is a list of available commandes when in runtime :
+Here are the methods we used to make our teamwork more effective :
 - *Agile methods* : An agile project is organized in iterative and incremental development cycles, in which the end customer and the user are integrated and actively participate.
 - *Scrum methods* : Scrum is an Agile methodology and provides a project management framework with roles, meetings and an iterative development cycle. The advantage of working in a Scrum framework is that this methodology is simple, transparent and pragmatic.
 	To summarize, the content of an iteration (or "scrum sprint") is defined in terms of functionalities, which are developed and then validated at the end of the sprint. An assessment of the sprint is made before continuing with the next sprint
