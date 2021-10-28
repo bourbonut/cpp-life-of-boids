@@ -1,19 +1,14 @@
-#include <iostream>
+#pragma region declarations
 #include <vector>
-#include <array>
 #include <tuple>
 #include "GraphicalManager.hpp"
 #include "glx.hpp"
 #include "graphics.hpp"
-
 #include "../controller/TriangleDisplayer.hpp"
 #include "../controller/DotDisplayer.hpp"
-
 #include "shaders/lines.hpp"
 #include "shaders/points.hpp"
 #include "shaders/triangle.hpp"
-#include <math.h>
-
 #include "../model/Flock.hpp"
 #include "../model/Bird.hpp"
 #include "../model/Eagle.hpp"
@@ -21,6 +16,7 @@
 #include <iomanip>
 #include <chrono>
 #include <sstream>
+#pragma endregion
 
 bool run_boids = true;
 bool manual_hunt = false;
