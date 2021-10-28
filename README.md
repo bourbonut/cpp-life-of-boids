@@ -56,11 +56,11 @@ Special usage : ```./life-of-boids r``` to generate a _fully_ random flock, with
 
   - **flock_size** : The number of agents in the initial flock
   - **agent_type** : Predetermined agents type, this value can be
-   	   - ```Parrot``` : Angle view : range : ... + Cohesion high, separation low, etc...
-   	   - ```Dove```
-   	   - ```Duck```
-   	   - ```Ant```
-   	   - ```Fly```
+   	   - ```Parrot``` : The "classic" flock
+   	   - ```Dove``` : Weak cohesion, big range and angle of view, weak aligment
+   	   - ```Duck``` : Good alignment and range of view but weak cohesion 
+   	   - ```Ant``` : Weak cohesion, strong separation, negative alignment
+   	   - ```Fly``` : Strong cohesion, big angle of view and small range of view
   -  **agent_color**  : Predetermined colors, this alue can be
    	   - ```Red```
    	   - ```Green```
