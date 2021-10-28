@@ -26,18 +26,21 @@ In general lines, the project corresponds to an artificial life experience which
 
 ## Build
 
+You can run these comman in a directory `build/` that you have created in the root folder.
+```
 sudo apt update && sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
 conan profile new default --detect
 conan profile update settings.compiler.libcxx=libstdc++11 default
 conan install ..
-cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake _DCMAKE_BUILD_TYPE=Debug ..
+cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake _DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
+```
 
 <a name="running-the-program"/>
 
 ## Running the program
 
-When built, the executable file to launch is **life-of-boids.exe**. By default, the program will be generated with a flock of 400 parrots.
+When built, the executable file to launch is **life-of-boids.exe**. By default, the program will be generated with a flock of 600 parrots.
 
 Here are the different usages, you can configure the program with more precision using these options :
 ```
@@ -341,26 +344,28 @@ with differents attributes (flock_size, range, angle_view, agent_size, cohesion_
 The color of the birds can be chosen to be random.
 
 Angle view is 360, range 70<br />
-Flock generate_duck_flock(int size);
+
+```generate_duck_flock(int size);```
 
 ![Ducks](assets/readme/ducks.png)
 
-Flock generate_ant_flock(int size);
+```generate_ant_flock(int size);```
 
 ![Ants](assets/readme/ants.png)
 
 Angle view is 270, range is 50<br />
-Flock generate_dove_flock(int size);
+
+```generate_dove_flock(int size);```
 
 ![Doves](assets/readme/doves.png)
 
 Angle view is about 300, range 50<br />
-Flock generate_parrot_flock(int size);
+```generate_parrot_flock(int size);```
 
 ![Parrots](assets/readme/parrots.png)
 
 Everything randomized<br />
-Flock generate_fully_random_bird_flock();
+```generate_fully_random_bird_flock();```
 
 ![Randomized](assets/readme/randomized.png)
 
