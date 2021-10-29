@@ -220,7 +220,7 @@ The weighted outputs of these laws form, after theirs respectives relaxation are
 In order to be able to calculate the laws of alignment, cohesion and separation, it was necessary to create the method "compute neighbors".
 This method consists in going through a list of agents and checking the existence of a neighbor according to a precise range and to the angle of view of the agent (according to type of bird).
 
-![Colors](assets/readme/colorsOfFlock.png)
+![Colors](assets/readme/colorsBis.png)
 
 [Link to the file](https://git.sophia.mines-paristech.fr/hpc-ai_21/cpp-life-of-boids/-/blob/master/src/resources/model/Flock.cpp)
 
@@ -368,6 +368,8 @@ Everything randomized<br />
 ```generate_fully_random_bird_flock();```
 
 ![Randomized](assets/readme/randomized.png)
+
+![ColorsSwitch](assets/readme/colorsSwitch.png)
 
 # User configuration
 Now that we have implemented a flock generator, which can be used in many ways in the code, we want to be able to let the user configure his flock. This can be done by using options (c.f. chapter **Running the program - Options**).
