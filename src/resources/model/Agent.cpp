@@ -8,10 +8,10 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	switch (m_color)
 	{
 	case Color::Red:
-		m_GLColor = { 0.91f, 0.12f, 0.39f };
+		m_GLColor = { 0.82745f, 0.184313f, 0.184313f };
 		break;
 	case Color::Green:
-		m_GLColor = { 0.39f, 0.99f, 0.85f };
+		m_GLColor = { 0.219607f, 0.55686f, 0.235294f };
 		break;
 	case Color::Blue:
 		m_GLColor = { 0.09f, 0.99f, 0.99f };
@@ -28,6 +28,9 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	case Color::Predator:
 		m_GLColor = { 0.63f, 0.53f, 0.4980f };
 		break;
+	case Color::LightRed:
+		m_GLColor = {0.8980f, 0.4509f, 0.4509f};
+		break;
 	default:
 		m_GLColor = { 0.97f, 0.97f, 0.97f };
 		break;
@@ -39,6 +42,7 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	m_viewAngle = viewAngle;
 	m_range = range;
 	m_maxSpeed = maxSpeed;
+	m_toDestroy = false;
 
 };
 
@@ -52,6 +56,7 @@ Agent::Agent(const int &lVelocity, const int& uVelocity, const int& bodySize,
 	m_nextVelocity = vel + 1;
 	m_bodySize = bodySize;
 	m_viewAngle = viewAngle;
+	m_toDestroy = false;
 	m_range = 50;
 };
 
@@ -62,6 +67,7 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
 	m_bodySize = bodySize;
 	m_viewAngle = viewAngle;
 	m_range = range;
+	m_toDestroy = false;
 };
 
 
@@ -93,6 +99,14 @@ int Agent::getBodySize() const {
 	return m_bodySize;
 }
 
+bool Agent::getDestruction() {
+	return m_toDestroy;
+}
+
+void Agent::setDestruction() {
+	m_toDestroy = true;
+}
+
 void Agent::move() {
 	m_position = m_nextPosition;
 	m_velocity = m_nextVelocity;
@@ -105,6 +119,19 @@ void Agent::prepareMove() {
 void Agent::setPosition(const Vec2& newPos) {
 	m_position = newPos;
 };
+
+void Agent::setVelocity(const Vec2& newVel) {
+	m_velocity = newVel;
+}
+
+void Agent::setSize(int size) {
+	m_bodySize = size;
+}
+
+void Agent::setNextVelocity(const Vec2& newVel)
+{
+	m_nextVelocity = newVel;
+}
 
 void Agent::setNextPosition(const Vec2& newPos) {
 	m_nextPosition = newPos;
@@ -123,6 +150,7 @@ Agent& Agent::operator=(const Agent& other)
 	m_bodySize = other.m_bodySize;
 	m_range = other.m_range;
 	m_viewAngle = other.m_viewAngle;
+	m_toDestroy = false;
 
 	return *this;
 };

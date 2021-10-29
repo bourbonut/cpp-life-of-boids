@@ -6,8 +6,8 @@
 #include <cmath>
 
 int main() {
-    Vec2 a = Vec2(4.5, 6.2);
-    Vec2 b = Vec2(2., 100.2);
+    Vec2 a = Vec2(4.5f, 6.2f);
+    Vec2 b = Vec2(2.f, 100.2f);
     std::cout << a << std::endl; // Display the vector
     std::cout << "x: " << a.x << std::endl; // return the x value
     std::cout << "y: " << a.y << std::endl; // return the y value
@@ -45,21 +45,21 @@ int main() {
     std::cout << "Distance: " << distance(a, b) << std::endl;
     Vec2 x = barycenter(vecs);
     std::cout << x << std::endl;
-    std::cout << (a == Vec2(4., 6.2)) << std::endl;
+    std::cout << (a == Vec2(4.f, 6.2f)) << std::endl;
     Vec2 e = Vec2(1., 0.);
-    std::cout << e.rotate(M_PI/2) << std::endl;
-    std::cout << e.rotate(-M_PI/2) << std::endl;
-    std::cout << e.rotate(M_PI) << std::endl;
-    std::cout << "Rotation: " << Vec2(1., 0.).rotate(M_PI / 3) << std::endl; //ERORR ON LINUX
+    std::cout << e.rotate((float)M_PI/2.f) << std::endl;
+    std::cout << e.rotate((float)-M_PI/2.f) << std::endl;
+    std::cout << e.rotate((float)M_PI) << std::endl;
+    std::cout << "Rotation: " << Vec2(1.f, 0.f).rotate((float)M_PI / 3.f) << std::endl; //ERORR ON LINUX
 
-    a = Vec2(2., 5.);
-    b = Vec2(2., 5.);
-    Vec2 X = Vec2(1., 0.);
+    a = Vec2(2.f, 5.f);
+    b = Vec2(2.f, 5.f);
+    Vec2 X = Vec2(1.f, 0.f);
     std::cout << "AntiClockwise ?" << "\n";
     std::cout << isAntiClockwise(a, X) << "\n";
     std::cout << isAntiClockwise(X, a) << "\n";
     std::cout << isAntiClockwise(b, X) << "\n";
     std::cout << isAntiClockwise(X, a) << "\n";
-
+    
     return 0;
 }

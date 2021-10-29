@@ -18,6 +18,7 @@ protected:
 	float m_maxSpeed;
 	Color m_color;
 	std::array<float, 3> m_GLColor;
+	bool m_toDestroy;
 	
 
 protected:
@@ -29,6 +30,7 @@ protected:
 		const int& viewAngle, const int& range, const float & maxSpeed, const Color& color);
 
 public:
+	virtual ~Agent() = default;
 	int _id = ++id;
 	virtual void computeLaws(const std::vector<Agent*>& neighbors, 
 							 const std::vector<Agent*>& neighborsPredator) = 0;
@@ -37,10 +39,15 @@ public:
 
 	void setPosition(const Vec2& newPos);
 	void setNextPosition(const Vec2& newPos);
+	void setNextVelocity(const Vec2& newVel);
+	void setVelocity(const Vec2& newVel);
+	void setSize(int size);
 	Vec2 getPosition() const;
 	Vec2 getVelocity() const;
 	Vec2 getNextVelocity() const;
 	Vec2 getNextPosition() const;
+	bool getDestruction();
+	void setDestruction();
 	int getRange() const;
 	int getBodySize() const;
 	int getViewAngle() const;

@@ -17,7 +17,7 @@ namespace {
 	}
 
 	TEST(TestGraphics, DrawAgent2) {
-		mat2x6 result = drawAgent(Vec2(100, 50), Vec2(-1.5678, 3.72654));
+		mat2x6 result = drawAgent(Vec2(100.f, 50.f), Vec2(-1.5678f, 3.72654f));
 		ASSERT_EQ(result[0].x, 100.f);
 		ASSERT_EQ(result[0].y, 50.f);
 		ASSERT_NEAR(result[1].x, 97.285469f, 0.0001);

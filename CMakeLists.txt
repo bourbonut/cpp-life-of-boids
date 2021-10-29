@@ -4,14 +4,14 @@ cmake_minimum_required(VERSION 3.17)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)                                                                                                                                               
 
 # This message also avoid warning : "Manually-specified variables were not used by the project"
 message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
 
 #------------------------------------------------------
 project(life_of_boids
-        VERSION "0.0.0")
+        VERSION "12.5.9")
 #------------------------------------------------------
 
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
