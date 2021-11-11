@@ -90,8 +90,8 @@ std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(con
   float y = pos.y;
   int indexXInf = researchX(x - range, m_x);
   int indexXSup = researchX(x + range, m_x);
-  int indexYInf = researchX(y - range, m_y);
-  int indexYSup = researchX(y + range, m_y);
+  int indexYInf = researchY(y - range, m_y);
+  int indexYSup = researchY(y + range, m_y);
   std::vector<std::tuple<float, float, int>> vx;
   std::vector<std::tuple<float, float, int>> vy;
   std::vector<std::tuple<float, float, int>> potentialNeighbors;

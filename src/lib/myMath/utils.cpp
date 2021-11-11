@@ -49,7 +49,7 @@ float random_float(const int &inf, const int &sup)
 
 
 int researchX(const float& target, const std::vector<std::tuple<float, float, int>>& v){
-  long int size = (long int)v.size();
+  int size = (int)v.size();
   if (std::get<0>(v[0]) >= target){
     return 0;
   }
@@ -62,13 +62,16 @@ int researchX(const float& target, const std::vector<std::tuple<float, float, in
     int middle = (int) size / 2;
     while (!(std::get<0>(v[(int)(middle - 1.0)]) < target  && target <= std::get<0>(v[middle]))){
       a = (int)size / d;
-      if (target < std::get<0>(v[middle])) {
+      if (std::get<0>(v[middle - 1]) == std::get<0>(v[middle])){
+        return middle;
+      }
+      else if (target < std::get<0>(v[middle])) {
         middle -= (a!=0) ? a : 1;
       }
       else {
         middle += (a!=0) ? a : 1;
       }
-      d *= 2;
+      d = 2 * std::min(d, size);
     }
     return middle;
   }
@@ -88,13 +91,16 @@ int researchY(const float& target, const std::vector<std::tuple<float, float, in
     int middle = (int) size / 2;
     while (!(std::get<1>(v[(int)(middle - 1.0)]) <= target  && target <= std::get<1>(v[middle]))){
       a = (int) size / d;
-      if (target < std::get<1>(v[middle])) {
+      if (std::get<1>(v[middle - 1]) == std::get<1>(v[middle])){
+        return middle;
+      }
+      else if (target < std::get<1>(v[middle])) {
         middle -= (a!=0) ? a : 1;
       }
       else {
         middle += (a!=0) ? a : 1;
       }
-      d *= 2;
+      d = 2 * std::min(d, size);
     }
     return middle;
   }
