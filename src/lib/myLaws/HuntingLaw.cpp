@@ -21,11 +21,12 @@ Vec2 HuntingLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbo
 	//To compute with the front of the triangle of the agent
 
 	if (neighbors.size() > 0) {
-		float weight = distance((currentAgent).getPosition(), (*neighbors[0]).getPosition());
+		Agent* neighbor = neighbors[0];
+		float weight = distance(currentAgent.getPosition(), (*neighbor).getPosition());
 
 
 		if (weight < currentAgent.getBodySize()*1.5) {
-			(*m_pFlock).setAgentsToBeDestroyed((*neighbors[0]).getPosition(), 1);
+			(*neighbor).setDestruction();
 
 			if (currentAgent.getBodySize() < 26)
 				currentAgent.setSize((currentAgent.getBodySize() + 5));
@@ -35,8 +36,8 @@ Vec2 HuntingLaw::compute(Agent& currentAgent, const std::vector<Agent*>& neighbo
 				Vec2 pos = currentAgent.getPosition();
 				Vec2 vel = Vec2{-5,-5};
 
-				(*m_pFlock).addAgent(new Eagle{ pos, vel,10,50,100, 15.f, Color::Red, HuntingLaw{m_pFlock, false}});
-				(*m_pFlock).addAgent(new Eagle{ pos, Vec2{ 5,5 },10,50,100, 15.f, Color::Red, HuntingLaw{m_pFlock, false} });
+				(*m_pFlock).addBornAgent(new Eagle{ pos, vel,10,50,100, 15.f, Color::Red, HuntingLaw{m_pFlock, false}});
+				(*m_pFlock).addBornAgent(new Eagle{ pos, Vec2{ 5,5 },10,50,100, 15.f, Color::Red, HuntingLaw{m_pFlock, false} });
 			}
 		}
 

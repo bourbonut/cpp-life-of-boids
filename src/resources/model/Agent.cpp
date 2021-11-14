@@ -60,7 +60,7 @@ Agent::Agent(const int &lVelocity, const int& uVelocity, const int& bodySize,
 	m_range = 50;
 };
 
-Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize, 
+Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
 	const int& viewAngle, const int& range) {
 	m_position = position;
 	m_velocity = velocity;
@@ -72,7 +72,7 @@ Agent::Agent(const Vec2& position, const Vec2& velocity, const int& bodySize,
 
 
 Vec2 Agent::getPosition() const{
-	return m_position; 
+	return m_position;
 };
 
 Vec2 Agent::getVelocity() const {
@@ -155,3 +155,20 @@ Agent& Agent::operator=(const Agent& other)
 	return *this;
 };
 
+void Agent::keepPositionInScreen(const float& width, const float& height){
+	float x = m_nextPosition.x;
+	float y = m_nextPosition.y;
+	if (x >= width) {
+		x = x - width;
+	}
+	else if (x < 0) {
+		x = x + width;
+	}
+	if (y >= height) {
+		y =  y - height;
+	}
+	else if (y < 0) {
+		y = y + height;
+	}
+	m_nextPosition = Vec2(x, y);
+}

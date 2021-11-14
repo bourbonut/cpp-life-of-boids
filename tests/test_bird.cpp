@@ -88,7 +88,7 @@ namespace {
 		mainFlock.push_back(new Bird(Vec2(1, 1), Vec2(1, 1)));
 		mainFlock.push_back(new Bird(Vec2(2, 2), Vec2(2, 2)));
 		mainFlock.push_back(new Bird(Vec2(3, 3), Vec2(3, 3)));
-	
+
 		Flock flock{ mainFlock };
 
 		ASSERT_EQ(flock.getPopSize(), 3);
@@ -102,7 +102,7 @@ namespace {
 
 		//flock.print();
 		flock.setAgentsToBeDestroyed(Vec2(1, 1), 1);
-		flock.destroyAgents();
+		flock.update();
 		//flock.print();
 		ASSERT_EQ(flock.getPopSize(), 1) << "Error in destroyLastAgent: PopSize = " << flock.getPopSize();
 		ASSERT_EQ((*flock.getAgent(0)).getPosition().x, 2);

@@ -19,7 +19,7 @@ protected:
 	Color m_color;
 	std::array<float, 3> m_GLColor;
 	bool m_toDestroy;
-	
+
 
 protected:
 	Agent(const int& lVelocity, const int& uVelocity, const int& bodySize,
@@ -32,7 +32,7 @@ protected:
 public:
 	virtual ~Agent() = default;
 	int _id = ++id;
-	virtual void computeLaws(const std::vector<Agent*>& neighbors, 
+	virtual void computeLaws(const std::vector<Agent*>& neighbors,
 							 const std::vector<Agent*>& neighborsPredator) = 0;
 	void prepareMove();
 	void move();
@@ -51,6 +51,7 @@ public:
 	int getRange() const;
 	int getBodySize() const;
 	int getViewAngle() const;
+	void keepPositionInScreen(const float& width, const float& height);
 	std::array<float, 3> getGLColor() const;
 
 

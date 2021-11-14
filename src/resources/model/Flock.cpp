@@ -9,6 +9,7 @@
 #include <random>
 #include <algorithm>
 #include <tuple>
+#include <functional>
 
 struct {
   bool operator()(std::tuple<float, float, int> a, std::tuple<float, float, int> b) const { return std::get<0>(a) < std::get<0>(b); }
@@ -46,6 +47,9 @@ Flock::Flock(std::vector<Agent*> population) : m_agents(population) {
 		m_x.push_back(std::tuple<float, float, int>{0., 0., i});
 		m_y.push_back(std::tuple<float, float, int>{0., 0., i});
 	}
+  getNeighbors = [this](const Agent& agent){
+    return this->computeNeighborsOrigin(agent);
+  };
 };
 
 
@@ -66,15 +70,22 @@ void Flock::setAgentsToBeDestroyed(const Vec2& position, const int& destroyRadiu
 	}
 }
 
-void Flock::destroyAgents() {
-	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
+void Flock::update() {
+	auto garbageAgents = std::remove_if(
+    m_agents.begin(),
+    m_agents.end(),
 		[](Agent* a) {
 			// If distance < 1, destroy bird
 			bool destroyBool = ((*a).getDestruction());
 			if (destroyBool) { delete a; };
-			return destroyBool; });
-
+			return destroyBool;
+    }
+  );
 	m_agents.erase(garbageAgents, m_agents.end());
+  for(Agent* a : m_bornAgents){
+    m_agents.push_back(a);
+  }
+  m_bornAgents.clear();
 };
 
 void Flock::destroyLastAgent() {
@@ -152,7 +163,7 @@ std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighborsOrig
 	return std::make_tuple( neighbors, neighborsPredators );
 };
 
-void Flock::updateAgents(){
+void Flock::sortAgents(){
 	int size = (int) m_agents.size();
   float x;
   float y;
@@ -171,7 +182,6 @@ void Flock::updateAgents(){
 }
 
 
-
 void Flock::print() {
 	std::cout << "Printing Flock :\n";
 	int i = 0;
@@ -183,3 +193,44 @@ void Flock::print() {
 Agent* Flock::getAgent(int index) {
 	return m_agents.at(index);
 };
+
+void Flock::addBornAgent(Agent* agent){
+  m_bornAgents.push_back(agent);
+}
+
+void Flock::updateAgents(const bool& run_boids, const float& width, const float& height){
+  // if (optimized_computing) {
+  //   (*MAIN_pFLOCK).sortAgents();
+  // }
+  if (run_boids) {
+    this->sortAgents();
+    for (Agent* bird : m_agents){
+      std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors;
+
+      allNeighbors = this->getNeighbors(*bird);
+
+      std::vector<Agent*> bVec = std::get<0>(allNeighbors);
+      std::vector<Agent*> eVec = std::get<1>(allNeighbors);
+
+
+      (*bird).computeLaws(bVec, eVec);
+      (*bird).prepareMove();
+    }
+    for (Agent* bird : m_agents){
+      (*bird).keepPositionInScreen(width, height);
+      (*bird).move();
+    }
+  }
+}
+
+void Flock::setOptimization(){
+  if(optimized_computing){
+    getNeighbors = [this](const Agent& agent){
+      return this->computeNeighbors(agent);
+    };
+  }else{
+    getNeighbors = [this](const Agent& agent){
+      return this->computeNeighborsOrigin(agent);
+    };
+  }
+}

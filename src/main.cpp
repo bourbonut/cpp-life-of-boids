@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
 
 		if (flock.getPopSize() > 700) {
 			flock.optimized_computing = true;
+			flock.setOptimization();
 			std::cout << "Size of flock over 700, using the optimized version of compute neighbors.\nIf you want to use predators, you might prefer generating a small flock (size under 700). Optimized version is in beta." << std::endl;
 		}
 		if (flock.getPopSize() > CRITICAL_FLOCK_SIZE) {

@@ -172,35 +172,8 @@ bool GraphicalManager::mainLoop() {
 
 
 		{
-			if ((*MAIN_pFLOCK).optimized_computing) {
-				(*MAIN_pFLOCK).updateAgents();
-			}
-
-			for (int i = 0; i < (*MAIN_pFLOCK).getPopSize(); ++i){
-				Agent *bird = (*MAIN_pFLOCK)[i];
-				std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors;
-
-				if ((*MAIN_pFLOCK).optimized_computing) {
-					allNeighbors = (*MAIN_pFLOCK).computeNeighbors(*bird);
-				}
-				else {
-					allNeighbors = (*MAIN_pFLOCK).computeNeighborsOrigin(*bird);
-				}
-
-				std::vector<Agent*> bVec = std::get<0>(allNeighbors);
-				std::vector<Agent*> eVec = std::get<1>(allNeighbors);
-
-				if (run_boids) {
-					(*bird).computeLaws(bVec, eVec);
-					(*bird).prepareMove();
-				}
-
-
-				if (run_boids) {
-					(*bird).setNextPosition(keepPositionInScreen((*bird).getNextPosition(), (float)m_width, (float)m_height));
-					(*bird).move();
-				}
-
+			(*MAIN_pFLOCK).updateAgents(run_boids, (float) m_width, (float) m_height);
+			for (Agent* bird : (*MAIN_pFLOCK)){
 				if (prettyAgents) {
 					// Fill vertex array of groups of 6 points each for double triangles
 					mat2x6 result = triangleDisplay.drawAgent(bird);
@@ -212,10 +185,10 @@ bool GraphicalManager::mainLoop() {
 					// Fill vertex array of points for each agents
 					Vec2 res = (dotDisplayer.drawAgent(bird))[0];
 					vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, (*bird).getGLColor() });
-				}				
+				}
 			}
 
-			(*MAIN_pFLOCK).destroyAgents();
+			(*MAIN_pFLOCK).update();
 
 			if (prettyAgents) {
 				// DRAW AGENTS AS TRIANGLES
