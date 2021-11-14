@@ -5,6 +5,8 @@
 #include "Bird.hpp"
 #include <functional>
 
+using tupleNP = std::tuple<std::vector<Agent*>, std::vector<Agent*>>;
+
 class Flock {
 private :
 	//std::vector<Bird> m_birdsVec;
@@ -12,7 +14,7 @@ private :
 	std::vector<Agent*> m_bornAgents;
 	std::vector<std::tuple<float, float, int>> m_x;
 	std::vector<std::tuple<float, float, int>> m_y;
-	std::function<std::tuple<std::vector<Agent*>, std::vector<Agent*>>( const Agent& agent )> getNeighbors;
+	std::function<tupleNP( const Agent& agent )> getNeighbors;
 
 public:
 	bool optimized_computing = false;
@@ -20,8 +22,8 @@ public:
 	int getPopSize() const;
 	Agent* getAgent(int index);
 	Agent* operator[](int index) { return m_agents.at(index); };
-	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighbors(const Agent& agent);
-	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighborsOrigin(const Agent& agent);
+	tupleNP computeNeighbors(const Agent& agent);
+	tupleNP computeNeighborsOrigin(const Agent& agent);
 
 	void addAgent(Agent *a);
 	void setAgentsToBeDestroyed(const Vec2& position, const int& destroyRadius);

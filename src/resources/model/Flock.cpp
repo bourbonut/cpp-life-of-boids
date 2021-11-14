@@ -11,16 +11,19 @@
 #include <tuple>
 #include <functional>
 
+using tupleXYID = std::tuple<float, float, int>;
+using tupleNP = std::tuple<std::vector<Agent*>, std::vector<Agent*>>;
+
 struct {
-  bool operator()(std::tuple<float, float, int> a, std::tuple<float, float, int> b) const { return std::get<0>(a) < std::get<0>(b); }
+  bool operator()(tupleXYID a, tupleXYID b) const { return std::get<0>(a) < std::get<0>(b); }
 } customLessX;
 
 struct {
-  bool operator()(std::tuple<float, float, int> a, std::tuple<float, float, int> b) const { return std::get<1>(a) < std::get<1>(b); }
+  bool operator()(tupleXYID a, tupleXYID b) const { return std::get<1>(a) < std::get<1>(b); }
 } customLessY;
 
 struct {
-  bool operator()(std::tuple<float, float, int> a, std::tuple<float, float, int> b) const { return std::get<2>(a) < std::get<2>(b); }
+  bool operator()(tupleXYID a, tupleXYID b) const { return std::get<2>(a) < std::get<2>(b); }
 } customLessIndex;
 
 template<class InputIt1, class InputIt2, class OutputIt, class Compare>
@@ -44,8 +47,8 @@ OutputIt set_intersection(InputIt1 first1, InputIt1 last1, InputIt2 first2, Inpu
 Flock::Flock(std::vector<Agent*> population) : m_agents(population) {
 	int size = (int) m_agents.size();
 	for (int i = 0; i<size; ++i){
-		m_x.push_back(std::tuple<float, float, int>{0., 0., i});
-		m_y.push_back(std::tuple<float, float, int>{0., 0., i});
+		m_x.push_back(tupleXYID{0., 0., i});
+		m_y.push_back(tupleXYID{0., 0., i});
 	}
   getNeighbors = [this](const Agent& agent){
     return this->computeNeighborsOrigin(agent);
@@ -94,7 +97,7 @@ void Flock::destroyLastAgent() {
 	m_agents.pop_back();
 };
 
-std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(const Agent& agent){
+tupleNP Flock::computeNeighbors(const Agent& agent){
   Vec2 pos = agent.getPosition();
 	int range = agent.getRange();
   float x = pos.x;
@@ -103,9 +106,9 @@ std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(con
   int indexXSup = researchX(x + range, m_x);
   int indexYInf = researchY(y - range, m_y);
   int indexYSup = researchY(y + range, m_y);
-  std::vector<std::tuple<float, float, int>> vx;
-  std::vector<std::tuple<float, float, int>> vy;
-  std::vector<std::tuple<float, float, int>> potentialNeighbors;
+  std::vector<tupleXYID> vx;
+  std::vector<tupleXYID> vy;
+  std::vector<tupleXYID> potentialNeighbors;
   vx.insert(vx.end(), m_x.begin() + indexXInf, m_x.begin() + indexXSup + 1);
   vy.insert(vy.end(), m_y.begin() + indexYInf, m_y.begin() + indexYSup + 1);
   std::sort(vx.begin(), vx.end(), customLessIndex);
@@ -120,7 +123,7 @@ std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(con
 	std::vector<Agent*> neighbors;
 	std::vector<Agent*> neighborsPredators;
 	neighbors.reserve(potentialNeighbors.size());
-  for (std::tuple<float, float, int> data : potentialNeighbors) {
+  for (tupleXYID data : potentialNeighbors) {
 		Agent * potentialNeighbor = m_agents[std::get<2>(data)];
     angle = degrees((pos - (*potentialNeighbor).getPosition()).angle());
 		if (!(angle > agent.getViewAngle() * 0.5) && !(agent._id == (*potentialNeighbor)._id)){
@@ -138,7 +141,7 @@ std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(con
 }
 
 
-std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighborsOrigin(
+tupleNP Flock::computeNeighborsOrigin(
 			const Agent& agent){//, const float &range, const float &angle) {
 
 	std::vector<Agent*> neighbors;
@@ -174,8 +177,8 @@ void Flock::sortAgents(){
 		Vec2 pos = (*agent).getPosition();
     x = pos.x;
     y = pos.y;
-		m_x.push_back(std::tuple<float, float, int>{x, y, i});
-		m_y.push_back(std::tuple<float, float, int>{x, y, i});
+		m_x.push_back(tupleXYID{x, y, i});
+		m_y.push_back(tupleXYID{x, y, i});
 	}
 	std::sort(m_x.begin(), m_x.end(), customLessX);
 	std::sort(m_y.begin(), m_y.end(), customLessY);
@@ -205,7 +208,7 @@ void Flock::updateAgents(const bool& run_boids, const float& width, const float&
   if (run_boids) {
     this->sortAgents();
     for (Agent* bird : m_agents){
-      std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors;
+      tupleNP allNeighbors;
 
       allNeighbors = this->getNeighbors(*bird);
 
