@@ -17,3 +17,6 @@ target_link_libraries(main_profiling PUBLIC libGLX myMath shaders myBirds myLaws
 
 add_executable(life-of-boids main.cpp)
 target_link_libraries(life-of-boids PUBLIC libGLX myMath shaders myBirds myLaws opencv::opencv flockGenerator)
+
+add_executable(chrono main_chrono.cpp)
+target_link_libraries(chrono PUBLIC libGLX myMath shaders myBirds myLaws opencv::opencv flockGenerator)

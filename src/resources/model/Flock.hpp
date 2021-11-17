@@ -8,10 +8,12 @@
 using tupleNP = std::tuple<std::vector<Agent*>, std::vector<Agent*>>;
 
 class Flock {
-private :
+public :
 	//std::vector<Bird> m_birdsVec;
 	std::vector<Agent*> m_agents;
 	std::vector<Agent*> m_bornAgents;
+
+public:
 	std::vector<std::tuple<float, float, int>> m_x;
 	std::vector<std::tuple<float, float, int>> m_y;
 	std::function<tupleNP( const Agent& agent )> getNeighbors;

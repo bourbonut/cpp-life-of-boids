@@ -97,6 +97,10 @@ void Flock::destroyLastAgent() {
 	m_agents.pop_back();
 };
 
+// tupleNP Flock::computeNeighbors(const Agent& agent){
+//
+// }
+
 tupleNP Flock::computeNeighbors(const Agent& agent){
   Vec2 pos = agent.getPosition();
 	int range = agent.getRange();

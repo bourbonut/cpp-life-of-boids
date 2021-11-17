@@ -1,1 +1,3 @@
-add_library(myBirds "Bird.cpp" "Bird.hpp" "Eagle.cpp" "Eagle.hpp" "Flock.cpp" "Flock.hpp" "Agent.cpp" "Agent.hpp" "../../lib/myMath/utils.cpp" )
+file(GLOB SOURCES "*.cpp" "*.hpp" "../../lib/myMath/*.hpp" "../../lib/myMath/*.cpp")
+
+add_library(myBirds "${SOURCES}" )
