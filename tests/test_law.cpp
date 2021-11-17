@@ -27,7 +27,7 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
+            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighborsOrigin(*bird);
             std::vector<Agent*> bVec = std::get<0>(allNeighbors);
             std::vector<Agent*> eVec = std::get<1>(allNeighbors);
             AlignmentLaw law;
@@ -61,7 +61,7 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
+            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighborsOrigin(*bird);
             std::vector<Agent*> bVec = std::get<0>(allNeighbors);
             std::vector<Agent*> eVec = std::get<1>(allNeighbors);
             CohesionLaw cLaw;
@@ -96,7 +96,7 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
+            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighborsOrigin(*bird);
             std::vector<Agent*> bVec = std::get<0>(allNeighbors);
             std::vector<Agent*> eVec = std::get<1>(allNeighbors);
             SeparationLaw law;

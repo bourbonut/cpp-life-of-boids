@@ -188,7 +188,7 @@ bool GraphicalManager::mainLoop() {
 				}
 			}
 
-			(*MAIN_pFLOCK).update();
+			(*MAIN_pFLOCK).removeEatenBirds();
 
 			if (prettyAgents) {
 				// DRAW AGENTS AS TRIANGLES

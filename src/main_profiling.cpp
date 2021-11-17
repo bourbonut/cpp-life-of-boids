@@ -41,8 +41,7 @@ int main() {
     do {
         std::cout << "Tour " << t << '\n';
         for (auto& bird : *MAIN_pFLOCK) {
-            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors =
-                (*MAIN_pFLOCK).computeNeighbors(*bird); //this costs performance
+            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*MAIN_pFLOCK).computeNeighbors(*bird, 850, 1000); //this costs performance
             std::vector<Agent*> bVec = std::get<0>(allNeighbors);
             std::vector<Agent*> eVec = std::get<1>(allNeighbors);
 
@@ -56,4 +55,3 @@ int main() {
 
     return 0;
 }
-
