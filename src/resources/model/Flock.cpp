@@ -162,11 +162,7 @@ void Flock::updateAgents(const bool &run_boids, const float &width, const float 
     this->updateGrid(width, height);
     #pragma omp parallel for
     for (Agent *bird : m_agents) {
-      pairNP allNeighbors = this->getNeighbors(*bird, width, height);
-      std::vector<Agent *> bVec = std::get<0>(allNeighbors);
-      std::vector<Agent *> eVec = std::get<1>(allNeighbors);
-
-      (*bird).computeLaws(bVec, eVec);
+      (*bird).computeLaws(this->getNeighbors(*bird, width, height));
       (*bird).prepareMove();
     }
     #pragma omp parallel for

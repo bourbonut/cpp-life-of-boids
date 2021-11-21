@@ -1,8 +1,12 @@
 #include <array>
 #include <vector>
+#include <utility>
+
+#include "Eagle.hpp"
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myMath/utils.hpp"
-#include "Eagle.hpp"
+
+using pairNP = std::pair<std::vector<Agent *>, std::vector<Agent *>>;
 
 Eagle::Eagle() : Agent(-8, 8, 2, 50) {};
 
@@ -18,12 +22,13 @@ Eagle::Eagle(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 	Agent(position, velocity, bodySize, viewAngle, range, maxSpeed, color), m_huntingLaw(), m_separationLaw() {};
 
 
-void Eagle::computeLaws(const std::vector<Agent*>& neighborsBird, const std::vector<Agent*>&) {
+void Eagle::computeLaws(const pairNP& neighbors) {
+	std::vector<Agent *> neighborsBird = std::get<0>(neighbors);
 	Vec2 vec_displacement{};
-	
+
 	if (neighborsBird.size() > 0) { vec_displacement = vec_displacement + m_huntingLaw.compute(*this, neighborsBird) ; }
 	//if (allNeighbors.size() > 0) { vec_displacement = vec_displacement + m_separationLaw.compute(*this, allNeighbors) * 0.1f; }
-	
+
 	float norm = vec_displacement.norm();
 
 	if (norm > 5) {

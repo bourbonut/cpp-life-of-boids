@@ -1,9 +1,13 @@
 #pragma once
+#include <vector>
+#include <utility>
+
 #include "Agent.hpp"
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myLaws/HuntingLaw.hpp"
 #include "../../lib/myLaws/SeparationLaw.hpp"
-#include <vector>
+
+using pairNP = std::pair<std::vector<Agent *>, std::vector<Agent *>>;
 
 class Eagle : public Agent {
 private:
@@ -11,12 +15,12 @@ private:
 	SeparationLaw m_separationLaw;
 
 public:
-	Eagle(); // Constructeur sans arguments
+	Eagle();
 	Eagle(const Vec2& position, const Vec2& velocity);
 	Eagle(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float& speedRelaxation, const Color& color);
 	Eagle(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float& speedRelaxation, const Color& color, const HuntingLaw& huntLaw);
 
-	void computeLaws(const std::vector<Agent*>& neighborsBird, const std::vector<Agent*>& neighborsPredator) override;
+	void computeLaws(const pairNP& neighbors) override;
 
 	//void computeLaws(const std::vector<Agent*>& neighbors) override;
 

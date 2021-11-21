@@ -1,9 +1,12 @@
 #include <array>
 #include <vector>
+#include <utility>
 
+#include "Bird.hpp"
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myMath/utils.hpp"
-#include "Bird.hpp"
+
+using pairNP = std::pair<std::vector<Agent *>, std::vector<Agent *>>;
 
 Bird::Bird() : Agent(-5, 5, 6, 270){};
 //
@@ -26,8 +29,9 @@ Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, cons
   m_separationLaw = separationLaw;
 };
 
-void Bird::computeLaws(const std::vector<Agent*>& neighborsBird,
-                       const std::vector<Agent*>& neighborsPredator) {
+void Bird::computeLaws(const pairNP& neighbors) {
+  std::vector<Agent *> neighborsBird = std::get<0>(neighbors);
+  std::vector<Agent *> neighborsPredator = std::get<1>(neighbors);
   Vec2 vecCohesion = m_cohesionLaw.compute(*this, neighborsBird);
   Vec2 vecAlignment = m_alignmentLaw.compute(*this, neighborsBird);
   Vec2 vecSeparation = m_separationLaw.compute(*this, neighborsBird);

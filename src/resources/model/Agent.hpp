@@ -1,9 +1,13 @@
 #pragma once
+#include <array>
+#include <vector>
+#include <utility>
+
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myMath/utils.hpp"
 #include "../controller/Color.h"
-#include <array>
-#include <vector>
+
+
 static int id = 0;
 
 class Agent{
@@ -20,6 +24,7 @@ protected:
 	std::array<float, 3> m_GLColor;
 	bool m_toDestroy;
 
+using pairNP = std::pair<std::vector<Agent *>, std::vector<Agent *>>;
 
 protected:
 	Agent(const int& lVelocity, const int& uVelocity, const int& bodySize,
@@ -32,8 +37,7 @@ protected:
 public:
 	virtual ~Agent() = default;
 	int _id = ++id;
-	virtual void computeLaws(const std::vector<Agent*>& neighbors,
-							 const std::vector<Agent*>& neighborsPredator) = 0;
+	virtual void computeLaws(const pairNP& neighbors) = 0;
 	void prepareMove();
 	void move();
 
