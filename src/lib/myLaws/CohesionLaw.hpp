@@ -1,8 +1,12 @@
 #pragma once
+#include <vector>
+#include <utility>
+
 #include "Law.hpp"
 #include "../myMath/Vec2.hpp"
-#include <vector>
 #include "../../resources/model/Agent.hpp"
+
+using pair = std::pair<Vec2, Agent *>;
 
 class CohesionLaw : public Law {
 protected:
@@ -11,5 +15,5 @@ protected:
 public:
 	CohesionLaw(const float& relaxation);
 	CohesionLaw();
-	Vec2 compute(Agent& currentAgent, const std::vector<Agent*>& neighbors) const override;
+	Vec2 compute(Agent& currentAgent, const std::vector<pair>& neighbors) const override;
 };

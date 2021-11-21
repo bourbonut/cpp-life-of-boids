@@ -24,7 +24,8 @@ protected:
 	std::array<float, 3> m_GLColor;
 	bool m_toDestroy;
 
-using pairNP = std::pair<std::vector<Agent *>, std::vector<Agent *>>;
+using pair = std::pair<Vec2, Agent *>;
+using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
 
 protected:
 	Agent(const int& lVelocity, const int& uVelocity, const int& bodySize,

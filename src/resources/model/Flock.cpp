@@ -11,8 +11,9 @@
 #include "Eagle.hpp"
 #include "Flock.hpp"
 #define CRITICAL_FLOCK_SIZE 2500  // at this point, we start to have fps issues
-using pairNP = std::pair<std::vector<Agent *>, std::vector<Agent *>>;
+
 using pair = std::pair<Vec2, Agent *>;
+using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
 using dict = std::unordered_map<int, std::vector<pair>>;
 
 Flock::Flock(std::vector<Agent *> population) : m_agents(population) {
@@ -106,8 +107,8 @@ pairNP Flock::computeNeighbors(const Agent &agent, const float &width, const flo
     }
   }
 
-  std::vector<Agent *> neighbors;
-  std::vector<Agent *> neighborsPredators;
+  std::vector<pair> neighbors;
+  std::vector<pair> neighborsPredators;
   neighbors.reserve(potentialNeighbors.size());
   for (pair data : potentialNeighbors) {
     Vec2 neighbor = std::get<0>(data);
@@ -116,9 +117,9 @@ pairNP Flock::computeNeighbors(const Agent &agent, const float &width, const flo
 		if(norm <= range && vel.dot(diff) / (velNorm * norm)  > viewAngle){
       Agent *potentialNeighbor = std::get<1>(data);
       if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
-        neighbors.push_back(potentialNeighbor);
+        neighbors.push_back(data);
       } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
-        neighborsPredators.push_back(potentialNeighbor);
+        neighborsPredators.push_back(data);
       }
     }
   }
@@ -126,8 +127,8 @@ pairNP Flock::computeNeighbors(const Agent &agent, const float &width, const flo
 }
 
 pairNP Flock::computeNeighborsOrigin(const Agent &agent) {
-  std::vector<Agent *> neighbors;
-  std::vector<Agent *> neighborsPredators;
+  std::vector<pair> neighbors;
+  std::vector<pair> neighborsPredators;
   neighbors.reserve(m_agents.size());
 
   // Like this one bird is going to be its own potential neighbor
@@ -136,9 +137,9 @@ pairNP Flock::computeNeighborsOrigin(const Agent &agent) {
       double distWithPotNeighb = distance(agent.getPosition(), (*potentialNeighbor).getPosition());
       if (fabs(distWithPotNeighb) <= (float)abs(agent.getRange())) {
         if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
-          neighbors.push_back(potentialNeighbor);
+          neighbors.push_back(std::make_pair((*potentialNeighbor).getPosition(), potentialNeighbor));
         } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
-          neighborsPredators.push_back(potentialNeighbor);
+          neighborsPredators.push_back(std::make_pair((*potentialNeighbor).getPosition(), potentialNeighbor));
         }
       }
     }

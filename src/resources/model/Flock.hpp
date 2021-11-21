@@ -6,8 +6,8 @@
 #include <utility>
 #include <unordered_map>
 
-using pairNP = std::pair<std::vector<Agent*>, std::vector<Agent*>>;
 using pair = std::pair<Vec2, Agent*>;
+using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
 using dict = std::unordered_map<int, std::vector<pair>>;
 
 class Flock {

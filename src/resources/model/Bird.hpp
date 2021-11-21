@@ -8,7 +8,8 @@
 #include "../../lib/myLaws/CohesionLaw.hpp"
 #include "../../lib/myLaws/AlignmentLaw.hpp"
 
-using pairNP = std::pair<std::vector<Agent *>, std::vector<Agent *>>;
+using pair = std::pair<Vec2, Agent *>;
+using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
 
 class Bird : public Agent{
 private:
