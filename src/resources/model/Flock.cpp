@@ -4,6 +4,7 @@
 #include <utility>
 #include <vector>
 #include <omp.h>
+#include "tbb/parallel_for.h"
 
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myMath/utils.hpp"
@@ -161,11 +162,19 @@ void Flock::updateGrid(const float &width, const float &height) {
 void Flock::updateAgents(const bool &run_boids, const float &width, const float &height) {
   if (run_boids) {
     this->updateGrid(width, height);
-    #pragma omp parallel for
-    for (Agent *bird : m_agents) {
-      (*bird).computeLaws(this->getNeighbors(*bird, width, height));
-      (*bird).prepareMove();
-    }
+    tbb::parallel_for(
+      size_t(0),
+      m_agents.size(),
+      [&](size_t i){
+        (*(m_agents[i])).computeLaws(this->getNeighbors(*(m_agents[i]), width, height));
+        (*(m_agents[i])).prepareMove();
+      }
+    );
+    //#pragma omp parallel for
+    // for (Agent *bird : m_agents) {
+    //   (*bird).computeLaws(this->getNeighbors(*bird, width, height));
+    //   (*bird).prepareMove();
+    // }
     #pragma omp parallel for
     for (Agent *bird : m_agents) {
       (*bird).keepPositionInScreen(width, height);
