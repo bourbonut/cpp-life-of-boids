@@ -27,8 +27,7 @@ void Eagle::computeLaws(const pairNP& neighbors) {
 	std::vector<pair> neighborsBird = std::get<0>(neighbors);
 	Vec2 vec_displacement{};
 
-	if (neighborsBird.size() > 0) { vec_displacement = vec_displacement + m_huntingLaw.compute(*this, neighborsBird) ; }
-	//if (allNeighbors.size() > 0) { vec_displacement = vec_displacement + m_separationLaw.compute(*this, allNeighbors) * 0.1f; }
+	if (neighborsBird.size() > 0) vec_displacement = vec_displacement + m_huntingLaw.compute(*this, neighborsBird);
 
 	float norm = vec_displacement.norm();
 
@@ -42,6 +41,7 @@ void Eagle::computeLaws(const pairNP& neighbors) {
 	}
 }
 
-void Eagle::print() const {
-	std::cout << ">>>Printing eagle : P(" << m_position.x << ", " << m_position.y << " ) / V(" << m_velocity.x << ", " << m_velocity.y << " )";
-};
+std::ostream& operator<<(std::ostream& os, const Eagle& obj)
+{
+    return os << "Eagle(" << obj.string() << ")";
+}

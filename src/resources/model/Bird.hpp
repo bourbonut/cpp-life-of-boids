@@ -25,6 +25,6 @@ public:
 
 	void computeLaws(const pairNP& neighbors) override;
 
-	void print() const;
-
 };
+
+std::ostream& operator<<(std::ostream& os, const Bird& obj);

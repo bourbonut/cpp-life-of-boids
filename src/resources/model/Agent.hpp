@@ -59,7 +59,7 @@ public:
 	void keepPositionInScreen(const float& width, const float& height);
 	std::array<float, 3> getGLColor() const;
 
-
+	std::string string() const;
 	Agent& operator=(const Agent& other);
 
 };

@@ -10,24 +10,20 @@ using pair = std::pair<Vec2, Agent *>;
 using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
 
 Bird::Bird() : Agent(-5, 5, 6, 270){};
-//
+
 Bird::Bird(const Vec2& position, const Vec2& velocity) : Agent(position, velocity, 6, 270, 50){};
 
-Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle,
-           const int& range, const float& maxSpeed, const Color& color)
-    : Agent(position, velocity, bodySize, viewAngle, range, maxSpeed, color),
-      m_cohesionLaw(),
-      m_alignmentLaw(),
-      m_separationLaw(){};
+Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle, const int& range, const float& maxSpeed, const Color& color):
+  Agent(position, velocity, bodySize, viewAngle, range, maxSpeed, color), m_cohesionLaw(), m_alignmentLaw(), m_separationLaw(){};
 
 Bird::Bird(const Vec2& position, const Vec2& velocity, const int& bodySize, const int& viewAngle,
            const int& range, const float& maxSpeed, const Color& color,
            const CohesionLaw& cohesionLaw, const AlignmentLaw& alignmentLaw,
-           const SeparationLaw& separationLaw)
-    : Bird(position, velocity, bodySize, viewAngle, range, maxSpeed, color) {
-  m_cohesionLaw = cohesionLaw;
-  m_alignmentLaw = alignmentLaw;
-  m_separationLaw = separationLaw;
+           const SeparationLaw& separationLaw):
+  Bird(position, velocity, bodySize, viewAngle, range, maxSpeed, color) {
+    m_cohesionLaw = cohesionLaw;
+    m_alignmentLaw = alignmentLaw;
+    m_separationLaw = separationLaw;
 };
 
 void Bird::computeLaws(const pairNP& neighbors) {
@@ -46,7 +42,7 @@ void Bird::computeLaws(const pairNP& neighbors) {
   if (m_nextVelocity.norm() > m_maxSpeed) m_nextVelocity = m_nextVelocity.normalize() * m_maxSpeed;
 };
 
-void Bird::print() const {
-  std::cout << ">>>Printing bird : P(" << m_position.x << ", " << m_position.y << " ) / V("
-            << m_velocity.x << ", " << m_velocity.y << " )";
-};
+std::ostream& operator<<(std::ostream& os, const Bird& obj)
+{
+    return os << "Bird(" << obj.string() << ")";
+}

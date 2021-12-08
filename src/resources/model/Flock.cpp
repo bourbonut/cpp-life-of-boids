@@ -40,24 +40,10 @@ Flock::Flock(std::vector<Agent *> population) : m_agents(population) {
   }
 };
 
-int Flock::getPopSize() const { return (int)m_agents.size(); };
-
-Flock::Flock(){};
-
-void Flock::addAgent(Agent *a) { m_agents.emplace_back(a); };
-
-void Flock::addBornAgent(Agent *agent) { m_bornAgents.push_back(agent); }
-
-Agent *Flock::getAgent(int index) { return m_agents.at(index); };
-
-void Flock::print() {
-  std::cout << "Printing Flock :\n";
-  int i = 0;
-  for (Agent *b : m_agents) {
-    std::cout << ++i << " : Pos(" << (*b).getPosition().x << ", " << (*b).getPosition().y
-              << ") 	//  Vel(" << (*b).getVelocity().x << ", " << (*b).getVelocity().y << ")"
-              << std::endl;
-  }
+std::string Flock::string() const {
+  std::string string = "Flock(\n";
+  for (Agent *agent : m_agents) string += "\tAgent(" + (*agent).string() + ")\n";
+  return string + ")";
 };
 
 void Flock::setAgentsToBeDestroyed(const Vec2 &position, const int &destroyRadius) {
@@ -70,13 +56,17 @@ void Flock::setAgentsToBeDestroyed(const Vec2 &position, const int &destroyRadiu
 }
 
 void Flock::removeEatenBirds() {
-  auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(), [](Agent *a) {
+  auto garbageAgents = std::remove_if(
+    m_agents.begin(),
+    m_agents.end(),
+    [](Agent *a) {
     bool destroyBool = ((*a).getDestruction());
-    if (destroyBool) {
-      delete a;
-    };
+      if (destroyBool) {
+        delete a;
+      };
     return destroyBool;
-  });
+    }
+  );
   m_agents.erase(garbageAgents, m_agents.end());
   for (Agent *a : m_bornAgents) {
     m_agents.push_back(a);
@@ -85,8 +75,7 @@ void Flock::removeEatenBirds() {
 };
 
 void Flock::destroyLastAgent() {
-  Agent *ptr = getAgent(getPopSize() - 1);
-  delete ptr;
+  delete m_agents.back();
   m_agents.pop_back();
 };
 
@@ -182,4 +171,10 @@ void Flock::updateAgents(const bool &run_boids, const float &width, const float 
     }
     m_grid.clear();
   }
+}
+
+
+std::ostream& operator<<(std::ostream& os, const Flock& obj)
+{
+    return os << obj.string();
 }
