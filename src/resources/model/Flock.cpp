@@ -5,6 +5,7 @@
 #include <vector>
 #include <omp.h>
 #include "tbb/parallel_for.h"
+#include "tbb/task_arena.h"
 
 #include "../../lib/myMath/Vec2.hpp"
 #include "../../lib/myMath/utils.hpp"
@@ -27,16 +28,6 @@ Flock::Flock(std::vector<Agent *> population) : m_agents(population) {
     getNeighbors = [this](const Agent &agent, const float &, const float &) {
       return this->computeNeighborsOrigin(agent);
     };
-  }
-  if (size > 700) {
-    std::cout << "Size of flock over 700, using the optimized version of compute neighbors.\nIf "
-                 "you want to use predators, you might prefer generating a small flock (size under "
-                 "700). Optimized version is in beta."
-              << std::endl;
-  }
-  if (size > CRITICAL_FLOCK_SIZE) {
-    std::cout << "\nWARNING : Flock size is over " << CRITICAL_FLOCK_SIZE
-              << ", the program might have frame rate issues." << std::endl;
   }
 };
 
@@ -151,23 +142,53 @@ void Flock::updateGrid(const float &width, const float &height) {
 void Flock::updateAgents(const bool &run_boids, const float &width, const float &height) {
   if (run_boids) {
     this->updateGrid(width, height);
-    tbb::parallel_for(
-      size_t(0),
-      m_agents.size(),
-      [&](size_t i){
-        (*(m_agents[i])).computeLaws(this->getNeighbors(*(m_agents[i]), width, height));
-        (*(m_agents[i])).prepareMove();
-      }
-    );
-    //#pragma omp parallel for
-    // for (Agent *bird : m_agents) {
-    //   (*bird).computeLaws(this->getNeighbors(*bird, width, height));
-    //   (*bird).prepareMove();
-    // }
+    #pragma omp parallel for
+    for (Agent *bird : m_agents) {
+      (*bird).computeLaws(this->getNeighbors(*bird, width, height));
+      (*bird).prepareMove();
+    }
     #pragma omp parallel for
     for (Agent *bird : m_agents) {
       (*bird).keepPositionInScreen(width, height);
       (*bird).move();
+    }
+    m_grid.clear();
+  }
+}
+
+void Flock::experiment(const bool &run_boids, const float &width, const float &height, const int& nb_threads, const bool& thread_switch) {
+  if (run_boids) {
+    this->updateGrid(width, height);
+    if(thread_switch){
+      tbb::task_arena arena(nb_threads);
+      arena.execute([&]{tbb::parallel_for(
+        size_t(0),
+        m_agents.size(),
+        [&](size_t i){
+          (*(m_agents[i])).computeLaws(this->getNeighbors(*(m_agents[i]), width, height));
+          (*(m_agents[i])).prepareMove();
+        }
+      );});
+      arena.execute([&]{tbb::parallel_for(
+        size_t(0),
+        m_agents.size(),
+        [&](size_t i){
+          (*m_agents[i]).keepPositionInScreen(width, height);
+          (*m_agents[i]).move();
+        }
+      );});
+    } else {
+      omp_set_num_threads(nb_threads);
+      #pragma omp parallel for
+      for (Agent *bird : m_agents) {
+        (*bird).computeLaws(this->getNeighbors(*bird, width, height));
+        (*bird).prepareMove();
+      }
+      #pragma omp parallel for
+      for (Agent *bird : m_agents) {
+        (*bird).keepPositionInScreen(width, height);
+        (*bird).move();
+      }
     }
     m_grid.clear();
   }

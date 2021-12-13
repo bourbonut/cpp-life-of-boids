@@ -30,6 +30,7 @@ public:
 	void addBornAgent(Agent* agent) { m_bornAgents.push_back(agent); };
 	void updateGrid(const float& width, const float& height);
 	void updateAgents(const bool& run_boids, const float& width, const float& height);
+	void experiment(const bool& run_boids, const float& width, const float& height, const int& nb_threads, const bool& thread_switch);
 	std::string string() const;
 
 public:
