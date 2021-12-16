@@ -24,7 +24,7 @@ Eagle::Eagle(const Vec2& position, const Vec2& velocity, const int& bodySize, co
 
 
 void Eagle::computeLaws(const pairNP& neighbors) {
-	std::vector<pair> neighborsBird = std::get<0>(neighbors);
+	const std::vector<pair> neighborsBird = std::get<0>(neighbors);
 	Vec2 vec_displacement{};
 
 	if (neighborsBird.size() > 0) vec_displacement = vec_displacement + m_huntingLaw.compute(*this, neighborsBird);

@@ -12,7 +12,6 @@
 #include "Bird.hpp"
 #include "Eagle.hpp"
 #include "Flock.hpp"
-#define CRITICAL_FLOCK_SIZE 2500  // at this point, we start to have fps issues
 
 using pair = std::pair<Vec2, Agent *>;
 using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
@@ -70,15 +69,15 @@ void Flock::destroyLastAgent() {
   m_agents.pop_back();
 };
 
-pairNP Flock::computeNeighbors(const Agent &agent, const float &width, const float &height) {
+const pairNP Flock::computeNeighbors(const Agent &agent, const float &width, const float &height) {
   Vec2 pos = agent.getPosition();
 	Vec2 vel = agent.getVelocity();
   double velNorm = vel.norm();
   double range = agent.getRange();
-  float viewAngle = std::cos(radians(agent.getViewAngle()) * 0.5);
+  float viewAngle = std::cos(radians(agent.getViewAngle()) * 0.5) * velNorm;
   Vec2 normalized_pos = pos + Vec2(width, height);
-  int i = (int)(normalized_pos.x / 50);
-  int j = (int)(normalized_pos.y / 50);
+  int i = (int)(normalized_pos.x / m_precision);
+  int j = (int)(normalized_pos.y / m_precision);
   std::vector<pair> potentialNeighbors;
   std::vector<pair> *ptr;
   for(int i_ = i - 1; i_ <= i + 1; i_ ++){
@@ -91,11 +90,11 @@ pairNP Flock::computeNeighbors(const Agent &agent, const float &width, const flo
   std::vector<pair> neighbors;
   std::vector<pair> neighborsPredators;
   neighbors.reserve(potentialNeighbors.size());
-  for (pair data : potentialNeighbors) {
-    Vec2 neighbor = std::get<0>(data);
-    Vec2 diff = neighbor - pos;
-    double norm = diff.norm();
-		if(norm <= range && vel.dot(diff) / (velNorm * norm)  > viewAngle){
+  for (const pair& data : potentialNeighbors) {
+    const Vec2 neighbor = std::get<0>(data);
+    const Vec2 diff = neighbor - pos;
+    const double norm = diff.norm();
+		if(norm <= range && vel.dot(diff) / norm  > viewAngle){
       Agent *potentialNeighbor = std::get<1>(data);
       if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
         neighbors.push_back(data);
@@ -133,8 +132,8 @@ void Flock::updateGrid(const float &width, const float &height) {
   for (Agent *a : m_agents) {
     Vec2 pos = (*a).getPosition();
     Vec2 normalized_pos = pos + v;
-    int i = (int)(normalized_pos.x / 50);
-    int j = (int)(normalized_pos.y / 50);
+    int i = (int)(normalized_pos.x / m_precision);
+    int j = (int)(normalized_pos.y / m_precision);
     m_grid[i * i + j].push_back(std::make_pair(pos, a));
   }
 }

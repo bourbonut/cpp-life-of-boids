@@ -12,6 +12,7 @@ using dict = std::unordered_map<int, std::vector<pair>>;
 
 class Flock {
 private :
+	double m_precision = 50.;
 	std::vector<Agent*> m_agents;
 	std::vector<Agent*> m_bornAgents;
 	std::function<pairNP( const Agent& agent, const float& width, const float& height )> getNeighbors;
@@ -20,7 +21,7 @@ private :
 public:
 	int getPopSize() const { return (int)m_agents.size(); };
 	Agent* operator[](int index) { return m_agents.at(index); };
-	pairNP computeNeighbors(const Agent& agent, const float& width, const float& height);
+	const pairNP computeNeighbors(const Agent& agent, const float& width, const float& height);
 	pairNP computeNeighborsOrigin(const Agent& agent);
 
 	void addAgent(Agent *a) { m_agents.emplace_back(a); };
