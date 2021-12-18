@@ -23,7 +23,7 @@ int main(int /*argc*/, char** /*argv[]*/) {
     float width = 1000.;
     float height = 850.;
 
-    std::vector<int> sizes {4096, 8192, 16384};//, 32768, 65536, 131072};
+    std::vector<int> sizes {4096, 8192, 16384, 32768, 65536, 131072};
     std::vector<int> vthreads {1, 2, 4, 8};
     std::vector<bool> vswitch {false, true};
 
