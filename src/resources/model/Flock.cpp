@@ -78,31 +78,31 @@ const pairNP Flock::computeNeighbors(const Agent &agent, const float &width, con
   Vec2 normalized_pos = pos + Vec2(width, height);
   int i = (int)(normalized_pos.x / m_precision);
   int j = (int)(normalized_pos.y / m_precision);
-  std::vector<pair> potentialNeighbors;
-  std::vector<pair> *ptr;
-  for(int i_ = i - 1; i_ <= i + 1; i_ ++){
-    for(int j_ = j - 1; j_ <= j + 1; j_ ++){
-      ptr = &m_grid[i_ * i_ + j_];
-      potentialNeighbors.insert(potentialNeighbors.begin(), (*ptr).begin(), (*ptr).end());
-    }
-  }
 
   std::vector<pair> neighbors;
   std::vector<pair> neighborsPredators;
-  neighbors.reserve(potentialNeighbors.size());
-  for (const pair& data : potentialNeighbors) {
-    const Vec2 neighbor = std::get<0>(data);
-    const Vec2 diff = neighbor - pos;
-    const double norm = diff.norm();
-		if(norm <= range && vel.dot(diff) / norm  > viewAngle){
-      Agent *potentialNeighbor = std::get<1>(data);
-      if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
-        neighbors.push_back(data);
-      } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
-        neighborsPredators.push_back(data);
+  for(int i_ = i - 1; i_ <= i + 1; i_ ++){
+    for(int j_ = j - 1; j_ <= j + 1; j_ ++){
+      try{
+        for (const pair& data : m_grid[i_ * i_ + j_]) {
+          const Vec2 neighbor = std::get<0>(data);
+          const Vec2 diff = neighbor - pos;
+          const double norm = diff.norm();
+      		if(norm <= range && vel.dot(diff) / norm  > viewAngle){
+            Agent *potentialNeighbor = std::get<1>(data);
+            if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
+              neighbors.push_back(data);
+            } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
+              neighborsPredators.push_back(data);
+            }
+          }
+        }
+      }catch(const std::exception& e){
+        std::cout << "Erreur Get : " << e.what() << '\n';
       }
     }
   }
+
   return std::make_pair(neighbors, neighborsPredators);
 }
 
