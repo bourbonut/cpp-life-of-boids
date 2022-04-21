@@ -108,11 +108,11 @@ Flock generate_random_bird_flock(Vec2 inf_sup_size, Vec2 inf_sup_range, Vec2 inf
 	float speed_relax = random_float((int)inf_sup_speed_relax.x, (int)inf_sup_speed_relax.y);
 
 
-	//Change to random color 
+	//Change to random color
 	return create_bird_flock(flock_size, Color::Default, agent_size, range, angle_view, sep_relax, cohesion_relax, align_relax, speed_relax);
 }
 
-//TODO : Change 
+//TODO : Change
 Flock generate_parrot_flock(int size)
 {
 	float cohesion_relax = 0.0002f;
@@ -195,7 +195,7 @@ Color random_color() {
 }
 
 //Sert a convertir une chaine de caractere en entier pour le comparer dans un switch case
-//On va assigner une valeur à chaque caractere et créer un int unique pour chaque chaine de caractere
+//On va assigner une valeur ï¿½ chaque caractere et crï¿½er un int unique pour chaque chaine de caractere
 constexpr unsigned int str2int(const char* str, int h = 0)
 {
 	return !str[h] ? 0/*5381*/ : (str2int(str, h + 1) /** 33*/) ^ str[h];
@@ -320,7 +320,7 @@ Flock generate_flock_with_args(int argc, char* argv[])
 		char* pColor = argv[2];
 		Color color = str_to_color(pColor);
 		if (color == Color::Default) {
-			std::cout << "WARNING : Color unknown, default color will be applied" << std::endl;
+			std::cout << "WARNING : Color unknown, default color will be applied." << std::endl;
 		}
 
 		int bird_size = atoi(argv[3]);
@@ -348,12 +348,12 @@ Flock generate_flock_with_args(int argc, char* argv[])
 		float max_speed = std::stof(argv[9]);
 		if (max_speed <= 0) {
 			max_speed = 0;
-			std::cout << "WARNING :Agent's max speed (int) will be 0, they won't move, check your arguments." << std::endl;
+			std::cout << "WARNING : Agent's max speed (int) will be 0, they won't move, check your arguments." << std::endl;
 		}
 
 		std::cout << "\nGenerating a flock with\n\t" << size << " " << pColor << " agents\n\trange : " << range << " / angle view : " << angle_view << '\n';
 		std::cout << "\tmax speed : " << max_speed <<"\n\n\t >> Alignment : " << r_align << "\n\t >> Separation : " << r_sep << "\n\t >> Cohesion : " << r_cohe << "\n\n" << std::endl;
-		
+
 		return create_bird_flock((int)size, color, (int)bird_size, (int)range, (int)angle_view, r_sep, r_cohe, r_align, max_speed);
 	}
 	default:
@@ -362,4 +362,3 @@ Flock generate_flock_with_args(int argc, char* argv[])
 		throw std::domain_error("Wrong number of arguments");
 	}
 }
-
