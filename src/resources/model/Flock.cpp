@@ -83,22 +83,20 @@ const pairNP Flock::computeNeighbors(const Agent &agent, const float &width, con
   std::vector<pair> neighborsPredators;
   for(int i_ = i - 1; i_ <= i + 1; i_ ++){
     for(int j_ = j - 1; j_ <= j + 1; j_ ++){
-      try{
-        for (const pair& data : m_grid[i_ * i_ + j_]) {
-          const Vec2 neighbor = std::get<0>(data);
-          const Vec2 diff = neighbor - pos;
-          const double norm = diff.norm();
-      		if(norm <= range && vel.dot(diff) / norm  > viewAngle){
-            Agent *potentialNeighbor = std::get<1>(data);
-            if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
-              neighbors.push_back(data);
-            } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
-              neighborsPredators.push_back(data);
-            }
+      for (const pair& data : m_grid[i_ * i_ + j_]) {
+        const Vec2 neighbor = std::get<0>(data);
+        const Vec2 diff = neighbor - pos;
+        const double norm = diff.norm();
+    		if(norm <= range && vel.dot(diff) / norm  > viewAngle){
+          Agent *potentialNeighbor = std::get<1>(data);
+          if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
+            neighbors.push_back(data);
+          } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
+            neighborsPredators.push_back(data);
+          } else {
+            std::cout << "HERE" << '\n';;
           }
         }
-      }catch(const std::exception& e){
-        std::cout << "Erreur Get : " << e.what() << '\n';
       }
     }
   }
@@ -144,10 +142,10 @@ void Flock::updateAgents(const bool &run_boids, const float &width, const float 
     #pragma omp parallel for
     for (Agent *bird : m_agents) {
       (*bird).computeLaws(this->getNeighbors(*bird, width, height));
-      (*bird).prepareMove();
     }
     #pragma omp parallel for
     for (Agent *bird : m_agents) {
+      (*bird).prepareMove();
       (*bird).keepPositionInScreen(width, height);
       (*bird).move();
     }
@@ -165,13 +163,13 @@ void Flock::experiment(const bool &run_boids, const float &width, const float &h
         m_agents.size(),
         [&](size_t i){
           (*(m_agents[i])).computeLaws(this->getNeighbors(*(m_agents[i]), width, height));
-          (*(m_agents[i])).prepareMove();
         }
       );});
       arena.execute([&]{tbb::parallel_for(
         size_t(0),
         m_agents.size(),
         [&](size_t i){
+          (*(m_agents[i])).prepareMove();
           (*m_agents[i]).keepPositionInScreen(width, height);
           (*m_agents[i]).move();
         }
@@ -181,10 +179,10 @@ void Flock::experiment(const bool &run_boids, const float &width, const float &h
       #pragma omp parallel for
       for (Agent *bird : m_agents) {
         (*bird).computeLaws(this->getNeighbors(*bird, width, height));
-        (*bird).prepareMove();
       }
       #pragma omp parallel for
       for (Agent *bird : m_agents) {
+        (*bird).prepareMove();
         (*bird).keepPositionInScreen(width, height);
         (*bird).move();
       }
