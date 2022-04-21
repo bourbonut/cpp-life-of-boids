@@ -1,185 +1,200 @@
-#include "Flock.hpp"
+#include <algorithm>
+#include <cmath>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+#include <omp.h>
+#include "tbb/parallel_for.h"
+#include "tbb/task_arena.h"
+
+#include "../../lib/myMath/Vec2.hpp"
+#include "../../lib/myMath/utils.hpp"
 #include "Bird.hpp"
 #include "Eagle.hpp"
-#include "../../lib/myMath/utils.hpp"
-#include "../../lib/myMath/Vec2.hpp"
-#include "../../lib/myLaws/Law.hpp"
-#include <vector>
-#include <cmath>
-#include <random>
-#include <algorithm>
-#include <tuple>
+#include "Flock.hpp"
 
-struct {
-  bool operator()(std::tuple<float, float, int> a, std::tuple<float, float, int> b) const { return std::get<0>(a) < std::get<0>(b); }
-} customLessX;
+using pair = std::pair<Vec2, Agent *>;
+using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
+using dict = std::unordered_map<int, std::vector<pair>>;
 
-struct {
-  bool operator()(std::tuple<float, float, int> a, std::tuple<float, float, int> b) const { return std::get<1>(a) < std::get<1>(b); }
-} customLessY;
+Flock::Flock(std::vector<Agent *> population) : m_agents(population) {
+  int size = (int)m_agents.size();
+  if (size > 700) {
+    getNeighbors = [this](const Agent &agent, const float &width, const float &height) {
+      return this->computeNeighbors(agent, width, height);
+    };
+  } else {
+    getNeighbors = [this](const Agent &agent, const float &, const float &) {
+      return this->computeNeighborsOrigin(agent);
+    };
+  }
+};
 
-struct {
-  bool operator()(std::tuple<float, float, int> a, std::tuple<float, float, int> b) const { return std::get<2>(a) < std::get<2>(b); }
-} customLessIndex;
+std::string Flock::string() const {
+  std::string string = "Flock(\n";
+  for (Agent *agent : m_agents) string += "\tAgent(" + (*agent).string() + ")\n";
+  return string + ")";
+};
 
-template<class InputIt1, class InputIt2, class OutputIt, class Compare>
-OutputIt set_intersection(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, OutputIt d_first, Compare comp)
-{
-    while (first1 != last1 && first2 != last2) {
-        if (comp(*first1, *first2)) {
-            ++first1;
-        } else {
-            if (!comp(*first2, *first1)) {
-                *d_first++ = *first1++;
-            }
-            ++first2;
-        }
+void Flock::setAgentsToBeDestroyed(const Vec2 &position, const int &destroyRadius) {
+  for (auto &bird : m_agents) {
+    bool destroyBool = ((*bird).getPosition() - position).norm() < destroyRadius;
+    if (destroyBool) {
+      (*bird).setDestruction();
+    };
+  }
+}
+
+void Flock::removeEatenBirds() {
+  auto garbageAgents = std::remove_if(
+    m_agents.begin(),
+    m_agents.end(),
+    [](Agent *a) {
+    bool destroyBool = ((*a).getDestruction());
+      if (destroyBool) {
+        delete a;
+      };
+    return destroyBool;
     }
-    return d_first;
-}
-
-
-
-Flock::Flock(std::vector<Agent*> population) : m_agents(population) {
-	int size = (int) m_agents.size();
-	for (int i = 0; i<size; ++i){
-		m_x.push_back(std::tuple<float, float, int>{0., 0., i});
-		m_y.push_back(std::tuple<float, float, int>{0., 0., i});
-	}
-};
-
-
-int Flock::getPopSize() const {
-	return (int)m_agents.size();
-};
-
-Flock::Flock() {};
-
-void Flock::addAgent(Agent *a) {
-	m_agents.emplace_back(a);
-};
-
-void Flock::setAgentsToBeDestroyed(const Vec2& position, const int& destroyRadius) {
-	for (auto& bird : m_agents) {
-		bool destroyBool = ((*bird).getPosition() - position).norm() < destroyRadius;
-		if (destroyBool) { (*bird).setDestruction(); };
-	}
-}
-
-void Flock::destroyAgents() {
-	auto garbageAgents = std::remove_if(m_agents.begin(), m_agents.end(),
-		[](Agent* a) {
-			// If distance < 1, destroy bird
-			bool destroyBool = ((*a).getDestruction());
-			if (destroyBool) { delete a; };
-			return destroyBool; });
-
-	m_agents.erase(garbageAgents, m_agents.end());
+  );
+  m_agents.erase(garbageAgents, m_agents.end());
+  for (Agent *a : m_bornAgents) {
+    m_agents.push_back(a);
+  }
+  m_bornAgents.clear();
 };
 
 void Flock::destroyLastAgent() {
-	Agent *ptr = getAgent(getPopSize() - 1);
-	delete ptr;
-	m_agents.pop_back();
+  delete m_agents.back();
+  m_agents.pop_back();
 };
 
-std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighbors(const Agent& agent){
+const pairNP Flock::computeNeighbors(const Agent &agent, const float &width, const float &height) {
   Vec2 pos = agent.getPosition();
-	int range = agent.getRange();
-  float x = pos.x;
-  float y = pos.y;
-  int indexXInf = researchX(x - range, m_x);
-  int indexXSup = researchX(x + range, m_x);
-  int indexYInf = researchY(y - range, m_y);
-  int indexYSup = researchY(y + range, m_y);
-  std::vector<std::tuple<float, float, int>> vx;
-  std::vector<std::tuple<float, float, int>> vy;
-  std::vector<std::tuple<float, float, int>> potentialNeighbors;
-  vx.insert(vx.end(), m_x.begin() + indexXInf, m_x.begin() + indexXSup + 1);
-  vy.insert(vy.end(), m_y.begin() + indexYInf, m_y.begin() + indexYSup + 1);
-  std::sort(vx.begin(), vx.end(), customLessIndex);
-  std::sort(vy.begin(), vy.end(), customLessIndex);
-  std::set_intersection(
-    vx.begin(), vx.end(),
-    vy.begin(), vy.end(),
-    std::back_inserter(potentialNeighbors),
-    [](const auto & t1, const auto & t2) { return std::get<2>(t1) < std::get<2>(t2);}
-  );
-  float angle;
-	std::vector<Agent*> neighbors;
-	std::vector<Agent*> neighborsPredators;
-	neighbors.reserve(potentialNeighbors.size());
-  for (std::tuple<float, float, int> data : potentialNeighbors) {
-		Agent * potentialNeighbor = m_agents[std::get<2>(data)];
-    angle = degrees((pos - (*potentialNeighbor).getPosition()).angle());
-		if (!(angle > agent.getViewAngle() * 0.5) && !(agent._id == (*potentialNeighbor)._id)){
-			if (distance(pos, (*potentialNeighbor).getPosition()) <= range){
-				if (dynamic_cast<Bird*> (potentialNeighbor) != nullptr) {
-					neighbors.push_back(potentialNeighbor);
-				}
-				else if (dynamic_cast<Eagle*> (potentialNeighbor) != nullptr) {
-					neighborsPredators.push_back(potentialNeighbor);
-				}
-			}
-		}
-	}
-  return std::make_tuple( neighbors, neighborsPredators );
+	Vec2 vel = agent.getVelocity();
+  double velNorm = vel.norm();
+  double range = agent.getRange();
+  float viewAngle = std::cos(radians(agent.getViewAngle()) * 0.5) * velNorm;
+  Vec2 normalized_pos = pos + Vec2(width, height);
+  int i = (int)(normalized_pos.x / m_precision);
+  int j = (int)(normalized_pos.y / m_precision);
+
+  std::vector<pair> neighbors;
+  std::vector<pair> neighborsPredators;
+  for(int i_ = i - 1; i_ <= i + 1; i_ ++){
+    for(int j_ = j - 1; j_ <= j + 1; j_ ++){
+      try{
+        for (const pair& data : m_grid[i_ * i_ + j_]) {
+          const Vec2 neighbor = std::get<0>(data);
+          const Vec2 diff = neighbor - pos;
+          const double norm = diff.norm();
+      		if(norm <= range && vel.dot(diff) / norm  > viewAngle){
+            Agent *potentialNeighbor = std::get<1>(data);
+            if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
+              neighbors.push_back(data);
+            } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
+              neighborsPredators.push_back(data);
+            }
+          }
+        }
+      }catch(const std::exception& e){
+        std::cout << "Erreur Get : " << e.what() << '\n';
+      }
+    }
+  }
+
+  return std::make_pair(neighbors, neighborsPredators);
+}
+
+pairNP Flock::computeNeighborsOrigin(const Agent &agent) {
+  std::vector<pair> neighbors;
+  std::vector<pair> neighborsPredators;
+  neighbors.reserve(m_agents.size());
+
+  // Like this one bird is going to be its own potential neighbor
+  for (Agent *potentialNeighbor : m_agents) {
+    if (!(degrees((agent.getPosition() - (*potentialNeighbor).getPosition()).angle()) > agent.getViewAngle() / 2) && !(agent._id == (*potentialNeighbor)._id)) {
+      double distWithPotNeighb = distance(agent.getPosition(), (*potentialNeighbor).getPosition());
+      if (fabs(distWithPotNeighb) <= (float)abs(agent.getRange())) {
+        if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
+          neighbors.push_back(std::make_pair((*potentialNeighbor).getPosition(), potentialNeighbor));
+        } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
+          neighborsPredators.push_back(std::make_pair((*potentialNeighbor).getPosition(), potentialNeighbor));
+        }
+      }
+    }
+  }
+  return std::make_pair(neighbors, neighborsPredators);
+};
+
+void Flock::updateGrid(const float &width, const float &height) {
+  Vec2 v = Vec2(width, height);
+  for (Agent *a : m_agents) {
+    Vec2 pos = (*a).getPosition();
+    Vec2 normalized_pos = pos + v;
+    int i = (int)(normalized_pos.x / m_precision);
+    int j = (int)(normalized_pos.y / m_precision);
+    m_grid[i * i + j].push_back(std::make_pair(pos, a));
+  }
+}
+
+void Flock::updateAgents(const bool &run_boids, const float &width, const float &height) {
+  if (run_boids) {
+    this->updateGrid(width, height);
+    #pragma omp parallel for
+    for (Agent *bird : m_agents) {
+      (*bird).computeLaws(this->getNeighbors(*bird, width, height));
+      (*bird).prepareMove();
+    }
+    #pragma omp parallel for
+    for (Agent *bird : m_agents) {
+      (*bird).keepPositionInScreen(width, height);
+      (*bird).move();
+    }
+    m_grid.clear();
+  }
+}
+
+void Flock::experiment(const bool &run_boids, const float &width, const float &height, const int& nb_threads, const bool& thread_switch) {
+  if (run_boids) {
+    this->updateGrid(width, height);
+    if(thread_switch){
+      tbb::task_arena arena(nb_threads);
+      arena.execute([&]{tbb::parallel_for(
+        size_t(0),
+        m_agents.size(),
+        [&](size_t i){
+          (*(m_agents[i])).computeLaws(this->getNeighbors(*(m_agents[i]), width, height));
+          (*(m_agents[i])).prepareMove();
+        }
+      );});
+      arena.execute([&]{tbb::parallel_for(
+        size_t(0),
+        m_agents.size(),
+        [&](size_t i){
+          (*m_agents[i]).keepPositionInScreen(width, height);
+          (*m_agents[i]).move();
+        }
+      );});
+    } else {
+      omp_set_num_threads(nb_threads);
+      #pragma omp parallel for
+      for (Agent *bird : m_agents) {
+        (*bird).computeLaws(this->getNeighbors(*bird, width, height));
+        (*bird).prepareMove();
+      }
+      #pragma omp parallel for
+      for (Agent *bird : m_agents) {
+        (*bird).keepPositionInScreen(width, height);
+        (*bird).move();
+      }
+    }
+    m_grid.clear();
+  }
 }
 
 
-std::tuple<std::vector<Agent*>, std::vector<Agent*>> Flock::computeNeighborsOrigin(
-			const Agent& agent){//, const float &range, const float &angle) {
-
-	std::vector<Agent*> neighbors;
-	std::vector<Agent*> neighborsPredators;
-	neighbors.reserve(m_agents.size());
-
-	//Like this one bird is going to be its own potential neighbor
-	for (Agent* potentialNeighbor : m_agents) {
-		if (!(degrees((agent.getPosition() - (*potentialNeighbor).getPosition()).angle()) > agent.getViewAngle() / 2) && !(agent._id == (*potentialNeighbor)._id))
-		{
-			double distWithPotNeighb = distance(agent.getPosition(), (*potentialNeighbor).getPosition());
-			if (fabs(distWithPotNeighb) <= (float)abs(agent.getRange())) {
-				if (dynamic_cast<Bird*> (potentialNeighbor) != nullptr) {
-					neighbors.push_back(potentialNeighbor);
-				}
-				else if (dynamic_cast<Eagle*> (potentialNeighbor) != nullptr) {
-					neighborsPredators.push_back(potentialNeighbor);
-				}
-			}
-		}
-	}
-	return std::make_tuple( neighbors, neighborsPredators );
-};
-
-void Flock::updateAgents(){
-	int size = (int) m_agents.size();
-  float x;
-  float y;
-  m_x.clear();
-  m_y.clear();
-	for (int i = 0; i<size; ++i){
-		Agent* agent = m_agents[i];
-		Vec2 pos = (*agent).getPosition();
-    x = pos.x;
-    y = pos.y;
-		m_x.push_back(std::tuple<float, float, int>{x, y, i});
-		m_y.push_back(std::tuple<float, float, int>{x, y, i});
-	}
-	std::sort(m_x.begin(), m_x.end(), customLessX);
-	std::sort(m_y.begin(), m_y.end(), customLessY);
+std::ostream& operator<<(std::ostream& os, const Flock& obj)
+{
+    return os << obj.string();
 }
-
-
-
-void Flock::print() {
-	std::cout << "Printing Flock :\n";
-	int i = 0;
-	for (Agent *b : m_agents) {
-		std::cout << ++i << " : Pos(" << (*b).getPosition().x << ", " << (*b).getPosition().y << ")  //  Vel(" << (*b).getVelocity().x << ", " << (*b).getVelocity().y << ")" << std::endl;
-	}
-};
-
-Agent* Flock::getAgent(int index) {
-	return m_agents.at(index);
-};

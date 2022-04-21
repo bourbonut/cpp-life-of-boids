@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.17)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)                                                                                                                                               
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # This message also avoid warning : "Manually-specified variables were not used by the project"
 message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
@@ -29,7 +29,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 #------------------------------------------------------
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(CUSTOM_CXX_FLAGS "${CUSTOM_CXX_FLAGS} -Wall -Wextra")
+    set(CUSTOM_CXX_FLAGS "${CUSTOM_CXX_FLAGS} -Wall -Wextra -fopenmp -ltbb")
     if (WIN32 AND MINGW) # https://stackoverflow.com/questions/16596876/object-file-has-too-many-sections
         set(CUSTOM_CXX_FLAGS "${CUSTOM_CXX_FLAGS} -Wa,-mbig-obj")
     endif ()

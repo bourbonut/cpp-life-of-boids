@@ -61,25 +61,10 @@ namespace {
 		ASSERT_EQ(flock.getPopSize(), testSize + loopSize + 2) << "Added one more agents, should be " << testSize << " + " << loopSize << "+ 2";
 		//flock.print();
 		//flock[testSize + loopSize + 1].getPosition()
-		Vec2 pos = (*flock.getAgent(testSize + loopSize + 1)).getPosition();
-		Vec2 vel = (*flock.getAgent(testSize + loopSize + 1)).getVelocity();
+		Vec2 pos = (*flock[testSize + loopSize + 1]).getPosition();
+		Vec2 vel = (*flock[testSize + loopSize + 1]).getVelocity();
 		EXPECT_EQ(pos, b.getPosition()) << "Last agent's position should be 0,0";
 		EXPECT_EQ(vel, b.getVelocity()) << "Last agent's velocity should be 0,0";
-
-		//flock.addAgent(b);
-		//flock.addAgent(b);
-		//flock.addAgent(b);
-		//flock.addAgent(b);
-		//flock.addAgent(b);
-
-		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(flock.getPopSize() - 1), 1, 1);
-		//EXPECT_GE(neighbors.size(), 5) << "Expected at least 5 neighbors to the bird we added";
-
-		//Printing neighbors
-		//for (Bird b : neighbors) {
-		//	std::cout << " : Pos(" << b.getPosition().x << ", " << b.getPosition().y << ")  //  Vel(" << b.getVelocity().x << ", " << b.getVelocity().y << ")" << std::endl;
-		//}
-		//std::vector<Bird> neighbors = flock.computeNeighbors(flock.getAgent(1000)
 	}
 
 	TEST(TestFlock, Destroy) {
@@ -88,7 +73,7 @@ namespace {
 		mainFlock.push_back(new Bird(Vec2(1, 1), Vec2(1, 1)));
 		mainFlock.push_back(new Bird(Vec2(2, 2), Vec2(2, 2)));
 		mainFlock.push_back(new Bird(Vec2(3, 3), Vec2(3, 3)));
-	
+
 		Flock flock{ mainFlock };
 
 		ASSERT_EQ(flock.getPopSize(), 3);
@@ -96,16 +81,16 @@ namespace {
 		flock.destroyLastAgent();
 		//flock.print();
 		ASSERT_EQ(flock.getPopSize(), 2) << "Error in destroyLastAgent: PopSize = " << flock.getPopSize();
-		ASSERT_EQ((*flock.getAgent(1)).getPosition().x, 2);
+		ASSERT_EQ((*flock[1]).getPosition().x, 2);
 
 		flock.addAgent(new Bird(Vec2(1.5, 1), Vec2(1, 1)));
 
 		//flock.print();
 		flock.setAgentsToBeDestroyed(Vec2(1, 1), 1);
-		flock.destroyAgents();
+		flock.removeEatenBirds();
 		//flock.print();
 		ASSERT_EQ(flock.getPopSize(), 1) << "Error in destroyLastAgent: PopSize = " << flock.getPopSize();
-		ASSERT_EQ((*flock.getAgent(0)).getPosition().x, 2);
+		ASSERT_EQ((*flock[0]).getPosition().x, 2);
 
 	}
 

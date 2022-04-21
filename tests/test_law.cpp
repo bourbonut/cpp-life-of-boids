@@ -4,9 +4,12 @@
 #include "../src/resources/model/Flock.hpp"
 #include "../src/resources/model/Agent.hpp"
 #include <vector>
+#include <utility>
 #include <tuple>
 #include "../src/lib/myLaws/AlignmentLaw.hpp"
 #include "../src/lib/myMath/Vec2.hpp"
+
+using pair = std::pair<Vec2, Agent *>;
 
 namespace {
     TEST(AlignmentLaw, BasicsTests) {
@@ -27,9 +30,9 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
-            std::vector<Agent*> bVec = std::get<0>(allNeighbors);
-            std::vector<Agent*> eVec = std::get<1>(allNeighbors);
+            std::tuple<std::vector<pair>, std::vector<pair>> allNeighbors = (*flockPtr).computeNeighborsOrigin(*bird);
+            std::vector<pair> bVec = std::get<0>(allNeighbors);
+            std::vector<pair> eVec = std::get<1>(allNeighbors);
             AlignmentLaw law;
             Vec2 vecAlignment = law.compute(*bird, bVec);
             alignments.push_back(vecAlignment);
@@ -61,9 +64,9 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
-            std::vector<Agent*> bVec = std::get<0>(allNeighbors);
-            std::vector<Agent*> eVec = std::get<1>(allNeighbors);
+            std::tuple<std::vector<pair>, std::vector<pair>> allNeighbors = (*flockPtr).computeNeighborsOrigin(*bird);
+            std::vector<pair> bVec = std::get<0>(allNeighbors);
+            std::vector<pair> eVec = std::get<1>(allNeighbors);
             CohesionLaw cLaw;
             Vec2 vecCohesion = cLaw.compute(*bird, bVec);
             cohesions.push_back(vecCohesion);
@@ -96,9 +99,9 @@ namespace {
 
         for (auto& bird : *flockPtr) {
 
-            std::tuple<std::vector<Agent*>, std::vector<Agent*>> allNeighbors = (*flockPtr).computeNeighbors(*bird);
-            std::vector<Agent*> bVec = std::get<0>(allNeighbors);
-            std::vector<Agent*> eVec = std::get<1>(allNeighbors);
+            std::tuple<std::vector<pair>, std::vector<pair>> allNeighbors = (*flockPtr).computeNeighborsOrigin(*bird);
+            std::vector<pair> bVec = std::get<0>(allNeighbors);
+            std::vector<pair> eVec = std::get<1>(allNeighbors);
             SeparationLaw law;
             Vec2 vecSeparation = law.compute(*bird, bVec);
             separations.push_back(vecSeparation);

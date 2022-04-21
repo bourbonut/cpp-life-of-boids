@@ -1,38 +1,47 @@
 #pragma once
 #include "../../lib/myMath/Vec2.hpp"
-#include "vector"
-#include <tuple>
 #include "Bird.hpp"
+#include <vector>
+#include <functional>
+#include <utility>
+#include <unordered_map>
 
+using pair = std::pair<Vec2, Agent*>;
+using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
+using dict = std::unordered_map<int, std::vector<pair>>;
 
 class Flock {
 private :
-	//std::vector<Bird> m_birdsVec;
+	double m_precision = 50.;
 	std::vector<Agent*> m_agents;
-	std::vector<std::tuple<float, float, int>> m_x;
-	std::vector<std::tuple<float, float, int>> m_y;
+	std::vector<Agent*> m_bornAgents;
+	std::function<pairNP( const Agent& agent, const float& width, const float& height )> getNeighbors;
+	dict m_grid;
 
 public:
-	bool optimized_computing = false;
-	void print();
-	int getPopSize() const;
-	Agent* getAgent(int index);
+	int getPopSize() const { return (int)m_agents.size(); };
 	Agent* operator[](int index) { return m_agents.at(index); };
-	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighbors(const Agent& agent);
-	std::tuple<std::vector<Agent*>, std::vector<Agent*>> computeNeighborsOrigin(const Agent& agent);
+	const pairNP computeNeighbors(const Agent& agent, const float& width, const float& height);
+	pairNP computeNeighborsOrigin(const Agent& agent);
 
-	void addAgent(Agent *a);
+	void addAgent(Agent *a) { m_agents.emplace_back(a); };
 	void setAgentsToBeDestroyed(const Vec2& position, const int& destroyRadius);
-	void destroyAgents();
+	void removeEatenBirds();
 	void destroyLastAgent();
-	void updateAgents();
+	void addBornAgent(Agent* agent) { m_bornAgents.push_back(agent); };
+	void updateGrid(const float& width, const float& height);
+	void updateAgents(const bool& run_boids, const float& width, const float& height);
+	void experiment(const bool& run_boids, const float& width, const float& height, const int& nb_threads, const bool& thread_switch);
+	std::string string() const;
 
 public:
 	Flock(std::vector<Agent*> population);
-	Flock();
-	~Flock() {}; // Destructeur
+	Flock(){};
+	~Flock(){};
 
 	auto begin() { return m_agents.begin(); };
 	auto end() { return m_agents.end(); };
 
 };
+
+std::ostream& operator<<(std::ostream& os, const Flock& obj);
