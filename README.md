@@ -16,6 +16,10 @@
 - [V. Profiling and performance computing](./doc/contents/profiling_performance_computing.md)
 - [VI. Conclusion and openings](./doc/contents/conclusion_openings.md)
 
-[Next]("./doc/contents/overview.md")
 
-<!-- TODO explain OpenMP and TBB -->
+## Improvements
+
+In order to increase the frame rate when we increase the number of birds, we use [OpenMP](https://en.wikipedia.org/wiki/OpenMP) and [TBB](https://en.wikipedia.org/wiki/Threading_Building_Blocks).
+The program is able to have around 25 FPS with `2 ** 14 = 16384` birds on a machine with 8 cores.
+
+[Next (Overview)]("./doc/contents/overview.md")

@@ -28,12 +28,9 @@ All following functions are presented in different parts of the project.
 - `randomVec2Generation` it generates a random `Vec2`
 - `random_float` it generates a random float
 
-<!-- Todo Add new functions -->
-
 ## Main classes
 
-![ULM diagram](../assets/ulmDiagram.png)
-<!-- Todo Change diagram -->
+![ULM diagram](../assets/ulmDiagram.png)=
 
 ### Flock
 
@@ -121,12 +118,37 @@ The first idea was to implement a _brute-force_ function. We keeped it during th
 
 This algorithm has a complexity of `O(n²)`.
 
+### New implementation
+
+Another way to see this problem, it consists in doing a hash table. In other words, knowing the positions of birds at each time `t`, we can transpose the position from a continuous set to a discrete set which is at the end, simplified and easier to work with. We set the key as `i * i + j` where `i` and `j` are positive.
+
+```cpp
+void Flock::updateGrid(const float &width, const float &height) {
+  Vec2 v = Vec2(width, height);
+  for (Agent *a : m_agents) {
+    Vec2 pos = (*a).getPosition();
+    Vec2 normalized_pos = pos + v;
+    int i = (int)(normalized_pos.x / m_precision);
+    int j = (int)(normalized_pos.y / m_precision);
+    m_grid[i * i + j].push_back(std::make_pair(pos, a));
+  }
+}
+```
+Thanks to this, we can reduce drastically the number of potential neighbors.
 
 ### Flock generator and color
 There are differents level of personalization of Flocks generating according to the choice of the user :
 This code contributes to generate different types of Birds in a Flock (Duck, Ant, Dove, Parrot,...),
 with differents attributes (flock_size, range, angle_view, agent_size, cohesion_relax, sep_relax, align_relax, speed_relax, position, velocity, agent_color).
 The color of the birds can be chosen to be random.
+
+| Generator | Image |
+| --- | --- |
+| `generate_duck_flock(int size);` | ![ducks](../assets/ducks.png) |
+| `generate_ant_flock(int size);` |  ![ants](../assets/ants.png) |
+| `generate_dove_flock(int size);` | ![doves](../assets/doves.png) |
+| `generate_parrot_flock(int size);` | ![parrots](../assets/parrots.png) |
+| `generate_fully_random_bird_flock();` | ![randomized](../assets/randomized.png) |
 
 # User configuration
 Now that we have implemented a flock generator, which can be used in many ways in the code, we want to be able to let the user configure his flock. This can be done by using options (c.f. chapter **Running the program - Options**).
