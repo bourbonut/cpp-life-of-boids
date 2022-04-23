@@ -93,8 +93,6 @@ const pairNP Flock::computeNeighbors(const Agent &agent, const float &width, con
             neighbors.push_back(data);
           } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
             neighborsPredators.push_back(data);
-          } else {
-            std::cout << "HERE" << '\n';;
           }
         }
       }
@@ -143,7 +141,7 @@ void Flock::updateAgents(const bool &run_boids, const float &width, const float 
     for (Agent *bird : m_agents) {
       (*bird).computeLaws(this->getNeighbors(*bird, width, height));
     }
-    #pragma omp parallel for
+    // #pragma omp parallel for
     for (Agent *bird : m_agents) {
       (*bird).prepareMove();
       (*bird).keepPositionInScreen(width, height);
@@ -180,7 +178,7 @@ void Flock::experiment(const bool &run_boids, const float &width, const float &h
       for (Agent *bird : m_agents) {
         (*bird).computeLaws(this->getNeighbors(*bird, width, height));
       }
-      #pragma omp parallel for
+      // #pragma omp parallel for
       for (Agent *bird : m_agents) {
         (*bird).prepareMove();
         (*bird).keepPositionInScreen(width, height);
