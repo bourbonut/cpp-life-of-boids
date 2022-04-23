@@ -198,3 +198,7 @@ FPS calculates the time needed to create an image and calculates the number of i
 		oss << 1 / (duration.count() * 10e-7) << " FPS. " << std::endl;
 		glfwSetWindowTitle(m_window, oss.str().c_str());
 ```
+
+[Next]("./continuous_integration.md")
+
+[Previous]("./work_methodology.md")

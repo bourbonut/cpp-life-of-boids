@@ -34,7 +34,6 @@ We decided to build new docker images, with prebuilt and installed dependencies 
 
 It enabled us to iterate faster on our portability with other compilers.
 
-<div style="float:right;">
-<a href="./continuous_integration.md">Next</a>
-</div>
-<a href="./work_methodology.md">Previous</a>
+[Next]("./profiling_performance_computing.md")
+
+[Previous]("./code_logic_architecture.md")

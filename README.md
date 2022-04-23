@@ -16,9 +16,6 @@
 - [V. Profiling and performance computing](./doc/contents/profiling_performance_computing.md)
 - [VI. Conclusion and openings](./doc/contents/conclusion_openings.md)
 
-<div style="float:right;">
-<a href="./doc/contents/overview.md">Next</a>
-</div>
-<!-- <a href="#">Previous</a> -->
+[Next]("./doc/contents/overview.md")
 
 <!-- TODO explain OpenMP and TBB -->

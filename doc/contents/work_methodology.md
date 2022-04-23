@@ -13,7 +13,6 @@ To summarize, the content of an iteration (or "scrum sprint") is defined in term
 
 Two people work simultaneously on the code, one writes the code while the other checks it in real time.
 
-<div style="float:right;">
-<a href="./work_methodology.md">Next</a>
-</div>
-<a href="./code_logic_architecture.md">Previous</a>
+[Next]("./code_logic_architecture.md")
+
+[Previous]("./overview.md")

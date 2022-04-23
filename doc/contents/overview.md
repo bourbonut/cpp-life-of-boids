@@ -90,7 +90,6 @@ This is a list of available commandes when in runtime :
 - **LEFT CLIC** : Adds a predator to the flock, press **CTRL** while clicking to add a predator with no law (easier to control with ZQSD).
 - **Z, Q, S, D** : Moves the last added predator respectively : up, left, down, right.
 
-<div style="float:right;">
-<a href="./work_methodology.md">Next</a>
-</div>
-<a href="../../README.md">Previous</a>
+[Next]("./work_methodology.md")
+
+[Previous]("../../README.md")

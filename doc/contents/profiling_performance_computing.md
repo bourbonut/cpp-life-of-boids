@@ -33,7 +33,7 @@ We tried to implement the move constructor and move operator but it did not seem
 
 After taking a step back, we can determine some parts to improve and limits.
 
-<div style="float:right;">
-<a href="./conclusion_openings.md">Next</a>
-</div>
-<a href="./continuous_integration.md">Previous</a>
+
+[Next]("./conclusion_openings.md")
+
+[Previous]("./continuous_integration.md")
