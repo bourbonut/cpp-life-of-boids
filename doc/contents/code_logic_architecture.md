@@ -221,6 +221,6 @@ FPS calculates the time needed to create an image and calculates the number of i
 		glfwSetWindowTitle(m_window, oss.str().c_str());
 ```
 
-[Next]("./continuous_integration.md")
+[Next](./continuous_integration.md)
 
-[Previous]("./work_methodology.md")
+[Previous](./work_methodology.md)

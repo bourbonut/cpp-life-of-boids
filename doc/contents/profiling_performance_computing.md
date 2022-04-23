@@ -34,6 +34,6 @@ We tried to implement the move constructor and move operator but it did not seem
 After taking a step back, we can determine some parts to improve and limits.
 
 
-[Next]("./conclusion_openings.md")
+[Next](./conclusion_openings.md)
 
-[Previous]("./continuous_integration.md")
+[Previous](./continuous_integration.md)
