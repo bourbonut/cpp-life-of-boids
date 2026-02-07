@@ -1,7 +1,7 @@
-FIND_PACKAGE(glfw3 3.3 REQUIRED) # REQUIRED means : "fatal if not found"
-FIND_PACKAGE(glad REQUIRED)
-FIND_PACKAGE(OpenCV REQUIRED)
-FIND_PACKAGE(TBB REQUIRED)
+find_package(glfw3 3.3 REQUIRED)
+find_package(glad REQUIRED)
+find_package(OpenCV REQUIRED)
+find_package(TBB REQUIRED)
 
 add_subdirectory("lib/myLaws")
 add_subdirectory("lib/myMath")
