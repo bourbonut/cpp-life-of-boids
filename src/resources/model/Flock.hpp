@@ -5,10 +5,20 @@
 #include <functional>
 #include <utility>
 #include <unordered_map>
+#include <shared_mutex>
+
+struct pairhash {
+public:
+  template <typename T, typename U>
+  std::size_t operator()(const std::pair<T, U> &x) const
+  {
+    return std::hash<T>()(x.first) ^ std::hash<U>()(x.second);
+  }
+};
 
 using pair = std::pair<Vec2, Agent*>;
 using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
-using dict = std::unordered_map<int, std::vector<pair>>;
+using dict = std::unordered_map<std::pair<int, int>, std::vector<pair>, pairhash>;
 
 class Flock {
 private :
@@ -17,6 +27,7 @@ private :
 	std::vector<Agent*> m_bornAgents;
 	std::function<pairNP( const Agent& agent, const float& width, const float& height )> getNeighbors;
 	dict m_grid;
+  mutable std::shared_mutex m_gridMutex;
 
 public:
 	int getPopSize() const { return (int)m_agents.size(); };

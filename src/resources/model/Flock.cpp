@@ -15,7 +15,7 @@
 
 using pair = std::pair<Vec2, Agent *>;
 using pairNP = std::pair<std::vector<pair>, std::vector<pair>>;
-using dict = std::unordered_map<int, std::vector<pair>>;
+using dict = std::unordered_map<std::pair<int, int>, std::vector<pair>, pairhash>;
 
 Flock::Flock(std::vector<Agent *> population) : m_agents(population) {
   int size = (int)m_agents.size();
@@ -50,18 +50,24 @@ void Flock::removeEatenBirds() {
     m_agents.begin(),
     m_agents.end(),
     [](Agent *a) {
-    bool destroyBool = ((*a).getDestruction());
+      bool destroyBool = ((*a).getDestruction());
       if (destroyBool) {
         delete a;
-      };
-    return destroyBool;
+      }
+      return destroyBool;
     }
   );
   m_agents.erase(garbageAgents, m_agents.end());
+  
   for (Agent *a : m_bornAgents) {
     m_agents.push_back(a);
   }
   m_bornAgents.clear();
+  
+  {
+    std::unique_lock<std::shared_mutex> lock(m_gridMutex);
+    m_grid.clear();
+  }
 };
 
 void Flock::destroyLastAgent() {
@@ -81,18 +87,22 @@ const pairNP Flock::computeNeighbors(const Agent &agent, const float &width, con
 
   std::vector<pair> neighbors;
   std::vector<pair> neighborsPredators;
-  for(int i_ = i - 1; i_ <= i + 1; i_ ++){
-    for(int j_ = j - 1; j_ <= j + 1; j_ ++){
-      for (const pair& data : m_grid[i_ * i_ + j_]) {
-        const Vec2 neighbor = std::get<0>(data);
-        const Vec2 diff = neighbor - pos;
-        const double norm = diff.norm();
-    		if(norm <= range && vel.dot(diff) / norm  > viewAngle){
-          Agent *potentialNeighbor = std::get<1>(data);
-          if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
-            neighbors.push_back(data);
-          } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
-            neighborsPredators.push_back(data);
+
+  {
+    std::shared_lock<std::shared_mutex> lock(m_gridMutex);
+    for(int i_ = i - 1; i_ <= i + 1; i_ ++){
+      for(int j_ = j - 1; j_ <= j + 1; j_ ++){
+        for (const pair& data : m_grid[std::make_pair(i_, j_)]) {
+          const Vec2 neighbor = std::get<0>(data);
+          const Vec2 diff = neighbor - pos;
+          const double norm = diff.norm();
+          if(norm <= range && vel.dot(diff) / norm  > viewAngle){
+            Agent *potentialNeighbor = std::get<1>(data);
+            if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
+              neighbors.push_back(data);
+            } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
+              neighborsPredators.push_back(data);
+            }
           }
         }
       }
@@ -130,24 +140,32 @@ void Flock::updateGrid(const float &width, const float &height) {
     Vec2 normalized_pos = pos + v;
     int i = (int)(normalized_pos.x / m_precision);
     int j = (int)(normalized_pos.y / m_precision);
-    m_grid[i * i + j].push_back(std::make_pair(pos, a));
+    m_grid[std::make_pair(i, j)].push_back(std::make_pair(pos, a));
   }
 }
 
 void Flock::updateAgents(const bool &run_boids, const float &width, const float &height) {
   if (run_boids) {
-    this->updateGrid(width, height);
+    {
+      std::unique_lock<std::shared_mutex> lock(m_gridMutex);
+      this->updateGrid(width, height);
+    }
+    
     #pragma omp parallel for
     for (Agent *bird : m_agents) {
       (*bird).computeLaws(this->getNeighbors(*bird, width, height));
     }
-    // #pragma omp parallel for
+    
+    // {
+    //   std::unique_lock<std::shared_mutex> lock(m_gridMutex);
+    //   m_grid.clear();
+    // }
+    
     for (Agent *bird : m_agents) {
       (*bird).prepareMove();
       (*bird).keepPositionInScreen(width, height);
       (*bird).move();
     }
-    m_grid.clear();
   }
 }
 
@@ -167,7 +185,7 @@ void Flock::experiment(const bool &run_boids, const float &width, const float &h
         size_t(0),
         m_agents.size(),
         [&](size_t i){
-          (*(m_agents[i])).prepareMove();
+          (*m_agents[i]).prepareMove();
           (*m_agents[i]).keepPositionInScreen(width, height);
           (*m_agents[i]).move();
         }

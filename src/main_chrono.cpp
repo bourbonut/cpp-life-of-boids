@@ -12,7 +12,7 @@
 // using tupleXYID = std::tuple<float, float, int>;
 using tupleNP = std::tuple<std::vector<Agent*>, std::vector<Agent*>>;
 using pair = std::pair<Vec2, Agent*>;
-using dict = std::unordered_map<int, std::vector<pair>>;
+using dict = std::unordered_map<std::pair<int, int>, std::vector<pair>, pairhash>;
 
 using namespace std::chrono;
 

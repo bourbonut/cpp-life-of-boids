@@ -172,23 +172,24 @@ bool GraphicalManager::mainLoop() {
 
 
 		{
-			(*MAIN_pFLOCK).updateAgents(run_boids, (float) m_width, (float) m_height);
-			for (Agent* bird : (*MAIN_pFLOCK)){
-				if (prettyAgents) {
-					// Fill vertex array of groups of 6 points each for double triangles
-					mat2x6 result = triangleDisplay.drawAgent(bird);
-					for (int j = 0; j < (int)result.size(); ++j) {
-						vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, (*bird).getGLColor() });
-					}
-				}
-				else {
-					// Fill vertex array of points for each agents
-					Vec2 res = (dotDisplayer.drawAgent(bird))[0];
-					vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, (*bird).getGLColor() });
-				}
-			}
+      (*MAIN_pFLOCK).updateAgents(run_boids, (float) m_width, (float) m_height);
 
-			(*MAIN_pFLOCK).removeEatenBirds();
+      for (Agent* bird : (*MAIN_pFLOCK)){
+        if (prettyAgents) {
+          // Fill vertex array of groups of 6 points each for double triangles
+          mat2x6 result = triangleDisplay.drawAgent(bird);
+          for (int j = 0; j < (int)result.size(); ++j) {
+            vertex_data_triangle.push_back(triangle::Vertex{ {result[j].x, result[j].y }, (*bird).getGLColor() });
+          }
+        }
+        else {
+          // Fill vertex array of points for each agents
+          Vec2 res = (dotDisplayer.drawAgent(bird))[0];
+          vertex_data_dots.push_back(points::Vertex{ {res.x, res.y}, (*bird).getGLColor() });
+        }
+      }
+
+      (*MAIN_pFLOCK).removeEatenBirds();
 
 			if (prettyAgents) {
 				// DRAW AGENTS AS TRIANGLES
