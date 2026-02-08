@@ -1,0 +1,15 @@
+[submodule "gtest"]
+	path = thirdparty/gtest
+	url = https://github.com/google/googletest
+[submodule "glfw"]
+	path = thirdparty/glfw
+	url = https://github.com/glfw/glfw
+[submodule "glad"]
+	path = thirdparty/glad
+	url = https://github.com/Dav1dde/glad
+[submodule "TBB"]
+	path = thirdparty/TBB
+	url = https://github.com/uxlfoundation/oneTBB
+[submodule "opencv"]
+	path = thirdparty/opencv
+	url = https://github.com/opencv/opencv
