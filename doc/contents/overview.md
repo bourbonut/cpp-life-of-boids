@@ -6,15 +6,10 @@ In general lines, the project corresponds to an artificial life experience which
 
 ## Dependencies
 
-The application uses the package `conan` to manage C++ packages.
-Simply run :
-```
-pip install conan
-```
 There are some potential packages required for Linux, you should run :
 ```
 sudo apt update
-sudo apt install -y libgtk2.0-dev libgl1-mesa-dev
+sudo apt install -y libopencv-core-dev libopencv-imgcodecs-dev
 ```
 
 ## Build
@@ -24,18 +19,12 @@ To build the application, download the repository `cpp-life-of-boids` and create
 git clone https://github.com/bourbonut/cpp-life-of-boids
 cd cpp-life-of-boids
 mkdir build && cd build
+cmake ..
+make -j8
 ```
-Now, you will configure a `conan` profile :
-```
-conan profile new default --detect
-conan profile update settings.compiler.libcxx=libstdc++11 default
-```
-To finish, compile the application (make sure you are in `build` folder) :
-```
-conan install ..
-cmake -DCMAKE_TOOLCHAIN_FILE=conan_paths.cmake _DCMAKE_BUILD_TYPE=Release ..
-cmake --build .
-```
+
+> [!NOTE]
+> `8` for because my machine have 8 processes.
 
 ## Run the program
 
@@ -44,10 +33,10 @@ After having successfully built the program, the executable file to launch is `l
 Here are the different usages, you can configure the program with more precision using these options :
 
 ```
-./life-of-boids.exe
-./life-of-boids.exe flock_size
-./life-of-boids.exe flock_size agent_type
-./life-of-boids.exe flock_size agent_color agent_size view_range view_angle r_align r_sep r_cohe max_speed
+./life-of-boids
+./life-of-boids flock_size
+./life-of-boids flock_size agent_type
+./life-of-boids flock_size agent_color agent_size view_range view_angle r_align r_sep r_cohe max_speed
 ```
 The first two ones draw a flock of parrot. The third usage uses predetermined agents. Finally, the last command let you created your agents the way your want.
 Special usage : `./life-of-boids r` to generate a fully random flock (birds are randomly generated).
