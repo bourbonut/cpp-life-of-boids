@@ -13,6 +13,20 @@ project(life_of_boids VERSION "12.5.9")
 
 set(PROJECT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(PROJECT_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+set(THIRD_PARTY_DIR ${CMAKE_SOURCE_DIR}/thirdparty)
+
+# Generate glad.h
+if(NOT EXISTS "${THIRD_PARTY_DIR}/glad/output/include/glad/glad.h")
+    execute_process(
+        COMMAND python3 -m glad --out-path=output --profile=core --api gl=3.3 --generator c
+        WORKING_DIRECTORY ${THIRD_PARTY_DIR}/glad
+    )
+    if(NOT EXISTS "${THIRD_PARTY_DIR}/glad/output/include/glad/glad.h")
+      message(FATAL_ERROR "glad.h in ${THIRD_PARTY_DIR}/glad/output/include/glad cannot be generated")
+    endif()
+endif()
+
+set(GLAD_DIR "${THIRD_PARTY_DIR}/glad/output")
 
 # Generate position independent (aka -fPIC) code even for static libs
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -40,6 +54,21 @@ endif ()
 
 # Compiler flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_CXX_FLAGS}")
+
+# set(WITH_IPP OFF CACHE BOOL "" FORCE)
+# set(BUILD_IPP_IW OFF CACHE BOOL "" FORCE)
+# add_subdirectory(${THIRD_PARTY_DIR}/opencv)
+# include_directories(SYSTEM ${THIRD_PARTY_DIR}/opencv/include)
+
+set(OpenCV_INCLUDE_DIRS /usr/include/opencv4)
+set(OpenCV_LIBRARIES opencv_core opencv_imgcodecs)
+set(OpenCV_LIBRARY_DIRS /usr/lib/x86_64-linux-gnu)
+
+add_subdirectory(${THIRD_PARTY_DIR}/glfw)
+add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
+include_directories(SYSTEM ${GLAD_DIR}/include)
+add_subdirectory(${THIRD_PARTY_DIR}/gtest)
+add_subdirectory(${THIRD_PARTY_DIR}/TBB)
 
 add_subdirectory(src)
 

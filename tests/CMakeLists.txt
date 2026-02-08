@@ -1,37 +1,28 @@
 include(CTest)
-
-find_package(GTest REQUIRED)
-find_package(TBB REQUIRED)
 include(GoogleTest)
 
 # Build a list of test binaries
 add_executable(first_gtest first_gtest.cpp)
-target_link_libraries(first_gtest PRIVATE GTest::gtest GTest::gtest_main)
+target_link_libraries(first_gtest PRIVATE gtest gtest_main)
 target_include_directories(first_gtest PRIVATE ${GTest_INCLUDE_DIRS})
-gtest_discover_tests(first_gtest) # helps to split one ctest executable into multiple google tests
+gtest_discover_tests(first_gtest)
 
 add_executable(test_math test_math.cpp)
-target_link_libraries(test_math myMath GTest::GTest)
-target_include_directories(test_math PUBLIC ${CMAKE_SOURCE_DIR}/src)
-add_test(NAME test_math COMMAND test_math)
-gtest_discover_tests(test_math) # helps to split one ctest executable into multiple google tests
-
+target_link_libraries(test_math PRIVATE myMath gtest gtest_main)
+target_include_directories(test_math PRIVATE ${CMAKE_SOURCE_DIR}/src)
+gtest_discover_tests(test_math)
 
 add_executable(test_bird test_bird.cpp)
-target_link_libraries(test_bird myBirds myLaws myMath GTest::GTest flockGenerator)
-target_include_directories(test_bird PUBLIC ${CMAKE_SOURCE_DIR}/src)
-add_test(NAME test_bird COMMAND test_bird)
+target_link_libraries(test_bird PRIVATE myBirds myLaws myMath gtest gtest_main flockGenerator)
+target_include_directories(test_bird PRIVATE ${CMAKE_SOURCE_DIR}/src)
 gtest_discover_tests(test_bird)
 
 add_executable(test_graphics test_graphics.cpp)
-target_link_libraries(test_graphics libGLX myBirds myLaws myMath GTest::GTest)
-target_include_directories(test_graphics PUBLIC ${CMAKE_SOURCE_DIR}/src)
-add_test(NAME test_graphics COMMAND test_graphics)
+target_link_libraries(test_graphics PRIVATE libGLX myBirds myLaws myMath gtest gtest_main)
+target_include_directories(test_graphics PRIVATE ${CMAKE_SOURCE_DIR}/src)
 gtest_discover_tests(test_graphics)
 
-
 add_executable(test_law "test_law.cpp")
-target_link_libraries(test_law myBirds myLaws myMath GTest::GTest)
-target_include_directories(test_law PUBLIC ${GTest_INCLUDE_DIRS}/src)
-add_test(NAME test_law COMMAND test_law)
-gtest_discover_tests(test_law) # helps to split one ctest executable into multiple google tests
+target_link_libraries(test_law PRIVATE myBirds myLaws myMath gtest gtest_main)
+target_include_directories(test_law PRIVATE ${CMAKE_SOURCE_DIR}/src)
+gtest_discover_tests(test_law)
