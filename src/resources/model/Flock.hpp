@@ -5,7 +5,6 @@
 #include <functional>
 #include <utility>
 #include <unordered_map>
-#include <shared_mutex>
 
 struct pairhash {
 public:
@@ -27,7 +26,6 @@ private :
 	std::vector<Agent*> m_bornAgents;
 	std::function<pairNP( const Agent& agent, const float& width, const float& height )> getNeighbors;
 	dict m_grid;
-  mutable std::shared_mutex m_gridMutex;
 
 public:
 	int getPopSize() const { return (int)m_agents.size(); };

@@ -64,10 +64,7 @@ void Flock::removeEatenBirds() {
   }
   m_bornAgents.clear();
   
-  {
-    std::unique_lock<std::shared_mutex> lock(m_gridMutex);
-    m_grid.clear();
-  }
+  m_grid.clear();
 };
 
 void Flock::destroyLastAgent() {
@@ -88,21 +85,18 @@ const pairNP Flock::computeNeighbors(const Agent &agent, const float &width, con
   std::vector<pair> neighbors;
   std::vector<pair> neighborsPredators;
 
-  {
-    std::shared_lock<std::shared_mutex> lock(m_gridMutex);
-    for(int i_ = i - 1; i_ <= i + 1; i_ ++){
-      for(int j_ = j - 1; j_ <= j + 1; j_ ++){
-        for (const pair& data : m_grid[std::make_pair(i_, j_)]) {
-          const Vec2 neighbor = std::get<0>(data);
-          const Vec2 diff = neighbor - pos;
-          const double norm = diff.norm();
-          if(norm <= range && vel.dot(diff) / norm  > viewAngle){
-            Agent *potentialNeighbor = std::get<1>(data);
-            if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
-              neighbors.push_back(data);
-            } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
-              neighborsPredators.push_back(data);
-            }
+  for(int i_ = i - 1; i_ <= i + 1; i_ ++){
+    for(int j_ = j - 1; j_ <= j + 1; j_ ++){
+      for (const pair& data : m_grid[std::make_pair(i_, j_)]) {
+        const Vec2 neighbor = std::get<0>(data);
+        const Vec2 diff = neighbor - pos;
+        const double norm = diff.norm();
+        if(norm <= range && vel.dot(diff) / norm  > viewAngle){
+          Agent *potentialNeighbor = std::get<1>(data);
+          if (dynamic_cast<Bird *>(potentialNeighbor) != nullptr) {
+            neighbors.push_back(data);
+          } else if (dynamic_cast<Eagle *>(potentialNeighbor) != nullptr) {
+            neighborsPredators.push_back(data);
           }
         }
       }
@@ -146,20 +140,12 @@ void Flock::updateGrid(const float &width, const float &height) {
 
 void Flock::updateAgents(const bool &run_boids, const float &width, const float &height) {
   if (run_boids) {
-    {
-      std::unique_lock<std::shared_mutex> lock(m_gridMutex);
-      this->updateGrid(width, height);
-    }
+    this->updateGrid(width, height);
     
     #pragma omp parallel for
     for (Agent *bird : m_agents) {
       (*bird).computeLaws(this->getNeighbors(*bird, width, height));
     }
-    
-    // {
-    //   std::unique_lock<std::shared_mutex> lock(m_gridMutex);
-    //   m_grid.clear();
-    // }
     
     for (Agent *bird : m_agents) {
       (*bird).prepareMove();
