@@ -55,14 +55,7 @@ endif ()
 # Compiler flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_CXX_FLAGS}")
 
-# set(WITH_IPP OFF CACHE BOOL "" FORCE)
-# set(BUILD_IPP_IW OFF CACHE BOOL "" FORCE)
-# add_subdirectory(${THIRD_PARTY_DIR}/opencv)
-# include_directories(SYSTEM ${THIRD_PARTY_DIR}/opencv/include)
-
-set(OpenCV_INCLUDE_DIRS /usr/include/opencv4)
-set(OpenCV_LIBRARIES opencv_core opencv_imgcodecs)
-set(OpenCV_LIBRARY_DIRS /usr/lib/x86_64-linux-gnu)
+find_package(REQUIRED OpenCV)
 
 add_subdirectory(${THIRD_PARTY_DIR}/glfw)
 add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
