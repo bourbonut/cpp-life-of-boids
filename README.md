@@ -1,6 +1,6 @@
 # Life of Boids in C++
 
-![demo](./doc/assets/demo.gif)
+![boids](./doc/assets/boids.png)
 
 ## Table of Contents
 
