@@ -6,12 +6,6 @@ In general lines, the project corresponds to an artificial life experience which
 
 ## Dependencies
 
-There are some potential packages required for Linux, you should run :
-```
-sudo apt update
-sudo apt install -y libopencv-core-dev libopencv-imgcodecs-dev
-```
-
 ## Build
 
 To build the application, download the repository `cpp-life-of-boids` and create the `build` folder by running the following lines :
