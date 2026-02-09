@@ -59,7 +59,7 @@ add_subdirectory(${THIRD_PARTY_DIR}/glfw)
 add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 include_directories(SYSTEM ${GLAD_DIR}/include)
 add_subdirectory(${THIRD_PARTY_DIR}/gtest)
-add_subdirectory(${THIRD_PARTY_DIR}/TBB)
+add_subdirectory(${THIRD_PARTY_DIR}/TBB EXCLUDE_FROM_ALL)
 
 add_subdirectory(src)
 
