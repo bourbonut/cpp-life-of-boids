@@ -18,6 +18,7 @@ To build the application, download the repository `cpp-life-of-boids` and create
 ```
 git clone https://github.com/bourbonut/cpp-life-of-boids
 cd cpp-life-of-boids
+git submodule update --init --recursive --depth=1
 mkdir build && cd build
 cmake ..
 make -j8
