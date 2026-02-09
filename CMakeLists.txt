@@ -55,8 +55,6 @@ endif ()
 # Compiler flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_CXX_FLAGS}")
 
-find_package(REQUIRED OpenCV)
-
 add_subdirectory(${THIRD_PARTY_DIR}/glfw)
 add_library(glad STATIC ${GLAD_DIR}/src/glad.c)
 include_directories(SYSTEM ${GLAD_DIR}/include)

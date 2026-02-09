@@ -10,6 +10,3 @@
 [submodule "TBB"]
 	path = thirdparty/TBB
 	url = https://github.com/uxlfoundation/oneTBB
-[submodule "opencv"]
-	path = thirdparty/opencv
-	url = https://github.com/opencv/opencv
